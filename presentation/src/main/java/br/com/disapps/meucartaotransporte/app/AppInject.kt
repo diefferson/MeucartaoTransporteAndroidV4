@@ -1,6 +1,6 @@
 package br.com.disapps.meucartaotransporte.app
 
-import android.app.Application
+import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -19,7 +19,7 @@ object AppInject {
     }
 
     val viewModelModule = applicationContext {
-
+        viewModel { MainViewModel() }
     }
 
     private fun provideApp(): App = App.instance!!

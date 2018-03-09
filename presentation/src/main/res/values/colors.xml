@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#D32F2F</color>
+    <color name="colorPrimaryDark">#B71C1C</color>
+    <color name="colorAccent">#448AFF</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="colorBackground">#f7f6f6</color>
+    <color name="navigationBarColor">#FFFFFF</color>
+    <color name="horarioFuturo">#f9448aff</color>
+    <color name="horarioPassado">#69448aff</color>
+    <color name="fabButton">#69F0AE</color>
+    <color name="normalButton">#387ef5</color>
+    <color name="saldoPositivo">#48b59e</color>
+    <color name="saldoNegativo">#b54848</color>
+    <color name="textGrey">#64000000</color>
+
+    <!-- Screens background -->
+    <color name="bg_screen1">#26c5d9</color>
+    <color name="bg_screen2">#b12515</color>
+    <color name="bg_screen3">#74a443</color>
+
+    <!-- dots active colors -->
+    <color name="dot_active">#000000</color>
+
+
+    <!-- dots inactive colors -->
+    <color name="dot_inactive">#cccccc</color>
+
 </resources>
