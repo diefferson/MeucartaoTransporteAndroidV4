@@ -1,18 +1,18 @@
-package br.com.disapps.data.model
+package br.com.disapps.data.entity
 
 /**
- * Created by diefferson.santos on 09/05/17.
+ * Created by diefferson.santos on 05/06/17.
  */
-data class Ponto(
-    var numPonto: String,
-    var nomePonto: String,
-    var codigoLinha: String,
+class Veiculo (
+
+    var prefixo: String,
+    var hora: String,
     var latitude: String,
     var longitude: String,
-    var sequencia: Int = 0,
-    var sentido: String,
-    var tipo: String
+    var linha: String
+
 )
+
 //    val latLng: LatLng
 //        get() {
 //            val lat = this.latitude!!.replace(',', '.')

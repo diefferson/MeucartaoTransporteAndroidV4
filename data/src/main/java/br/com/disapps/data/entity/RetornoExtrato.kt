@@ -1,10 +1,9 @@
-package br.com.disapps.data.model
+package br.com.disapps.data.entity
 
 /**
  * Created by diefferson.santos on 10/05/17.
  */
-
-data class RetornoExtrato (
+class RetornoExtrato (
     var code: String,
     var message: String,
     var content: List<Extrato>

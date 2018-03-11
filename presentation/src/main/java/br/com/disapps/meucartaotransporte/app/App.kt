@@ -2,6 +2,8 @@ package br.com.disapps.meucartaotransporte.app
 
 import android.app.Application
 import android.support.v7.app.AppCompatDelegate
+import br.com.disapps.data.database.Database
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
 
 /**
@@ -9,6 +11,8 @@ import org.koin.android.ext.android.startKoin
  */
 
 class App : Application() {
+
+    val database : Database by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -18,6 +22,8 @@ class App : Application() {
         instance = this
 
         startKoin(this, AppInject.modules())
+
+        database.initDatabase()
     }
 
     companion object {

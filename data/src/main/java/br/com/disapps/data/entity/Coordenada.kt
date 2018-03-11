@@ -1,4 +1,4 @@
-package br.com.disapps.data.model
+package br.com.disapps.data.entity
 
 /**
  * Created by diefferson.santos on 09/05/17.

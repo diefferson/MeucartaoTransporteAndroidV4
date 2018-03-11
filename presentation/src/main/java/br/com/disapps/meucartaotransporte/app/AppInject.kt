@@ -1,5 +1,7 @@
 package br.com.disapps.meucartaotransporte.app
 
+import br.com.disapps.data.database.Database
+import br.com.disapps.data.database.RealmDatabase
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
@@ -16,6 +18,7 @@ object AppInject {
 
     val appModule: Module = applicationContext {
         bean { provideApp() }
+        bean { RealmDatabase(get<App>()) as Database}
     }
 
     val viewModelModule = applicationContext {
