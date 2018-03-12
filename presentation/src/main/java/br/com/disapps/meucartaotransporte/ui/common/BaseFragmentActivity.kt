@@ -13,7 +13,7 @@ import android.widget.FrameLayout
  */
 abstract class BaseFragmentActivity : AppCompatActivity(), IBaseFragmentActivityListener {
 
-    abstract val viewModel: Class<out ViewModel>
+    abstract val viewModel: ViewModel
     abstract val activityTag: String
     abstract val activityName: String
     abstract val activityLayout: Int

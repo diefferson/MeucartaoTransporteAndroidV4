@@ -16,6 +16,9 @@
     <color name="saldoPositivo">#48b59e</color>
     <color name="saldoNegativo">#b54848</color>
     <color name="textGrey">#64000000</color>
+    <color name="textDark">#FF000000</color>
+    <color name="textLight">#c1c1c1</color>
+    <color name="divider">#c1c1c1</color>
 
     <!-- Screens background -->
     <color name="bg_screen1">#26c5d9</color>

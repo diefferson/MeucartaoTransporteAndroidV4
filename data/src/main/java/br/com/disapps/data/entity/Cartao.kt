@@ -8,7 +8,7 @@ import io.realm.annotations.PrimaryKey
 /**
  * Created by diefferson.santos on 10/05/17.
  */
-class Cartao : RealmObject() {
+open class Cartao : RealmObject() {
 
     @PrimaryKey
     var codigo: String = ""
@@ -17,8 +17,10 @@ class Cartao : RealmObject() {
     var tipo: String = ""
     var estado: String = ""
     var saldo: Double = 0.toDouble()
+
     @SerializedName("data_saldo")
     var dataSaldo: String = ""
+
     @Ignore
     var mensagem: String = ""
 

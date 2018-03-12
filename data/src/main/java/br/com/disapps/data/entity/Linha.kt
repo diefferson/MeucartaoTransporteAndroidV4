@@ -6,7 +6,7 @@ import io.realm.annotations.PrimaryKey
 /**
  * Created by diefferson.santos on 09/05/17.
  */
-class Linha: RealmObject() {
+open class Linha: RealmObject() {
 
     @PrimaryKey
     var codigo: String = ""

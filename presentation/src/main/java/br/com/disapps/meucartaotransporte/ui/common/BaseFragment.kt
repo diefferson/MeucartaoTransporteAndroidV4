@@ -12,13 +12,13 @@ import android.view.ViewGroup
  */
 abstract class BaseFragment : Fragment() {
 
-    abstract val viewModel: Class<out ViewModel>
+    abstract val viewModel: ViewModel
     abstract val fragmentTag: String
     abstract val fragmentName: String
     abstract val fragmentLayout: Int
 
     val iAppActivityListener: IBaseFragmentActivityListener by lazy{
-        context as IBaseFragmentActivityListener
+        activity as IBaseFragmentActivityListener
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =

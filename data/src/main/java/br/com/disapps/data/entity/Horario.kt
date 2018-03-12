@@ -5,7 +5,7 @@ import io.realm.RealmObject
 /**
  * Created by diefferson.santos on 09/05/17.
  */
-class Horario : RealmObject() {
+open class Horario : RealmObject() {
 
     var tabelaHoraria: String = ""
     var adapt: String = ""

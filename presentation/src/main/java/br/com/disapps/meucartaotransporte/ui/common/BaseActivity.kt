@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 /**
  * Created by diefferson on 09/03/2018.
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(){
 
     abstract val viewModel: ViewModel
     abstract val activityTag: String

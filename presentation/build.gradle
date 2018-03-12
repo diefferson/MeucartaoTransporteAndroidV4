@@ -40,12 +40,10 @@ android {
         dev {
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            buildConfigField 'String', 'HOST', '"http://api.teste.com"'
         }
         prod {
             applicationIdSuffix ".prod"
             versionNameSuffix "-prod"
-            buildConfigField 'String', 'HOST', '"http://api.teste.com"'
         }
     }
 }
@@ -69,9 +67,12 @@ dependencies {
     implementation presentationDependencies.timber
     implementation presentationDependencies.glide
     implementation presentationDependencies.koin
+    implementation presentationDependencies.rxAndroid
     implementation presentationDependencies.koinArch
     implementation presentationDependencies.archRuntime
     implementation presentationDependencies.archExtensions
+    implementation presentationDependencies.baseRecyclerView
+    implementation presentationDependencies.materialScrollBar
     kapt presentationDependencies.archCompiler
 
     // Instrumentation test dependencies

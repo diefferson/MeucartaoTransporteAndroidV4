@@ -1,12 +1,16 @@
-
 allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
 ext {
+
+    apiHost = "http://meucartaotransporte.com.br/api"
+    apiHostDev = "http://meucartaotransporte.com.br/api"
+
     //Android
     androidBuildToolsVersion = "26.0.2"
     androidMinSdkVersion = 15
@@ -33,6 +37,8 @@ ext {
     glideVersion = '4.0.0'
     glassfishAnnotationVersion = '10.0-b28'
     constraintVersion= '1.0.2'
+    baseRecyclerViewVersion = '2.9.35'
+    materialScrollBarVersion = '12.3.5'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -52,6 +58,7 @@ ext {
     presentationDependencies = [
             kotlin:             "org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}",
             koin:               "org.koin:koin-android:${koinVersion}",
+            rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             koinArch:           "org.koin:koin-android-architecture:${koinVersion}",
             archRuntime:        "android.arch.lifecycle:runtime:${archLifecycleVersion}",
             archExtensions:     "android.arch.lifecycle:extensions:${archLifecycleVersion}",
@@ -61,6 +68,8 @@ ext {
             appCompatV7:        "com.android.support:appcompat-v7:${supportLibraryVersion}",
             supportDesign:      "com.android.support:design:${supportLibraryVersion}",
             constraintLayout:   "com.android.support.constraint:constraint-layout:${constraintVersion}",
+            baseRecyclerView:   "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
+            materialScrollBar:  "com.github.turing-tech:MaterialScrollBar:${materialScrollBarVersion}"
     ]
 
     presentationTestDependencies = [

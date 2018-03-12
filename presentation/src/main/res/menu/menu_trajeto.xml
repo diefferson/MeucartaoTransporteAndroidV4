@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="br.com.disapps.meucartaotransporte.activity.TrajetoLinhaActivity">
+
+    <item android:id="@+id/veiculos_linha"
+        android:icon="@drawable/bus"
+        android:title="Veículos Linha"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="100"/>
+
+    <item android:id="@+id/pontos_linha"
+        android:icon="@drawable/map_marker"
+        android:title="Pontos Linha"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="100"/>
+
+</menu>

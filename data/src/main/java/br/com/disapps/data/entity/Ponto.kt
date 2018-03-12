@@ -6,7 +6,7 @@ import io.realm.annotations.PrimaryKey
 /**
  * Created by diefferson.santos on 09/05/17.
  */
-class Ponto : RealmObject() {
+open class Ponto : RealmObject() {
 
     @PrimaryKey
     var numPonto: String = ""
@@ -17,11 +17,4 @@ class Ponto : RealmObject() {
     var sequencia: Int = 0
     var sentido: String = ""
     var tipo: String = ""
-
 }
-//    val latLng: LatLng
-//        get() {
-//            val lat = this.latitude!!.replace(',', '.')
-//            val lng = this.longitude!!.replace(',', '.')
-//            return LatLng(java.lang.Double.valueOf(lat), java.lang.Double.valueOf(lng))
-//        }
