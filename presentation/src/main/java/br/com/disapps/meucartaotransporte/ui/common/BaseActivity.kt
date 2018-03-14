@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity
 abstract class BaseActivity : AppCompatActivity(){
 
     abstract val viewModel: ViewModel
-    abstract val activityTag: String
-    abstract val activityName: String
     abstract val activityLayout: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {

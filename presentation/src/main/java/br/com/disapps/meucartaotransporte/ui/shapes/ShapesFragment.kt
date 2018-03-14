@@ -17,12 +17,6 @@ class ShapesFragment : BaseFragment() {
     override val viewModel: ViewModel
         get() = getViewModel()
 
-    override val fragmentTag: String
-        get() = ShapesFragment::class.java.simpleName
-
-    override val fragmentName: String
-        get() = getString(R.string.shapes)
-
     override val fragmentLayout: Int
         get() = R.layout.fragment_shapes
 }

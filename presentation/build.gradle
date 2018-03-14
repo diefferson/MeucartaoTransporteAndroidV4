@@ -64,6 +64,7 @@ dependencies {
     implementation presentationDependencies.appCompatV7
     implementation presentationDependencies.supportDesign
     implementation presentationDependencies.constraintLayout
+    implementation presentationDependencies.cardView
     implementation presentationDependencies.timber
     implementation presentationDependencies.glide
     implementation presentationDependencies.koin

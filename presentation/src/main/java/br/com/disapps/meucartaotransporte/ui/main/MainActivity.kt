@@ -25,12 +25,6 @@ class MainActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSele
     override val viewModel : MainViewModel
         get() = getViewModel()
 
-    override val activityTag: String
-        get() = MainActivity::class.java.simpleName
-
-    override val activityName: String
-        get() =  getString(R.string.app_name)
-
     override val activityLayout: Int
         get() = R.layout.activity_main
 
@@ -49,12 +43,9 @@ class MainActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun setupDrawer(){
-        val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, vToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, vToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
-
         toggle.syncState()
-
         nav_view.setNavigationItemSelectedListener(this)
     }
 
@@ -78,6 +69,14 @@ class MainActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSele
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun checkItemMenu(itemId: Int){
+        nav_view.menu.findItem(itemId).isChecked = true
+    }
+
+    init {
+        initialFragmentItemId = R.id.nav_cards
     }
 }
 

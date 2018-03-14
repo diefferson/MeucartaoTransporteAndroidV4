@@ -33,11 +33,15 @@
                 android:id="@+id/nav_ads"
                 android:icon="@drawable/remove_ads"
                 android:title="@string/remove_ads" />
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/settings"
-                android:title="@string/settings" />
+
         </menu>
     </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/settings"
+            android:title="@string/settings" />
+    </group>
 
 </menu>

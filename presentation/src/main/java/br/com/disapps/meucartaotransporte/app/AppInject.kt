@@ -6,12 +6,15 @@ import br.com.disapps.data.api.RestClient
 import br.com.disapps.data.database.Database
 import br.com.disapps.data.database.RealmDatabase
 import br.com.disapps.data.executor.JobExecutor
+import br.com.disapps.data.preferences.Preferences
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.meucartaotransporte.executor.UIThread
+import br.com.disapps.meucartaotransporte.ui.allLines.AllLinesViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.CardsViewModel
 import br.com.disapps.meucartaotransporte.ui.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
+import br.com.disapps.meucartaotransporte.ui.myCards.MyCardsViewModel
 import br.com.disapps.meucartaotransporte.ui.quick_find.QuickFindViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.shapes.ShapesViewModel
@@ -35,6 +38,7 @@ object AppInject {
         bean { UIThread() as PostExecutionThread }
         bean { JobExecutor() as  ThreadExecutor }
         bean { RestClient().api }
+        bean { Preferences(get("applicationContext"))}
     }
 
     private val viewModelModule = applicationContext {
@@ -45,6 +49,8 @@ object AppInject {
         viewModel { QuickFindViewModel() }
         viewModel { SettingsViewModel() }
         viewModel { ShapesViewModel() }
+        viewModel { MyCardsViewModel() }
+        viewModel { AllLinesViewModel() }
     }
 
 }

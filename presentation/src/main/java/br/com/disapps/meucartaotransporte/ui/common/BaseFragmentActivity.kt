@@ -14,12 +14,11 @@ import android.widget.FrameLayout
 abstract class BaseFragmentActivity : AppCompatActivity(), IBaseFragmentActivityListener {
 
     abstract val viewModel: ViewModel
-    abstract val activityTag: String
-    abstract val activityName: String
     abstract val activityLayout: Int
     abstract val container: FrameLayout
     abstract val toolbar : Toolbar
     abstract val initialFragment : BaseFragment
+    var initialFragmentItemId: Int =0
 
     private val fragmentTransaction: FragmentTransaction
         get() = supportFragmentManager.beginTransaction()
@@ -29,6 +28,7 @@ abstract class BaseFragmentActivity : AppCompatActivity(), IBaseFragmentActivity
         setContentView(activityLayout)
         setSupportActionBar(toolbar)
         replaceFragment(initialFragment)
+        checkItemMenu(initialFragmentItemId)
     }
 
     override fun setTitle(title: String) {
@@ -41,26 +41,18 @@ abstract class BaseFragmentActivity : AppCompatActivity(), IBaseFragmentActivity
 
     override fun replaceFragment(fragment: Fragment) {
         val ft = fragmentTransaction
-        if (fragment is BaseFragment) {
-            ft.replace(container.id, fragment, fragment.fragmentTag)
-        } else {
-            ft.replace(container.id, fragment, fragment.javaClass.simpleName)
-        }
-
+        ft.replace(container.id, fragment, fragment.javaClass.simpleName)
         ft.commit()
     }
 
     override fun replaceAndBackStackFragment(fragment: Fragment) {
         val ft = fragmentTransaction
-
-        if (fragment is BaseFragment) {
-            ft.replace(container.id, fragment, fragment.fragmentTag)
-            ft.addToBackStack(fragment.fragmentTag)
-        } else {
-            ft.replace(container.id, fragment, fragment.javaClass.simpleName)
-            ft.addToBackStack(fragment.javaClass.simpleName)
-        }
-
+        ft.replace(container.id, fragment, fragment.javaClass.simpleName)
+        ft.addToBackStack(fragment.javaClass.simpleName)
         ft.commit()
+    }
+
+    override fun checkItemMenu(itemId: Int) {
+        //implements in child
     }
 }

@@ -9,11 +9,6 @@ import android.widget.TextView
  * Created by diefferson on 29/11/2017.
  */
 
-fun TextView.setText(value : Int){
-    this.text = value.toString()
-}
-
-
 fun TextView.setMutableText(owner: LifecycleOwner, mutableText: MutableLiveData<String>){
     mutableText.observe(owner, Observer { this.text = it.toString() })
 }

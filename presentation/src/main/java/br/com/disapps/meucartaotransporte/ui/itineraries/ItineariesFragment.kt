@@ -16,12 +16,6 @@ class ItineariesFragment : BaseFragment() {
     override val viewModel: ItinerariesViewModel
         get() = getViewModel()
 
-    override val fragmentTag: String
-        get() = ItineariesFragment::class.java.simpleName
-
-    override val fragmentName: String
-        get() = getString(R.string.itineraries)
-
     override val fragmentLayout: Int
         get() = R.layout.fragment_itineraries
 }

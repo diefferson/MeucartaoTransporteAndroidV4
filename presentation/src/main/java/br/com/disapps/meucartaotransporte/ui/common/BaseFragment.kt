@@ -13,9 +13,11 @@ import android.view.ViewGroup
 abstract class BaseFragment : Fragment() {
 
     abstract val viewModel: ViewModel
-    abstract val fragmentTag: String
-    abstract val fragmentName: String
     abstract val fragmentLayout: Int
+
+    companion object {
+        var teste = "etste"
+    }
 
     val iAppActivityListener: IBaseFragmentActivityListener by lazy{
         activity as IBaseFragmentActivityListener

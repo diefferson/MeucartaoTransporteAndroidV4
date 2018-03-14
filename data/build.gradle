@@ -12,6 +12,7 @@ android {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
         multiDexEnabled = true
+        buildConfigField 'String', 'PREFERENCES_FILE_KEY', "\"br.com.disapps.meucartaotransporte.configs\""
     }
 
     buildTypes {

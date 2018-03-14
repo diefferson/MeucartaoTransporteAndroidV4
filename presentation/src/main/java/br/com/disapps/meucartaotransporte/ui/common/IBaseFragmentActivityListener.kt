@@ -15,4 +15,6 @@ interface IBaseFragmentActivityListener {
 
     fun replaceAndBackStackFragment(fragment: Fragment)
 
+    fun checkItemMenu(itemId: Int)
+
 }

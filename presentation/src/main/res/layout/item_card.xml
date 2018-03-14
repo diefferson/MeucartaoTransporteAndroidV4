@@ -1,0 +1,205 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="0dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginLeft="4dp"
+    app:cardElevation="3dp"
+    app:cardMaxElevation="3dp"
+    app:cardUseCompatPadding="false"
+    app:cardPreventCornerOverlap="false"
+    app:cardCornerRadius="3dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guide_center"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <ImageView
+            android:id="@+id/ic_delete_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:contentDescription="@string/delete"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@drawable/delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/card_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nome Cartão" />
+
+        <TextView
+            android:id="@+id/label_card_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/item_card_code"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@id/card_code"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_name" />
+
+        <TextView
+            android:id="@+id/card_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="0002909840"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/label_card_code"
+            app:layout_constraintTop_toBottomOf="@id/card_name"
+            app:layout_constraintEnd_toStartOf="@id/guide_center"/>
+
+        <TextView
+            android:id="@+id/label_card_cpf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_card_cpf"
+            android:textStyle="bold"
+            android:gravity="end"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@id/card_cpf"
+            app:layout_constraintTop_toBottomOf="@id/card_name"
+            app:layout_constraintStart_toEndOf="@id/guide_center"/>
+
+        <TextView
+            android:id="@+id/card_cpf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="09695910980"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/card_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_card_cpf"/>
+
+        <TextView
+            android:id="@+id/label_card_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_card_status"
+            android:textStyle="bold"
+            android:gravity="end"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@id/card_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_card_code" />
+
+        <TextView
+            android:id="@+id/card_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Ativo"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/card_code"
+            app:layout_constraintStart_toEndOf="@id/label_card_status"
+            app:layout_constraintEnd_toStartOf="@id/guide_center"/>
+
+        <TextView
+            android:id="@+id/label_card_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_card_type"
+            android:textStyle="bold"
+            android:gravity="end"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/label_card_cpf"
+            app:layout_constraintStart_toEndOf="@id/guide_center"
+            app:layout_constraintEnd_toStartOf="@id/card_type"/>
+
+        <TextView
+            android:id="@+id/card_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Usuario"
+            app:layout_constraintTop_toBottomOf="@id/card_cpf"
+            app:layout_constraintStart_toEndOf="@id/label_card_type"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/label_card_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/item_card_balance"
+            android:textStyle="bold"
+            android:gravity="end"
+            app:layout_constraintTop_toBottomOf="@id/card_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guide_center"/>
+
+        <TextView
+            android:id="@+id/card_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="R$54.00"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guide_center"
+            app:layout_constraintTop_toBottomOf="@id/card_type"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/card_date_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="Atualizado em 15/07/2016 19:08:00"
+            app:layout_constraintTop_toBottomOf="@id/label_card_balance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/vw_divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="#c5c5c5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_date_balance"/>
+
+        <Button
+            android:id="@+id/btn_card_balance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/balance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vw_divider"
+            app:layout_constraintEnd_toStartOf="@id/btn_card_extract"/>
+
+        <Button
+            android:id="@+id/btn_card_extract"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/extract"
+            app:layout_constraintTop_toBottomOf="@id/vw_divider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_card_balance"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
