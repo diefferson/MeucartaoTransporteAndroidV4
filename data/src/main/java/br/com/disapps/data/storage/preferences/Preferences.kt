@@ -1,4 +1,4 @@
-package br.com.disapps.data.preferences
+package br.com.disapps.data.storage.preferences
 
 import android.content.Context
 import android.content.SharedPreferences

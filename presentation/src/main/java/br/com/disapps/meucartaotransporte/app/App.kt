@@ -2,7 +2,7 @@ package br.com.disapps.meucartaotransporte.app
 
 import android.app.Application
 import android.support.v7.app.AppCompatDelegate
-import br.com.disapps.data.database.Database
+import br.com.disapps.data.storage.database.Database
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
 

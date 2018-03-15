@@ -5,10 +5,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.widget.TextView
 
-/**
- * Created by diefferson on 29/11/2017.
- */
-
 fun TextView.setMutableText(owner: LifecycleOwner, mutableText: MutableLiveData<String>){
     mutableText.observe(owner, Observer { this.text = it.toString() })
 }

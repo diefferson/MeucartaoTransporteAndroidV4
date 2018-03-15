@@ -7,10 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 
-/**
- * Created by diefferson on 28/11/2017.
- */
-
 fun Activity.toast(message : String){
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }

@@ -1,8 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.myCards
 
-import android.arch.lifecycle.ViewModel
+import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
 /**
  * Created by dnso on 14/03/2018.
  */
-class MyCardsViewModel: ViewModel()
+class MyCardsViewModel: BaseViewModel()

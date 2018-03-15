@@ -1,13 +1,13 @@
 package br.com.disapps.meucartaotransporte.ui.main
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
 /**
  * Created by dnso on 09/03/2018.
  */
-class MainViewModel : ViewModel(){
+class MainViewModel : BaseViewModel(){
 
-    val text = MutableLiveData<String>().apply { value = "Hello World!" }
+
 
 }

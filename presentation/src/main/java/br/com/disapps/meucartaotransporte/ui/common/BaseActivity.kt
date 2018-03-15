@@ -1,6 +1,5 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
-import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
@@ -9,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
  */
 abstract class BaseActivity : AppCompatActivity(){
 
-    abstract val viewModel: ViewModel
+    abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {

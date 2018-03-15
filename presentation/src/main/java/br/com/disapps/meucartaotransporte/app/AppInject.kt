@@ -2,11 +2,18 @@ package br.com.disapps.meucartaotransporte.app
 
 import android.content.Context
 import br.com.disapps.data.api.RestClient
-import br.com.disapps.data.database.Database
-import br.com.disapps.data.database.RealmDatabase
+import br.com.disapps.data.entity.mapper.CardEntityMapper
+import br.com.disapps.data.storage.database.Database
+import br.com.disapps.data.storage.database.RealmDatabase
 import br.com.disapps.data.executor.JobExecutor
-import br.com.disapps.data.preferences.Preferences
+import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.data.repository.CardsDataRepository
+import br.com.disapps.data.repository.LinesDataRepository
+import br.com.disapps.data.repository.dataSource.cards.CardsDataSourceFactory
+import br.com.disapps.data.repository.dataSource.lines.LinesDataSourceFactory
 import br.com.disapps.domain.executor.ThreadExecutor
+import br.com.disapps.domain.interactor.cards.GetCard
+import br.com.disapps.domain.repository.CardsRepository
 import br.com.disapps.meucartaotransporte.executor.UIThread
 import br.com.disapps.meucartaotransporte.ui.allLines.AllLinesViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.CardsViewModel
@@ -28,20 +35,25 @@ import org.koin.dsl.module.applicationContext
 object AppInject {
 
     fun modules() : List<Module> = listOf(
-            applicationModule, viewModelModule
+            applicationModule,
+            viewModelModule,
+            repositoriesModule,
+            useCaseModule,
+            mappersModule,
+            dataSourceFactoryModule
     )
 
     private val applicationModule: Module = applicationContext {
         bean("applicationContext") { App.instance!! as Context }
         bean { RealmDatabase(get("applicationContext")) as Database }
+        bean { Preferences(get("applicationContext"))}
+        bean { RestClient().api }
         bean { UIThread() as PostExecutionThread }
         bean { JobExecutor() as  ThreadExecutor }
-        bean { RestClient().api }
-        bean { Preferences(get("applicationContext"))}
     }
 
     private val viewModelModule = applicationContext {
-        viewModel { CardsViewModel() }
+        viewModel { CardsViewModel( getCardUseCase = get()) }
         viewModel { ItinerariesViewModel() }
         viewModel { LinesViewModel() }
         viewModel { MainViewModel() }
@@ -50,6 +62,24 @@ object AppInject {
         viewModel { ShapesViewModel() }
         viewModel { MyCardsViewModel() }
         viewModel { AllLinesViewModel() }
+    }
+
+    private val repositoriesModule: Module = applicationContext {
+        bean { CardsDataRepository(cardsDataSourceFactory = get(), cardEntityMapper = get()) as CardsRepository }
+        bean { LinesDataRepository(linesDataSourceFactory = get()) as CardsRepository }
+    }
+
+    private val useCaseModule: Module = applicationContext {
+        factory { GetCard(cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+    }
+
+    private val mappersModule: Module = applicationContext {
+        bean { CardEntityMapper() }
+    }
+
+    private val dataSourceFactoryModule : Module = applicationContext {
+        bean { CardsDataSourceFactory(database = get(), restApi = get()) }
+        bean { LinesDataSourceFactory(database = get(), restApi = get()) }
     }
 
 }

@@ -1,4 +1,4 @@
-package br.com.disapps.data.database
+package br.com.disapps.data.storage.database
 
 /**
  * Created by diefferson on 10/03/2018.
@@ -6,5 +6,6 @@ package br.com.disapps.data.database
 interface Database {
 
     fun initDatabase()
+    fun getDatabase() : Any
 
 }

@@ -3,8 +3,8 @@ package br.com.disapps.domain.model
 /**
  * Created by diefferson.santos on 09/05/17.
  */
-data class Horario(
-    var tabelaHoraria: String,
+data class Schedule(
+    var schedulesTable: String,
     var adapt: String,
-    var hora: String
+    var time: String
 )

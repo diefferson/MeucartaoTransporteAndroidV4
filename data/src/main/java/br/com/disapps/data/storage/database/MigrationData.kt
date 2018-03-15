@@ -1,4 +1,4 @@
-package br.com.disapps.data.database
+package br.com.disapps.data.storage.database
 
 import io.realm.DynamicRealm
 import io.realm.RealmMigration
@@ -17,21 +17,21 @@ class MigrationData : RealmMigration {
         }
 
         if (oldVersion < 2) {
-            val pontoSchema = realm.schema.get("Ponto")
+            val pontoSchema = realm.schema.get("BusStop")
             pontoSchema!!.removeField("numPonto")
             pontoSchema.addField("numPonto", String::class.java)
 
-            val horarioSchema = realm.schema.get("HorarioLinha")
+            val horarioSchema = realm.schema.get("LineSchedule")
             horarioSchema!!.removeField("numPonto")
             horarioSchema.addField("numPonto", String::class.java)
         }
 
         if (oldVersion < VERSION) {
 
-            realm.delete("Ponto")
+            realm.delete("BusStop")
             realm.delete("Shape")
 
-            val pontoSchema = realm.schema.get("Ponto")
+            val pontoSchema = realm.schema.get("BusStop")
             pontoSchema!!.addPrimaryKey("numPonto")
 
             val shapeSachema = realm.schema.get("Shape")

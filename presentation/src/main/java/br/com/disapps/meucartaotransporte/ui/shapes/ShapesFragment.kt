@@ -14,7 +14,7 @@ class ShapesFragment : BaseFragment() {
         fun newInstance() = ShapesFragment()
     }
 
-    override val viewModel: ViewModel
+    override val viewModel: ShapesViewModel
         get() = getViewModel()
 
     override val fragmentLayout: Int

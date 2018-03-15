@@ -1,7 +1,6 @@
-package br.com.disapps.data.database
+package br.com.disapps.data.storage.database
 
 import android.content.Context
-import android.util.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -21,5 +20,9 @@ class RealmDatabase(var context: Context) : Database{
 
         Realm.setDefaultConfiguration(realmConfiguration)
 
+    }
+
+    override fun getDatabase() : Realm {
+        return Realm.getDefaultInstance()
     }
 }

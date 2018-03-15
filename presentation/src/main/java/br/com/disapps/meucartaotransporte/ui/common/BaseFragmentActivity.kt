@@ -1,6 +1,5 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
-import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
@@ -13,7 +12,7 @@ import android.widget.FrameLayout
  */
 abstract class BaseFragmentActivity : AppCompatActivity(), IBaseFragmentActivityListener {
 
-    abstract val viewModel: ViewModel
+    abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
     abstract val container: FrameLayout
     abstract val toolbar : Toolbar
