@@ -1,4 +1,4 @@
-package br.com.disapps.meucartaotransporte.ui.quick_find
+package br.com.disapps.meucartaotransporte.ui.quickFind
 
 import android.arch.lifecycle.ViewModel
 

@@ -1,6 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.main
 
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.architecture.ext.getViewModel
 
-class MainActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseFragmentActivity(){
 
     override val viewModel : MainViewModel
         get() = getViewModel()
@@ -39,40 +40,29 @@ class MainActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupDrawer()
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
-    private fun setupDrawer(){
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, vToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-        nav_view.setNavigationItemSelectedListener(this)
-    }
-
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.nav_cards -> replaceFragment(CardsFragment.newInstance())
-            R.id.nav_lines -> replaceFragment(LinesFragment.newInstance())
-            R.id.nav_shapes -> replaceFragment(ShapesFragment.newInstance())
-            R.id.nav_itineraries -> replaceFragment(ItineariesFragment.newInstance())
-            R.id.nav_share -> {}
-            R.id.nav_ads -> {}
-            R.id.nav_settings -> replaceFragment(SettingsFragment.newInstance())
+            R.id.nav_cards -> {
+                replaceFragment(CardsFragment.newInstance())
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_lines -> {
+                replaceFragment(LinesFragment.newInstance())
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_settings -> {
+                replaceFragment(SettingsFragment.newInstance())
+                return@OnNavigationItemSelectedListener true
+            }
         }
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
+        false
     }
 
     override fun checkItemMenu(itemId: Int){
-        nav_view.menu.findItem(itemId).isChecked = true
+        navigation.menu.findItem(itemId).isChecked = true
     }
 
     init {

@@ -1,6 +1,5 @@
-package br.com.disapps.meucartaotransporte.ui.quick_find
+package br.com.disapps.meucartaotransporte.ui.quickFind
 
-import android.arch.lifecycle.ViewModel
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import org.koin.android.architecture.ext.getViewModel

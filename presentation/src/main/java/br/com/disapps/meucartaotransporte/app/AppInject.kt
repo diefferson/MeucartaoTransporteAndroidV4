@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.app
 
 import android.content.Context
-import br.com.disapps.data.api.RestApi
 import br.com.disapps.data.api.RestClient
 import br.com.disapps.data.database.Database
 import br.com.disapps.data.database.RealmDatabase
@@ -15,7 +14,7 @@ import br.com.disapps.meucartaotransporte.ui.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.myCards.MyCardsViewModel
-import br.com.disapps.meucartaotransporte.ui.quick_find.QuickFindViewModel
+import br.com.disapps.meucartaotransporte.ui.quickFind.QuickFindViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.shapes.ShapesViewModel
 import org.buffer.android.boilerplate.domain.executor.PostExecutionThread

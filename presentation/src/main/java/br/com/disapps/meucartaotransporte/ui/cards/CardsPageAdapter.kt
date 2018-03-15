@@ -1,13 +1,12 @@
 package br.com.disapps.meucartaotransporte.ui.cards
 
 import android.content.Context
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.myCards.MyCardsFragment
-import br.com.disapps.meucartaotransporte.ui.quick_find.QuickFindFragment
+import br.com.disapps.meucartaotransporte.ui.quickFind.QuickFindFragment
 
 /**
  * Created by dnso on 14/03/2018.
