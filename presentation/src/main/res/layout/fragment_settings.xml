@@ -1,74 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <data>
+        <variable
+            name="viewModel"
+            type="br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel"/>
+    </data>
 
-        <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/tela_inicial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                style="@style/AppTheme.SettingsItem">
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/tela_inicial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    style="@style/AppTheme.SettingsItem">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textStyle="normal"
+                        android:text="@string/initial_screen"
+                        style="@style/AppTheme.TextTitle"/>
+
+                    <TextView
+                        android:id="@+id/tela_inicial_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        tools:text="@string/cards"
+                        style="@style/AppTheme.SettingsValue"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/divider"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textStyle="normal"
-                    android:text="@string/initial_screen"
-                    style="@style/AppTheme.TextTitle"/>
+                    android:id="@+id/data_usage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/data_usage"
+                    style="@style/AppTheme.SettingsItem"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/divider"/>
 
                 <TextView
-                    android:id="@+id/tela_inicial_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    tools:text="@string/cards"
-                    style="@style/AppTheme.SettingsValue"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help"
+                    style="@style/AppTheme.SettingsItem"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/divider"/>
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/divider"/>
+        </ScrollView>
 
-            <TextView
-                android:id="@+id/data_usage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/data_usage"
-                style="@style/AppTheme.SettingsItem"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/divider"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/help"
-                style="@style/AppTheme.SettingsItem"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/divider"/>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>

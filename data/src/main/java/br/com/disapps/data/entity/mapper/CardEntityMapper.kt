@@ -9,7 +9,7 @@ import br.com.disapps.domain.model.Card
  */
 class CardEntityMapper : Mapper<Cartao, Card>{
 
-    override fun mapToEntity(cartao: Cartao): Card {
+    override fun mapFromEntity(cartao: Cartao): Card {
         return Card(
             code = cartao.codigo,
             cpf = cartao.cpf,
@@ -22,7 +22,7 @@ class CardEntityMapper : Mapper<Cartao, Card>{
         )
     }
 
-    override fun mapFromEntity(card: Card): Cartao {
+    override fun mapToEntity(card: Card): Cartao {
         val cartao = Cartao()
         cartao.codigo = card.code
         cartao.cpf = card.cpf
@@ -34,4 +34,13 @@ class CardEntityMapper : Mapper<Cartao, Card>{
         cartao.mensagem = card.message
         return cartao
     }
+
+    override fun mapFromEntity(entity: List<Cartao>): List<Card> {
+       return entity.map(this::mapFromEntity)
+    }
+
+    override fun mapToEntity(data: List<Card>): List<Cartao> {
+        return data.map(this::mapToEntity)
+    }
 }
+

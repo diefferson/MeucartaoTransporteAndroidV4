@@ -12,7 +12,7 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 class CardsViewModel(var getCardUseCase: GetCard) : BaseViewModel(){
 
     fun getCards(){
-        getCardUseCase.execute(GetCardObservable(), GetCard.Params.forCard("25"))
+       // getCardUseCase.execute(GetCardObservable(), GetCard.Params.forCard("25"))
     }
 
     private inner class GetCardObservable : DefaultObserver<Card>() {

@@ -17,13 +17,13 @@ class GetCard(var cardRepository: CardsRepository,
 
     override fun buildUseCaseObservable(params: Params ): Observable<Card> {
         Preconditions.checkNotNull(params)
-        return this.cardRepository.card(params.code)
+        return this.cardRepository.card(params.card)
     }
 
-    class Params (val code: String) {
+    class Params (val card: Card) {
         companion object {
-            fun forCard(code: String): Params {
-                return Params(code)
+            fun forCard(card: Card): Params {
+                return Params(card)
             }
         }
     }

@@ -25,6 +25,6 @@ interface CardsRepository{
      *
      * @param code The code of card used to retrieve card data.
      */
-    fun card(code : String) : Observable<Card>
+    fun card(card : Card) : Observable<Card>
 
 }

@@ -1,14 +1,14 @@
 package br.com.disapps.data.repository.dataSource.cards
 
+import br.com.disapps.data.api.RestApi
 import br.com.disapps.data.entity.Cartao
 import br.com.disapps.data.entity.RequestCartao
-import br.com.disapps.data.storage.database.Database
 import io.reactivex.Observable
 
 /**
- * Created by dnso on 15/03/2018.
+ * Created by dnso on 16/03/2018.
  */
-class LocalCardsDataSource(private var database: Database) : CardsDataSource {
+class CloudCardsDataSource(private var restApi: RestApi) : CardsDataSource{
 
     override fun saveCard(cartao: Cartao) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -19,6 +19,6 @@ class LocalCardsDataSource(private var database: Database) : CardsDataSource {
     }
 
     override fun card(requestCartao: RequestCartao): Observable<Cartao> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return restApi.saldoCartao(requestCartao).map { t -> t.content }
     }
 }

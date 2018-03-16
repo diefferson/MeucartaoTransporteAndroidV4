@@ -1,5 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
@@ -10,7 +12,7 @@ import android.widget.FrameLayout
 /**
  * Created by diefferson on 29/11/2017.
  */
-abstract class BaseFragmentActivity : AppCompatActivity(), IBaseFragmentActivityListener {
+abstract class BaseFragmentActivity<DTB : ViewDataBinding>: AppCompatActivity(), IBaseFragmentActivityListener {
 
     abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
@@ -24,7 +26,7 @@ abstract class BaseFragmentActivity : AppCompatActivity(), IBaseFragmentActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(activityLayout)
+        val binding = DataBindingUtil.setContentView<DTB>(this,activityLayout )
         setSupportActionBar(toolbar)
         replaceFragment(initialFragment)
         checkItemMenu(initialFragmentItemId)

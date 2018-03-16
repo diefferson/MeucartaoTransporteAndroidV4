@@ -34,11 +34,7 @@ import io.reactivex.schedulers.Schedulers
  * that will execute its job in a background thread and will post the result in the UI thread.
  */
 abstract class UseCase<T, Params> internal constructor(private val threadExecutor: ThreadExecutor, private val postExecutionThread: PostExecutionThread) {
-    private val disposables: CompositeDisposable
-
-    init {
-        this.disposables = CompositeDisposable()
-    }
+    private val disposables: CompositeDisposable = CompositeDisposable()
 
     /**
      * Builds an [Observable] which will be used when executing the current [UseCase].

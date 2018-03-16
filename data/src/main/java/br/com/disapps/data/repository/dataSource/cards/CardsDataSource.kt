@@ -1,7 +1,9 @@
 package br.com.disapps.data.repository.dataSource.cards
 
 import br.com.disapps.data.entity.Cartao
+import br.com.disapps.data.entity.RequestCartao
 import br.com.disapps.data.repository.dataSource.DataSource
+import br.com.disapps.domain.model.Card
 import io.reactivex.Observable
 
 /**
@@ -23,7 +25,7 @@ interface CardsDataSource : DataSource {
     /**
      * Get an {@link Observable} which will emit a {@link Cartao}.
      *
-     * @param code The code of card used to retrieve card data.
+     * @param RequestCartao The code of card used to retrieve card data.
      */
-    fun card(code : String) : Observable<Cartao>
+    fun card(requestCartao: RequestCartao) : Observable<Cartao>
 }
