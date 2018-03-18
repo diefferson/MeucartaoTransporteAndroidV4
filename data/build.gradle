@@ -49,7 +49,6 @@ android {
         disable 'IconDensities'             //For testing purpose. This is safe to remove.
         disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
     }
-
 }
 
 
@@ -74,5 +73,5 @@ dependencies {
     testImplementation dataTestDependencies.assertj
     testImplementation dataTestDependencies.robolectric
 
-    compile project(':domain')
+    implementation project(':domain')
 }

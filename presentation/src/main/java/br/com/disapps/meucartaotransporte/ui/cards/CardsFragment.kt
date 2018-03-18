@@ -1,5 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.cards
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -24,10 +25,10 @@ class CardsFragment : BaseFragment(){
     override val fragmentLayout: Int
         get() = R.layout.fragment_cards
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view_pager.adapter = CardsPageAdapter(childFragmentManager, context)
+        view_pager.adapter = CardsPageAdapter(childFragmentManager, context!!)
         tabs.setupWithViewPager(view_pager)
     }
 

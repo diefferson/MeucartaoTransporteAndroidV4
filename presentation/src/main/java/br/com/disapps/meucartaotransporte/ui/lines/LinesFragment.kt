@@ -26,10 +26,10 @@ class LinesFragment : BaseFragment() {
     override val fragmentLayout: Int
         get() = R.layout.fragment_lines
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view_pager.adapter = LinesPageAdapter(childFragmentManager, context)
+        view_pager.adapter = LinesPageAdapter(childFragmentManager, context!!)
         tabs.setupWithViewPager(view_pager)
     }
 

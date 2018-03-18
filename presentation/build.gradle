@@ -48,10 +48,6 @@ android {
     }
 }
 
-kapt {
-    generateStubs = true
-}
-
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
@@ -59,25 +55,39 @@ dependencies {
     implementation project(':domain')
     implementation project(':data')
 
-
-    implementation presentationDependencies.kotlin
-    implementation presentationDependencies.appCompatV7
-    implementation presentationDependencies.supportDesign
-    implementation presentationDependencies.constraintLayout
-    implementation presentationDependencies.cardView
-    implementation presentationDependencies.timber
-    implementation presentationDependencies.glide
-    implementation presentationDependencies.koin
-    implementation presentationDependencies.rxAndroid
-    implementation presentationDependencies.koinArch
-    implementation presentationDependencies.archRuntime
-    implementation presentationDependencies.archExtensions
-    implementation presentationDependencies.baseRecyclerView
-    implementation presentationDependencies.materialScrollBar
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:support-vector-drawable:26.1.0'
-    kapt presentationDependencies.archCompiler
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$rootProject.kotlinVersion"
+    implementation "org.koin:koin-android:$rootProject.koinVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "org.koin:koin-android-architecture:$rootProject.koinVersion"
+    implementation "android.arch.lifecycle:runtime:$rootProject.archLifecycleVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+    //implementation "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintVersion"
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.baseRecyclerViewVersion"
+    implementation "com.github.turing-tech:MaterialScrollBar:$rootProject.materialScrollBarVersion"
+    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+//    implementation presentationDependencies.kotlin
+//    implementation presentationDependencies.appCompatV7
+//    implementation presentationDependencies.supportDesign
+//    implementation presentationDependencies.constraintLayout
+//    implementation presentationDependencies.cardView
+//    implementation presentationDependencies.timber
+//    implementation presentationDependencies.glide
+//    implementation presentationDependencies.koin
+//    implementation presentationDependencies.rxAndroid
+//    implementation presentationDependencies.koinArch
+//    implementation presentationDependencies.archRuntime
+//    implementation presentationDependencies.archExtensions
+//    implementation presentationDependencies.baseRecyclerView
+//    implementation presentationDependencies.materialScrollBar
+//    implementation 'com.android.support:design:26.1.0'
+//    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+//    implementation 'com.android.support:support-vector-drawable:26.1.0'
+//    kapt presentationDependencies.archCompiler
 
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit

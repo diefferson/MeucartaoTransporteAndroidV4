@@ -12,10 +12,10 @@ ext {
     apiHostDev = "http://meucartaotransporte.com.br/api"
 
     //Android
-    androidBuildToolsVersion = "26.0.2"
+    androidBuildToolsVersion = "27.0.3"
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 26
-    androidCompileSdkVersion = 26
+    androidTargetSdkVersion = 27
+    androidCompileSdkVersion = 27
 
     //Libraries
     koinVersion = "0.9.0"
@@ -32,8 +32,7 @@ ext {
     androidAnnotationsVersion = '21.0.3'
     retrofitVersion = '2.3.0'
     roomVersion = '1.0.0-alpha6'
-    supportLibraryVersion = '26.1.0'
-    timberVersion = '4.5.1'
+    supportLibraryVersion = '27.1.0'
     glideVersion = '4.0.0'
     glassfishAnnotationVersion = '10.0-b28'
     constraintVersion= '1.0.2'
@@ -63,14 +62,14 @@ ext {
             archRuntime:        "android.arch.lifecycle:runtime:${archLifecycleVersion}",
             archExtensions:     "android.arch.lifecycle:extensions:${archLifecycleVersion}",
             archCompiler:       "android.arch.lifecycle:compiler:${archLifecycleVersion}",
-            timber:             "com.jakewharton.timber:timber:${timberVersion}",
             glide:              "com.github.bumptech.glide:glide:${glideVersion}",
             appCompatV7:        "com.android.support:appcompat-v7:${supportLibraryVersion}",
             supportDesign:      "com.android.support:design:${supportLibraryVersion}",
-            cardView:      "com.android.support:cardview-v7:${supportLibraryVersion}",
+            cardView:           "com.android.support:cardview-v7:${supportLibraryVersion}",
             constraintLayout:   "com.android.support.constraint:constraint-layout:${constraintVersion}",
             baseRecyclerView:   "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
-            materialScrollBar:  "com.github.turing-tech:MaterialScrollBar:${materialScrollBarVersion}"
+            materialScrollBar:  "com.github.turing-tech:MaterialScrollBar:${materialScrollBarVersion}",
+            vectorDrawable:     "com.android.support:support-vector-drawable:${supportLibraryVersion}"
     ]
 
     presentationTestDependencies = [
