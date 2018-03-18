@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.widget.FrameLayout
+import br.com.disapps.meucartaotransporte.BR
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -15,18 +16,17 @@ import android.widget.FrameLayout
 abstract class BaseFragmentActivity<DTB : ViewDataBinding>: AppCompatActivity(), IBaseFragmentActivityListener {
 
     abstract val viewModel: BaseViewModel
+    var binding: ViewDataBinding? = null
     abstract val activityLayout: Int
     abstract val container: FrameLayout
     abstract val toolbar : Toolbar
-    abstract val initialFragment : BaseFragment
+    abstract val initialFragment : BaseFragment<*>
     var initialFragmentItemId: Int =0
 
-    private val fragmentTransaction: FragmentTransaction
-        get() = supportFragmentManager.beginTransaction()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<DTB>(this,activityLayout )
+        initDataBinding()
         setSupportActionBar(toolbar)
         replaceFragment(initialFragment)
         checkItemMenu(initialFragmentItemId)
@@ -53,7 +53,16 @@ abstract class BaseFragmentActivity<DTB : ViewDataBinding>: AppCompatActivity(),
         ft.commit()
     }
 
+    private val fragmentTransaction: FragmentTransaction
+        get() = supportFragmentManager.beginTransaction()
+
     override fun checkItemMenu(itemId: Int) {
         //implements in child
+    }
+
+    private fun initDataBinding(){
+        binding = DataBindingUtil.setContentView<DTB>(this,activityLayout )
+        binding?.setVariable(BR.viewModel, viewModel)
+        //binding?.setLifecycleOwner(this)
     }
 }
