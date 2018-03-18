@@ -1,10 +1,10 @@
 package br.com.disapps.meucartaotransporte.ui.cards
 
 import android.content.Context
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.myCards.MyCardsFragment
 import br.com.disapps.meucartaotransporte.ui.quickFind.QuickFindFragment
 
@@ -15,7 +15,7 @@ class CardsPageAdapter(fm: FragmentManager, var context: Context) : FragmentPage
 
     override fun getCount()= 2
 
-    override fun getItem(position: Int): BaseFragment {
+    override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> MyCardsFragment.newInstance()
             1 -> QuickFindFragment.newInstance()

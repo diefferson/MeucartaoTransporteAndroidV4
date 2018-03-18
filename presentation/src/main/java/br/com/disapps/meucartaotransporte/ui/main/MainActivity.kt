@@ -36,7 +36,7 @@ class MainActivity : BaseFragmentActivity<ActivityMainBinding>(){
     override val toolbar: Toolbar
         get() = vToolbar
 
-    override val initialFragment: BaseFragment
+    override val initialFragment: BaseFragment<*>
         get() = CardsFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {

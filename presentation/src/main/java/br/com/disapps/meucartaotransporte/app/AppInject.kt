@@ -20,6 +20,8 @@ import br.com.disapps.domain.repository.LinesRepository
 import br.com.disapps.meucartaotransporte.executor.UIThread
 import br.com.disapps.meucartaotransporte.ui.allLines.AllLinesViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.CardsViewModel
+import br.com.disapps.meucartaotransporte.ui.favoritesLines.FavoritesLinesFragment
+import br.com.disapps.meucartaotransporte.ui.favoritesLines.FavoritesLinesViewModel
 import br.com.disapps.meucartaotransporte.ui.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
@@ -65,6 +67,7 @@ object AppInject {
         viewModel { ShapesViewModel() }
         viewModel { MyCardsViewModel() }
         viewModel { AllLinesViewModel() }
+        viewModel { FavoritesLinesViewModel() }
     }
 
     private val repositoriesModule: Module = applicationContext {

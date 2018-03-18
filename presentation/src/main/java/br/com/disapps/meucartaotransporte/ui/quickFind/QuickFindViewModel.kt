@@ -12,10 +12,12 @@ class QuickFindViewModel : BaseViewModel(){
 
     val isValidCpf = MutableLiveData<Boolean>().apply { value = true }
     val isValidCode = MutableLiveData<Boolean>().apply { value = true }
+    val error = MutableLiveData<String>()
 
     fun consult(codeCard:String, cpf: String){
         isValidCode.value = true
         isValidCpf.value = true
+        error.value = "error"
 
         if ( codeCard.isEmpty()) {
             isValidCode.value = false
