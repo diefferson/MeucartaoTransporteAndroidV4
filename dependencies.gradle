@@ -12,10 +12,10 @@ ext {
     apiHostDev = "http://meucartaotransporte.com.br/api"
 
     //Android
-    androidBuildToolsVersion = "26.0.2"
+    androidBuildToolsVersion = "27.0.3"
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 26
-    androidCompileSdkVersion = 26
+    androidTargetSdkVersion = 27
+    androidCompileSdkVersion = 27
 
     //Libraries
     koinVersion = "0.9.0"
@@ -32,14 +32,14 @@ ext {
     androidAnnotationsVersion = '21.0.3'
     retrofitVersion = '2.3.0'
     roomVersion = '1.0.0-alpha6'
-    supportLibraryVersion = '26.1.0'
+    supportLibraryVersion = '27.1.0'
     timberVersion = '4.5.1'
     glideVersion = '4.0.0'
     glassfishAnnotationVersion = '10.0-b28'
     constraintVersion= '1.0.2'
     baseRecyclerViewVersion = '2.9.35'
     materialScrollBarVersion = '12.3.5'
-    databindingCompiler = '3.0.0'
+    databindingCompiler = '3.2.0-alpha06'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -68,11 +68,12 @@ ext {
             glide:              "com.github.bumptech.glide:glide:${glideVersion}",
             appCompatV7:        "com.android.support:appcompat-v7:${supportLibraryVersion}",
             supportDesign:      "com.android.support:design:${supportLibraryVersion}",
-            cardView:      "com.android.support:cardview-v7:${supportLibraryVersion}",
+            cardView:           "com.android.support:cardview-v7:${supportLibraryVersion}",
             constraintLayout:   "com.android.support.constraint:constraint-layout:${constraintVersion}",
             baseRecyclerView:   "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
             materialScrollBar:  "com.github.turing-tech:MaterialScrollBar:${materialScrollBarVersion}",
-            databindingCompiler:"com.android.databinding:compiler:${databindingCompiler}"
+            databindingCompiler:"com.android.databinding:compiler:${databindingCompiler}",
+            vectorDrawable:     "com.android.support:support-vector-drawable:${supportLibraryVersion}"
     ]
 
     presentationTestDependencies = [
