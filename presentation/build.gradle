@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
+apply plugin: 'kotlin-android-extensions'
+
 
 def versionMajor = 0
 def versionMinor = 0
@@ -48,10 +49,6 @@ android {
     }
 }
 
-kapt {
-    generateStubs = true
-}
-
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
@@ -65,20 +62,16 @@ dependencies {
     implementation presentationDependencies.supportDesign
     implementation presentationDependencies.constraintLayout
     implementation presentationDependencies.cardView
-    implementation presentationDependencies.timber
     implementation presentationDependencies.glide
     implementation presentationDependencies.koin
     implementation presentationDependencies.rxAndroid
     implementation presentationDependencies.koinArch
-    implementation presentationDependencies.archRuntime
     implementation presentationDependencies.archExtensions
     implementation presentationDependencies.baseRecyclerView
     implementation presentationDependencies.materialScrollBar
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:support-vector-drawable:26.1.0'
-    kapt presentationDependencies.archCompiler
-    kapt presentationDependencies.databindingCompiler
+    implementation presentationDependencies.vectorDrawable
+    //kapt presentationDependencies.dataBindingCompiler
+    //kapt presentationDependencies.archCompiler
 
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit

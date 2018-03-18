@@ -20,7 +20,7 @@ fun String.isCPF(): Boolean{
 
     //## check if is number
     try {
-        val number  = cpfClean.toLong()
+        cpfClean.toLong()
     }catch (e : Exception){
         return false
     }

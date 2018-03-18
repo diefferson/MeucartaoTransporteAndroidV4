@@ -63,6 +63,6 @@ abstract class BaseFragmentActivity<DTB : ViewDataBinding>: AppCompatActivity(),
     private fun initDataBinding(){
         binding = DataBindingUtil.setContentView<DTB>(this,activityLayout )
         binding?.setVariable(BR.viewModel, viewModel)
-        //binding?.setLifecycleOwner(this)
+        binding?.setLifecycleOwner(this)
     }
 }

@@ -30,7 +30,7 @@ abstract class BaseFragment<DTB : ViewDataBinding> : Fragment() {
     private fun initDataBinding(inflater: LayoutInflater, container: ViewGroup?) : View?{
         binding = DataBindingUtil.inflate(inflater, fragmentLayout, container, false)
         binding?.setVariable(BR.viewModel, viewModel)
-       // binding?.setLifecycleOwner(this)
+        binding?.setLifecycleOwner(this)
         return binding?.root
     }
 }

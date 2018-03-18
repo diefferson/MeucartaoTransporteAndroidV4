@@ -21,11 +21,11 @@ class CardsViewModel(var getCardUseCase: GetCard) : BaseViewModel(){
             Log.i(CardsViewModel::class.java.simpleName, "onComplete")
         }
 
-        override fun onError(e: Throwable) {
+        override fun onError(exception: Throwable) {
             Log.i(CardsViewModel::class.java.simpleName, "onError")
         }
 
-        override fun onNext(card: Card) {
+        override fun onNext(t: Card) {
             Log.i(CardsViewModel::class.java.simpleName, "onNext")
         }
     }

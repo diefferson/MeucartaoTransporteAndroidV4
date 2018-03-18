@@ -9,29 +9,29 @@ import br.com.disapps.domain.model.Card
  */
 class CardEntityMapper : Mapper<Cartao, Card>{
 
-    override fun mapFromEntity(cartao: Cartao): Card {
+    override fun mapFromEntity(entity: Cartao): Card {
         return Card(
-            code = cartao.codigo,
-            cpf = cartao.cpf,
-            name = cartao.nome,
-            type = cartao.tipo,
-            status = cartao.estado,
-            balance = cartao.saldo,
-            balanceDate = cartao.dataSaldo,
-            message = cartao.mensagem
+            code = entity.codigo,
+            cpf = entity.cpf,
+            name = entity.nome,
+            type = entity.tipo,
+            status = entity.estado,
+            balance = entity.saldo,
+            balanceDate = entity.dataSaldo,
+            message = entity.mensagem
         )
     }
 
-    override fun mapToEntity(card: Card): Cartao {
+    override fun mapToEntity(data: Card): Cartao {
         val cartao = Cartao()
-        cartao.codigo = card.code
-        cartao.cpf = card.cpf
-        cartao.nome = card.name
-        cartao.tipo = card.type
-        cartao.estado = card.status
-        cartao.saldo = card.balance
-        cartao.dataSaldo = card.balanceDate
-        cartao.mensagem = card.message
+        cartao.codigo = data.code
+        cartao.cpf = data.cpf
+        cartao.nome = data.name
+        cartao.tipo = data.type
+        cartao.estado = data.status
+        cartao.saldo = data.balance
+        cartao.dataSaldo = data.balanceDate
+        cartao.mensagem = data.message
         return cartao
     }
 
