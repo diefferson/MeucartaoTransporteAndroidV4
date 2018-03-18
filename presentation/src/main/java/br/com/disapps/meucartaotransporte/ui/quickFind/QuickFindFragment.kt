@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.quickFind
 
 import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
@@ -25,13 +24,16 @@ class QuickFindFragment: BaseFragment<FragmentQuickFindBinding>(){
     override val fragmentLayout: Int
         get() = R.layout.fragment_quick_find
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btn_quick_find.setOnClickListener { viewModel.consult(card_code.text.toString(),card_cpf.text.toString() ) }
-
+        viewModelObservers()
     }
 
-
+    private fun viewModelObservers() {
+        viewModel.code.observe(this, Observer { viewModel.isValidCode.value = true })
+        viewModel.cpf.observe(this, Observer { viewModel.isValidCpf.value = true })
+    }
 
 }

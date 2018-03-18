@@ -24,12 +24,13 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                >
+                app:error="@{!viewModel.isValidCode ? @string/invalid_code : null}">
 
                 <EditText
                     android:id="@+id/card_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@={viewModel.code}"
                     android:hint="@string/card_code"
                     android:inputType="number" />
 
@@ -42,13 +43,14 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                >
+                app:error="@{!viewModel.isValidCpf ? @string/invalid_cpf : null}">
 
                 <EditText
                     android:id="@+id/card_cpf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:text="@={viewModel.cpf}"
                     android:hint="@string/cpf"
                     android:inputType="number"/>
 
@@ -63,6 +65,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/normalButton"
                 android:text="@string/consult"
+                android:onClick="@{viewModel::consult}"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
