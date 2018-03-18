@@ -74,5 +74,5 @@ dependencies {
     testImplementation dataTestDependencies.assertj
     testImplementation dataTestDependencies.robolectric
 
-    compile project(':domain')
+    implementation project(':domain')
 }
