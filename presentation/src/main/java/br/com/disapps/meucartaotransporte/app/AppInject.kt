@@ -15,6 +15,8 @@ import br.com.disapps.data.repository.dataSource.cards.CardsDataSourceFactory
 import br.com.disapps.data.repository.dataSource.lines.LinesDataSourceFactory
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.cards.GetCard
+import br.com.disapps.domain.interactor.cards.GetCards
+import br.com.disapps.domain.interactor.cards.SaveCard
 import br.com.disapps.domain.repository.CardsRepository
 import br.com.disapps.domain.repository.LinesRepository
 import br.com.disapps.meucartaotransporte.executor.UIThread
@@ -33,6 +35,7 @@ import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
+import java.sql.Savepoint
 
 /**
  * Created by dnso on 08/03/2018.
@@ -77,6 +80,8 @@ object AppInject {
 
     private val useCaseModule: Module = applicationContext {
         factory { GetCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetCards( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { SaveCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val mappersModule: Module = applicationContext {

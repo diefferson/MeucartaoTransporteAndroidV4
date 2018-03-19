@@ -26,8 +26,8 @@ fun String.isCPF(): Boolean{
     }
 
     //continue
-    var dvCurrent10 = cpfClean.substring(9,10).toInt()
-    var dvCurrent11= cpfClean.substring(10,11).toInt()
+    val dvCurrent10 = cpfClean.substring(9,10).toInt()
+    val dvCurrent11= cpfClean.substring(10,11).toInt()
 
     //the sum of the nine first digits determines the tenth digit
     val cpfNineFirst = IntArray(9)
@@ -37,7 +37,7 @@ fun String.isCPF(): Boolean{
         i--
     }
     //multiple the nine digits for your weights: 10,9..2
-    var sumProductNine = IntArray(9)
+    val sumProductNine = IntArray(9)
     var weight = 10
     var position = 0
     while (weight >= 2){
@@ -54,10 +54,10 @@ fun String.isCPF(): Boolean{
         return false
 
     //### verify tenth digit
-    var cpfTenFirst = cpfNineFirst.copyOf(10)
+    val cpfTenFirst = cpfNineFirst.copyOf(10)
     cpfTenFirst[9] = dvCurrent10
     //multiple the nine digits for your weights: 10,9..2
-    var sumProductTen = IntArray(10)
+    val sumProductTen = IntArray(10)
     var w = 11
     var p = 0
     while (w >= 2){

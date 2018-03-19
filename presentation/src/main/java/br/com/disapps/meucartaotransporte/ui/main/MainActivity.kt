@@ -2,21 +2,15 @@ package br.com.disapps.meucartaotransporte.ui.main
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
-import android.view.MenuItem
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.databinding.ActivityMainBinding
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
-import br.com.disapps.meucartaotransporte.ui.itineraries.ItineariesFragment
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
-import br.com.disapps.meucartaotransporte.ui.shapes.ShapesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar.*
