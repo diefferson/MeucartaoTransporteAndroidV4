@@ -6,7 +6,6 @@ import android.view.MenuInflater
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.app.App
-import br.com.disapps.meucartaotransporte.databinding.FragmentLinesBinding
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import kotlinx.android.synthetic.main.fragment_cards.*
 import org.koin.android.architecture.ext.getViewModel
@@ -14,7 +13,7 @@ import org.koin.android.architecture.ext.getViewModel
 /**
  * Created by dnso on 12/03/2018.
  */
-class LinesFragment : BaseFragment<FragmentLinesBinding>() {
+class LinesFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = LinesFragment()

@@ -29,7 +29,7 @@ class CardsDataRepository( private var cardsDataSourceFactory: CardsDataSourceFa
 
     override fun card(card: Card): Observable<Card> {
         return cardsDataSourceFactory
-                .create()
+                .create(true)
                 .card(cardRequestMapper.mapToEntity(card))
                 .map(cardEntityMapper::mapFromEntity)
     }

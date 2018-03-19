@@ -32,7 +32,7 @@ interface RestApi {
 
     @FormUrlEncoded
     @POST("cartao")
-    fun saldoCartao(@QueryMap requestCartao: RequestCartao): Observable<RetornoCartao>
+    fun saldoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Observable<RetornoCartao>
 
     @FormUrlEncoded
     @POST("cartao")

@@ -10,6 +10,10 @@ import br.com.disapps.data.storage.database.Database
 class CardsDataSourceFactory(private var database: Database,private var restApi: RestApi) : DataSourceFactory {
 
     override fun create(useCloud: Boolean): CardsDataSource {
-        return LocalCardsDataSource(database)
+        return if(useCloud){
+            CloudCardsDataSource(restApi)
+        }else{
+            LocalCardsDataSource(database)
+        }
     }
 }

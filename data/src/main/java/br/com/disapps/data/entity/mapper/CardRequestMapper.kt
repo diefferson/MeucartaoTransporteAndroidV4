@@ -12,6 +12,7 @@ class CardRequestMapper : Mapper<RequestCartao, Card>{
         val request = RequestCartao()
         request.codigo = data.code
         request.cpf = data.cpf
+        request.tipoConsulta= "saldo"
         return request
     }
 

@@ -65,7 +65,7 @@ object AppInject {
         viewModel { ItinerariesViewModel() }
         viewModel { LinesViewModel() }
         viewModel { MainViewModel() }
-        viewModel { QuickFindViewModel() }
+        viewModel { QuickFindViewModel(getCardUseCase = get()) }
         viewModel { SettingsViewModel() }
         viewModel { ShapesViewModel() }
         viewModel { MyCardsViewModel() }

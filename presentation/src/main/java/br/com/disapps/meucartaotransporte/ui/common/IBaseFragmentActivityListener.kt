@@ -17,4 +17,8 @@ interface IBaseFragmentActivityListener {
 
     fun checkItemMenu(itemId: Int)
 
+    fun showLoading()
+
+    fun dismissLoading()
+
 }

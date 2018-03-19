@@ -19,6 +19,6 @@ class CloudCardsDataSource(private var restApi: RestApi) : CardsDataSource{
     }
 
     override fun card(requestCartao: RequestCartao): Observable<Cartao> {
-        return restApi.saldoCartao(requestCartao).map { t -> t.content }
+        return restApi.saldoCartao(requestCartao.codigo, requestCartao.cpf, requestCartao.tipoConsulta).map { t -> t.content }
     }
 }

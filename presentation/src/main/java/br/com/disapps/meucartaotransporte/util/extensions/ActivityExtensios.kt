@@ -1,6 +1,7 @@
 package br.com.disapps.meucartaotransporte.util.extensions
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -9,7 +10,13 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.Toast
+import br.com.disapps.meucartaotransporte.R
+import android.widget.RelativeLayout.CENTER_IN_PARENT
+import kotlinx.android.synthetic.main.include_container.*
+
 
 fun Activity.toast(message : String){
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()

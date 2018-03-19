@@ -5,7 +5,6 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.Toolbar
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.databinding.ActivityMainBinding
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
@@ -16,7 +15,7 @@ import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.architecture.ext.getViewModel
 
-class MainActivity : BaseFragmentActivity<ActivityMainBinding>(){
+class MainActivity : BaseFragmentActivity(){
 
     override val viewModel : MainViewModel
         get() = getViewModel()
@@ -30,7 +29,7 @@ class MainActivity : BaseFragmentActivity<ActivityMainBinding>(){
     override val toolbar: Toolbar
         get() = vToolbar
 
-    override val initialFragment: BaseFragment<*>
+    override val initialFragment: BaseFragment
         get() = CardsFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
