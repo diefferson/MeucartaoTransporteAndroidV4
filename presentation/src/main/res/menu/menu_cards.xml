@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.com.disapps.meucartaotransporte.activity.CartoesActivity">
 
-    <item android:id="@+id/action_add_cartao"
+    <item android:id="@+id/action_add_card"
         android:icon="@drawable/plus"
         android:title="@string/action_add_card"
         app:showAsAction="ifRoom"

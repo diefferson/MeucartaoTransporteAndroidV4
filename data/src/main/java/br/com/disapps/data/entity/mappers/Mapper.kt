@@ -1,4 +1,4 @@
-package br.com.disapps.data.entity.mapper
+package br.com.disapps.data.entity.mappers
 
 /**
  * Created by dnso on 15/03/2018.

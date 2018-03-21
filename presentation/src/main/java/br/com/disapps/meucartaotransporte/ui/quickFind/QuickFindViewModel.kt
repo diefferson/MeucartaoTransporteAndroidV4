@@ -15,14 +15,15 @@ import br.com.disapps.meucartaotransporte.util.extensions.isCPF
 /**
  * Created by dnso on 12/03/2018.
  */
-class QuickFindViewModel(var getCardUseCase: GetCard) : BaseViewModel(){
+class QuickFindViewModel : BaseViewModel(){
 
     val isValidCpf = MutableLiveData<Boolean>().apply { value = true }
     val isValidCode = MutableLiveData<Boolean>().apply { value = true }
+    val isSuccess = MutableLiveData<Boolean>()
     val cpf = MutableLiveData<String>()
     val code = MutableLiveData<String>()
 
-    fun consult(view : View){
+    fun consult(){
 
         var valid = true
 
@@ -40,31 +41,7 @@ class QuickFindViewModel(var getCardUseCase: GetCard) : BaseViewModel(){
         }
 
         if(valid){
-           getCard()
-        }
-
-    }
-
-    private fun getCard(){
-        loadingEvent.value = true
-        getCardUseCase.execute(GetCardObservable(), GetCard.Params.forCard(Card(code = code.value!!, cpf = cpf.value!!)))
-    }
-
-    private inner class GetCardObservable : DefaultObserver<Card>() {
-
-        override fun onComplete() {
-            loadingEvent.value = false
-            Log.i(CardsViewModel::class.java.simpleName, "onComplete")
-        }
-
-        override fun onError(exception: Throwable) {
-            loadingEvent.value = false
-            Log.i(CardsViewModel::class.java.simpleName, "onError")
-        }
-
-        override fun onNext(t: Card) {
-            loadingEvent.value = false
-            Log.i(CardsViewModel::class.java.simpleName, "onNext")
+            isSuccess.value = true
         }
     }
 }

@@ -2,9 +2,9 @@ package br.com.disapps.meucartaotransporte.app
 
 import android.content.Context
 import br.com.disapps.data.api.RestClient
-import br.com.disapps.data.entity.mapper.CardEntityMapper
-import br.com.disapps.data.entity.mapper.CardRequestMapper
-import br.com.disapps.data.entity.mapper.LineEntityMapper
+import br.com.disapps.data.entity.mappers.CardEntityMapper
+import br.com.disapps.data.entity.mappers.CardRequestMapper
+import br.com.disapps.data.entity.mappers.LineEntityMapper
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.database.RealmDatabase
 import br.com.disapps.data.executor.JobExecutor
@@ -21,21 +21,21 @@ import br.com.disapps.domain.repository.CardsRepository
 import br.com.disapps.domain.repository.LinesRepository
 import br.com.disapps.meucartaotransporte.executor.UIThread
 import br.com.disapps.meucartaotransporte.ui.allLines.AllLinesViewModel
+import br.com.disapps.meucartaotransporte.ui.balance.BalanceViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.CardsViewModel
-import br.com.disapps.meucartaotransporte.ui.favoritesLines.FavoritesLinesFragment
 import br.com.disapps.meucartaotransporte.ui.favoritesLines.FavoritesLinesViewModel
 import br.com.disapps.meucartaotransporte.ui.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.myCards.MyCardsViewModel
 import br.com.disapps.meucartaotransporte.ui.quickFind.QuickFindViewModel
+import br.com.disapps.meucartaotransporte.ui.registerCard.RegisterCardViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.shapes.ShapesViewModel
 import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
-import java.sql.Savepoint
 
 /**
  * Created by dnso on 08/03/2018.
@@ -65,12 +65,14 @@ object AppInject {
         viewModel { ItinerariesViewModel() }
         viewModel { LinesViewModel() }
         viewModel { MainViewModel() }
-        viewModel { QuickFindViewModel(getCardUseCase = get()) }
+        viewModel { QuickFindViewModel() }
         viewModel { SettingsViewModel() }
         viewModel { ShapesViewModel() }
         viewModel { MyCardsViewModel() }
         viewModel { AllLinesViewModel() }
         viewModel { FavoritesLinesViewModel() }
+        viewModel { BalanceViewModel(getCardUseCase = get()) }
+        viewModel { RegisterCardViewModel() }
     }
 
     private val repositoriesModule: Module = applicationContext {

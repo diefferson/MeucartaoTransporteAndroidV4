@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: "kotlin-kapt"
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt'
 
 def versionMajor = 0
 def versionMinor = 0
@@ -70,8 +69,8 @@ dependencies {
     implementation presentationDependencies.baseRecyclerView
     implementation presentationDependencies.materialScrollBar
     implementation presentationDependencies.vectorDrawable
-    //kapt presentationDependencies.dataBindingCompiler
-    //kapt presentationDependencies.archCompiler
+    kapt presentationDependencies.dataBindingCompiler
+    kapt presentationDependencies.archCompiler
 
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit

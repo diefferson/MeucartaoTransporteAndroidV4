@@ -28,13 +28,13 @@ class LinesFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
         view_pager.adapter = LinesPageAdapter(childFragmentManager, context!!)
         tabs.setupWithViewPager(view_pager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.menu_linhas, menu)
+        inflater!!.inflate(R.menu.menu_lines, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 }

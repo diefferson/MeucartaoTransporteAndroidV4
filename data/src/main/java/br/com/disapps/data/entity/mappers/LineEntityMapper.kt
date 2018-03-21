@@ -1,4 +1,4 @@
-package br.com.disapps.data.entity.mapper
+package br.com.disapps.data.entity.mappers
 
 import br.com.disapps.data.entity.Linha
 import br.com.disapps.domain.model.Line

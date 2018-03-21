@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.graphics.Color"/>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="br.com.disapps.meucartaotransporte.ui.balance.BalanceViewModel"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="3dp"
+            android:visibility="@{viewModel.card == null ? View.GONE : View.VISIBLE}"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="10dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/card_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="30dp"
+                        android:paddingLeft="30dp"
+                        android:text="@{@string/card_state(viewModel.card.status)}"
+                        tools:text="Status: Ativo"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/card_type"
+                        app:layout_constraintBottom_toTopOf="@id/title_balance"/>
+
+                    <TextView
+                        android:id="@+id/card_type"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:paddingRight="30dp"
+                        android:paddingLeft="30dp"
+                        android:text="@{@string/card_type(viewModel.card.type)}"
+                        tools:text="Tipo: Usuário"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/card_status"
+                        app:layout_constraintBottom_toTopOf="@id/title_balance"/>
+
+
+                    <TextView
+                        android:id="@+id/title_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/balance"
+                        tools:text="Saldo"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/card_type"
+                        app:layout_constraintBottom_toTopOf="@id/card_balance"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/card_balance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text='@{@string/card_balance_value(String.format("%.2f",viewModel.card.balance))}'
+                        android:textColor="@{viewModel.card.balance>15? Color.GREEN : Color.RED}"
+                        tools:text='59,00'
+                        android:gravity="center"
+                        android:textSize="50sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/title_balance"
+                        app:layout_constraintBottom_toTopOf="@id/card_balance_date"/>
+
+                    <TextView
+                        android:id="@+id/card_balance_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{@string/card_updated(viewModel.card.balanceDate)}"
+                        tools:text="Status: Ativo"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/card_balance"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/update_message"/>
+
+                    <TextView
+                        android:id="@+id/update_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/update_message"
+                        android:textSize="15sp"
+                        app:layout_constraintTop_toBottomOf="@id/card_balance_date"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </ScrollView>
+
+</layout>

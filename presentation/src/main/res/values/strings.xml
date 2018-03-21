@@ -50,8 +50,12 @@
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
     <string name="type">Tipo</string>
+    <string name="card_type">Tipo: %1$s</string>
+    <string name="card_balance_value">R$: %1$s</string>
     <string name="state">Estado</string>
-    <string name="updated">Atualizado em: </string>
+    <string name="card_state">Estado: %1$s</string>
+    <string name="updated">Atualizado em</string>
+    <string name="card_updated">Atualizado em: %1$s </string>
     <string name="rate_app">Avaliar App </string>
 
     <!-- BUTTONS-->

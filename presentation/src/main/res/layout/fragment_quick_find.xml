@@ -65,7 +65,6 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/normalButton"
                 android:text="@string/consult"
-                android:onClick="@{viewModel::consult}"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

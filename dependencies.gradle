@@ -38,7 +38,7 @@ ext {
     constraintVersion= '1.0.2'
     baseRecyclerViewVersion = '2.9.35'
     materialScrollBarVersion = '12.3.5'
-    databindingCompiler = '3.1.0-rc01'
+    databindingCompiler = '3.1.0-rc03'
 
     //Testing
     robolectricVersion = '3.4.2'

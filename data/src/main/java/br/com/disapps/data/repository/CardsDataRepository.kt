@@ -1,7 +1,7 @@
 package br.com.disapps.data.repository
 
-import br.com.disapps.data.entity.mapper.CardEntityMapper
-import br.com.disapps.data.entity.mapper.CardRequestMapper
+import br.com.disapps.data.entity.mappers.CardEntityMapper
+import br.com.disapps.data.entity.mappers.CardRequestMapper
 import br.com.disapps.data.repository.dataSource.cards.CardsDataSourceFactory
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.repository.CardsRepository

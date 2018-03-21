@@ -1,6 +1,6 @@
 package br.com.disapps.data.repository
 
-import br.com.disapps.data.entity.mapper.LineEntityMapper
+import br.com.disapps.data.entity.mappers.LineEntityMapper
 import br.com.disapps.data.repository.dataSource.lines.LinesDataSourceFactory
 import br.com.disapps.domain.model.Line
 import br.com.disapps.domain.repository.LinesRepository

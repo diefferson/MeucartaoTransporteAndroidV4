@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
 
@@ -22,6 +23,18 @@ abstract class BaseActivity: AppCompatActivity(){
         super.onCreate(savedInstanceState)
         initDataBinding()
         setupLoading()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initDataBinding(){

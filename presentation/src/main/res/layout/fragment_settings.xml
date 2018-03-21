@@ -61,6 +61,28 @@
                     android:text="@string/data_usage"
                     style="@style/AppTheme.SettingsItem"/>
 
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/divider"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/remove_ads"
+                    style="@style/AppTheme.SettingsItem"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/divider"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/share"
+                    style="@style/AppTheme.SettingsItem"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
