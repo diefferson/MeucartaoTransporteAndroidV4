@@ -49,4 +49,10 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="AppTheme.InputLayout">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
 </resources>

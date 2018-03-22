@@ -37,6 +37,6 @@ interface LinesRepository{
      *
      * @param code The code of line used to retrieve line data.
      */
-    fun line() : Observable<Line>
+    fun line(line: Line) : Observable<Line>
 
 }

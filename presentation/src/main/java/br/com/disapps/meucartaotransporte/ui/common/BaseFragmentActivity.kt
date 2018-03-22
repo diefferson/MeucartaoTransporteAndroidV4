@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BR
+import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
+import br.com.disapps.meucartaotransporte.util.extensions.toast
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -34,6 +36,7 @@ abstract class BaseFragmentActivity: AppCompatActivity(), IBaseFragmentActivityL
         replaceFragment(initialFragment)
         checkItemMenu(initialFragmentItemId)
         setupLoading()
+        setupError()
     }
 
     override fun setTitle(title: String) {
@@ -79,6 +82,16 @@ abstract class BaseFragmentActivity: AppCompatActivity(), IBaseFragmentActivityL
                    loading.dismiss()
                }
            }
+        })
+    }
+
+    private fun setupError(){
+        viewModel.getErrorObservable().observe(this, Observer {
+            if(it != null){
+                toast(it.message)
+            }else{
+                toast(getString(R.string.unknow_error))
+            }
         })
     }
 

@@ -86,6 +86,6 @@ fun String.clean() : String {
         finalString += mat.group()
     }
 
-    return finalString
+    return finalString.trim()
 
 }

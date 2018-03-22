@@ -7,7 +7,7 @@ import br.com.disapps.domain.model.Card
 /**
  * Created by dnso on 15/03/2018.
  */
-class CardEntityMapper : Mapper<Cartao, Card>{
+object CardEntityMapper : Mapper<Cartao, Card>{
 
     override fun mapFromEntity(entity: Cartao): Card {
         return Card(

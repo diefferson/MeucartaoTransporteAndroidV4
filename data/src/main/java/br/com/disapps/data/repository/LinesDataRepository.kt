@@ -9,12 +9,12 @@ import io.reactivex.Observable
 /**
  * Created by dnso on 15/03/2018.
  */
-class LinesDataRepository(private var linesDataSourceFactory: LinesDataSourceFactory, private var lineEntityMapper: LineEntityMapper) : LinesRepository{
+class LinesDataRepository(private var linesDataSourceFactory: LinesDataSourceFactory) : LinesRepository{
 
     override fun saveLine(line: Line) {
         linesDataSourceFactory
                 .create()
-                .saveLine(lineEntityMapper.mapToEntity(line))
+                .saveLine(LineEntityMapper.mapToEntity(line))
     }
 
     override fun saveAllFromJson(json: String) {
@@ -27,14 +27,14 @@ class LinesDataRepository(private var linesDataSourceFactory: LinesDataSourceFac
         return linesDataSourceFactory
                 .create()
                 .lines()
-                .map(lineEntityMapper::mapFromEntity)
+                .map(LineEntityMapper::mapFromEntity)
     }
 
-    override fun line(): Observable<Line> {
+    override fun line(line : Line): Observable<Line> {
         return linesDataSourceFactory
                 .create()
-                .line()
-                .map(lineEntityMapper::mapFromEntity)
+                .line(LineEntityMapper.mapToEntity(line))
+                .map(LineEntityMapper::mapFromEntity)
     }
 
     override fun jsonLines(): Observable<String> {

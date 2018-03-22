@@ -6,7 +6,7 @@ import br.com.disapps.domain.model.Line
 /**
  * Created by dnso on 16/03/2018.
  */
-class LineEntityMapper : Mapper<Linha, Line>{
+object LineEntityMapper : Mapper<Linha, Line>{
 
     override fun mapToEntity(data: Line): Linha {
         val entity = Linha()

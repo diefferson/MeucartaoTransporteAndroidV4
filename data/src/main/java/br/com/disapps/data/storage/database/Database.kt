@@ -7,5 +7,6 @@ interface Database {
 
     fun initDatabase()
     fun getDatabase() : Any
+    fun closeDataBase()
 
 }

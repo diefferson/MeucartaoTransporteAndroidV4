@@ -10,27 +10,37 @@ import io.reactivex.Observable
 /**
  * Created by dnso on 15/03/2018.
  */
-class CardsDataRepository( private var cardsDataSourceFactory: CardsDataSourceFactory,
-                          private var cardEntityMapper: CardEntityMapper,
-                          private var cardRequestMapper: CardRequestMapper) : CardsRepository {
+class CardsDataRepository( private var cardsDataSourceFactory: CardsDataSourceFactory) : CardsRepository {
 
-    override fun saveCard(card: Card) {
-        cardsDataSourceFactory
+    override fun saveCard(card: Card): Observable<Boolean> {
+        return cardsDataSourceFactory
                 .create()
-                .saveCard(cardEntityMapper.mapToEntity(card))
+                .saveCard(CardEntityMapper.mapToEntity(card))
     }
 
     override fun cards(): Observable<List<Card>> {
         return cardsDataSourceFactory
                 .create()
                 .cards()
-                .map(cardEntityMapper::mapFromEntity)
+                .map(CardEntityMapper::mapFromEntity)
     }
 
-    override fun card(card: Card): Observable<Card> {
+    override fun card(card: Card): Observable<Card?> {
         return cardsDataSourceFactory
                 .create(true)
-                .card(cardRequestMapper.mapToEntity(card))
-                .map(cardEntityMapper::mapFromEntity)
+                .card(CardRequestMapper.mapToEntity(card))
+                .map(CardEntityMapper::mapFromEntity)
+    }
+
+    override fun hasCard(card: Card): Observable<Boolean> {
+        return cardsDataSourceFactory
+                .create()
+                .hasCard(CardEntityMapper.mapToEntity(card))
+    }
+
+    override fun deleteCard(card: Card): Observable<Boolean> {
+        return cardsDataSourceFactory
+                .create()
+                .deleteCard(CardEntityMapper.mapToEntity(card))
     }
 }

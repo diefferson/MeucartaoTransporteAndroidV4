@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
+import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.util.extensions.toast
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -33,6 +35,7 @@ abstract class BaseFragment : Fragment() {
         binding?.setVariable(BR.viewModel, viewModel)
         binding?.setLifecycleOwner(this)
         setupLoading()
+        setupError()
         return binding?.root
     }
 
@@ -44,6 +47,16 @@ abstract class BaseFragment : Fragment() {
                 }else{
                     iAppActivityListener.dismissLoading()
                 }
+            }
+        })
+    }
+
+    private fun setupError(){
+        viewModel.getErrorObservable().observe(this, Observer {
+            if(it != null){
+                activity?.toast(it.message)
+            }else{
+                activity?.toast(getString(R.string.unknow_error))
             }
         })
     }

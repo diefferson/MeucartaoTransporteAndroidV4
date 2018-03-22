@@ -1,5 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.settings
 
+import android.os.Bundle
+import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import org.koin.android.architecture.ext.getViewModel
@@ -18,4 +20,9 @@ class SettingsFragment : BaseFragment(){
 
     override val fragmentLayout: Int
         get() = R.layout.fragment_settings
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        iAppActivityListener.setTitle(getString(R.string.settings))
+    }
 }

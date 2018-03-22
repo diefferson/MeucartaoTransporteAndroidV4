@@ -22,7 +22,11 @@ class RealmDatabase(var context: Context) : Database{
 
     }
 
-    override fun getDatabase() : Realm {
+    override fun getDatabase(): Any {
         return Realm.getDefaultInstance()
+    }
+
+    override fun closeDataBase() {
+
     }
 }

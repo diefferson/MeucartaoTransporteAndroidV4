@@ -14,9 +14,7 @@ import br.com.disapps.data.repository.LinesDataRepository
 import br.com.disapps.data.repository.dataSource.cards.CardsDataSourceFactory
 import br.com.disapps.data.repository.dataSource.lines.LinesDataSourceFactory
 import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.cards.GetCard
-import br.com.disapps.domain.interactor.cards.GetCards
-import br.com.disapps.domain.interactor.cards.SaveCard
+import br.com.disapps.domain.interactor.cards.*
 import br.com.disapps.domain.repository.CardsRepository
 import br.com.disapps.domain.repository.LinesRepository
 import br.com.disapps.meucartaotransporte.executor.UIThread
@@ -47,7 +45,6 @@ object AppInject {
             viewModelModule,
             repositoriesModule,
             useCaseModule,
-            mappersModule,
             dataSourceFactoryModule
     )
 
@@ -68,28 +65,24 @@ object AppInject {
         viewModel { QuickFindViewModel() }
         viewModel { SettingsViewModel() }
         viewModel { ShapesViewModel() }
-        viewModel { MyCardsViewModel() }
+        viewModel { MyCardsViewModel(getCardsUseCase = get(), deleteCardUseCase = get()) }
         viewModel { AllLinesViewModel() }
         viewModel { FavoritesLinesViewModel() }
         viewModel { BalanceViewModel(getCardUseCase = get()) }
-        viewModel { RegisterCardViewModel() }
+        viewModel { RegisterCardViewModel(hasCardUseCase = get(), saveCardUseCase = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {
-        bean { CardsDataRepository( cardsDataSourceFactory = get(), cardEntityMapper = get(), cardRequestMapper = get()) as CardsRepository }
-        bean { LinesDataRepository( linesDataSourceFactory = get(), lineEntityMapper = get()) as LinesRepository }
+        bean { CardsDataRepository( cardsDataSourceFactory = get()) as CardsRepository }
+        bean { LinesDataRepository( linesDataSourceFactory = get()) as LinesRepository }
     }
 
     private val useCaseModule: Module = applicationContext {
         factory { GetCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetCards( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-    }
-
-    private val mappersModule: Module = applicationContext {
-        bean { CardEntityMapper() }
-        bean { CardRequestMapper() }
-        bean { LineEntityMapper() }
+        factory { DeleteCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { HasCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val dataSourceFactoryModule : Module = applicationContext {

@@ -154,5 +154,6 @@
     <string name="balance">Saldo</string>
     <string name="extract">Extrato</string>
     <string name="consult">Consultar</string>
+    <string name="unknow_error">Algo deu errado</string>
 
 </resources>

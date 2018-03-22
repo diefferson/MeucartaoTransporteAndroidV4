@@ -13,7 +13,14 @@ interface CardsRepository{
      *
      * @param {@link Card} Card object to save on storage.
      */
-    fun saveCard(card : Card)
+    fun saveCard(card : Card) : Observable<Boolean>
+
+    /**
+     * Save an {@link Card} in storage
+     *
+     * @param {@link Card} Card object to save on storage.
+     */
+    fun deleteCard(card : Card) : Observable<Boolean>
 
     /**
      * Get an {@link Observable} which will emit a List of {@link Card}.
@@ -25,6 +32,13 @@ interface CardsRepository{
      *
      * @param code The code of card used to retrieve card data.
      */
-    fun card(card : Card) : Observable<Card>
+    fun card(card : Card) : Observable<Card?>
+
+    /**
+     * Get an {@link Observable} which will emit a {@link Card}.
+     *
+     * @param code The code of card used to retrieve card data.
+     */
+    fun hasCard(card : Card) : Observable<Boolean>
 
 }

@@ -10,19 +10,19 @@ import io.reactivex.Observable
 class CloudLinesDataSource(private var restApi: RestApi) : LinesDataSource{
 
     override fun saveLine(linha: Linha) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented, local only")
     }
 
     override fun saveAllFromJson(json: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented, local only")
     }
 
     override fun lines(): Observable<List<Linha>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.0
+        TODO("not implemented, local only")
     }
 
-    override fun line(): Observable<Linha> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun line(linha: Linha): Observable<Linha> {
+        TODO("not implemented, local only")
     }
 
     override fun jsonLines(): Observable<String> {

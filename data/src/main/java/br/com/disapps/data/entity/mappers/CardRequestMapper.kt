@@ -6,7 +6,7 @@ import br.com.disapps.domain.model.Card
 /**
  * Created by dnso on 16/03/2018.
  */
-class CardRequestMapper : Mapper<RequestCartao, Card>{
+object CardRequestMapper : Mapper<RequestCartao, Card>{
 
     override fun mapToEntity(data: Card): RequestCartao {
         val request = RequestCartao()

@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import br.com.disapps.meucartaotransporte.BR
+import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
+import br.com.disapps.meucartaotransporte.util.extensions.toast
 
 /**
  * Created by diefferson on 09/03/2018.
@@ -23,6 +25,7 @@ abstract class BaseActivity: AppCompatActivity(){
         super.onCreate(savedInstanceState)
         initDataBinding()
         setupLoading()
+        setupError()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -51,6 +54,16 @@ abstract class BaseActivity: AppCompatActivity(){
                 }else{
                     loading.dismiss()
                 }
+            }
+        })
+    }
+
+    private fun setupError(){
+        viewModel.getErrorObservable().observe(this, Observer {
+            if(it != null){
+                toast(it.message)
+            }else{
+                toast(getString(R.string.unknow_error))
             }
         })
     }

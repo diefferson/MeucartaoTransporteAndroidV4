@@ -13,9 +13,9 @@ import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
  */
 class GetCard(var cardRepository: CardsRepository,
               var threadExecutor: ThreadExecutor,
-              var postExecutionThread: PostExecutionThread) : UseCase<Card, GetCard.Params >(threadExecutor, postExecutionThread) {
+              var postExecutionThread: PostExecutionThread) : UseCase<Card?, GetCard.Params >(threadExecutor, postExecutionThread) {
 
-    override fun buildUseCaseObservable(params: Params ): Observable<Card> {
+    override fun buildUseCaseObservable(params: Params ): Observable<Card?> {
         Preconditions.checkNotNull(params)
         return this.cardRepository.card(params.card)
     }

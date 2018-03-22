@@ -21,9 +21,7 @@
                 android:id="@+id/card_code_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                style="@style/AppTheme.InputLayout"
                 app:error="@{!viewModel.isValidCode ? @string/invalid_code : null}">
 
                 <EditText
@@ -40,9 +38,7 @@
                 android:id="@+id/card_cpf_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                style="@style/AppTheme.InputLayout"
                 app:error="@{!viewModel.isValidCpf ? @string/invalid_cpf : null}">
 
                 <EditText
@@ -60,9 +56,7 @@
                 android:id="@+id/btn_quick_find"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                style="@style/AppTheme.InputLayout"
                 android:background="@color/normalButton"
                 android:text="@string/consult"
                 android:textColor="@android:color/white" />

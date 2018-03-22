@@ -10,15 +10,23 @@ import io.reactivex.Observable
  */
 class CloudCardsDataSource(private var restApi: RestApi) : CardsDataSource{
 
-    override fun saveCard(cartao: Cartao) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun saveCard(cartao: Cartao): Observable<Boolean> {
+        TODO("not implemented, only local")
     }
 
     override fun cards(): Observable<List<Cartao>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented, only local")
     }
 
-    override fun card(requestCartao: RequestCartao): Observable<Cartao> {
+    override fun card(requestCartao: RequestCartao): Observable<Cartao?> {
         return restApi.saldoCartao(requestCartao.codigo, requestCartao.cpf, requestCartao.tipoConsulta).map { t -> t.content }
+    }
+
+    override fun hasCard(cartao: Cartao): Observable<Boolean> {
+        TODO("not implemented, only local")
+    }
+
+    override fun deleteCard(cartao: Cartao): Observable<Boolean> {
+        TODO("not implemented, only local")
     }
 }

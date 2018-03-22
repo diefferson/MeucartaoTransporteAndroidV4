@@ -16,6 +16,10 @@ import android.widget.Toast
 import br.com.disapps.meucartaotransporte.R
 import android.widget.RelativeLayout.CENTER_IN_PARENT
 import kotlinx.android.synthetic.main.include_container.*
+import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
+import android.support.design.widget.Snackbar
+
+
 
 
 fun Activity.toast(message : String){

@@ -3,29 +3,36 @@ package br.com.disapps.data.repository.dataSource.lines
 import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.storage.database.Database
 import io.reactivex.Observable
+import io.realm.Realm
 
 /**
  * Created by dnso on 15/03/2018.
  */
 class LocalLinesDataSource(private var database: Database): LinesDataSource{
 
+    val realm : Realm by lazy { database.getDatabase() as Realm }
+
     override fun saveLine(linha: Linha) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        realm.beginTransaction()
+        realm.copyToRealmOrUpdate(linha)
+        realm.commitTransaction()
     }
 
     override fun saveAllFromJson(json: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        realm.beginTransaction()
+        realm.createOrUpdateAllFromJson(Linha::class.java, json)
+        realm.commitTransaction()
     }
 
     override fun lines(): Observable<List<Linha>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Observable.just(realm.where(Linha::class.java).findAll().toList())
     }
 
-    override fun line(): Observable<Linha> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun line(linha: Linha): Observable<Linha> {
+        return Observable.just(realm.where(Linha::class.java).equalTo("codigo", linha.codigo).findFirst())
     }
 
     override fun jsonLines(): Observable<String> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented, cloud only")
     }
 }

@@ -8,7 +8,7 @@ import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.model.mappers.CardVOMapper
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
-class BalanceViewModel(var getCardUseCase: GetCard) : BaseViewModel(){
+class BalanceViewModel(val getCardUseCase: GetCard) : BaseViewModel(){
 
     private var isRequested  = false
     val isSuccess = MutableLiveData<Boolean>()
@@ -22,17 +22,18 @@ class BalanceViewModel(var getCardUseCase: GetCard) : BaseViewModel(){
         }
     }
 
-    private inner class GetCardObservable : DefaultObserver<Card>() {
+    private inner class GetCardObservable : DefaultObserver<Card?>() {
 
         override fun onError(exception: Throwable) {
             loadingEvent.value = false
             isSuccess.value = false
         }
 
-        override fun onNext(t: Card) {
+        override fun onNext(t: Card?) {
             loadingEvent.value = false
             isSuccess.value = true
-            card.value = CardVOMapper.mapToView(t)
+            if(t!= null)
+                card.value = CardVOMapper.mapToView(t)
         }
     }
 }
