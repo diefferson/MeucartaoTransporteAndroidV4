@@ -50,6 +50,11 @@ android {
         disable 'IconDensities'             //For testing purpose. This is safe to remove.
         disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
     }
+
+    sourceSets {
+        main { java.srcDirs = ['src/main/java', 'src/main/kotlin'] }
+        test.java.srcDirs += 'src/test/kotlin'
+    }
 }
 
 

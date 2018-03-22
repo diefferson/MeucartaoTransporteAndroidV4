@@ -5,18 +5,18 @@
     <data>
         <variable
             name="viewModel"
-            type="br.com.disapps.meucartaotransporte.ui.myCards.MyCardsViewModel"/>
+            type="br.com.disapps.meucartaotransporte.ui.extract.ExtractViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
-         android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/cards_recycler"
+            android:id="@+id/extract_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_card"
+            tools:listitem="@layout/item_extract"
             tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
     </android.support.constraint.ConstraintLayout>

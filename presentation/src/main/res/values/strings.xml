@@ -155,5 +155,9 @@
     <string name="extract">Extrato</string>
     <string name="consult">Consultar</string>
     <string name="unknow_error">Algo deu errado</string>
+    <string name="extract_date">Data:&#160;</string>
+    <string name="extract_place">Local:&#160;</string>
+    <string name="balance_extract">Saldo:&#160;</string>
+    <string name="value_extract">Valor:&#160;</string>
 
 </resources>

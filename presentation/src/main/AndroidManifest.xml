@@ -45,6 +45,10 @@
             android:label="@string/register_card"
             android:windowSoftInputMode="adjustPan"/>
 
+        <activity
+            android:name=".ui.extract.ExtractActivity"
+            android:label="@string/card_extract"/>
+
     </application>
 
 </manifest>

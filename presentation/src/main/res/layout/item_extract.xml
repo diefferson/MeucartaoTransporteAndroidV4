@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginTop="4dp"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardMaxElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/label_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/extract_date"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="@id/extract_date"
+            app:layout_constraintBottom_toBottomOf="@id/extract_date"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/extract_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="18/07/2016 18:06:38"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/label_date"
+            app:layout_constraintBottom_toTopOf="@id/extract_place"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/label_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/extract_place"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="@id/extract_place"
+            app:layout_constraintBottom_toBottomOf="@id/extract_place"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/extract_place"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Terminal Capão Raso"
+            app:layout_constraintStart_toEndOf="@id/label_place"
+            app:layout_constraintTop_toBottomOf="@id/extract_date"
+            app:layout_constraintBottom_toTopOf="@id/extract_balance"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/label_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance_extract"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/extract_balance"
+            app:layout_constraintBottom_toBottomOf="@id/extract_balance"/>
+
+        <TextView
+            android:id="@+id/extract_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="R$44,75"
+            app:layout_constraintStart_toEndOf="@id/label_balance"
+            app:layout_constraintTop_toBottomOf="@id/extract_place"
+            app:layout_constraintBottom_toTopOf="@id/extract_value"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/label_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/value_extract"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="@id/extract_value"
+            app:layout_constraintBottom_toBottomOf="@id/extract_value"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/extract_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="R$-3,70"
+            app:layout_constraintStart_toEndOf="@id/label_value"
+            app:layout_constraintTop_toBottomOf="@id/extract_balance"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
