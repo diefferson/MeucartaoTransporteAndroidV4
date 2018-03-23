@@ -1,4 +1,8 @@
 apply plugin: 'kotlin'
+apply plugin: "jacoco"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 sourceSets {
     main { java.srcDirs = ['src/main/java', 'src/main/kotlin'] }
@@ -9,12 +13,12 @@ dependencies {
     def domainDependencies = rootProject.ext.domainDependencies
     def domainTestDependencies = rootProject.ext.domainTestDependencies
 
-    implementation domainDependencies.rxKotlin
-    implementation domainDependencies.kotlin
-    implementation domainDependencies.koin
-
     testImplementation domainTestDependencies.junit
+    testImplementation domainTestDependencies.kotlinJUnit
     testImplementation domainTestDependencies.mockito
     testImplementation domainTestDependencies.assertj
 
+    implementation domainDependencies.rxKotlin
+    implementation domainDependencies.kotlin
+    implementation domainDependencies.koin
 }

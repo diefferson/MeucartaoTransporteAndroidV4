@@ -16,5 +16,5 @@ interface CardsRepository{
 
     fun hasCard(card : Card) : Observable<Boolean>
 
-    fun getExtract(card: Card) : Observable<List<Extract>>
+    fun extract(card: Card) : Observable<List<Extract>>
 }

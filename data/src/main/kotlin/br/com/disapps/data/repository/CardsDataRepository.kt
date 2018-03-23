@@ -44,7 +44,7 @@ class CardsDataRepository( private var cardsDataSourceFactory: CardsDataSourceFa
                 .deleteCard(card.toCardDTO())
     }
 
-    override fun getExtract(card: Card): Observable<List<Extract>> {
+    override fun extract(card: Card): Observable<List<Extract>> {
         return cardsDataSourceFactory
                 .create(true)
                 .getExtract(card.toRequestExtractDTO())

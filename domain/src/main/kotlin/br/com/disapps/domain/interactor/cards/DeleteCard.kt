@@ -15,7 +15,8 @@ class DeleteCard(var cardRepository: CardsRepository,
 
     override fun buildUseCaseObservable(params: Params): Observable<Boolean> {
         Preconditions.checkNotNull(params)
-        return cardRepository.deleteCard(params.card)    }
+        return cardRepository.deleteCard(params.card)
+    }
 
     class Params (val card: Card) {
         companion object {

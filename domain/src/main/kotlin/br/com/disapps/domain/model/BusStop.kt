@@ -9,7 +9,7 @@ data class BusStop(
     var lineCode: String,
     var latitude: String,
     var longitude: String,
-    var sequence: Int = 0,
+    var sequence: Int,
     var direction: String,
     var type: String
 )

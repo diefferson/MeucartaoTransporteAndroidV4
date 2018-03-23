@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "jacoco"
 
 def versionMajor = 0
 def versionMinor = 0
@@ -24,6 +25,9 @@ android {
         multiDexEnabled = true
     }
     buildTypes {
+        debug {
+            testCoverageEnabled = true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -47,37 +51,31 @@ android {
         }
     }
 
+    testOptions {
+        unitTests {
+            all {
+                jvmArgs '-noverify', '-ea'
+                jacoco {
+                    includeNoLocationClasses = true
+                }
+            }
+            includeAndroidResources = true
+        }
+    }
     sourceSets {
         main { java.srcDirs = ['src/main/java', 'src/main/kotlin'] }
         test.java.srcDirs += 'src/test/kotlin'
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
-
-    implementation project(':domain')
-    implementation project(':data')
-
-
-    implementation presentationDependencies.kotlin
-    implementation presentationDependencies.appCompatV7
-    implementation presentationDependencies.supportDesign
-    implementation presentationDependencies.constraintLayout
-    implementation presentationDependencies.cardView
-    implementation presentationDependencies.glide
-    implementation presentationDependencies.koin
-    implementation presentationDependencies.rxAndroid
-    implementation presentationDependencies.koinArch
-    implementation presentationDependencies.archExtensions
-    implementation presentationDependencies.baseRecyclerView
-    implementation presentationDependencies.materialScrollBar
-    implementation presentationDependencies.vectorDrawable
-    kapt presentationDependencies.dataBindingCompiler
-    kapt presentationDependencies.archCompiler
-
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit
     androidTestImplementation presentationTestDependencies.junit
@@ -104,4 +102,21 @@ dependencies {
         exclude module: 'recyclerview-v7'
         exclude module: 'design'
     }
+    implementation presentationDependencies.kotlin
+    implementation presentationDependencies.appCompatV7
+    implementation presentationDependencies.supportDesign
+    implementation presentationDependencies.constraintLayout
+    implementation presentationDependencies.cardView
+    implementation presentationDependencies.glide
+    implementation presentationDependencies.koin
+    implementation presentationDependencies.rxAndroid
+    implementation presentationDependencies.koinArch
+    implementation presentationDependencies.archExtensions
+    implementation presentationDependencies.baseRecyclerView
+    implementation presentationDependencies.materialScrollBar
+    implementation presentationDependencies.vectorDrawable
+    kapt presentationDependencies.dataBindingCompiler
+    kapt presentationDependencies.archCompiler
+    implementation project(':domain')
+    implementation project(':data')
 }

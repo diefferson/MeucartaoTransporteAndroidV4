@@ -13,6 +13,7 @@ import br.com.disapps.meucartaotransporte.ui.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.util.extensions.toast
 import kotlinx.android.synthetic.main.fragment_my_cards.*
 import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.ext.android.inject
 
 /**
  * Created by dnso on 14/03/2018.
@@ -24,6 +25,7 @@ class MyCardsFragment : BaseFragment(){
 
     override val fragmentLayout: Int
         get() = R.layout.fragment_my_cards
+
 
     private var adapter = CardsListAdapter(ArrayList())
 

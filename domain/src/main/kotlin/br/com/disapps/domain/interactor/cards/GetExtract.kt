@@ -15,7 +15,7 @@ class GetExtract(var cardRepository: CardsRepository,
 
     override fun buildUseCaseObservable(params: Params): Observable<List<Extract>> {
         Preconditions.checkNotNull(params)
-        return cardRepository.getExtract(params.card)
+        return cardRepository.extract(params.card)
     }
 
     class Params (val card: Card) {

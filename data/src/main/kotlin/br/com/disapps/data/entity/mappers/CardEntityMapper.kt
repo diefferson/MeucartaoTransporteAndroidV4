@@ -10,8 +10,7 @@ fun Cartao.toCardBO()= Card(
     type = this.tipo,
     status = this.estado,
     balance = this.saldo,
-    balanceDate = this.dataSaldo,
-    message = this.mensagem
+    balanceDate = this.dataSaldo
 )
 
 fun Card.toCardDTO() = Cartao().apply {
@@ -22,7 +21,6 @@ fun Card.toCardDTO() = Cartao().apply {
     estado = this@toCardDTO.status
     saldo = this@toCardDTO.balance
     dataSaldo = this@toCardDTO.balanceDate
-    mensagem = this@toCardDTO.message
 }
 
 fun List<Cartao>.toCardBO() = this.map{ c-> c.toCardBO() }
