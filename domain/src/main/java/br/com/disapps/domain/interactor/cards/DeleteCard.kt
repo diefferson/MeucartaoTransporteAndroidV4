@@ -8,16 +8,13 @@ import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Observable
 import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
 
-/**
- * Created by dnso on 15/03/2018.
- */
-class GetCard(var cardRepository: CardsRepository,
-              var threadExecutor: ThreadExecutor,
-              var postExecutionThread: PostExecutionThread) : UseCase<Card?, GetCard.Params >(threadExecutor, postExecutionThread) {
+class DeleteCard(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
+                 var postExecutionThread: PostExecutionThread) : UseCase<Boolean, DeleteCard.Params>(threadExecutor, postExecutionThread){
 
-    override fun buildUseCaseObservable(params: Params ): Observable<Card?> {
+
+    override fun buildUseCaseObservable(params: Params): Observable<Boolean> {
         Preconditions.checkNotNull(params)
-        return this.cardRepository.card(params.card)
+        return cardRepository.deleteCard(params.card)
     }
 
     class Params (val card: Card) {

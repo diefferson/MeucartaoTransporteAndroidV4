@@ -159,5 +159,12 @@
     <string name="extract_place">Local:&#160;</string>
     <string name="balance_extract">Saldo:&#160;</string>
     <string name="value_extract">Valor:&#160;</string>
+    <string name="fav_line">Favoritar Linha</string>
+    <string name="see_shape">Ver Trajeto</string>
+    <string name="see_points">Ver Pontos</string>
+    <string name="see_vehicles">Ver Veículos</string>
+    <string name="vehicles_line">Veículos Linha</string>
+    <string name="points_line">Pontos Linha</string>
+    <string name="no_results">Nenhum resultado encontrado</string>
 
 </resources>

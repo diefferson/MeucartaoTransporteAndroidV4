@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: "jacoco"
 
 def versionMajor = 0
 def versionMinor = 0
@@ -49,27 +48,6 @@ android {
             applicationIdSuffix ".prod"
             versionNameSuffix "-prod"
         }
-    }
-
-    testOptions {
-        unitTests {
-            all {
-                jvmArgs '-noverify', '-ea'
-                jacoco {
-                    includeNoLocationClasses = true
-                }
-            }
-            includeAndroidResources = true
-        }
-    }
-    sourceSets {
-        main { java.srcDirs = ['src/main/java', 'src/main/kotlin'] }
-        test.java.srcDirs += 'src/test/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

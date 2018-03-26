@@ -1,11 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="br.com.disapps.meucartaotransporte.activity.LinhasActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_search_linhas"
+    <item android:id="@+id/action_search_lines"
         android:icon="@drawable/search_icon"
-        android:title="Pesquisar"
+        android:title="@string/search_hint"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always"
         android:orderInCategory="100"/>

@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'realm-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: "jacoco"
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -50,15 +48,6 @@ android {
         disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
         disable 'IconDensities'             //For testing purpose. This is safe to remove.
         disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
-    }
-
-    sourceSets {
-        main { java.srcDirs = ['src/main/java', 'src/main/kotlin'] }
-        test.java.srcDirs += 'src/test/kotlin'
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

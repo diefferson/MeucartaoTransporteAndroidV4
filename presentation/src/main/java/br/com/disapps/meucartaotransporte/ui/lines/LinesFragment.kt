@@ -34,7 +34,7 @@ class LinesFragment : BaseFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.menu_lines, menu)
+        inflater!!.inflate(R.menu.menu_searchable_activity, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 }

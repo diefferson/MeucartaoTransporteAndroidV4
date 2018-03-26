@@ -1,21 +1,17 @@
 package br.com.disapps.domain.interactor.cards
 
 import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.Preconditions
 import br.com.disapps.domain.interactor.UseCase
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Observable
 import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
 
-class DeleteCard(var cardRepository: CardsRepository,
-                 var threadExecutor: ThreadExecutor,
-                 var postExecutionThread: PostExecutionThread) : UseCase<Boolean, DeleteCard.Params>(threadExecutor, postExecutionThread){
-
+class HasCard(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
+              var postExecutionThread: PostExecutionThread) : UseCase<Boolean, HasCard.Params>(threadExecutor, postExecutionThread){
 
     override fun buildUseCaseObservable(params: Params): Observable<Boolean> {
-        Preconditions.checkNotNull(params)
-        return cardRepository.deleteCard(params.card)
+        return cardRepository.hasCard(params.card)
     }
 
     class Params (val card: Card) {

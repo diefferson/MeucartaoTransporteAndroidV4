@@ -8,13 +8,15 @@ import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Observable
 import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
 
-class SaveCard (var cardRepository: CardsRepository,
-                var threadExecutor: ThreadExecutor,
-                var postExecutionThread: PostExecutionThread) : UseCase<Boolean, SaveCard.Params>(threadExecutor, postExecutionThread) {
+/**
+ * Created by dnso on 15/03/2018.
+ */
+class GetCard(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
+              var postExecutionThread: PostExecutionThread) : UseCase<Card?, GetCard.Params >(threadExecutor, postExecutionThread) {
 
-    override fun buildUseCaseObservable(params: SaveCard.Params): Observable<Boolean> {
+    override fun buildUseCaseObservable(params: Params ): Observable<Card?> {
         Preconditions.checkNotNull(params)
-        return cardRepository.saveCard(params.card)
+        return this.cardRepository.card(params.card)
     }
 
     class Params (val card: Card) {

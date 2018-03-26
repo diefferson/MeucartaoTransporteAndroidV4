@@ -7,8 +7,7 @@ import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Observable
 import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
 
-class GetCards(var cardRepository: CardsRepository,
-                var threadExecutor: ThreadExecutor,
+class GetCards(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
                 var postExecutionThread: PostExecutionThread) : UseCase<List<Card>, Unit>(threadExecutor, postExecutionThread) {
 
 
