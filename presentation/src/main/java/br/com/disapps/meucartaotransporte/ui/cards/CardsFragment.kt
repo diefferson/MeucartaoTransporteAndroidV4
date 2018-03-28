@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
-import br.com.disapps.meucartaotransporte.ui.registerCard.RegisterCardActivity
+import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardActivity
 import kotlinx.android.synthetic.main.fragment_cards.*
 import org.koin.android.architecture.ext.getViewModel
 

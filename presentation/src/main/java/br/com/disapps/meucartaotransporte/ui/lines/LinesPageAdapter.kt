@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.allLines.AllLinesFragment
-import br.com.disapps.meucartaotransporte.ui.favoritesLines.FavoritesLinesFragment
+import br.com.disapps.meucartaotransporte.ui.lines.allLines.AllLinesFragment
+import br.com.disapps.meucartaotransporte.ui.lines.favoritesLines.FavoritesLinesFragment
 /**
  * Created by dnso on 14/03/2018.
  */

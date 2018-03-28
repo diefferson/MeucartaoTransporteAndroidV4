@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="br.com.disapps.meucartaotransporte.ui.registerCard.RegisterCardViewModel"/>
+            type="br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel"/>
     </data>
 
 

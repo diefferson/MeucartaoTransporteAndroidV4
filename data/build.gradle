@@ -1,37 +1,31 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'realm-android'
+apply plugin: 'kotlin-kapt'
 
 android {
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
-    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
-
+    compileSdkVersion 27
     defaultConfig {
-        minSdkVersion globalConfiguration["androidMinSdkVersion"]
-        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        minSdkVersion 15
+        targetSdkVersion 27
         multiDexEnabled = true
         buildConfigField 'String', 'PREFERENCES_FILE_KEY', "\"br.com.disapps.meucartaotransporte.configs\""
     }
-
     buildTypes {
         release {
             buildConfigField 'boolean', 'HTTP_LOG_ENABLED', "false"
-            buildConfigField 'String', 'HOST', "\"${globalConfiguration["apiHostDev"]}\""
+            buildConfigField 'String', 'HOST', "\"${rootProject.ext.apiHostDev}\""
         }
         debug {
             buildConfigField 'boolean', 'HTTP_LOG_ENABLED', "true"
-            buildConfigField 'String', 'HOST', "\"${globalConfiguration["apiHostDev"]}\""
+            buildConfigField 'String', 'HOST', "\"${rootProject.ext.apiHostDev}\""
         }
     }
-
     dexOptions {
         preDexLibraries = false
         dexInProcess = false
         javaMaxHeapSize "4g"
     }
-
     packagingOptions {
         exclude 'LICENSE.txt'
         exclude 'META-INF/DEPENDENCIES'
@@ -39,15 +33,17 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
-
     lintOptions {
         quiet true
         abortOnError false
         ignoreWarnings true
         disable 'InvalidPackage'            //Some libraries have issues with this.
-        disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'OldTargetApi'
+        //Lint gives this warning but SDK 20 would be Android L Beta.
         disable 'IconDensities'             //For testing purpose. This is safe to remove.
         disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
+    }
+    productFlavors {
     }
 }
 

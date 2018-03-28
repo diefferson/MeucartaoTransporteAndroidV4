@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="br.com.disapps.meucartaotransporte.ui.quickFind.QuickFindViewModel"/>
+            type="br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel"/>
     </data>
 
     <ScrollView

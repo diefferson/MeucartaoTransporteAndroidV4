@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
+import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
+import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.architecture.ext.getViewModel
 
 /**
@@ -20,7 +22,10 @@ class SettingsFragment : BaseFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iAppActivityListener.setTitle(getString(R.string.settings))
+
+        help.setOnClickListener { HelpActivity.launch(context!!) }
     }
+
 
     companion object {
         fun newInstance() = SettingsFragment()

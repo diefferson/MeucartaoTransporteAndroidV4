@@ -166,5 +166,8 @@
     <string name="vehicles_line">Veículos Linha</string>
     <string name="points_line">Pontos Linha</string>
     <string name="no_results">Nenhum resultado encontrado</string>
+    <string name="mailto">mailto:contato@meucartaotransporte.com.br</string>
+    <string name="mail_subject">Contato via Aplicativo Meu Cartão Transporte</string>
+    <string name="mail_title">Contato</string>
 
 </resources>

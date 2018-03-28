@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="br.com.disapps.meucartaotransporte.ui.favoritesLines.FavoritesLinesViewModel"/>
+            type="br.com.disapps.meucartaotransporte.ui.lines.favoritesLines.FavoritesLinesViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

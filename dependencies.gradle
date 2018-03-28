@@ -19,26 +19,21 @@ ext {
 
     //Libraries
     koinVersion = "0.9.0"
+    supportLibraryVersion = '27.1.0'
     archLifecycleVersion = "1.0.0"
     kotlinVersion = '1.1.3-2'
     recyclerViewVersion = '21.0.3'
     rxJavaVersion = '2.0.2'
     rxKotlinVersion = '2.1.0'
     rxAndroidVersion = '2.0.1'
-    javaxAnnotationVersion = '1.0'
-    javaxInjectVersion = '1'
     gsonVersion = '2.8.1'
     okHttpVersion = '3.8.1'
     androidAnnotationsVersion = '21.0.3'
     retrofitVersion = '2.3.0'
     roomVersion = '1.0.0-alpha6'
-    supportLibraryVersion = '27.1.0'
-    glideVersion = '4.0.0'
-    glassfishAnnotationVersion = '10.0-b28'
     constraintVersion= '1.0.2'
     baseRecyclerViewVersion = '2.9.35'
     materialScrollBarVersion = '12.3.5'
-    databindingCompiler = '3.1.0-rc03'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -56,21 +51,20 @@ ext {
     runnerVersion = '0.5'
 
     presentationDependencies = [
+            appCompatV7:        "com.android.support:appcompat-v7:${supportLibraryVersion}",
+            supportV4:        "com.android.support:support-v4:${supportLibraryVersion}",
+            supportDesign:      "com.android.support:design:${supportLibraryVersion}",
+            constraintLayout:   "com.android.support.constraint:constraint-layout:${constraintVersion}",
+            cardView:           "com.android.support:cardview-v7:${supportLibraryVersion}",
+            vectorDrawable:     "com.android.support:support-vector-drawable:${supportLibraryVersion}",
+            archExtensions:     "android.arch.lifecycle:extensions:${archLifecycleVersion}",
+            archCompiler:       "android.arch.lifecycle:compiler:${archLifecycleVersion}",
             kotlin:             "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
             koin:               "org.koin:koin-android:${koinVersion}",
             rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             koinArch:           "org.koin:koin-android-architecture:${koinVersion}",
-            archExtensions:     "android.arch.lifecycle:extensions:${archLifecycleVersion}",
-            archCompiler:       "android.arch.lifecycle:compiler:${archLifecycleVersion}",
-            glide:              "com.github.bumptech.glide:glide:${glideVersion}",
-            appCompatV7:        "com.android.support:appcompat-v7:${supportLibraryVersion}",
-            supportDesign:      "com.android.support:design:${supportLibraryVersion}",
-            cardView:           "com.android.support:cardview-v7:${supportLibraryVersion}",
-            constraintLayout:   "com.android.support.constraint:constraint-layout:${constraintVersion}",
             baseRecyclerView:   "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
             materialScrollBar:  "com.github.turing-tech:MaterialScrollBar:${materialScrollBarVersion}",
-            vectorDrawable:     "com.android.support:support-vector-drawable:${supportLibraryVersion}",
-            dataBindingCompiler:"com.android.databinding:compiler:${databindingCompiler}",
     ]
 
     presentationTestDependencies = [

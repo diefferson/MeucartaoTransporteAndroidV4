@@ -1,2 +1,2 @@
-rootProject.name = 'meuCartaoTransporte'
+rootProject.name = 'MeuCartaoTransporte'
 include ':presentation', ':domain', ':data'

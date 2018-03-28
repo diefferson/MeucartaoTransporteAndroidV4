@@ -13,16 +13,23 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="AppTheme.ToolbarStyle" parent="AppTheme.AppBarOverlay"/>
+    <style name="AppTheme.DrawerActionBar">
+        <item name="elevation">0dp</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <style name="AppTheme.NoActionBar.SplashTheme">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.ToolbarStyle" parent="AppTheme.AppBarOverlay"/>
 
     <style name="AppTheme.TextTitle">
         <item name="android:textColor">@color/textDark</item>
