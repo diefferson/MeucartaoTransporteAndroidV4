@@ -17,6 +17,7 @@ class SaveCardTest{
     private val mockCardsRepository : CardsRepository = mock()
     private val mockThreadExecutor: ThreadExecutor = mock()
     private val mockPostExecutionThread: PostExecutionThread = mock()
+    private val mockCard:Card = mock()
 
     @Before
     fun setup(){
@@ -25,9 +26,9 @@ class SaveCardTest{
 
     @Test
     fun testSaveCardUseCaseObservableHappyCase() {
-        saveCard.buildUseCaseObservable(SaveCard.Params.forCard(FAKE_CARD))
+        saveCard.buildUseCaseObservable(SaveCard.Params.forCard(mockCard))
 
-        verify(mockCardsRepository).saveCard(FAKE_CARD)
+        verify(mockCardsRepository).saveCard(mockCard)
         verifyNoMoreInteractions(mockCardsRepository)
         verifyZeroInteractions(mockPostExecutionThread)
         verifyZeroInteractions(mockThreadExecutor)
@@ -38,7 +39,4 @@ class SaveCardTest{
         saveCard.buildUseCaseObservable(null!!)
     }
 
-    companion object {
-        val FAKE_CARD = Card("0002909840", "09695910980")
-    }
 }

@@ -1,6 +1,6 @@
 package br.com.disapps.domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -19,9 +19,9 @@ class ShapeTest{
 
     @Test
     fun testShapeConstructorHappyCase(){
-        Assertions.assertThat(shape.code).isEqualTo(FAKE_CODE)
-        Assertions.assertThat(shape.lineCode).isEqualTo(FAKE_LINE_CODE)
-        Assertions.assertThat(shape.coordinates).isEqualTo(FAKE_COORDINATES)
+        assertThat(shape.code).isEqualTo(FAKE_CODE)
+        assertThat(shape.lineCode).isEqualTo(FAKE_LINE_CODE)
+        assertThat(shape.coordinates).isEqualTo(FAKE_COORDINATES)
     }
 
     companion object {

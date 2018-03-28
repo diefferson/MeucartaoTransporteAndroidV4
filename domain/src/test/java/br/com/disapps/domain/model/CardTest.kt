@@ -1,6 +1,6 @@
 package br.com.disapps.domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -22,13 +22,13 @@ class CardTest{
 
     @Test
     fun testCardConstructorHappyCase() {
-        Assertions.assertThat(card.code).isEqualTo(FAKE_CODE)
-        Assertions.assertThat(card.cpf).isEqualTo(FAKE_CPF)
-        Assertions.assertThat(card.name).isEqualTo(FAKE_NAME)
-        Assertions.assertThat(card.type).isEqualTo(FAKE_TYPE)
-        Assertions.assertThat(card.status).isEqualTo(FAKE_STATUS)
-        Assertions.assertThat(card.balance).isEqualTo(FAKE_BALANCE)
-        Assertions.assertThat(card.balanceDate).isEqualTo(FAKE_BALANCE_DATE)
+        assertThat(card.code).isEqualTo(FAKE_CODE)
+        assertThat(card.cpf).isEqualTo(FAKE_CPF)
+        assertThat(card.name).isEqualTo(FAKE_NAME)
+        assertThat(card.type).isEqualTo(FAKE_TYPE)
+        assertThat(card.status).isEqualTo(FAKE_STATUS)
+        assertThat(card.balance).isEqualTo(FAKE_BALANCE)
+        assertThat(card.balanceDate).isEqualTo(FAKE_BALANCE_DATE)
     }
 
     companion object {

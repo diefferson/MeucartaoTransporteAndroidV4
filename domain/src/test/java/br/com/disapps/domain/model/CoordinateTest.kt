@@ -1,6 +1,6 @@
 package br.com.disapps.domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -17,8 +17,8 @@ class CoordinateTest{
 
     @Test
     fun testCoordinateConstructorHappyCase() {
-        Assertions.assertThat(coordinate.latitude).isEqualTo(FAKE_LATITUDE)
-        Assertions.assertThat(coordinate.longitude).isEqualTo(FAKE_LONGITUDE)
+        assertThat(coordinate.latitude).isEqualTo(FAKE_LATITUDE)
+        assertThat(coordinate.longitude).isEqualTo(FAKE_LONGITUDE)
 
     }
 

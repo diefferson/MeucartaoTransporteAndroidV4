@@ -19,7 +19,3 @@ fun RequestCartao.toCardBO()= Card(
         code = this.codigo,
         cpf = this.cpf
 )
-
-fun List<Card>.toRequestCardDTO() = this.map{ c-> c.toRequestCardDTO() }
-
-fun List<RequestCartao>.toCardBO() = this.map{ c-> c.toCardBO() }

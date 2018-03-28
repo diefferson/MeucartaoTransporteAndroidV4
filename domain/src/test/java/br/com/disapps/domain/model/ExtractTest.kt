@@ -1,6 +1,6 @@
 package br.com.disapps.domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -20,10 +20,10 @@ class ExtractTest{
 
     @Test
     fun testExtractConstructorHappyCase(){
-        Assertions.assertThat(extract.balance).isEqualTo(FAKE_BALANCE)
-        Assertions.assertThat(extract.local).isEqualTo(FAKE_LOCAL)
-        Assertions.assertThat(extract.date).isEqualTo(FAKE_DATE)
-        Assertions.assertThat(extract.value).isEqualTo(FAKE_VALUE)
+        assertThat(extract.balance).isEqualTo(FAKE_BALANCE)
+        assertThat(extract.local).isEqualTo(FAKE_LOCAL)
+        assertThat(extract.date).isEqualTo(FAKE_DATE)
+        assertThat(extract.value).isEqualTo(FAKE_VALUE)
     }
 
     companion object {

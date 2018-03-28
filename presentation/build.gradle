@@ -19,13 +19,26 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
     }
+
     buildTypes {
-        debug {
-            testCoverageEnabled = true
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+        prod {
+            applicationIdSuffix ""
+            versionNameSuffix ""
         }
     }
 
@@ -33,18 +46,13 @@ android {
         enabled = true
     }
 
-    flavorDimensions "default"
-
-    productFlavors {
-        dev {
-            applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
-        }
-        prod {
-            applicationIdSuffix ".prod"
-            versionNameSuffix "-prod"
-        }
+    dexOptions {
+        preDexLibraries = false
+        dexInProcess = false
+        javaMaxHeapSize "4g"
     }
+
+
 }
 
 dependencies {

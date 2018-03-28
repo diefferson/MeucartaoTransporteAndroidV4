@@ -16,22 +16,22 @@ class GetExtractTest{
     private val mockCardsRepository : CardsRepository = mock()
     private val mockThreadExecutor: ThreadExecutor = mock()
     private val mockPostExecutionThread: PostExecutionThread = mock()
+    private val mockCard:Card = mock()
 
     private lateinit var extracts: ArrayList<Extract>
 
     @Before
     fun setup(){
         extracts = ArrayList()
-        whenever(mockCardsRepository.extract(FAKE_CARD)).thenReturn(Observable.just(extracts))
+        whenever(mockCardsRepository.extract(mockCard)).thenReturn(Observable.just(extracts))
         getExtract = GetExtract(mockCardsRepository, mockThreadExecutor, mockPostExecutionThread)
-
     }
 
     @Test
     fun testGetExtractUseCaseObservableHappyCase() {
-        getExtract.buildUseCaseObservable(GetExtract.Params.forCard(FAKE_CARD))
+        getExtract.buildUseCaseObservable(GetExtract.Params.forCard(mockCard))
 
-        verify(mockCardsRepository).extract(FAKE_CARD)
+        verify(mockCardsRepository).extract(mockCard)
         verifyNoMoreInteractions(mockCardsRepository)
         verifyZeroInteractions(mockPostExecutionThread)
         verifyZeroInteractions(mockThreadExecutor)
@@ -39,7 +39,7 @@ class GetExtractTest{
 
     @Test
     fun getExtractAPIShouldReturnData(){
-        val observableTest = getExtract.buildUseCaseObservable(GetExtract.Params.forCard(FAKE_CARD)).test()
+        val observableTest = getExtract.buildUseCaseObservable(GetExtract.Params.forCard(mockCard)).test()
         observableTest.assertValue(extracts)
     }
 
@@ -48,7 +48,4 @@ class GetExtractTest{
         getExtract.buildUseCaseObservable(null!!)
     }
 
-    companion object {
-        val FAKE_CARD = Card("0002909840", "09695910980")
-    }
 }

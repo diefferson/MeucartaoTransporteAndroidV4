@@ -1,6 +1,6 @@
 package br.com.disapps.domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -19,9 +19,9 @@ class ScheduleTest{
 
     @Test
     fun testScheduleConstructorHappyCase(){
-        Assertions.assertThat(schedule.schedulesTable).isEqualTo(FAKE_SCHEDULES_TABLE)
-        Assertions.assertThat(schedule.adapt).isEqualTo(FAKE_ADAPT)
-        Assertions.assertThat(schedule.time).isEqualTo(FAKE_TIME)
+        assertThat(schedule.schedulesTable).isEqualTo(FAKE_SCHEDULES_TABLE)
+        assertThat(schedule.adapt).isEqualTo(FAKE_ADAPT)
+        assertThat(schedule.time).isEqualTo(FAKE_TIME)
     }
 
     companion object {

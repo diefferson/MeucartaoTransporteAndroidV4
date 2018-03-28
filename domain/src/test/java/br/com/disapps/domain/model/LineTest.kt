@@ -1,6 +1,6 @@
 package br.com.disapps.domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -21,11 +21,11 @@ class LineTest{
 
     @Test
     fun testLineConstructorHappyCase(){
-        Assertions.assertThat(line.code).isEqualTo(FAKE_CODE)
-        Assertions.assertThat(line.name).isEqualTo(FAKE_NAME)
-        Assertions.assertThat(line.category).isEqualTo(FAKE_CATEGORY)
-        Assertions.assertThat(line.color).isEqualTo(FAKE_COLOR)
-        Assertions.assertThat(line.favorite).isEqualTo(FAKE_FAVORITE)
+        assertThat(line.code).isEqualTo(FAKE_CODE)
+        assertThat(line.name).isEqualTo(FAKE_NAME)
+        assertThat(line.category).isEqualTo(FAKE_CATEGORY)
+        assertThat(line.color).isEqualTo(FAKE_COLOR)
+        assertThat(line.favorite).isEqualTo(FAKE_FAVORITE)
     }
 
     companion object {

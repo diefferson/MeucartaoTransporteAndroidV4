@@ -1,6 +1,6 @@
 package br.com.disapps.domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -22,12 +22,12 @@ class LineScheduleTest{
 
     @Test
     fun testLineScheduleConstructorHappyCase(){
-        Assertions.assertThat(lineSchedule.lineCode).isEqualTo(FAKE_LINE_CODE)
-        Assertions.assertThat(lineSchedule.day).isEqualTo(FAKE_DAY)
-        Assertions.assertThat(lineSchedule.busStopName).isEqualTo(FAKE_BUS_STOP_NAME)
-        Assertions.assertThat(lineSchedule.busStopCode).isEqualTo(FAKE_BUS_STOP_CODE)
-        Assertions.assertThat(lineSchedule.schedules).isEqualTo(FAKE_SCHEDULES)
-        Assertions.assertThat(lineSchedule.nextSchedules).isEqualTo(FAKE_NEXT_SCHEDULES)
+        assertThat(lineSchedule.lineCode).isEqualTo(FAKE_LINE_CODE)
+        assertThat(lineSchedule.day).isEqualTo(FAKE_DAY)
+        assertThat(lineSchedule.busStopName).isEqualTo(FAKE_BUS_STOP_NAME)
+        assertThat(lineSchedule.busStopCode).isEqualTo(FAKE_BUS_STOP_CODE)
+        assertThat(lineSchedule.schedules).isEqualTo(FAKE_SCHEDULES)
+        assertThat(lineSchedule.nextSchedules).isEqualTo(FAKE_NEXT_SCHEDULES)
     }
 
     companion object {

@@ -1,6 +1,6 @@
 package br.com.disapps.domain.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -21,11 +21,11 @@ class BusTest{
 
     @Test
     fun testBusConstructorHappyCase() {
-        Assertions.assertThat(bus.prefix).isEqualTo(FAKE_PREFIX)
-        Assertions.assertThat(bus.time).isEqualTo(FAKE_TIME)
-        Assertions.assertThat(bus.line).isEqualTo(FAKE_LINE)
-        Assertions.assertThat(bus.latitude).isEqualTo(FAKE_LATITUDE)
-        Assertions.assertThat(bus.longitude).isEqualTo(FAKE_LONGITUDE)
+        assertThat(bus.prefix).isEqualTo(FAKE_PREFIX)
+        assertThat(bus.time).isEqualTo(FAKE_TIME)
+        assertThat(bus.line).isEqualTo(FAKE_LINE)
+        assertThat(bus.latitude).isEqualTo(FAKE_LATITUDE)
+        assertThat(bus.longitude).isEqualTo(FAKE_LONGITUDE)
     }
 
     companion object {
