@@ -20,6 +20,10 @@ class CardsFragment : BaseFragment(){
         fun newInstance() = CardsFragment()
     }
 
+    init {
+        hasTabs = true
+    }
+
     override val viewModel: CardsViewModel
         get() =  getViewModel()
 
@@ -31,7 +35,8 @@ class CardsFragment : BaseFragment(){
 
         setHasOptionsMenu(true)
         view_pager.adapter = CardsPageAdapter(childFragmentManager, context!!)
-        tabs.setupWithViewPager(view_pager)
+        iAppActivityListener.setupTabs(view_pager)
+        scroll_view.isFillViewport =true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

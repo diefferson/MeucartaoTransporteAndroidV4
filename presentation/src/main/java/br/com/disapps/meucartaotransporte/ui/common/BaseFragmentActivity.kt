@@ -3,11 +3,16 @@ package br.com.disapps.meucartaotransporte.ui.common
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
+import android.opengl.Visibility
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.View
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
@@ -24,10 +29,11 @@ abstract class BaseFragmentActivity: AppCompatActivity(), IBaseFragmentActivityL
     abstract val activityLayout: Int
     abstract val container: FrameLayout
     abstract val toolbar : Toolbar
+    abstract val tabs : TabLayout
+    abstract val appBar : AppBarLayout
     abstract val initialFragment : BaseFragment
     var initialFragmentItemId: Int =0
     private val loading by lazy { CustomProgressDialog(this) }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,24 +46,41 @@ abstract class BaseFragmentActivity: AppCompatActivity(), IBaseFragmentActivityL
     }
 
     override fun setTitle(title: String) {
-        supportActionBar!!.title = title
+        supportActionBar?.title = title
     }
 
     override fun setDisplayHomeAsUpEnabled() {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun replaceFragment(fragment: Fragment) {
-        val ft = fragmentTransaction
-        ft.replace(container.id, fragment, fragment.javaClass.simpleName)
-        ft.commit()
+    override fun setupTabs(viewPager: ViewPager) {
+        tabs.visibility = View.VISIBLE
+        tabs.setupWithViewPager(viewPager, false)
     }
 
-    override fun replaceAndBackStackFragment(fragment: Fragment) {
-        val ft = fragmentTransaction
-        ft.replace(container.id, fragment, fragment.javaClass.simpleName)
-        ft.addToBackStack(fragment.javaClass.simpleName)
-        ft.commit()
+    override fun replaceFragment(fragment: BaseFragment) {
+        if(supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null){
+            val ft = fragmentTransaction
+            ft.replace(container.id, fragment, fragment.javaClass.simpleName)
+            ft.commit()
+            if(!fragment.hasTabs){
+                appBar.setExpanded(true, true)
+                tabs.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun replaceAndBackStackFragment(fragment: BaseFragment) {
+        if(supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null){
+            val ft = fragmentTransaction
+            ft.replace(container.id, fragment, fragment.javaClass.simpleName)
+            ft.addToBackStack(fragment.javaClass.simpleName)
+            ft.commit()
+            if(!fragment.hasTabs){
+                appBar.setExpanded(true, true)
+                tabs.visibility = View.GONE
+            }
+        }
     }
 
     private val fragmentTransaction: FragmentTransaction

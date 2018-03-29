@@ -26,6 +26,7 @@ import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.myCards.MyCardsViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel
+import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.shapes.ShapesViewModel
 import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
@@ -69,6 +70,7 @@ object AppInject {
         viewModel { BalanceViewModel(getCardUseCase = get()) }
         viewModel { RegisterCardViewModel(hasCardUseCase = get(), saveCardUseCase = get(), getCardUseCase = get()) }
         viewModel { ExtractViewModel(getExtractUseCase = get() ) }
+        viewModel { IntroViewModel( ) }
     }
 
     private val repositoriesModule: Module = applicationContext {

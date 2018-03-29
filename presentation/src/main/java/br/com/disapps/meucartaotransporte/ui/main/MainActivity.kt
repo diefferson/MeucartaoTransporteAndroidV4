@@ -1,7 +1,9 @@
 package br.com.disapps.meucartaotransporte.ui.main
 
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.TabLayout
 import android.support.v7.widget.Toolbar
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.R
@@ -12,7 +14,7 @@ import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
-import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.include_toolbar_tabs.*
 import org.koin.android.architecture.ext.getViewModel
 
 class MainActivity : BaseFragmentActivity(){
@@ -28,6 +30,12 @@ class MainActivity : BaseFragmentActivity(){
 
     override val toolbar: Toolbar
         get() = vToolbar
+
+    override val tabs: TabLayout
+        get() = vTabs
+
+    override val appBar: AppBarLayout
+        get() = vAppBar
 
     override val initialFragment: BaseFragment
         get() = CardsFragment.newInstance()

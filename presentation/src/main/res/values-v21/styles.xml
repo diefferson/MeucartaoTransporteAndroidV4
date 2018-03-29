@@ -1,8 +1,8 @@
 <resources>
 
-    <style name="AppTheme.ToolbarStyle" parent="AppTheme.AppBarOverlay">
-        <item name="elevation">0dp</item>
-    </style>
+    <!--<style name="AppTheme.ToolbarStyle" parent="AppTheme.AppBarOverlay">-->
+        <!--<item name="elevation">0dp</item>-->
+    <!--</style>-->
 
     <style name="AppTheme.DrawerActionBar">
         <item name="windowActionBar">false</item>

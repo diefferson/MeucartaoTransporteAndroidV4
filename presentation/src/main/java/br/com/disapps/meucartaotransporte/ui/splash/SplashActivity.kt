@@ -5,6 +5,7 @@ import android.content.Intent
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import android.os.Bundle
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
 
 
 /**
@@ -13,7 +14,8 @@ import br.com.disapps.meucartaotransporte.R
 class SplashActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startActivity(Intent(this, MainActivity::class.java))
+        IntroActivity.launch(this)
+        //startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 }
