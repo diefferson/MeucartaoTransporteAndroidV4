@@ -26,6 +26,7 @@ import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.myCards.MyCardsViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel
+import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.shapes.ShapesViewModel
@@ -57,6 +58,7 @@ object AppInject {
     }
 
     private val viewModelModule = applicationContext {
+        viewModel { BaseViewModel() }
         viewModel { CardsViewModel( getCardUseCase = get()) }
         viewModel { ItinerariesViewModel() }
         viewModel { LinesViewModel() }

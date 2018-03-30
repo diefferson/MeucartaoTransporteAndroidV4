@@ -1,5 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
@@ -10,6 +12,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
+import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -69,6 +72,14 @@ class MainActivity : BaseFragmentActivity(){
 
     init {
         initialFragmentItemId = R.id.nav_cards
+    }
+
+    companion object {
+
+        fun launch(context: Context){
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }
 

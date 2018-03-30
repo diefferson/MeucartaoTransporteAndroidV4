@@ -73,6 +73,7 @@ dependencies {
     implementation presentationDependencies.archExtensions
     implementation presentationDependencies.baseRecyclerView
     implementation presentationDependencies.materialScrollBar
+    implementation presentationDependencies.pageIndicatorVersion
     kapt presentationDependencies.archCompiler
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit

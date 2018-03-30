@@ -10,6 +10,7 @@ import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
+import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import kotlinx.android.synthetic.main.fragment_my_cards.*
 import org.koin.android.architecture.ext.getViewModel
 
@@ -32,6 +33,7 @@ class MyCardsFragment : BaseFragment(){
         cards_recycler.layoutManager = LinearLayoutManager(context)
         cards_recycler.adapter = adapter
         observeViewModel()
+        adapter.emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler )
     }
 
     override fun onResume() {

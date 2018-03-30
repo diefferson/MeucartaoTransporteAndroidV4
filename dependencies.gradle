@@ -32,6 +32,7 @@ ext {
     retrofitVersion = '2.3.0'
     roomVersion = '1.0.0-alpha6'
     constraintVersion= '1.0.2'
+    pageIndicatorVersion = '0.2.0'
     baseRecyclerViewVersion = '2.9.35'
     materialScrollBarVersion = '12.3.5'
 
@@ -65,6 +66,7 @@ ext {
             koinArch:           "org.koin:koin-android-architecture:${koinVersion}",
             baseRecyclerView:   "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
             materialScrollBar:  "com.github.turing-tech:MaterialScrollBar:${materialScrollBarVersion}",
+            pageIndicatorVersion:  "com.romandanylyk:pageindicatorview:${pageIndicatorVersion}",
     ]
 
     presentationTestDependencies = [

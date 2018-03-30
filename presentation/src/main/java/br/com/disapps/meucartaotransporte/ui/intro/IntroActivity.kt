@@ -12,19 +12,18 @@ import android.widget.TextView
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
+import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import br.com.disapps.meucartaotransporte.util.extensions.fromHtml
 import kotlinx.android.synthetic.main.activity_intro.*
 import org.koin.android.architecture.ext.getViewModel
 
 class IntroActivity : BaseActivity(){
 
-    override val viewModel: BaseViewModel
+    override val viewModel: IntroViewModel
         get() = getViewModel()
 
     override val activityLayout: Int
         get() = R.layout.activity_intro
-
-    private lateinit var dots: ArrayList<TextView>
 
     private val layouts : IntArray by lazy {
         intArrayOf(R.layout.intro_slide0,
@@ -45,45 +44,32 @@ class IntroActivity : BaseActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        setupViewPager()
 
-        addBottomDots(0)
+        btn_skip.setOnClickListener { MainActivity.launch(this) }
+        btn_next.setOnClickListener { view_pager.currentItem = view_pager.currentItem+1 }
+    }
 
-        val viewPagerAdapter = IntroPageAdapter(this, layouts)
-        view_pager.adapter = viewPagerAdapter
-        view_pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+    private fun setupViewPager() {
+        view_pager.apply {
+            adapter = IntroPageAdapter(this@IntroActivity, layouts)
 
-            override fun onPageScrollStateChanged(state: Int) {}
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
-            override fun onPageSelected(position: Int) {
-                addBottomDots(position)
-
-                if (position == layouts.size - 1) {
-                    btn_next.visibility = View.GONE
-                } else {
-
-                    btn_next.text = getString(R.string.next)
-                    btn_next.visibility = View.VISIBLE
+            addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+                override fun onPageScrollStateChanged(state: Int) {}
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+                override fun onPageSelected(position: Int) {
+                    if (position == layouts.size - 1) {
+                        btn_next.visibility = View.INVISIBLE
+                    } else {
+                        btn_next.text = getString(R.string.next)
+                        btn_next.visibility = View.VISIBLE
+                    }
                 }
-            }
-        })
-    }
-    
-    private fun addBottomDots(currentPage: Int) {
-        dots = ArrayList()
-        layoutDots.removeAllViews()
-        for (i in 0..(layouts.size-1)) {
-            dots [i] = TextView(this)
-            dots[i].text = fromHtml("&#8226;")
-            dots[i].textSize = 35f
-            dots[i].setTextColor(ContextCompat.getColor(this, R.color.dot_inactive))
-            layoutDots.addView(dots[i])
+            })
         }
-        dots[currentPage].setTextColor(ContextCompat.getColor(this,R.color.dot_active))
-    }
 
+        pageIndicatorView.setViewPager(view_pager)
+    }
 
     companion object {
 

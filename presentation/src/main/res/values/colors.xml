@@ -26,10 +26,10 @@
     <color name="bg_screen3">#74a443</color>
 
     <!-- dots active colors -->
-    <color name="dot_active">#000000</color>
+    <color name="dot_active">@color/colorPrimaryDark</color>
 
 
     <!-- dots inactive colors -->
-    <color name="dot_inactive">#cccccc</color>
+    <color name="dot_inactive">#50000000</color>
 
 </resources>
