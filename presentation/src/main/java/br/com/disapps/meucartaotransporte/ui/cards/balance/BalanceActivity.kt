@@ -6,15 +6,13 @@ import android.os.Bundle
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.architecture.ext.viewModel
 
 class BalanceActivity : BaseActivity() {
 
-    override val viewModel: BalanceViewModel
-        get() = getViewModel()
+    override val viewModel by viewModel<BalanceViewModel>()
 
-    override val activityLayout: Int
-        get() = R.layout.activity_balance
+    override val activityLayout = R.layout.activity_balance
 
     override fun onResume() {
         super.onResume()

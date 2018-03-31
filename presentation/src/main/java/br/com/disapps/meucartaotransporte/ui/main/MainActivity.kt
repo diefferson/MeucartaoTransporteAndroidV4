@@ -12,36 +12,28 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
-import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
-import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.architecture.ext.viewModel
 
 class MainActivity : BaseFragmentActivity(){
 
-    override val viewModel : MainViewModel
-        get() = getViewModel()
+    override val viewModel by viewModel<MainViewModel>()
 
-    override val activityLayout: Int
-        get() = R.layout.activity_main
+    override val activityLayout = R.layout.activity_main
 
-    override val container: FrameLayout
-        get() = vContainer
+    override val container: FrameLayout by lazy { vContainer  }
 
-    override val toolbar: Toolbar
-        get() = vToolbar
+    override val toolbar: Toolbar by lazy { vToolbar }
 
-    override val tabs: TabLayout
-        get() = vTabs
+    override val tabs: TabLayout by lazy { vTabs }
 
-    override val appBar: AppBarLayout
-        get() = vAppBar
+    override val appBar: AppBarLayout by lazy { vAppBar }
 
-    override val initialFragment: BaseFragment
-        get() = CardsFragment.newInstance()
+    override val initialFragment: BaseFragment by lazy { viewModel.actualFragment }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,27 +43,22 @@ class MainActivity : BaseFragmentActivity(){
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_cards -> {
-                replaceFragment(CardsFragment.newInstance())
+                viewModel.actualFragment = CardsFragment.newInstance()
+                replaceFragment(viewModel.actualFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_lines -> {
-                replaceFragment(LinesFragment.newInstance())
+                viewModel.actualFragment = LinesFragment.newInstance()
+                replaceFragment(viewModel.actualFragment )
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_settings -> {
-                replaceFragment(SettingsFragment.newInstance())
+                viewModel.actualFragment = SettingsFragment.newInstance()
+                replaceFragment(viewModel.actualFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
-    }
-
-    override fun checkItemMenu(itemId: Int){
-        navigation.menu.findItem(itemId).isChecked = true
-    }
-
-    init {
-        initialFragmentItemId = R.id.nav_cards
     }
 
     companion object {

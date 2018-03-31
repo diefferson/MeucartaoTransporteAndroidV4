@@ -18,7 +18,7 @@ class BalanceViewModel(val getCardUseCase: GetCard) : BaseViewModel(){
         if(!isRequested){
             isRequested = true
             loadingEvent.value = true
-            getCardUseCase.execute(GetCardObservable(), GetCard.Params.forCard(Card(code = code, cpf = cpf)))
+            getCardUseCase.execute(GetCardObservable(), GetCard.Params(Card(code,cpf)))
         }
     }
 

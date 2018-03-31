@@ -12,14 +12,14 @@ import io.reactivex.Observable
  */
 class LinesDataRepository(private var linesDataSourceFactory: LinesDataSourceFactory) : LinesRepository{
 
-    override fun saveLine(line: Line) {
-        linesDataSourceFactory
+    override fun saveLine(line: Line):Observable<Boolean> {
+        return linesDataSourceFactory
                 .create()
                 .saveLine(line.toLineDTO())
     }
 
-    override fun saveAllFromJson(json: String) {
-        linesDataSourceFactory
+    override fun saveAllFromJson(json: String):Observable<Boolean> {
+        return linesDataSourceFactory
                 .create()
                 .saveAllFromJson(json)
     }
@@ -42,5 +42,11 @@ class LinesDataRepository(private var linesDataSourceFactory: LinesDataSourceFac
         return linesDataSourceFactory
                 .create(true)
                 .jsonLines()
+    }
+
+    override fun updateLine(line: Line): Observable<Boolean> {
+        return linesDataSourceFactory
+                .create()
+                .updateLine(line.toLineDTO())
     }
 }

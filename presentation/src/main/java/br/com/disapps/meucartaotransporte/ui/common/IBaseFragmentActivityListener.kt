@@ -16,8 +16,6 @@ interface IBaseFragmentActivityListener {
 
     fun replaceAndBackStackFragment(fragment: BaseFragment)
 
-    fun checkItemMenu(itemId: Int)
-
     fun showLoading()
 
     fun dismissLoading()

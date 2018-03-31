@@ -14,8 +14,8 @@ import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
 class SplashActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        IntroActivity.launch(this)
-        //startActivity(Intent(this, MainActivity::class.java))
+        //IntroActivity.launch(this)
+        MainActivity.launch(this)
         finish()
     }
 }

@@ -32,7 +32,6 @@ abstract class BaseFragmentActivity: AppCompatActivity(), IBaseFragmentActivityL
     abstract val tabs : TabLayout
     abstract val appBar : AppBarLayout
     abstract val initialFragment : BaseFragment
-    var initialFragmentItemId: Int =0
     private val loading by lazy { CustomProgressDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,6 @@ abstract class BaseFragmentActivity: AppCompatActivity(), IBaseFragmentActivityL
         initDataBinding()
         setSupportActionBar(toolbar)
         replaceFragment(initialFragment)
-        checkItemMenu(initialFragmentItemId)
         setupLoading()
         setupError()
     }
@@ -59,36 +57,37 @@ abstract class BaseFragmentActivity: AppCompatActivity(), IBaseFragmentActivityL
     }
 
     override fun replaceFragment(fragment: BaseFragment) {
+
         if(supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null){
             val ft = fragmentTransaction
             ft.replace(container.id, fragment, fragment.javaClass.simpleName)
             ft.commit()
-            if(!fragment.hasTabs){
-                appBar.setExpanded(true, true)
-                tabs.visibility = View.GONE
-            }
+        }
+
+        if(!fragment.hasTabs){
+            appBar.setExpanded(true, false)
+            tabs.visibility = View.GONE
         }
     }
 
     override fun replaceAndBackStackFragment(fragment: BaseFragment) {
+
         if(supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null){
             val ft = fragmentTransaction
             ft.replace(container.id, fragment, fragment.javaClass.simpleName)
             ft.addToBackStack(fragment.javaClass.simpleName)
             ft.commit()
-            if(!fragment.hasTabs){
-                appBar.setExpanded(true, true)
-                tabs.visibility = View.GONE
-            }
+        }
+
+        if(!fragment.hasTabs){
+            appBar.setExpanded(true, false)
+            tabs.visibility = View.GONE
         }
     }
 
     private val fragmentTransaction: FragmentTransaction
         get() = supportFragmentManager.beginTransaction()
 
-    override fun checkItemMenu(itemId: Int) {
-        //implements in child
-    }
 
     private fun initDataBinding(){
         binding = DataBindingUtil.setContentView(this,activityLayout )

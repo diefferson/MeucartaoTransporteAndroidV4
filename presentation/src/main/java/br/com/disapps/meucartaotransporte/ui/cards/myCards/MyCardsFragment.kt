@@ -13,27 +13,41 @@ import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import kotlinx.android.synthetic.main.fragment_my_cards.*
 import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.architecture.ext.viewModel
 
 /**
  * Created by dnso on 14/03/2018.
  */
 class MyCardsFragment : BaseFragment(){
 
-    override val viewModel: MyCardsViewModel
-        get() = getViewModel()
+    override val viewModel by viewModel<MyCardsViewModel>()
 
-    override val fragmentLayout: Int
-        get() = R.layout.fragment_my_cards
+    override val fragmentLayout = R.layout.fragment_my_cards
 
+    private val adapter: CardsListAdapter by lazy {
+        CardsListAdapter(ArrayList()).apply {
 
-    private var adapter = CardsListAdapter(ArrayList())
+            emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler )
+
+            setOnItemChildClickListener { adapter, view, position ->
+                when(view.id){
+                    R.id.btn_card_balance -> BalanceActivity.launch(context!!, adapter.data[position] as CardVO)
+                    R.id.btn_card_extract-> ExtractActivity.launch(context!!, adapter.data[position] as CardVO)
+                    R.id.ic_delete_card-> confirmDeleteCard( adapter.data[position] as CardVO)
+                }
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cards_recycler.layoutManager = LinearLayoutManager(context)
-        cards_recycler.adapter = adapter
+
+        cards_recycler.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@MyCardsFragment.adapter
+        }
+
         observeViewModel()
-        adapter.emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler )
     }
 
     override fun onResume() {
@@ -44,13 +58,6 @@ class MyCardsFragment : BaseFragment(){
     private fun observeViewModel(){
         viewModel.cards.observe(this, Observer {
             adapter.setNewData(it)
-            adapter.setOnItemChildClickListener { adapter, view, position ->
-                when(view.id){
-                    R.id.btn_card_balance -> BalanceActivity.launch(context!!, adapter.data[position] as CardVO)
-                    R.id.btn_card_extract-> ExtractActivity.launch(context!!, adapter.data[position] as CardVO)
-                    R.id.ic_delete_card-> confirmDeleteCard( adapter.data[position] as CardVO)
-                }
-            }
         })
     }
 

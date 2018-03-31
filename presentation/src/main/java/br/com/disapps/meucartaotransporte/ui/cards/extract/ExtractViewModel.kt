@@ -14,7 +14,7 @@ class ExtractViewModel(val getExtractUseCase: GetExtract) : BaseViewModel(){
     private var isRequested  = false
     val extract = MutableLiveData<List<Extract>>()
 
-    fun getExtract(){
+    fun getExtract(code: String, cpf: String) {
         if(!isRequested){
             isRequested = true
             loadingEvent.value = true
@@ -29,7 +29,7 @@ class ExtractViewModel(val getExtractUseCase: GetExtract) : BaseViewModel(){
                     loadingEvent.value = false
                     extract.value = t
                 }
-            }, GetExtract.Params.forCard(Card(code = "2909840", cpf = "09695910980")))
+            }, GetExtract.Params(Card(code,cpf)))
         }
     }
 }

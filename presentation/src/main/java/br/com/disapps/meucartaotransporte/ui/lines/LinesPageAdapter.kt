@@ -10,11 +10,20 @@ import br.com.disapps.meucartaotransporte.ui.lines.favoritesLines.FavoritesLines
 /**
  * Created by dnso on 14/03/2018.
  */
-class LinesPageAdapter(fm: FragmentManager, var context: Context) : FragmentPagerAdapter(fm){
+class LinesPageAdapter(fm: FragmentManager, var context: Context, var hasFavorite : Boolean) : FragmentPagerAdapter(fm){
 
     override fun getCount()= 2
 
     override fun getItem(position: Int): Fragment {
+
+        if(hasFavorite){
+            return when (position) {
+                0 -> FavoritesLinesFragment.newInstance()
+                1 -> AllLinesFragment.newInstance()
+                else -> FavoritesLinesFragment.newInstance()
+            }
+        }
+
         return when (position) {
             0 -> AllLinesFragment.newInstance()
             1 -> FavoritesLinesFragment.newInstance()
@@ -23,6 +32,16 @@ class LinesPageAdapter(fm: FragmentManager, var context: Context) : FragmentPage
     }
 
     override fun getPageTitle(position: Int): CharSequence {
+
+        if(hasFavorite){
+            return when (position) {
+                0 -> context.getString(R.string.favorites)
+                1 ->  context.getString(R.string.lines)
+                else -> context.getString(R.string.favorites)
+            }
+
+        }
+
         return when (position) {
             0 -> context.getString(R.string.lines)
             1 -> context.getString(R.string.favorites)

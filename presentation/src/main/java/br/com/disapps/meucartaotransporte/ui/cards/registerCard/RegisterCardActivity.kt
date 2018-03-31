@@ -7,16 +7,14 @@ import android.os.Bundle
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import kotlinx.android.synthetic.main.activity_register_card.*
-import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.architecture.ext.viewModel
 
 
 class RegisterCardActivity : BaseActivity(){
 
-    override val viewModel: RegisterCardViewModel
-        get() = getViewModel()
+    override val viewModel by viewModel<RegisterCardViewModel>()
 
-    override val activityLayout: Int
-        get() = R.layout.activity_register_card
+    override val activityLayout = R.layout.activity_register_card
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -71,7 +71,7 @@ class RegisterCardViewModel(val hasCardUseCase: HasCard,
                 }
             }
 
-        },HasCard.Params.forCard(getFormCard()))
+        },HasCard.Params(getFormCard()))
     }
 
     private fun validateHasCloudCard(){
@@ -91,7 +91,7 @@ class RegisterCardViewModel(val hasCardUseCase: HasCard,
                 }
             }
 
-        }, GetCard.Params.forCard(getFormCard()))
+        }, GetCard.Params(getFormCard()))
     }
 
     private fun saveCard(card: Card){
@@ -113,7 +113,7 @@ class RegisterCardViewModel(val hasCardUseCase: HasCard,
                 }
             }
 
-        },SaveCard.Params.forCard(card))
+        },SaveCard.Params(card))
     }
 
     private fun getFormCard() : Card{

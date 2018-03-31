@@ -8,5 +8,5 @@ data class Line(
     var name: String,
     var category: String,
     var color: String,
-    var favorite: Int = 0
+    var favorite: Boolean
 )

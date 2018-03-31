@@ -19,11 +19,5 @@ class GetCard(var cardRepository: CardsRepository, var threadExecutor: ThreadExe
         return this.cardRepository.card(params.card)
     }
 
-    class Params (val card: Card) {
-        companion object {
-            fun forCard(card: Card): Params {
-                return Params(card)
-            }
-        }
-    }
+    class Params (val card: Card)
 }

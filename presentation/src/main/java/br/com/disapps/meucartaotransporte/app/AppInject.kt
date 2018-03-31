@@ -12,14 +12,13 @@ import br.com.disapps.data.repository.dataSource.cards.CardsDataSourceFactory
 import br.com.disapps.data.repository.dataSource.lines.LinesDataSourceFactory
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.cards.*
+import br.com.disapps.domain.interactor.lines.*
 import br.com.disapps.domain.repository.CardsRepository
 import br.com.disapps.domain.repository.LinesRepository
 import br.com.disapps.meucartaotransporte.executor.UIThread
-import br.com.disapps.meucartaotransporte.ui.lines.allLines.AllLinesViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.CardsViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel
-import br.com.disapps.meucartaotransporte.ui.lines.favoritesLines.FavoritesLinesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
@@ -59,20 +58,18 @@ object AppInject {
 
     private val viewModelModule = applicationContext {
         viewModel { BaseViewModel() }
-        viewModel { CardsViewModel( getCardUseCase = get()) }
+        viewModel { CardsViewModel() }
         viewModel { ItinerariesViewModel() }
-        viewModel { LinesViewModel() }
+        viewModel { LinesViewModel(getLinesUseCase = get(), updateLineUseCase = get()) }
         viewModel { MainViewModel() }
         viewModel { QuickFindViewModel() }
         viewModel { SettingsViewModel() }
         viewModel { ShapesViewModel() }
         viewModel { MyCardsViewModel(getCardsUseCase = get(), deleteCardUseCase = get()) }
-        viewModel { AllLinesViewModel() }
-        viewModel { FavoritesLinesViewModel() }
         viewModel { BalanceViewModel(getCardUseCase = get()) }
         viewModel { RegisterCardViewModel(hasCardUseCase = get(), saveCardUseCase = get(), getCardUseCase = get()) }
         viewModel { ExtractViewModel(getExtractUseCase = get() ) }
-        viewModel { IntroViewModel( ) }
+        viewModel { IntroViewModel(getAllLinesJsonUseCase = get(), saveAllLinesJsonUseCase = get() ) }
     }
 
     private val repositoriesModule: Module = applicationContext {
@@ -87,6 +84,10 @@ object AppInject {
         factory { DeleteCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { HasCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetExtract( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetAllLinesJson( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { SaveAllLinesJson( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetLines( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { UpdateLine( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val dataSourceFactoryModule : Module = applicationContext {

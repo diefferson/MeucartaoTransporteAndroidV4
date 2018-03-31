@@ -14,11 +14,5 @@ class HasCard(var cardRepository: CardsRepository, var threadExecutor: ThreadExe
         return cardRepository.hasCard(params.card)
     }
 
-    class Params (val card: Card) {
-        companion object {
-            fun forCard(card: Card): Params {
-                return Params(card)
-            }
-        }
-    }
+    class Params (val card: Card)
 }

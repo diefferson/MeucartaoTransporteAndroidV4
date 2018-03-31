@@ -8,7 +8,7 @@ fun Line.toLineDTO() = Linha().apply {
     nome = this@toLineDTO.name
     categoria = this@toLineDTO.category
     cor = this@toLineDTO.color
-    favorito = this@toLineDTO.favorite
+    favorito = if(this@toLineDTO.favorite) 1 else 0
 }
 
 fun Linha.toLineBO()= Line(
@@ -16,7 +16,7 @@ fun Linha.toLineBO()= Line(
     name = this.nome,
     category = this.categoria,
     color = this.cor,
-    favorite = this.favorito
+    favorite = this.favorito == 1
 )
 
 fun List<Line>.toLineDTO() = this.map { l -> l.toLineDTO() }

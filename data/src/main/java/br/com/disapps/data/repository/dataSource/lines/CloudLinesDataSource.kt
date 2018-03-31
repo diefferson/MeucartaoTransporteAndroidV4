@@ -9,11 +9,11 @@ import io.reactivex.Observable
  */
 class CloudLinesDataSource(private var restApi: RestApi) : LinesDataSource{
 
-    override fun saveLine(linha: Linha) {
+    override fun saveLine(linha: Linha):Observable<Boolean> {
         TODO("not implemented, local only")
     }
 
-    override fun saveAllFromJson(json: String) {
+    override fun saveAllFromJson(json: String) :Observable<Boolean>{
         TODO("not implemented, local only")
     }
 
@@ -22,6 +22,10 @@ class CloudLinesDataSource(private var restApi: RestApi) : LinesDataSource{
     }
 
     override fun line(linha: Linha): Observable<Linha> {
+        TODO("not implemented, local only")
+    }
+
+    override fun updateLine(linha: Linha): Observable<Boolean> {
         TODO("not implemented, local only")
     }
 

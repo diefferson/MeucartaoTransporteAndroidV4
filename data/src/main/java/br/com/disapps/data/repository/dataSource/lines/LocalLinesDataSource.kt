@@ -10,26 +10,61 @@ import io.realm.Realm
  */
 class LocalLinesDataSource(private var database: Database): LinesDataSource{
 
-    val realm : Realm by lazy { database.getDatabase() as Realm }
+    override fun saveLine(linha: Linha):Observable<Boolean> {
+        val realm = database.getDatabase() as Realm
+        return try {
+            realm.beginTransaction()
+            realm.copyToRealmOrUpdate(linha)
+            realm.commitTransaction()
+            Observable.just(true)
+        }catch (ec: Exception){
+            Observable.just(false)
+        }finally {
+            realm.close()
+        }
 
-    override fun saveLine(linha: Linha) {
-        realm.beginTransaction()
-        realm.copyToRealmOrUpdate(linha)
-        realm.commitTransaction()
     }
 
-    override fun saveAllFromJson(json: String) {
-        realm.beginTransaction()
-        realm.createOrUpdateAllFromJson(Linha::class.java, json)
-        realm.commitTransaction()
+    override fun saveAllFromJson(json: String):Observable<Boolean> {
+        val realm = database.getDatabase() as Realm
+        return try {
+            realm.beginTransaction()
+            realm.createOrUpdateAllFromJson(Linha::class.java, json)
+            realm.commitTransaction()
+            Observable.just(true)
+        }catch (ec: Exception){
+            Observable.just(false)
+        }finally {
+            realm.close()
+        }
     }
 
     override fun lines(): Observable<List<Linha>> {
-        return Observable.just(realm.where(Linha::class.java).findAll().toList())
+        val realm = database.getDatabase() as Realm
+        val lines = realm.copyFromRealm(realm.where(Linha::class.java).findAll().sort("nome").toList())
+        realm.close()
+        return Observable.just(lines)
     }
 
     override fun line(linha: Linha): Observable<Linha> {
-        return Observable.just(realm.where(Linha::class.java).equalTo("codigo", linha.codigo).findFirst())
+        val realm = database.getDatabase() as Realm
+        val line = realm.where(Linha::class.java).equalTo("codigo", linha.codigo).findFirst()
+        realm.close()
+        return Observable.just(line)
+    }
+
+    override fun updateLine(linha: Linha): Observable<Boolean> {
+        val realm = database.getDatabase() as Realm
+        return try {
+            realm.beginTransaction()
+            realm.copyToRealmOrUpdate(linha)
+            realm.commitTransaction()
+            Observable.just(true)
+        }catch (ec: Exception){
+            Observable.just(false)
+        }finally {
+            realm.close()
+        }
     }
 
     override fun jsonLines(): Observable<String> {

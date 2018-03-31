@@ -9,29 +9,33 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import kotlinx.android.synthetic.main.activity_extract.*
-import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.architecture.ext.viewModel
 
 class ExtractActivity : BaseActivity(){
 
-    override val viewModel: ExtractViewModel
-        get() = getViewModel()
+    override val viewModel by viewModel<ExtractViewModel>()
 
-    override val activityLayout: Int
-        get() = R.layout.activity_extract
+    override val activityLayout = R.layout.activity_extract
 
-    private val adapter = ExtractListAdapter(ArrayList())
+    private val adapter : ExtractListAdapter by lazy {
+        ExtractListAdapter(ArrayList())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        extract_recycler.layoutManager = LinearLayoutManager(this)
-        extract_recycler.adapter = adapter
+        extract_recycler.apply {
+            layoutManager = LinearLayoutManager(this@ExtractActivity)
+            adapter = this@ExtractActivity.adapter
+        }
+
         observeViewModel()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.getExtract()
+        val card = intent.extras.getSerializable(CARD) as CardVO
+        viewModel.getExtract(card.code, card.cpf)
     }
 
     private fun observeViewModel(){

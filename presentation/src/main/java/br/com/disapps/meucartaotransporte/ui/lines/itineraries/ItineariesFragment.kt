@@ -2,7 +2,7 @@ package br.com.disapps.meucartaotransporte.ui.lines.itineraries
 
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
-import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.architecture.ext.viewModel
 
 /**
  * Created by dnso on 12/03/2018.
@@ -13,9 +13,7 @@ class ItineariesFragment : BaseFragment() {
         fun newInstance() = ItineariesFragment()
     }
 
-    override val viewModel: ItinerariesViewModel
-        get() = getViewModel()
+    override val viewModel by viewModel<ItinerariesViewModel>()
 
-    override val fragmentLayout: Int
-        get() = R.layout.fragment_itineraries
+    override val fragmentLayout = R.layout.fragment_itineraries
 }

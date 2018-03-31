@@ -45,6 +45,6 @@ class MyCardsViewModel(val getCardsUseCase: GetCards,
                 getCards()
             }
 
-        }, DeleteCard.Params.forCard(card.toCardBO()))
+        }, DeleteCard.Params(card.toCardBO()))
     }
 }

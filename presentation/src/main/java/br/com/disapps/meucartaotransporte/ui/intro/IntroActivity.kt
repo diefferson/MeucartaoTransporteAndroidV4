@@ -1,29 +1,23 @@
 package br.com.disapps.meucartaotransporte.ui.intro
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
-import android.widget.TextView
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
-import br.com.disapps.meucartaotransporte.util.extensions.fromHtml
+import br.com.disapps.meucartaotransporte.util.extensions.toast
 import kotlinx.android.synthetic.main.activity_intro.*
-import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.architecture.ext.viewModel
 
 class IntroActivity : BaseActivity(){
 
-    override val viewModel: IntroViewModel
-        get() = getViewModel()
+    override val viewModel by viewModel<IntroViewModel>()
 
-    override val activityLayout: Int
-        get() = R.layout.activity_intro
+    override val activityLayout = R.layout.activity_intro
 
     private val layouts : IntArray by lazy {
         intArrayOf(R.layout.intro_slide0,
@@ -48,6 +42,14 @@ class IntroActivity : BaseActivity(){
 
         btn_skip.setOnClickListener { MainActivity.launch(this) }
         btn_next.setOnClickListener { view_pager.currentItem = view_pager.currentItem+1 }
+
+        viewModel.downloadLines()
+
+        viewModel.isComplete.observe(this, Observer {
+            if(it!= null && it){
+                toast("sucesso")
+            }
+        })
     }
 
     private fun setupViewPager() {
