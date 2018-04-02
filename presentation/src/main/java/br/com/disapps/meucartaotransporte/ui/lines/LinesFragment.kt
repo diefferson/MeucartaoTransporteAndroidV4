@@ -4,10 +4,11 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
-import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
+import br.com.disapps.meucartaotransporte.ui.lines.searchView.SearchViewActivity
 import kotlinx.android.synthetic.main.fragment_lines.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -30,8 +31,20 @@ class LinesFragment : BaseFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.menu_searchable_activity, menu)
+        inflater!!.inflate(R.menu.menu_lines, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        val id = item!!.itemId
+        when (id) {
+            R.id.action_search_lines -> {
+                SearchViewActivity.launch(context!!)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
