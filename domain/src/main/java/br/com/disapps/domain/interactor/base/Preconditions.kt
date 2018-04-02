@@ -12,7 +12,7 @@
  * the License.
  */
 
-package br.com.disapps.domain.interactor
+package br.com.disapps.domain.interactor.base
 
 object Preconditions {
 

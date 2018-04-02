@@ -1,18 +1,18 @@
 package br.com.disapps.domain.interactor.cards
 
 import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.Preconditions
-import br.com.disapps.domain.interactor.UseCase
+import br.com.disapps.domain.interactor.base.Preconditions
+import br.com.disapps.domain.interactor.base.SingleUseCase
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.model.Extract
 import br.com.disapps.domain.repository.CardsRepository
-import io.reactivex.Observable
-import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
+import io.reactivex.Single
+import br.com.disapps.domain.executor.PostExecutionThread
 
 class GetExtract(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
-                 var postExecutionThread: PostExecutionThread) : UseCase<List<Extract>, GetExtract.Params>(threadExecutor, postExecutionThread){
+                 var postExecutionThread: PostExecutionThread) : SingleUseCase<List<Extract>, GetExtract.Params>(threadExecutor, postExecutionThread){
 
-    override fun buildUseCaseObservable(params: Params): Observable<List<Extract>> {
+    override fun buildUseCaseObservable(params: Params): Single<List<Extract>> {
         Preconditions.checkNotNull(params)
         return cardRepository.extract(params.card)
     }

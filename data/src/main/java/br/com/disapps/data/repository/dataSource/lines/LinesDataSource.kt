@@ -2,19 +2,20 @@ package br.com.disapps.data.repository.dataSource.lines
 
 import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.repository.dataSource.DataSource
-import io.reactivex.Observable
+import io.reactivex.Completable
+import io.reactivex.Single
 
 interface LinesDataSource : DataSource {
 
-    fun saveLine(linha : Linha): Observable<Boolean>
+    fun saveLine(linha : Linha): Completable
 
-    fun saveAllFromJson(json : String): Observable<Boolean>
+    fun saveAllFromJson(json : String): Completable
 
-    fun lines() : Observable<List<Linha>>
+    fun lines() : Single<List<Linha>>
 
-    fun jsonLines() : Observable<String>
+    fun jsonLines() : Single<String>
 
-    fun line(linha: Linha) : Observable<Linha>
+    fun line(linha: Linha) : Single<Linha>
 
-    fun updateLine(linha: Linha):Observable<Boolean>
+    fun updateLine(linha: Linha): Completable
 }

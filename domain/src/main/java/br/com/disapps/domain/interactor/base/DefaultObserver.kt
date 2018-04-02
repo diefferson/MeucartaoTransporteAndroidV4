@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.disapps.domain.interactor
+package br.com.disapps.domain.interactor.base
 
 import io.reactivex.observers.DisposableObserver
 

@@ -1,7 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.intro
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.DefaultObserver
+import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
+import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.lines.GetAllLinesJson
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
@@ -14,12 +15,12 @@ class IntroViewModel(val getAllLinesJsonUseCase: GetAllLinesJson,
 
     fun downloadLines(){
 
-        getAllLinesJsonUseCase.execute(object : DefaultObserver<String>(){
-            override fun onError(exception: Throwable) {
+        getAllLinesJsonUseCase.execute(object : DefaultSingleObserver<String>(){
+            override fun onError(e: Throwable) {
                 loadingEvent.value = false
             }
 
-            override fun onNext(t: String) {
+            override fun onSuccess(t: String) {
                 saveLines(t)
             }
 
@@ -29,18 +30,21 @@ class IntroViewModel(val getAllLinesJsonUseCase: GetAllLinesJson,
 
     private fun saveLines(json:String){
 
-        saveAllLinesJsonUseCase.execute(object :DefaultObserver<Boolean>(){
-
-            override fun onError(exception: Throwable) {
-                loadingEvent.value = false
-            }
-
-            override fun onNext(t: Boolean) {
+        saveAllLinesJsonUseCase.execute(object : DefaultCompletableObserver(){
+            override fun onComplete() {
                 loadingEvent.value = false
                 isComplete.value = true
             }
 
-        }, SaveAllLinesJson.Params(json))
+            override fun onError(e: Throwable) {
+                loadingEvent.value = false
+            }
+        },SaveAllLinesJson.Params(json))
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        getAllLinesJsonUseCase.dispose()
+        saveAllLinesJsonUseCase.dispose()
+    }
 }

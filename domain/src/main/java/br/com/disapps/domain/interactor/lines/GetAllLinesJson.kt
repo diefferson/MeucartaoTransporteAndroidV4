@@ -1,15 +1,15 @@
 package br.com.disapps.domain.interactor.lines
 
 import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.UseCase
+import br.com.disapps.domain.interactor.base.SingleUseCase
 import br.com.disapps.domain.repository.LinesRepository
-import io.reactivex.Observable
-import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
+import io.reactivex.Single
+import br.com.disapps.domain.executor.PostExecutionThread
 
 class GetAllLinesJson(var linesRepository: LinesRepository, var threadExecutor: ThreadExecutor,
-                      var postExecutionThread: PostExecutionThread) : UseCase<String, Unit>(threadExecutor,postExecutionThread){
+                      var postExecutionThread: PostExecutionThread) : SingleUseCase<String, Unit>(threadExecutor,postExecutionThread){
 
-    override fun buildUseCaseObservable(params: Unit): Observable<String> {
+    override fun buildUseCaseObservable(params: Unit): Single<String> {
         return linesRepository.jsonLines()
     }
 }

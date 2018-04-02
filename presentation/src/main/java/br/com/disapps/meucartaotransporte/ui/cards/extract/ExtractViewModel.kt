@@ -1,7 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.cards.extract
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.DefaultObserver
+import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.cards.GetExtract
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.model.Extract
@@ -18,18 +18,23 @@ class ExtractViewModel(val getExtractUseCase: GetExtract) : BaseViewModel(){
         if(!isRequested){
             isRequested = true
             loadingEvent.value = true
-            getExtractUseCase.execute(object : DefaultObserver<List<Extract>>() {
+            getExtractUseCase.execute(object : DefaultSingleObserver<List<Extract>>() {
 
-                override fun onError(exception: Throwable) {
+                override fun onError(e: Throwable) {
                     loadingEvent.value = false
                     errorEvent.value = KnownError("Erro!")
                 }
 
-                override fun onNext(t: List<Extract>) {
+                override fun onSuccess(t: List<Extract>) {
                     loadingEvent.value = false
                     extract.value = t
                 }
             }, GetExtract.Params(Card(code,cpf)))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getExtractUseCase.dispose()
     }
 }

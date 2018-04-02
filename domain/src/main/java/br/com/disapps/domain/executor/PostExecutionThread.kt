@@ -1,4 +1,4 @@
-package org.buffer.android.boilerplate.domain.executor
+package br.com.disapps.domain.executor
 
 import io.reactivex.Scheduler
 

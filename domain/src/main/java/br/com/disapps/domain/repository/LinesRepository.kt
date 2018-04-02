@@ -1,21 +1,22 @@
 package br.com.disapps.domain.repository
 
 import br.com.disapps.domain.model.Line
-import io.reactivex.Observable
+import io.reactivex.Completable
+import io.reactivex.Single
 
 
 interface LinesRepository{
 
-    fun saveLine(line : Line): Observable<Boolean>
+    fun saveLine(line : Line): Completable
 
-    fun saveAllFromJson(json : String): Observable<Boolean>
+    fun saveAllFromJson(json : String): Completable
 
-    fun jsonLines() : Observable<String>
+    fun jsonLines() : Single<String>
 
-    fun lines() : Observable<List<Line>>
+    fun lines() : Single<List<Line>>
 
-    fun line(line: Line) : Observable<Line>
+    fun line(line: Line) : Single<Line>
 
-    fun updateLine(line : Line): Observable<Boolean>
+    fun updateLine(line : Line): Completable
 
 }

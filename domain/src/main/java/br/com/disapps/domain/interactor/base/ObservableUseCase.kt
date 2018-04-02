@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.disapps.domain.interactor
+package br.com.disapps.domain.interactor.base
 
 
-import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
+import br.com.disapps.domain.executor.PostExecutionThread
 
 import br.com.disapps.domain.executor.ThreadExecutor
 import io.reactivex.Observable
@@ -30,14 +30,14 @@ import io.reactivex.schedulers.Schedulers
  * This interface represents a execution unit for different use cases (this means any use case
  * in the application should implement this contract).
  *
- * By convention each UseCase implementation will return the result using a [DisposableObserver]
+ * By convention each ObservableUseCase implementation will return the result using a [DisposableObserver]
  * that will execute its job in a background thread and will post the result in the UI thread.
  */
-abstract class UseCase<T, Params> internal constructor(private val threadExecutor: ThreadExecutor, private val postExecutionThread: PostExecutionThread) {
+abstract class ObservableUseCase<T, Params> internal constructor(private val threadExecutor: ThreadExecutor, private val postExecutionThread: PostExecutionThread) {
     private val disposables: CompositeDisposable = CompositeDisposable()
 
     /**
-     * Builds an [Observable] which will be used when executing the current [UseCase].
+     * Builds an [Observable] which will be used when executing the current [ObservableUseCase].
      */
     internal abstract fun buildUseCaseObservable(params: Params): Observable<T>
 

@@ -4,7 +4,7 @@ import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.repository.CardsRepository
 import com.nhaarman.mockito_kotlin.*
-import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
+import br.com.disapps.domain.executor.PostExecutionThread
 import org.junit.Before
 import org.junit.Test
 
@@ -23,7 +23,7 @@ class DeleteCardTest{
 
     @Test
     fun testDeleteCardUseCaseObservableHappyCase() {
-        deleteCard.buildUseCaseObservable(DeleteCard.Params.forCard(mockCard))
+        deleteCard.buildUseCaseObservable(DeleteCard.Params(mockCard))
 
         verify(mockCardsRepository).deleteCard(mockCard)
         verifyNoMoreInteractions(mockCardsRepository)

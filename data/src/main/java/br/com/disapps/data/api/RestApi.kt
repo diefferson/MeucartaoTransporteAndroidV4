@@ -6,6 +6,7 @@ import br.com.disapps.data.entity.RetornoExtrato
 import br.com.disapps.data.entity.Veiculo
 import com.google.gson.JsonArray
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.*
 
 /**
@@ -13,28 +14,28 @@ import retrofit2.http.*
  */
 interface RestApi {
     @POST("listaLinhas")
-    fun listaLinhas(): Observable<JsonArray>
+    fun listaLinhas(): Single<JsonArray>
 
     @POST("listaHorarios")
-    fun listaHorarios(): Observable<JsonArray>
+    fun listaHorarios(): Single<JsonArray>
 
     @FormUrlEncoded
     @POST("listaPontos")
-    fun listaPontos(@Field("met") m: String): Observable<JsonArray>
+    fun listaPontos(@Field("met") m: String): Single<JsonArray>
 
     @FormUrlEncoded
     @POST("listaShapes")
-    fun listaShapes(@Field("met") m: String): Observable<JsonArray>
+    fun listaShapes(@Field("met") m: String): Single<JsonArray>
 
     @FormUrlEncoded
     @POST("listaVeiculos")
-    fun listaVeiculos(@Field("l") l: String): Observable<List<Veiculo>>
+    fun listaVeiculos(@Field("l") l: String): Single<List<Veiculo>>
 
     @FormUrlEncoded
     @POST("cartao")
-    fun saldoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Observable<RetornoCartao>
+    fun saldoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Single<RetornoCartao>
 
     @FormUrlEncoded
     @POST("cartao")
-    fun extratoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Observable<RetornoExtrato>
+    fun extratoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Single<RetornoExtrato>
 }

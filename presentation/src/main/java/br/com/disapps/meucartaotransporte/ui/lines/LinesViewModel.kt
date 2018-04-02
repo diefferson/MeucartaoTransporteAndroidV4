@@ -1,7 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.lines
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.DefaultObserver
+import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
+import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.lines.GetLines
 import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.domain.model.Line
@@ -25,20 +26,19 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
             isRequested = true
             loadingEvent.value = true
 
-            getLinesUseCase.execute(object : DefaultObserver<List<Line>>() {
+            getLinesUseCase.execute(object : DefaultSingleObserver<List<Line>>() {
 
-                override fun onError(exception: Throwable) {
+                override fun onError(e: Throwable) {
                     loadingEvent.value = false
                 }
 
-                override fun onNext(t: List<Line>) {
+                override fun onSuccess(t: List<Line>) {
                     loadingEvent.value = false
                     favoriteLines.value = t.filter { line->line.favorite }
                     if(!refresh){
                         hasFavorite.value = favoriteLines.value!= null && favoriteLines.value!!.isNotEmpty()
                     }
                     lines.value = t
-
                 }
             }, Unit)
         }
@@ -46,10 +46,16 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
 
     fun favoriteLine(line: Line){
         line.favorite = !line.favorite
-        updateLineUseCase.execute(object : DefaultObserver<Boolean>(){
-            override fun onNext(t: Boolean) {
+        updateLineUseCase.execute(object : DefaultCompletableObserver(){
+            override fun onComplete() {
                 getLines(true)
             }
-        }, UpdateLine.Params(line))
+        },UpdateLine.Params(line))
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getLinesUseCase.dispose()
+        updateLineUseCase.dispose()
     }
 }

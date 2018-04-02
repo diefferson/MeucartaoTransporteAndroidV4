@@ -1,17 +1,17 @@
 package br.com.disapps.domain.interactor.cards
 
 import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.UseCase
+import br.com.disapps.domain.interactor.base.SingleUseCase
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.repository.CardsRepository
-import io.reactivex.Observable
-import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
+import io.reactivex.Single
+import br.com.disapps.domain.executor.PostExecutionThread
 
 class GetCards(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
-                var postExecutionThread: PostExecutionThread) : UseCase<List<Card>, Unit>(threadExecutor, postExecutionThread) {
+                var postExecutionThread: PostExecutionThread) : SingleUseCase<List<Card>, Unit>(threadExecutor, postExecutionThread) {
 
 
-    override fun buildUseCaseObservable(params: Unit): Observable<List<Card>> {
+    override fun buildUseCaseObservable(params: Unit): Single<List<Card>> {
         return cardRepository.cards()
     }
 

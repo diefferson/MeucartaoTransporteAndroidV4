@@ -7,7 +7,7 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
-import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
+import br.com.disapps.domain.executor.PostExecutionThread
 import org.junit.Before
 import org.junit.Test
 
@@ -26,7 +26,7 @@ class SaveCardTest{
 
     @Test
     fun testSaveCardUseCaseObservableHappyCase() {
-        saveCard.buildUseCaseObservable(SaveCard.Params.forCard(mockCard))
+        saveCard.buildUseCaseObservable(SaveCard.Params(mockCard))
 
         verify(mockCardsRepository).saveCard(mockCard)
         verifyNoMoreInteractions(mockCardsRepository)

@@ -30,7 +30,7 @@ import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.searchView.SearchViewViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.shapes.ShapesViewModel
-import org.buffer.android.boilerplate.domain.executor.PostExecutionThread
+import br.com.disapps.domain.executor.PostExecutionThread
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext

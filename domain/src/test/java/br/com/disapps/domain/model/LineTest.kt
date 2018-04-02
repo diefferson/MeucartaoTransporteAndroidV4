@@ -33,6 +33,6 @@ class LineTest{
         const val FAKE_NAME = "Interbairros IV"
         const val FAKE_CATEGORY = "Interbairros"
         const val FAKE_COLOR = "green"
-        const val FAKE_FAVORITE = 0
+        const val FAKE_FAVORITE = false
     }
 }

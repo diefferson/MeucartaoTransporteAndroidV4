@@ -1,7 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.cards.myCards
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.DefaultObserver
+import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
+import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.cards.DeleteCard
 import br.com.disapps.domain.interactor.cards.GetCards
 import br.com.disapps.domain.model.Card
@@ -20,13 +21,13 @@ class MyCardsViewModel(val getCardsUseCase: GetCards,
 
     fun getCards(){
         loadingEvent.value = true
-        getCardsUseCase.execute(object : DefaultObserver<List<Card>>() {
+        getCardsUseCase.execute(object : DefaultSingleObserver<List<Card>>() {
 
-            override fun onError(exception: Throwable) {
+            override fun onError(e: Throwable) {
                 loadingEvent.value = false
             }
 
-            override fun onNext(t: List<Card>) {
+            override fun onSuccess(t: List<Card>) {
                 loadingEvent.value = false
                 cards.value = t.toCardVO()
             }
@@ -34,17 +35,22 @@ class MyCardsViewModel(val getCardsUseCase: GetCards,
     }
 
     fun deleteCard(card: CardVO){
-
-        deleteCardUseCase.execute(object : DefaultObserver<Boolean>(){
-            override fun onError(exception: Throwable) {
-                loadingEvent.value = false
-            }
-
-            override fun onNext(t: Boolean) {
-                loadingEvent.value = false
+        loadingEvent.value = true
+        deleteCardUseCase.execute(object : DefaultCompletableObserver(){
+            override fun onComplete() {
                 getCards()
+                loadingEvent.value = false
             }
 
-        }, DeleteCard.Params(card.toCardBO()))
+            override fun onError(e: Throwable) {
+                loadingEvent.value = false
+            }
+        },DeleteCard.Params(card.toCardBO()))
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getCardsUseCase.dispose()
+        deleteCardUseCase.dispose()
     }
 }

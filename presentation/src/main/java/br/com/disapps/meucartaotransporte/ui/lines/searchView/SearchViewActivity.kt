@@ -18,6 +18,7 @@ import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesAdapter
+import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
 import org.koin.android.architecture.ext.viewModel
@@ -28,17 +29,24 @@ class SearchViewActivity : BaseActivity(){
 
     override val activityLayout = R.layout.activity_search_view
 
+    private val linesViewViewModel by viewModel<LinesViewModel>()
+
     private val adapter: LinesAdapter by lazy{
         LinesAdapter(ArrayList()).apply {
             emptyView = inflateView(R.layout.empty_view, lines_recycler )
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.fav_line -> {
-                        viewModel.favoriteLine(adapter.data[position] as Line)
+                        linesViewViewModel.favoriteLine(adapter.data[position] as Line)
                     }
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        linesViewViewModel.getLines()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +57,8 @@ class SearchViewActivity : BaseActivity(){
             adapter = this@SearchViewActivity.adapter
         }
 
-        viewModel.lines.observe(this, Observer {
+        linesViewViewModel.lines.observe(this, Observer {
+            viewModel.lines.value = it
             adapter.setNewData(it)
         })
     }

@@ -1,7 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.cards.registerCard
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.DefaultObserver
+import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
+import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.interactor.cards.HasCard
 import br.com.disapps.domain.interactor.cards.SaveCard
@@ -55,14 +56,14 @@ class RegisterCardViewModel(val hasCardUseCase: HasCard,
 
     private fun validateHasLocalCard(){
         loadingEvent.value = true
-        hasCardUseCase.execute(object : DefaultObserver<Boolean>() {
+        hasCardUseCase.execute(object : DefaultSingleObserver<Boolean>(){
 
-            override fun onError(exception: Throwable) {
+            override fun onError(e: Throwable) {
                 loadingEvent.value = false
                 errorEvent.value = KnownError("Erro ao verificar cartao")
             }
 
-            override fun onNext(t: Boolean) {
+            override fun onSuccess(t: Boolean) {
                 if(t){
                     loadingEvent.value = false
                     errorEvent.value = KnownError("Cartao já cadastrado")
@@ -71,18 +72,18 @@ class RegisterCardViewModel(val hasCardUseCase: HasCard,
                 }
             }
 
-        },HasCard.Params(getFormCard()))
+        }, HasCard.Params(getFormCard()))
     }
 
     private fun validateHasCloudCard(){
-        getCardUseCase.execute(object : DefaultObserver<Card?>(){
+        getCardUseCase.execute(object : DefaultSingleObserver<Card?>(){
 
-            override fun onError(exception: Throwable) {
+            override fun onError(e: Throwable) {
                 loadingEvent.value = false
                 errorEvent.value = KnownError("Erro ao consultar cartao")
             }
 
-            override fun onNext(t: Card?) {
+            override fun onSuccess(t: Card?) {
                 if(t!= null){
                     t.name = name.value.toString()
                     saveCard(t)
@@ -96,24 +97,19 @@ class RegisterCardViewModel(val hasCardUseCase: HasCard,
 
     private fun saveCard(card: Card){
 
-        saveCardUseCase.execute(object :  DefaultObserver<Boolean>() {
+        saveCardUseCase.execute(object : DefaultCompletableObserver(){
 
-            override fun onError(exception: Throwable) {
+            override fun onComplete() {
+                isFinished.value = true
                 loadingEvent.value = false
-                errorEvent.value = KnownError("Erro ao salvar cartao")
             }
 
-            override fun onNext(t: Boolean) {
+            override fun onError(e: Throwable) {
                 loadingEvent.value = false
-                if(t){
-                    errorEvent.value = KnownError("Cartão salvo com sucesso")
-                    isFinished.value = true;
-                }else{
-                    errorEvent.value = KnownError("Não foi possivel salvar cartao")
-                }
             }
 
         },SaveCard.Params(card))
+
     }
 
     private fun getFormCard() : Card{
@@ -122,5 +118,12 @@ class RegisterCardViewModel(val hasCardUseCase: HasCard,
             cpf = cpf.value.toString(),
             name = name.value.toString()
         )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getCardUseCase.dispose()
+        saveCardUseCase.dispose()
+        hasCardUseCase.dispose()
     }
 }
