@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
-import android.support.v7.widget.Toolbar
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
@@ -14,9 +13,9 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
+import com.oshi.libsearchtoolbar.SearchAnimationToolbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.include_container.*
-import kotlinx.android.synthetic.main.include_toolbar_tabs.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import org.koin.android.architecture.ext.viewModel
 
 class MainActivity : BaseFragmentActivity(){
@@ -27,7 +26,7 @@ class MainActivity : BaseFragmentActivity(){
 
     override val container: FrameLayout by lazy { vContainer  }
 
-    override val toolbar: Toolbar by lazy { vToolbar }
+    override val toolbar: SearchAnimationToolbar by lazy { vToolbar }
 
     override val tabs: TabLayout by lazy { vTabs }
 

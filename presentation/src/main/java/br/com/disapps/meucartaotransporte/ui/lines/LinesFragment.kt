@@ -40,7 +40,8 @@ class LinesFragment : BaseFragment() {
         val id = item!!.itemId
         when (id) {
             R.id.action_search_lines -> {
-                SearchViewActivity.launch(context!!)
+                iAppActivityListener.animateSearchAction()
+               // SearchViewActivity.launch(context!!)
                 return true
             }
         }
@@ -54,8 +55,10 @@ class LinesFragment : BaseFragment() {
 
     private fun observeViewModel(){
         viewModel.hasFavorite.observe(this, Observer {
-            view_pager.adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
+            val adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
+            view_pager.adapter = adapter
             iAppActivityListener.setupTabs(view_pager)
+            iAppActivityListener.setPagerAdaper(adapter)
         })
     }
 

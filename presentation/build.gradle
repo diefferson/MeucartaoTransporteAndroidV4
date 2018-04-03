@@ -75,6 +75,8 @@ dependencies {
     implementation presentationDependencies.materialScrollBar
     implementation presentationDependencies.pageIndicatorVersion
     kapt presentationDependencies.archCompiler
+    implementation 'com.github.udioshi85:libSearchToolbar:1.3.0'
+
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit
     androidTestImplementation presentationTestDependencies.junit

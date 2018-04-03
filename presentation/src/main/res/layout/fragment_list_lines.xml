@@ -12,9 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <br.com.disapps.meucartaotransporte.util.custom.ObservableRecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbars="vertical"
             android:id="@+id/lines_recycler"
             tools:listitem="@layout/item_line"
             tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>

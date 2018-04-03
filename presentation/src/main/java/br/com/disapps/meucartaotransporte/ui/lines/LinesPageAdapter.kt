@@ -5,12 +5,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.ui.common.BasePagerAdaper
 import br.com.disapps.meucartaotransporte.ui.lines.allLines.AllLinesFragment
 import br.com.disapps.meucartaotransporte.ui.lines.favoritesLines.FavoritesLinesFragment
 /**
  * Created by dnso on 14/03/2018.
  */
-class LinesPageAdapter(fm: FragmentManager, var context: Context, var hasFavorite : Boolean) : FragmentPagerAdapter(fm){
+class LinesPageAdapter(fm: FragmentManager, context: Context, var hasFavorite : Boolean) : BasePagerAdaper(fm, context){
 
     override fun getCount()= 2
 
@@ -19,15 +20,15 @@ class LinesPageAdapter(fm: FragmentManager, var context: Context, var hasFavorit
         if(hasFavorite){
             return when (position) {
                 0 -> FavoritesLinesFragment.newInstance()
-                1 -> AllLinesFragment.newInstance()
+                1 -> AllLinesFragment.newInstance(mScrollY)
                 else -> FavoritesLinesFragment.newInstance()
             }
         }
 
         return when (position) {
-            0 -> AllLinesFragment.newInstance()
+            0 -> AllLinesFragment.newInstance(mScrollY)
             1 -> FavoritesLinesFragment.newInstance()
-            else -> AllLinesFragment.newInstance()
+            else -> AllLinesFragment.newInstance(mScrollY)
         }
     }
 
