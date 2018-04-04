@@ -44,6 +44,10 @@ class MainActivity : BaseFragmentActivity(){
         viewModel.searchText.value = query
     }
 
+    override fun onSearchAction(isOpen: Boolean) {
+        viewModel.onSearchAction.value = isOpen
+    }
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_cards -> {

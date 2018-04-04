@@ -12,5 +12,6 @@ class MainViewModel : BaseViewModel(){
 
     var actualFragment: BaseFragment = CardsFragment.newInstance()
     val searchText = MutableLiveData<String>()
+    val onSearchAction = MutableLiveData<Boolean>()
 
 }

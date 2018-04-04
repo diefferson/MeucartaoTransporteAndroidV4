@@ -58,25 +58,23 @@ class AllLinesFragment : BaseFragment() {
             adapter.setNewData(it)
         })
 
-        viewModel.linesFiltered.observe(this, Observer {
-            adapter.setNewData(it)
+        mainViewModel.onSearchAction.observe(this, Observer {
+            if(it!= null && it){
+                adapter.setNewData(viewModel.linesFiltered)
+            }else{
+                adapter.setNewData(viewModel.lines.value)
+            }
         })
 
         mainViewModel.searchText.observe(this, Observer {
             if(it!= null){
                 viewModel.filterLines(it)
+                adapter.notifyDataSetChanged()
             }
         })
     }
 
     companion object {
-        const val ARG_SCROLL_Y = "scroll_y"
-        fun newInstance(mScrollY: Int = 0):AllLinesFragment {
-            val f = AllLinesFragment()
-            val args = Bundle()
-            args.putInt(ARG_SCROLL_Y, mScrollY)
-            f.arguments = args
-            return f
-        }
+        fun newInstance()= AllLinesFragment()
     }
 }

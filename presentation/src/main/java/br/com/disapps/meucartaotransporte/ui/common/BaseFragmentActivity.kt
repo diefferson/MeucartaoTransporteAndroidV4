@@ -138,10 +138,12 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
 
     override fun onSearchCollapsed() {
         showTabs()
+        onSearchAction(false)
     }
 
     override fun onSearchExpanded() {
         hideTabs()
+        onSearchAction(true)
     }
 
     override fun onSearchQueryChanged(query: String) {
@@ -153,6 +155,8 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     }
 
     abstract fun setSearchQuery(query: String)
+
+    abstract fun onSearchAction(isOpen: Boolean)
 
     private fun showTabs() {
         if(!isTabsVisible){

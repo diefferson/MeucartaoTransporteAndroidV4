@@ -17,14 +17,17 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
 
     private var isRequested  = false
     val lines = MutableLiveData<List<Line>>()
-    val linesFiltered = MutableLiveData<List<Line>>()
+    val linesFiltered = ArrayList<Line>()
     val favoriteLines = MutableLiveData<List<Line>>()
     val hasFavorite = MutableLiveData<Boolean>()
 
     fun filterLines(query:String){
-//        linesFiltered.value = lines.value?.filter {
-//            line -> this@LinesViewModel.filter(line, query)
-//        }
+        linesFiltered.clear()
+        lines.value?.forEach {
+            if(filter(it, query)){
+                linesFiltered.add(it)
+            }
+        }
     }
 
     private fun filter(line: Line, query: String) : Boolean{
@@ -47,6 +50,7 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
 
                 override fun onSuccess(t: List<Line>) {
                     loadingEvent.value = false
+
                     favoriteLines.value = t.filter { line->line.favorite }
                     if(!refresh){
                         hasFavorite.value = favoriteLines.value!= null && favoriteLines.value!!.isNotEmpty()
