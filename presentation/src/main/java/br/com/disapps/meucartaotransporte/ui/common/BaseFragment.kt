@@ -20,8 +20,9 @@ abstract class BaseFragment : Fragment() {
 
     abstract val viewModel: BaseViewModel
     abstract val fragmentLayout: Int
+    private var binding: ViewDataBinding? = null
+
     var hasTabs: Boolean = false
-    var binding: ViewDataBinding? = null
 
     val iAppActivityListener: IBaseFragmentActivityListener by lazy{
         activity as IBaseFragmentActivityListener

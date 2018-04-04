@@ -15,7 +15,8 @@ import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
 import com.oshi.libsearchtoolbar.SearchAnimationToolbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.include_container.*
+import kotlinx.android.synthetic.main.include_toolbar_tabs.*
 import org.koin.android.architecture.ext.viewModel
 
 class MainActivity : BaseFragmentActivity(){
@@ -61,7 +62,6 @@ class MainActivity : BaseFragmentActivity(){
     }
 
     companion object {
-
         fun launch(context: Context){
             val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)

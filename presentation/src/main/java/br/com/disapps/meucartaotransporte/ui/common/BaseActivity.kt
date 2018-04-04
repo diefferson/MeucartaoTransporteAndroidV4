@@ -18,7 +18,7 @@ abstract class BaseActivity: AppCompatActivity(){
 
     abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
-    var binding: ViewDataBinding? = null
+    private var binding: ViewDataBinding? = null
     private val loading by lazy { CustomProgressDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

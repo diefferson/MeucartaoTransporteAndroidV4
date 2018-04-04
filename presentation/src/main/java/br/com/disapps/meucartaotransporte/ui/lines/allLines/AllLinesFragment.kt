@@ -2,17 +2,14 @@ package br.com.disapps.meucartaotransporte.ui.lines.allLines
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.view.ViewGroup
 import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
-import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesAdapter
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
-import br.com.disapps.meucartaotransporte.util.custom.ObservableScrollViewCallbacks
-import br.com.disapps.meucartaotransporte.util.custom.ScrollUtils
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
 import org.koin.android.architecture.ext.viewModel
@@ -43,24 +40,10 @@ class AllLinesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lines_recycler.apply {
-            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
             adapter = this@AllLinesFragment.adapter
-        }
-
-        if (activity is ObservableScrollViewCallbacks) {
-            // Scroll to the specified offset after layout
-            val args = arguments
-            if (args != null && args.containsKey(ARG_SCROLL_Y)) {
-                val scrollY = args.getInt(ARG_SCROLL_Y, 0)
-                ScrollUtils.addOnGlobalLayoutListener(lines_recycler, Runnable { lines_recycler.scrollTo(0, scrollY) })
-            }
-
-            // TouchInterceptionViewGroup should be a parent view other than ViewPager.
-            // This is a workaround for the issue #117:
-            // https://github.com/ksoichiro/Android-ObservableScrollView/issues/117
-            lines_recycler.setTouchInterceptionViewGroup(activity!!.findViewById<ViewGroup>(R.id.vContainer) )
-
-            lines_recycler.setScrollViewCallbacks(activity as ObservableScrollViewCallbacks)
+            itemAnimator = DefaultItemAnimator()
         }
 
         observeViewModel()

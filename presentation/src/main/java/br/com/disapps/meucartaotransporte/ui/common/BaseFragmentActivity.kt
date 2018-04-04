@@ -6,55 +6,78 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
-import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.view.ViewPropertyAnimator
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
-import br.com.disapps.meucartaotransporte.util.custom.ObservableScrollViewCallbacks
-import br.com.disapps.meucartaotransporte.util.custom.ScrollState
-import br.com.disapps.meucartaotransporte.util.custom.ScrollUtils
-import br.com.disapps.meucartaotransporte.util.custom.Scrollable
 import br.com.disapps.meucartaotransporte.util.extensions.toast
 import com.oshi.libsearchtoolbar.SearchAnimationToolbar
-import kotlinx.android.synthetic.main.fragment_lines.view.*
-
 
 /**
  * Created by diefferson on 29/11/2017.
  */
 abstract class BaseFragmentActivity: AppCompatActivity(),
         IBaseFragmentActivityListener,
-        SearchAnimationToolbar.OnSearchQueryChangedListener,
-        ObservableScrollViewCallbacks {
+        SearchAnimationToolbar.OnSearchQueryChangedListener {
 
     abstract val viewModel: BaseViewModel
-    var binding: ViewDataBinding? = null
     abstract val activityLayout: Int
     abstract val container: FrameLayout
     abstract val toolbar : SearchAnimationToolbar
     abstract val tabs : TabLayout
     abstract val appBar : AppBarLayout
     abstract val initialFragment : BaseFragment
+
+    private var binding: ViewDataBinding? = null
     private val loading by lazy { CustomProgressDialog(this) }
 
-    private var mBaseTranslationY: Int = 0
-    private var mPagerAdapter:BasePagerAdaper? = null
+    private val fragmentTransaction : FragmentTransaction
+        get() = supportFragmentManager.beginTransaction()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initDataBinding()
-        toolbar.setSupportActionBar(this)
-        toolbar.setOnSearchQueryChangedListener(this)
-        replaceFragment(initialFragment)
+        setupToolbar()
         setupLoading()
         setupError()
+        replaceFragment(initialFragment)
+    }
+
+    private fun initDataBinding(){
+        binding = DataBindingUtil.setContentView(this,activityLayout )
+        binding?.setVariable(BR.viewModel, viewModel)
+        binding?.setLifecycleOwner(this)
+    }
+
+    private fun setupToolbar(){
+        toolbar.setSupportActionBar(this)
+        toolbar.setOnSearchQueryChangedListener(this)
+    }
+
+    private fun setupLoading(){
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it != null){
+                if(it){
+                    loading.show()
+                }else{
+                    loading.dismiss()
+                }
+            }
+        })
+    }
+
+    private fun setupError(){
+        viewModel.getErrorObservable().observe(this, Observer {
+            if(it != null){
+                toast(it.message)
+            }else{
+                toast(getString(R.string.unknow_error))
+            }
+        })
     }
 
     override fun setTitle(title: String) {
@@ -99,38 +122,6 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         }
     }
 
-    private val fragmentTransaction: FragmentTransaction
-        get() = supportFragmentManager.beginTransaction()
-
-
-    private fun initDataBinding(){
-        binding = DataBindingUtil.setContentView(this,activityLayout )
-        binding?.setVariable(BR.viewModel, viewModel)
-        binding?.setLifecycleOwner(this)
-    }
-
-    private fun setupLoading(){
-        viewModel.getIsLoadingObservable().observe(this, Observer {
-           if(it != null){
-               if(it){
-                   loading.show()
-               }else{
-                   loading.dismiss()
-               }
-           }
-        })
-    }
-
-    private fun setupError(){
-        viewModel.getErrorObservable().observe(this, Observer {
-            if(it != null){
-                toast(it.message)
-            }else{
-                toast(getString(R.string.unknow_error))
-            }
-        })
-    }
-
     override fun showLoading() {
         loading.show()
     }
@@ -140,7 +131,8 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     }
 
     override fun animateSearchAction() {
-        toolbar.onSearchIconClick()
+        hideToolbar()
+     //   toolbar.onSearchIconClick()
     }
 
     override fun onSearchCollapsed() {
@@ -159,69 +151,12 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         //searchText.setText(getString(R.string.submitted, query))
     }
 
-    override fun onScrollChanged(scrollY: Int, firstScroll: Boolean, dragging: Boolean) {
-        if (dragging) {
-            val toolbarHeight = toolbar.height
-            val currentHeaderTranslationY = appBar.translationY
-            if (firstScroll) {
-                if (-toolbarHeight < currentHeaderTranslationY) {
-                    mBaseTranslationY = scrollY
-                }
-            }
-            val headerTranslationY = ScrollUtils.getFloat(-(scrollY - mBaseTranslationY).toFloat(), -toolbarHeight.toFloat(), 0f)
-            appBar.animate().cancel()
-            appBar.translationY = headerTranslationY
-        }
-    }
-
-    override fun onDownMotionEvent() {
-
-    }
-
-    override fun onUpOrCancelMotionEvent(scrollState: ScrollState) {
-        mBaseTranslationY = 0
-
-        val fragment = getCurrentFragment()
-        val view = fragment?.view ?: return
-
-        // ObservableXxxViews have same API
-        // but currently they don't have any common interfaces.
-        adjustToolbar(scrollState, view)
-    }
-
-    private fun adjustToolbar(scrollState: ScrollState, view: View) {
-        val toolbarHeight = toolbar.height
-        val scrollView = view.findViewById<View>(R.id.lines_recycler) as Scrollable
-        val scrollY = scrollView.currentScrollY
-        if (scrollState === ScrollState.DOWN) {
-            showToolbar()
-        } else if (scrollState === ScrollState.UP) {
-            if (toolbarHeight <= scrollY) {
-                hideToolbar()
-            } else {
-                showToolbar()
-            }
-        } else {
-            // Even if onScrollChanged occurs without scrollY changing, toolbar should be adjusted
-            if (toolbarIsShown() || toolbarIsHidden()) {
-                // Toolbar is completely moved, so just keep its state
-                // and propagate it to other pages
-                propagateToolbarState(toolbarIsShown())
-            } else {
-                // Toolbar is moving but doesn't know which to move:
-                // you can change this to hideToolbar()
-                showToolbar()
-            }
-        }
-    }
-
     private fun showToolbar() {
         val headerTranslationY = appBar.translationY
         if (headerTranslationY != 0f) {
             appBar.animate().cancel()
             appBar.animate().translationY(0f).setDuration(200).start()
         }
-        propagateToolbarState(true)
     }
 
     private fun hideToolbar() {
@@ -231,7 +166,6 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
             appBar.animate().cancel()
             appBar.animate().translationY(-toolbarHeight.toFloat()).setDuration(200).start()
         }
-        propagateToolbarState(false)
     }
 
     private fun toolbarIsShown(): Boolean {
@@ -242,47 +176,6 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         return appBar.translationY == -toolbar.height.toFloat()
     }
 
-    private fun getCurrentFragment(): Fragment? {
-        return mPagerAdapter?.getItem(tabs.view_pager.currentItem)
-    }
 
-    private fun propagateToolbarState(isShown: Boolean) {
-        val toolbarHeight = toolbar.height
 
-        // Set scrollY for the fragments that are not created yet
-        mPagerAdapter?.mScrollY = (if (isShown) 0 else toolbarHeight)
-
-        // Set scrollY for the active fragments
-        for (i in 0 until mPagerAdapter!!.count) {
-            // Skip current item
-            if (i == tabs.view_pager.currentItem) {
-                continue
-            }
-
-            // Skip destroyed or not created item
-            val f = mPagerAdapter?.getItem(i) ?: continue
-
-            val view = f.view ?: continue
-            propagateToolbarState(isShown, view!!, toolbarHeight)
-        }
-    }
-
-    private fun propagateToolbarState(isShown: Boolean, view: View, toolbarHeight: Int) {
-        val scrollView = view.findViewById<View>(R.id.lines_recycler) as Scrollable
-        if (isShown) {
-            // Scroll up
-            if (0 < scrollView.currentScrollY) {
-                scrollView.scrollVerticallyTo(0)
-            }
-        } else {
-            // Scroll down (to hide padding)
-            if (scrollView.currentScrollY < toolbarHeight) {
-                scrollView.scrollVerticallyTo(toolbarHeight)
-            }
-        }
-    }
-
-    override fun setPagerAdaper(pagerAdapter: BasePagerAdaper) {
-        mPagerAdapter = pagerAdapter
-    }
 }

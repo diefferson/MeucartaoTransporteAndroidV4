@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
-import br.com.disapps.meucartaotransporte.ui.lines.searchView.SearchViewActivity
 import kotlinx.android.synthetic.main.fragment_lines.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -25,9 +24,14 @@ class LinesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        scroll_view.isFillViewport = true
+//        scroll_view.isFillViewport = true
 
         observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getLines()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -48,17 +52,11 @@ class LinesFragment : BaseFragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getLines()
-    }
-
     private fun observeViewModel(){
         viewModel.hasFavorite.observe(this, Observer {
             val adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
             view_pager.adapter = adapter
             iAppActivityListener.setupTabs(view_pager)
-            iAppActivityListener.setPagerAdaper(adapter)
         })
     }
 

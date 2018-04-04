@@ -1,52 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/include_toolbar_tabs" />
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/vAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:theme="@style/AppTheme.ToolbarStyle"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/include_container" />
 
-        <com.oshi.libsearchtoolbar.SearchAnimationToolbar
-            android:id="@+id/vToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/vTabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:background="@color/colorPrimary"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabIndicatorHeight="3dp"
-            app:tabMode="fixed"
-            app:elevation="2dp"
-            app:tabGravity="fill"/>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/app_bar_main"
-        android:id="@+id/vContainer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vAppBar"/>
-
-
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

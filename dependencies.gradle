@@ -34,7 +34,8 @@ ext {
     constraintVersion= '1.0.2'
     pageIndicatorVersion = '0.2.0'
     baseRecyclerViewVersion = '2.9.35'
-    materialScrollBarVersion = '12.3.5'
+    materialScrollBarVersion = '13.2.3'
+    recyclerviewFastscroll = '1.0.17'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -65,8 +66,8 @@ ext {
             rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             koinArch:           "org.koin:koin-android-architecture:${koinVersion}",
             baseRecyclerView:   "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
-            materialScrollBar:  "com.github.turing-tech:MaterialScrollBar:${materialScrollBarVersion}",
             pageIndicatorVersion:  "com.romandanylyk:pageindicatorview:${pageIndicatorVersion}",
+            recyclerviewFastscroll:  "com.simplecityapps:recyclerview-fastscroll:${recyclerviewFastscroll}",
     ]
 
     presentationTestDependencies = [

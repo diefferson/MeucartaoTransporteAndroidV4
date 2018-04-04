@@ -2,6 +2,7 @@ package br.com.disapps.meucartaotransporte.ui.lines.favoritesLines
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import br.com.disapps.domain.model.Line
@@ -39,8 +40,10 @@ class FavoritesLinesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lines_recycler.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
             adapter = this@FavoritesLinesFragment.adapter
+            itemAnimator = DefaultItemAnimator()
+            setHasFixedSize(true)
         }
 
         observeViewModel()
