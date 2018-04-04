@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import java.text.Normalizer
 import java.util.regex.Pattern
 
 fun TextView.setMutableText(owner: LifecycleOwner, mutableText: MutableLiveData<String>){
@@ -79,13 +80,6 @@ fun String.isCPF(): Boolean{
 }
 
 fun String.clean() : String {
-    var finalString = ""
-    val pat = Pattern.compile("[\\s\\p{L}]+")
-    val mat = pat.matcher(this)
-    while (mat.find()) {
-        finalString += mat.group()
-    }
-
-    return finalString.trim()
+    return Normalizer.normalize(this, Normalizer.Form.NFD).replace("\\p{InCombiningDiacriticalMarks}".toRegex(), "")
 
 }
