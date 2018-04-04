@@ -9,13 +9,14 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
 import br.com.disapps.meucartaotransporte.util.extensions.toast
-import com.oshi.libsearchtoolbar.SearchAnimationToolbar
+import android.animation.ValueAnimator
+import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
+
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -31,6 +32,7 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     abstract val tabs : TabLayout
     abstract val appBar : AppBarLayout
     abstract val initialFragment : BaseFragment
+    private var isTabsVisible = true
 
     private var binding: ViewDataBinding? = null
     private val loading by lazy { CustomProgressDialog(this) }
@@ -89,7 +91,7 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     }
 
     override fun setupTabs(viewPager: ViewPager) {
-        tabs.visibility = View.VISIBLE
+        showTabs()
         tabs.setupWithViewPager(viewPager, false)
     }
 
@@ -103,7 +105,7 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
 
         if(!fragment.hasTabs){
             appBar.setExpanded(true, false)
-            tabs.visibility = View.GONE
+            hideTabs()
         }
     }
 
@@ -118,7 +120,7 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
 
         if(!fragment.hasTabs){
             appBar.setExpanded(true, false)
-            tabs.visibility = View.GONE
+            hideTabs()
         }
     }
 
@@ -131,51 +133,58 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     }
 
     override fun animateSearchAction() {
-        hideToolbar()
-     //   toolbar.onSearchIconClick()
+        toolbar.onSearchIconClick()
     }
 
     override fun onSearchCollapsed() {
-        //searchText.setText(R.string.collapsed)
-    }
-
-    override fun onSearchQueryChanged(query: String) {
-       // searchText.setText("Searching: $query")
+        showTabs()
     }
 
     override fun onSearchExpanded() {
-        //searchText.setText(R.string.expanded)
+        hideTabs()
+    }
+
+    override fun onSearchQueryChanged(query: String) {
+        setSearchQuery(query)
     }
 
     override fun onSearchSubmitted(query: String) {
-        //searchText.setText(getString(R.string.submitted, query))
+        setSearchQuery(query)
     }
 
-    private fun showToolbar() {
-        val headerTranslationY = appBar.translationY
-        if (headerTranslationY != 0f) {
-            appBar.animate().cancel()
-            appBar.animate().translationY(0f).setDuration(200).start()
+    abstract fun setSearchQuery(query: String)
+
+    private fun showTabs() {
+        if(!isTabsVisible){
+            isTabsVisible = true
+            val headerHeight = appBar.height
+            val toolbarHeight = toolbar.height
+            val scale = this.resources.displayMetrics.density
+            val tabsHeight = (48 * scale + 0.5f).toInt()
+            ValueAnimator.ofInt(headerHeight, (toolbarHeight+tabsHeight)).apply {
+                duration = 200
+                addUpdateListener { animation ->
+                    appBar.layoutParams.height = animation.animatedValue as Int
+                    appBar.requestLayout()
+                }
+
+            }.start()
         }
     }
 
-    private fun hideToolbar() {
-        val headerTranslationY = appBar.translationY
-        val toolbarHeight = toolbar.height
-        if (headerTranslationY != (-toolbarHeight).toFloat()) {
-            appBar.animate().cancel()
-            appBar.animate().translationY(-toolbarHeight.toFloat()).setDuration(200).start()
+    private fun hideTabs() {
+        if(isTabsVisible){
+            isTabsVisible = false
+            val headerHeight = appBar.height
+            val toolbarHeight = toolbar.height
+            ValueAnimator.ofInt(headerHeight, toolbarHeight).apply {
+                duration = 200
+                addUpdateListener { animation ->
+                    appBar.layoutParams.height = animation.animatedValue as Int
+                    appBar.requestLayout()
+                }
+
+            }.start()
         }
     }
-
-    private fun toolbarIsShown(): Boolean {
-        return appBar.translationY == 0f
-    }
-
-    private fun toolbarIsHidden(): Boolean {
-        return appBar.translationY == -toolbar.height.toFloat()
-    }
-
-
-
 }

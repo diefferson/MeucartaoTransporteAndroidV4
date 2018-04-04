@@ -11,9 +11,9 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
+import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
-import com.oshi.libsearchtoolbar.SearchAnimationToolbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
@@ -38,6 +38,10 @@ class MainActivity : BaseFragmentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+
+    override fun setSearchQuery(query: String) {
+        viewModel.searchText.value = query
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

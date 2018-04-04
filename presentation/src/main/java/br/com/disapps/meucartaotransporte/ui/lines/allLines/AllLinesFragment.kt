@@ -10,6 +10,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.lines.LinesAdapter
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
+import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
 import org.koin.android.architecture.ext.viewModel
@@ -22,6 +23,8 @@ class AllLinesFragment : BaseFragment() {
     override val viewModel by viewModel<LinesViewModel>()
 
     override val fragmentLayout = R.layout.fragment_list_lines
+
+    val mainViewModel by viewModel<MainViewModel>()
 
     private val adapter:LinesAdapter by lazy{
         LinesAdapter(ArrayList()).apply {
@@ -50,8 +53,19 @@ class AllLinesFragment : BaseFragment() {
     }
 
     private fun observeViewModel(){
+
         viewModel.lines.observe(this, Observer {
             adapter.setNewData(it)
+        })
+
+        viewModel.linesFiltered.observe(this, Observer {
+            adapter.setNewData(it)
+        })
+
+        mainViewModel.searchText.observe(this, Observer {
+            if(it!= null){
+                viewModel.filterLines(it)
+            }
         })
     }
 

@@ -7,6 +7,7 @@ import br.com.disapps.domain.interactor.lines.GetLines
 import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
+import br.com.disapps.meucartaotransporte.util.extensions.clean
 
 /**
  * Created by dnso on 12/03/2018.
@@ -16,8 +17,20 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
 
     private var isRequested  = false
     val lines = MutableLiveData<List<Line>>()
+    val linesFiltered = MutableLiveData<List<Line>>()
     val favoriteLines = MutableLiveData<List<Line>>()
     val hasFavorite = MutableLiveData<Boolean>()
+
+    fun filterLines(query:String){
+//        linesFiltered.value = lines.value?.filter {
+//            line -> this@LinesViewModel.filter(line, query)
+//        }
+    }
+
+    private fun filter(line: Line, query: String) : Boolean{
+        return line.name.toLowerCase().clean().contains(query.toLowerCase().clean())
+                || line.code.toLowerCase().startsWith(query.toLowerCase())
+    }
 
     fun getLines(refresh :Boolean = false){
 
