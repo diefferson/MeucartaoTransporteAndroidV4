@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.lines.LinesAdapter
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
@@ -24,15 +24,15 @@ class AllLinesFragment : BaseFragment() {
 
     override val fragmentLayout = R.layout.fragment_list_lines
 
-    val mainViewModel by viewModel<MainViewModel>()
+    private val mainViewModel by viewModel<MainViewModel>()
 
     private val adapter:LinesAdapter by lazy{
-        LinesAdapter(ArrayList()).apply {
+        LinesAdapter(viewModel.lines).apply {
             emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.fav_line -> {
-                        viewModel.favoriteLine(adapter.data[position] as Line)
+                        viewModel.favoriteLine(adapter.data[position] as LineVO)
                     }
                 }
             }
@@ -54,15 +54,17 @@ class AllLinesFragment : BaseFragment() {
 
     private fun observeViewModel(){
 
-        viewModel.lines.observe(this, Observer {
-            adapter.setNewData(it)
+        viewModel.isUpdatedLines.observe(this, Observer {
+            adapter.notifyDataSetChanged()
         })
 
         mainViewModel.onSearchAction.observe(this, Observer {
             if(it!= null && it){
+                viewModel.linesFiltered.clear()
+                viewModel.linesFiltered.addAll(viewModel.lines)
                 adapter.setNewData(viewModel.linesFiltered)
             }else{
-                adapter.setNewData(viewModel.lines.value)
+                adapter.setNewData(viewModel.lines)
             }
         })
 

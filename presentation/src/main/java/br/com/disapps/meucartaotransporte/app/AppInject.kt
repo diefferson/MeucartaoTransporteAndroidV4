@@ -27,7 +27,6 @@ import br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
-import br.com.disapps.meucartaotransporte.ui.lines.searchView.SearchViewViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.shapes.ShapesViewModel
 import br.com.disapps.domain.executor.PostExecutionThread
@@ -71,7 +70,6 @@ object AppInject {
         viewModel { RegisterCardViewModel(hasCardUseCase = get(), saveCardUseCase = get(), getCardUseCase = get()) }
         viewModel { ExtractViewModel(getExtractUseCase = get() ) }
         viewModel { IntroViewModel(getAllLinesJsonUseCase = get(), saveAllLinesJsonUseCase = get() ) }
-        viewModel { SearchViewViewModel(getLinesUseCase = get(), updateLineUseCase = get()) }
 
     }
 

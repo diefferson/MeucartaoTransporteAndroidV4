@@ -16,7 +16,7 @@ import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
 import br.com.disapps.meucartaotransporte.util.extensions.toast
 import android.animation.ValueAnimator
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
-
+import br.com.disapps.meucartaotransporte.util.extensions.clean
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -32,7 +32,10 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     abstract val tabs : TabLayout
     abstract val appBar : AppBarLayout
     abstract val initialFragment : BaseFragment
-    private var isTabsVisible = true
+    abstract fun setSearchQuery(query: String)
+    abstract fun onSearchAction(isOpen: Boolean)
+    abstract fun getIsTabsVisible(): Boolean
+    abstract fun setIsTabsVisible(visible : Boolean)
 
     private var binding: ViewDataBinding? = null
     private val loading by lazy { CustomProgressDialog(this) }
@@ -47,6 +50,14 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         setupLoading()
         setupError()
         replaceFragment(initialFragment)
+    }
+
+    override fun onBackPressed() {
+        if(toolbar.isSearchExpanded){
+            toolbar.onBackPressed()
+        }else{
+            super.onBackPressed()
+        }
     }
 
     private fun initDataBinding(){
@@ -104,8 +115,8 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         }
 
         if(!fragment.hasTabs){
-            appBar.setExpanded(true, false)
-            hideTabs()
+            appBar.setExpanded(true)
+            hideTabs(true)
         }
     }
 
@@ -119,8 +130,8 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         }
 
         if(!fragment.hasTabs){
-            appBar.setExpanded(true, false)
-            hideTabs()
+            appBar.setExpanded(true)
+            hideTabs(true)
         }
     }
 
@@ -147,20 +158,16 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     }
 
     override fun onSearchQueryChanged(query: String) {
-        setSearchQuery(query)
+        setSearchQuery(query.clean().toLowerCase())
     }
 
     override fun onSearchSubmitted(query: String) {
-        setSearchQuery(query)
+        setSearchQuery(query.clean().toLowerCase())
     }
 
-    abstract fun setSearchQuery(query: String)
-
-    abstract fun onSearchAction(isOpen: Boolean)
-
     private fun showTabs() {
-        if(!isTabsVisible){
-            isTabsVisible = true
+        if(!getIsTabsVisible()){
+            setIsTabsVisible(true)
             val headerHeight = appBar.height
             val toolbarHeight = toolbar.height
             val scale = this.resources.displayMetrics.density
@@ -176,11 +183,13 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         }
     }
 
-    private fun hideTabs() {
-        if(isTabsVisible){
-            isTabsVisible = false
-            val headerHeight = appBar.height
-            val toolbarHeight = toolbar.height
+    private fun hideTabs(force: Boolean = false) {
+        if(getIsTabsVisible() || force){
+            setIsTabsVisible(false)
+            val scale = this.resources.displayMetrics.density
+            val headerHeight = if(appBar.height > 0) appBar.height else (56 * scale + 0.5f).toInt()
+            val toolbarHeight = if(toolbar.height > 0) toolbar.height else (56 * scale + 0.5f).toInt()
+
             ValueAnimator.ofInt(headerHeight, toolbarHeight).apply {
                 duration = 200
                 addUpdateListener { animation ->

@@ -6,8 +6,10 @@ import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.lines.GetLines
 import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.domain.model.Line
+import br.com.disapps.meucartaotransporte.model.LineVO
+import br.com.disapps.meucartaotransporte.model.mappers.toLineBO
+import br.com.disapps.meucartaotransporte.model.mappers.toLineVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
-import br.com.disapps.meucartaotransporte.util.extensions.clean
 
 /**
  * Created by dnso on 12/03/2018.
@@ -16,23 +18,21 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
                      private val updateLineUseCase: UpdateLine) : BaseViewModel(){
 
     private var isRequested  = false
-    val lines = MutableLiveData<List<Line>>()
-    val linesFiltered = ArrayList<Line>()
-    val favoriteLines = MutableLiveData<List<Line>>()
     val hasFavorite = MutableLiveData<Boolean>()
+    val isUpdatedLines = MutableLiveData<Boolean>()
+    val isUpdatedFavorites = MutableLiveData<Boolean>()
+
+    val lines = ArrayList<LineVO>()
+    val favoriteLines = ArrayList<LineVO>()
+    val linesFiltered = ArrayList<LineVO>()
 
     fun filterLines(query:String){
         linesFiltered.clear()
-        lines.value?.forEach {
-            if(filter(it, query)){
-                linesFiltered.add(it)
-            }
-        }
+        linesFiltered.addAll(lines.filter { filter(it, query) })
     }
 
-    private fun filter(line: Line, query: String) : Boolean{
-        return line.name.toLowerCase().clean().contains(query.toLowerCase().clean())
-                || line.code.toLowerCase().startsWith(query.toLowerCase())
+    private fun filter(line: LineVO, query: String) : Boolean{
+        return line.searchableName.contains(query) || line.code.toLowerCase().startsWith(query)
     }
 
     fun getLines(refresh :Boolean = false){
@@ -51,23 +51,31 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
                 override fun onSuccess(t: List<Line>) {
                     loadingEvent.value = false
 
-                    favoriteLines.value = t.filter { line->line.favorite }
+                    favoriteLines.clear()
+                    lines.clear()
+
+                    lines.addAll(t.toLineVO())
+                    favoriteLines.addAll(t.toLineVO().filter { line->line.favorite })
+
                     if(!refresh){
-                        hasFavorite.value = favoriteLines.value!= null && favoriteLines.value!!.isNotEmpty()
+                        hasFavorite.value = favoriteLines.isNotEmpty()
                     }
-                    lines.value = t
+
+                    isUpdatedLines.value = true
+                    isUpdatedFavorites.value = true
+
                 }
             }, Unit)
         }
     }
 
-    fun favoriteLine(line: Line){
+    fun favoriteLine(line: LineVO){
         line.favorite = !line.favorite
         updateLineUseCase.execute(object : DefaultCompletableObserver(){
             override fun onComplete() {
                 getLines(true)
             }
-        },UpdateLine.Params(line))
+        },UpdateLine.Params(line.toLineBO()))
     }
 
     override fun onCleared() {

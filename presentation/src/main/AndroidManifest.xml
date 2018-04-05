@@ -63,20 +63,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.SplashTheme"/>
 
-        <activity
-            android:name=".ui.lines.searchView.SearchViewActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/search_lines"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
     </application>
 
 </manifest>

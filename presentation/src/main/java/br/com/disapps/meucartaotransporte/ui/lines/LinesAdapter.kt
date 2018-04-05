@@ -1,14 +1,14 @@
 package br.com.disapps.meucartaotransporte.ui.lines
 
-import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.model.LineVO
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 
-class LinesAdapter(data: List<Line>?) : BaseQuickAdapter<Line, BaseViewHolder>(R.layout.item_line, data), FastScrollRecyclerView.SectionedAdapter {
+class LinesAdapter(data: List<LineVO>?) : BaseQuickAdapter<LineVO, BaseViewHolder>(R.layout.item_line, data), FastScrollRecyclerView.SectionedAdapter {
 
-    override fun convert(helper: BaseViewHolder?, item: Line) {
+    override fun convert(helper: BaseViewHolder?, item: LineVO) {
         helper?.setText(R.id.ic_line, item.code)
         helper?.setText(R.id.line_name, item.name)
         helper?.setText(R.id.line_type, item.category)

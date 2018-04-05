@@ -33,6 +33,8 @@ class SearchAnimationToolbar @JvmOverloads constructor(context: Context, attrs: 
     lateinit var searchToolbar: Toolbar
         private set
 
+    var isSearchExpanded = false
+
     private lateinit var txtSearch: EditText
     private lateinit var searchMenuItem: MenuItem
     private var onSearchQueryChangedListener: OnSearchQueryChangedListener? = null
@@ -260,6 +262,7 @@ class SearchAnimationToolbar @JvmOverloads constructor(context: Context, attrs: 
     }
 
     private fun collapse() {
+        isSearchExpanded = false
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             circleReveal(false)
         } else
@@ -267,6 +270,7 @@ class SearchAnimationToolbar @JvmOverloads constructor(context: Context, attrs: 
     }
 
     private fun expand() {
+        isSearchExpanded = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             circleReveal(true)
         } else {

@@ -35,9 +35,16 @@ class MainActivity : BaseFragmentActivity(){
 
     override val initialFragment: BaseFragment by lazy { viewModel.actualFragment }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+
+    override fun getIsTabsVisible() = viewModel.isTabsVisible
+
+    override fun setIsTabsVisible(visible: Boolean) {
+        viewModel.isTabsVisible = visible
     }
 
     override fun setSearchQuery(query: String) {

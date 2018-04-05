@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.lines.LinesAdapter
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
@@ -24,12 +24,12 @@ class FavoritesLinesFragment : BaseFragment() {
     override val fragmentLayout = R.layout.fragment_list_lines
 
     private val adapter: LinesAdapter by lazy{
-        LinesAdapter(ArrayList()).apply {
+        LinesAdapter(viewModel.favoriteLines).apply {
             emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.fav_line -> {
-                        viewModel.favoriteLine(adapter.data[position] as Line)
+                        viewModel.favoriteLine(adapter.data[position] as LineVO)
                     }
                 }
             }
@@ -50,8 +50,8 @@ class FavoritesLinesFragment : BaseFragment() {
     }
 
     private fun observeViewModel(){
-        viewModel.favoriteLines.observe(this, Observer {
-            adapter.setNewData(it)
+        viewModel.isUpdatedFavorites.observe(this, Observer {
+            adapter.notifyDataSetChanged()
         })
     }
 
