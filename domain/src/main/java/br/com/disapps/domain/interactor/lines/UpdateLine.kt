@@ -2,7 +2,6 @@ package br.com.disapps.domain.interactor.lines
 
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.base.CompletableUseCase
-import br.com.disapps.domain.interactor.base.Preconditions
 import br.com.disapps.domain.model.Line
 import br.com.disapps.domain.repository.LinesRepository
 import io.reactivex.Completable
@@ -13,7 +12,6 @@ class UpdateLine(var linesRepository: LinesRepository, var threadExecutor: Threa
 
 
     override fun buildUseCaseObservable(params: Params): Completable {
-        Preconditions.checkNotNull(params)
         return linesRepository.updateLine(params.line)
     }
 

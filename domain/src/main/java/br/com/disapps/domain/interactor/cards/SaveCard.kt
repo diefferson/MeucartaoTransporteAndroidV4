@@ -2,7 +2,6 @@ package br.com.disapps.domain.interactor.cards
 
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.base.CompletableUseCase
-import br.com.disapps.domain.interactor.base.Preconditions
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Completable
@@ -12,7 +11,6 @@ class SaveCard (var cardRepository: CardsRepository, var threadExecutor: ThreadE
                 var postExecutionThread: PostExecutionThread) : CompletableUseCase<SaveCard.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: SaveCard.Params): Completable {
-        Preconditions.checkNotNull(params)
         return cardRepository.saveCard(params.card)
     }
 

@@ -33,7 +33,7 @@ class GetCardTest{
 
     @Test(expected = NullPointerException::class)
     fun testShouldFailWhenNoOrEmptyParameters() {
-        getCard.buildUseCaseObservable(null!!)
+        getCard.buildUseCaseObservable(GetCard.Params(null!!))
     }
 
 }

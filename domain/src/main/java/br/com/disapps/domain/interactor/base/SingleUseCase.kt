@@ -26,7 +26,6 @@ abstract class SingleUseCase<T, in Params>internal constructor(
      * Executes the current use case.
      */
     open fun execute(singleObserver: DisposableSingleObserver<T>, params: Params) {
-        Preconditions.checkNotNull(singleObserver)
         val single = this.buildUseCaseObservable(params)
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.scheduler) as Single<T>
@@ -44,8 +43,6 @@ abstract class SingleUseCase<T, in Params>internal constructor(
      * Dispose from current [CompositeDisposable].
      */
     private fun addDisposable(disposable: Disposable) {
-        Preconditions.checkNotNull(disposable)
-        Preconditions.checkNotNull(disposables)
         disposables.add(disposable)
     }
 

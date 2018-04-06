@@ -1,7 +1,6 @@
 package br.com.disapps.domain.interactor.cards
 
 import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.base.Preconditions
 import br.com.disapps.domain.interactor.base.SingleUseCase
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.model.Extract
@@ -13,10 +12,8 @@ class GetExtract(var cardRepository: CardsRepository, var threadExecutor: Thread
                  var postExecutionThread: PostExecutionThread) : SingleUseCase<List<Extract>, GetExtract.Params>(threadExecutor, postExecutionThread){
 
     override fun buildUseCaseObservable(params: Params): Single<List<Extract>> {
-        Preconditions.checkNotNull(params)
         return cardRepository.extract(params.card)
     }
 
     class Params (val card: Card)
-
 }

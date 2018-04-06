@@ -49,7 +49,6 @@ abstract class ObservableUseCase<T, Params> internal constructor(private val thr
      * @param params Parameters (Optional) used to build/execute this use case.
      */
     fun execute(observer: DisposableObserver<T>, params: Params) {
-        Preconditions.checkNotNull(observer)
         val observable = this.buildUseCaseObservable(params)
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.scheduler)
@@ -69,8 +68,6 @@ abstract class ObservableUseCase<T, Params> internal constructor(private val thr
      * Dispose from current [CompositeDisposable].
      */
     private fun addDisposable(disposable: Disposable) {
-        Preconditions.checkNotNull(disposable)
-        Preconditions.checkNotNull(disposables)
         disposables.add(disposable)
     }
 }
