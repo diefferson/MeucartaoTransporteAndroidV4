@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
             name="viewModel"
-            type="br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel"/>
+            type="br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -13,4 +12,5 @@
         android:layout_height="match_parent">
 
     </android.support.constraint.ConstraintLayout>
+
 </layout>

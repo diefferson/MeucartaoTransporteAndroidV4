@@ -37,7 +37,7 @@ class AllLinesFragment : BaseFragment() {
                     }
                 }
             }
-            setOnItemClickListener { adapter, view, position -> LineActivity.launch(context!!)  }
+            setOnItemClickListener { adapter, _, position -> LineActivity.launch(context!!, adapter.data[position] as LineVO)  }
         }
     }
 

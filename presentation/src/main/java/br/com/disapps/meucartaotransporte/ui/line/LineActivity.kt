@@ -7,11 +7,18 @@ import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
 import android.widget.FrameLayout
+import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.model.CardVO
+import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
+import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
+import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItineariesFragment
+import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesFragment
+import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesFragment
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,22 +54,24 @@ class LineActivity : BaseFragmentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        setDisplayHomeAsUpEnabled()
+        viewModel
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_schedules -> {
-                viewModel.actualFragment = CardsFragment.newInstance()
+                viewModel.actualFragment = NextSchedulesFragment.newInstance()
                 replaceFragment(viewModel.actualFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_itineraries -> {
-                viewModel.actualFragment = LinesFragment.newInstance()
+                viewModel.actualFragment = ItineariesFragment.newInstance()
                 replaceFragment(viewModel.actualFragment )
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_map -> {
-                viewModel.actualFragment = SettingsFragment.newInstance()
+                viewModel.actualFragment = ShapesFragment.newInstance()
                 replaceFragment(viewModel.actualFragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -70,11 +79,12 @@ class LineActivity : BaseFragmentActivity(){
         false
     }
 
-
     companion object {
-        fun launch(context: Context){
-            val intent = Intent(context, LineActivity::class.java)
-            context.startActivity(intent)
+        private const val LINE = "line"
+        fun launch(context: Context,line : LineVO){
+            context.startActivity(Intent(context, LineActivity::class.java).apply {
+                putExtras(Bundle().apply{ putSerializable(LINE, line)})
+            })
         }
     }
 }

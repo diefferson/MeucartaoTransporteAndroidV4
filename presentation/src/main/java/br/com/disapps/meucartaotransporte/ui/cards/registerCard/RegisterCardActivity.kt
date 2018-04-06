@@ -33,8 +33,7 @@ class RegisterCardActivity : BaseActivity(){
     companion object {
 
         fun launch(context: Context){
-            val intent = Intent(context, RegisterCardActivity::class.java)
-            context.startActivity(intent)
+            context.startActivity(Intent(context, RegisterCardActivity::class.java))
         }
     }
 

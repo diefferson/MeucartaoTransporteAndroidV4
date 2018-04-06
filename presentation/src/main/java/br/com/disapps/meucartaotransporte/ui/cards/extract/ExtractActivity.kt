@@ -47,11 +47,9 @@ class ExtractActivity : BaseActivity(){
     companion object {
         private const val CARD = "card"
         fun launch(context: Context,card : CardVO){
-            val intent = Intent(context, ExtractActivity::class.java)
-            val params = Bundle()
-            params.putSerializable(CARD, card)
-            intent.putExtras(params)
-            context.startActivity(intent)
+            context.startActivity( Intent(context, ExtractActivity::class.java).apply {
+                putExtras(Bundle().apply { putSerializable(CARD, card) })
+            })
         }
     }
 }

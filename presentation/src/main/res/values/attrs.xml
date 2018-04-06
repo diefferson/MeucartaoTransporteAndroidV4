@@ -10,7 +10,11 @@
         <attr name="searchBackgroundColor" format="color" />
         <attr name="searchTextColor" format="color" />
         <attr name="searchHintColor" format="color" />
+    </declare-styleable>
 
+    <declare-styleable name="CustomSchedule">
+        <attr name="isAdapt" format="boolean"/>
+        <attr name="schedule" format="string"/>
     </declare-styleable>
 
 </resources>

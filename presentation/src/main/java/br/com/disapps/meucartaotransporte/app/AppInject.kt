@@ -30,6 +30,8 @@ import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.domain.executor.PostExecutionThread
+import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
+import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -70,6 +72,8 @@ object AppInject {
         viewModel { RegisterCardViewModel(hasCardUseCase = get(), saveCardUseCase = get(), getCardUseCase = get()) }
         viewModel { ExtractViewModel(getExtractUseCase = get() ) }
         viewModel { IntroViewModel(getAllLinesJsonUseCase = get(), saveAllLinesJsonUseCase = get() ) }
+        viewModel { LineViewModel() }
+        viewModel { NextSchedulesViewModel() }
 
     }
 

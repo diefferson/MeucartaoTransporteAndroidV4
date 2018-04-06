@@ -8,6 +8,7 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
+import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesAdapter
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
@@ -33,6 +34,7 @@ class FavoritesLinesFragment : BaseFragment() {
                     }
                 }
             }
+            setOnItemClickListener { adapter, _, position -> LineActivity.launch(context!!, adapter.data[position] as LineVO)  }
         }
     }
 

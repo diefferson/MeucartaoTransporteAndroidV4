@@ -50,17 +50,38 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/next_schedules_recycler"
+       <br.com.disapps.meucartaotransporte.ui.custom.CustomSchedule
+           android:id="@+id/next_schedule_1"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           app:isAdapt="true"
+           app:schedule="5:50"
+           style="@style/AppTheme.Schedule"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toStartOf="@id/next_schedule_2"
+           app:layout_constraintTop_toBottomOf="@id/next_schedules"/>
+
+        <br.com.disapps.meucartaotransporte.ui.custom.CustomSchedule
+            android:id="@+id/next_schedule_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/next_schedules"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_schedule"
-            tools:itemCount="3"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:isAdapt="true"
+            app:schedule="5:50"
+            style="@style/AppTheme.Schedule"
+            app:layout_constraintStart_toEndOf="@id/next_schedule_1"
+            app:layout_constraintEnd_toStartOf="@id/next_schedule_3"
+            app:layout_constraintTop_toBottomOf="@id/next_schedules"/>
+
+        <br.com.disapps.meucartaotransporte.ui.custom.CustomSchedule
+            android:id="@+id/next_schedule_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:isAdapt="true"
+            app:schedule="5:50"
+            style="@style/AppTheme.Schedule"
+            app:layout_constraintStart_toEndOf="@id/next_schedule_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/next_schedules"/>
 
         <View
             android:id="@+id/vw_divider2"
@@ -69,7 +90,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="#c5c5c5"
-            app:layout_constraintTop_toBottomOf="@id/next_schedules_recycler"/>
+            app:layout_constraintTop_toBottomOf="@id/next_schedule_1"/>
 
         <TextView
             android:layout_width="wrap_content"

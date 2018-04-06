@@ -25,7 +25,17 @@ import android.widget.TextView
 
 import br.com.disapps.meucartaotransporte.R
 
-class SearchAnimationToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr), TextWatcher {
+class SearchAnimationToolbar : FrameLayout, TextWatcher {
+
+    init {
+        inflateAndBindViews()
+    }
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs){
+        bindAttributes(attrs)
+    }
 
     lateinit var toolbar: Toolbar
         private set
@@ -40,20 +50,6 @@ class SearchAnimationToolbar @JvmOverloads constructor(context: Context, attrs: 
     private var onSearchQueryChangedListener: OnSearchQueryChangedListener? = null
     private var currentQuery = ""
 
-    interface OnSearchQueryChangedListener {
-        fun onSearchCollapsed()
-
-        fun onSearchQueryChanged(query: String)
-
-        fun onSearchExpanded()
-
-        fun onSearchSubmitted(query: String)
-    }
-
-    init {
-        inflateAndBindViews()
-        bindAttributes(attrs)
-    }
 
     private fun bindAttributes(attrs: AttributeSet?) {
 
@@ -286,4 +282,15 @@ class SearchAnimationToolbar @JvmOverloads constructor(context: Context, attrs: 
         searchMenuItem.expandActionView()
         txtSearch.setText(query)
     }
+
+    interface OnSearchQueryChangedListener {
+        fun onSearchCollapsed()
+
+        fun onSearchQueryChanged(query: String)
+
+        fun onSearchExpanded()
+
+        fun onSearchSubmitted(query: String)
+    }
+
 }
