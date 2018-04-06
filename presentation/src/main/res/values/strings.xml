@@ -169,5 +169,10 @@
     <string name="mailto">mailto:contato@meucartaotransporte.com.br</string>
     <string name="mail_subject">Contato via Aplicativo Meu Cartão Transporte</string>
     <string name="mail_title">Contato</string>
+    <string name="adapt">Carro Adaptado</string>
+    <string name="next_schedules">Próximos Horários</string>
+    <string name="see_more">Ver mais</string>
+    <string name="schedules">Horários</string>
+    <string name="itinerary">Itinerário</string>
 
 </resources>

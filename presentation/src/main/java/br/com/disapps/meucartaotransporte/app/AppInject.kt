@@ -19,7 +19,7 @@ import br.com.disapps.meucartaotransporte.executor.UIThread
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.CardsViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel
-import br.com.disapps.meucartaotransporte.ui.lines.itineraries.ItinerariesViewModel
+import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.myCards.MyCardsViewModel
@@ -28,7 +28,7 @@ import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardView
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
-import br.com.disapps.meucartaotransporte.ui.lines.shapes.ShapesViewModel
+import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.domain.executor.PostExecutionThread
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module

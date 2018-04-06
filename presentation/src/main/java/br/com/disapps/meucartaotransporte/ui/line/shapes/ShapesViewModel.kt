@@ -1,4 +1,4 @@
-package br.com.disapps.meucartaotransporte.ui.lines.shapes
+package br.com.disapps.meucartaotransporte.ui.line.shapes
 
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 

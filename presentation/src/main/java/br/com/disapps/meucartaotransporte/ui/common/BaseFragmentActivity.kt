@@ -147,23 +147,24 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         toolbar.onSearchIconClick()
     }
 
-    override fun onSearchCollapsed() {
+    final override fun onSearchCollapsed() {
         showTabs()
         onSearchAction(false)
     }
 
-    override fun onSearchExpanded() {
+    final override fun onSearchExpanded() {
         hideTabs()
         onSearchAction(true)
     }
 
-    override fun onSearchQueryChanged(query: String) {
+    final override fun onSearchQueryChanged(query: String) {
         setSearchQuery(query.clean().toLowerCase())
     }
 
-    override fun onSearchSubmitted(query: String) {
+    final override fun onSearchSubmitted(query: String) {
         setSearchQuery(query.clean().toLowerCase())
     }
+
 
     private fun showTabs() {
         if(!getIsTabsVisible()){

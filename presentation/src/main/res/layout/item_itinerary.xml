@@ -1,0 +1,71 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingLeft="16dp"
+    android:paddingStart="16dp"
+    tools:ignore="RtlSymmetry">
+
+    <View
+        android:id="@+id/vw_divider1"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="#c5c5c5"
+        app:layout_constraintStart_toStartOf="@id/ic_it_item"
+        app:layout_constraintEnd_toEndOf="@id/ic_it_item"
+        app:layout_constraintBottom_toBottomOf="@id/type_point"
+        app:layout_constraintTop_toTopOf="@id/name_point"/>
+
+    <TextView
+        android:id="@+id/ic_it_item"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/circle_blue_light"
+        android:text=""
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/vw_divider1"
+        app:layout_constraintBottom_toBottomOf="@id/vw_divider1"/>
+
+
+    <TextView
+        android:id="@+id/name_point"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        tools:text="Terminal Boa Vista - 226 - Abataé"
+        android:textColor="#FF000000"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ic_it_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/type_point"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/type_point"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:paddingBottom="10dp"
+        tools:text="Plataforma"
+        android:textColor="#c1c1c1"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@id/name_point"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ic_it_item"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
+
+
+
+

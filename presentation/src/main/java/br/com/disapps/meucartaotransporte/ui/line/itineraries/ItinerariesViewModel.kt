@@ -1,4 +1,4 @@
-package br.com.disapps.meucartaotransporte.ui.lines.itineraries
+package br.com.disapps.meucartaotransporte.ui.line.itineraries
 
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
