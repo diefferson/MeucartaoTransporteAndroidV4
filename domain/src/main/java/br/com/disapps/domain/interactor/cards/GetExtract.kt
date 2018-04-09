@@ -8,8 +8,8 @@ import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Single
 import br.com.disapps.domain.executor.PostExecutionThread
 
-class GetExtract(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
-                 var postExecutionThread: PostExecutionThread) : SingleUseCase<List<Extract>, GetExtract.Params>(threadExecutor, postExecutionThread){
+class GetExtract(val cardRepository: CardsRepository, val threadExecutor: ThreadExecutor,
+                 val postExecutionThread: PostExecutionThread) : SingleUseCase<List<Extract>, GetExtract.Params>(threadExecutor, postExecutionThread){
 
     override fun buildUseCaseObservable(params: Params): Single<List<Extract>> {
         return cardRepository.extract(params.card)

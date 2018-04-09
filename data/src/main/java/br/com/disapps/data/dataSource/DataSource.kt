@@ -1,4 +1,4 @@
-package br.com.disapps.data.repository.dataSource
+package br.com.disapps.data.dataSource
 
 /**
  * Created by dnso on 15/03/2018.

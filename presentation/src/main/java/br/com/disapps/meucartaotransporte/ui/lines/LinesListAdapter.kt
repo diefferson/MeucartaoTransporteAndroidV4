@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 
-class LinesAdapter(data: List<LineVO>?) : BaseQuickAdapter<LineVO, BaseViewHolder>(R.layout.item_line, data), FastScrollRecyclerView.SectionedAdapter {
+class LinesListAdapter(data: List<LineVO>?) : BaseQuickAdapter<LineVO, BaseViewHolder>(R.layout.item_line, data), FastScrollRecyclerView.SectionedAdapter {
 
     override fun convert(helper: BaseViewHolder?, item: LineVO) {
         helper?.setText(R.id.ic_line, item.code)

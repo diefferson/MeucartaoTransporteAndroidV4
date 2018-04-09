@@ -7,8 +7,8 @@ import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Completable
 import br.com.disapps.domain.executor.PostExecutionThread
 
-class SaveCard (var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
-                var postExecutionThread: PostExecutionThread) : CompletableUseCase<SaveCard.Params>(threadExecutor, postExecutionThread) {
+class SaveCard (val cardRepository: CardsRepository, val threadExecutor: ThreadExecutor,
+                val postExecutionThread: PostExecutionThread) : CompletableUseCase<SaveCard.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: SaveCard.Params): Completable {
         return cardRepository.saveCard(params.card)

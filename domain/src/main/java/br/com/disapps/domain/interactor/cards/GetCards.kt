@@ -7,8 +7,8 @@ import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Single
 import br.com.disapps.domain.executor.PostExecutionThread
 
-class GetCards(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
-                var postExecutionThread: PostExecutionThread) : SingleUseCase<List<Card>, Unit>(threadExecutor, postExecutionThread) {
+class GetCards(val cardRepository: CardsRepository, val threadExecutor: ThreadExecutor,
+               val postExecutionThread: PostExecutionThread) : SingleUseCase<List<Card>, Unit>(threadExecutor, postExecutionThread) {
 
 
     override fun buildUseCaseObservable(params: Unit): Single<List<Card>> {

@@ -9,7 +9,7 @@ interface LinesRepository{
 
     fun saveLine(line : Line): Completable
 
-    fun saveAllFromJson(json : String): Completable
+    fun saveAllLinesFromJson(json : String): Completable
 
     fun jsonLines() : Single<String>
 

@@ -9,7 +9,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineActivity
-import br.com.disapps.meucartaotransporte.ui.lines.LinesAdapter
+import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
@@ -27,8 +27,8 @@ class AllLinesFragment : BaseFragment() {
 
     private val mainViewModel by viewModel<MainViewModel>()
 
-    private val adapter:LinesAdapter by lazy{
-        LinesAdapter(viewModel.lines).apply {
+    private val listAdapter:LinesListAdapter by lazy{
+        LinesListAdapter(viewModel.lines).apply {
             emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
@@ -47,7 +47,7 @@ class AllLinesFragment : BaseFragment() {
         lines_recycler.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
-            adapter = this@AllLinesFragment.adapter
+            adapter = this@AllLinesFragment.listAdapter
             itemAnimator = DefaultItemAnimator()
         }
 
@@ -57,23 +57,23 @@ class AllLinesFragment : BaseFragment() {
     private fun observeViewModel(){
 
         viewModel.isUpdatedLines.observe(this, Observer {
-            adapter.notifyDataSetChanged()
+            listAdapter.notifyDataSetChanged()
         })
 
         mainViewModel.onSearchAction.observe(this, Observer {
             if(it!= null && it){
                 viewModel.linesFiltered.clear()
                 viewModel.linesFiltered.addAll(viewModel.lines)
-                adapter.setNewData(viewModel.linesFiltered)
+                listAdapter.setNewData(viewModel.linesFiltered)
             }else{
-                adapter.setNewData(viewModel.lines)
+                listAdapter.setNewData(viewModel.lines)
             }
         })
 
         mainViewModel.searchText.observe(this, Observer {
             if(it!= null){
                 viewModel.filterLines(it)
-                adapter.notifyDataSetChanged()
+                listAdapter.notifyDataSetChanged()
             }
         })
     }

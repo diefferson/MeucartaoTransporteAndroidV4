@@ -1,6 +1,7 @@
-package br.com.disapps.data.repository.dataSource.lines
+package br.com.disapps.data.dataSource.local
 
 import br.com.disapps.data.entity.Linha
+import br.com.disapps.data.dataSource.LinesDataSource
 import br.com.disapps.data.storage.database.Database
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -9,7 +10,7 @@ import io.realm.Realm
 /**
  * Created by dnso on 15/03/2018.
  */
-class LocalLinesDataSource(private var database: Database): LinesDataSource{
+class LocalLinesDataSource(private val database: Database): LinesDataSource {
 
     override fun saveLine(linha: Linha): Completable{
         return Completable.defer {
@@ -74,6 +75,6 @@ class LocalLinesDataSource(private var database: Database): LinesDataSource{
     }
 
     override fun jsonLines(): Single<String> {
-        TODO("not implemented, cloud only")
+        return Single.error<String>(Throwable("not implemented,  cloud only"))
     }
 }

@@ -7,8 +7,8 @@ import br.com.disapps.domain.repository.CardsRepository
 import io.reactivex.Completable
 import br.com.disapps.domain.executor.PostExecutionThread
 
-class DeleteCard(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
-                 var postExecutionThread: PostExecutionThread) : CompletableUseCase<DeleteCard.Params>(threadExecutor, postExecutionThread){
+class DeleteCard(val cardRepository: CardsRepository, val threadExecutor: ThreadExecutor,
+                 val postExecutionThread: PostExecutionThread) : CompletableUseCase<DeleteCard.Params>(threadExecutor, postExecutionThread){
 
 
     override fun buildUseCaseObservable(params: Params): Completable {

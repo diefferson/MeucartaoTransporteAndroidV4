@@ -9,6 +9,5 @@ data class CardVO(
         var type: String = "",
         var status: String = "",
         var balance: Double = 0.toDouble(),
-        var balanceDate: String = "",
-        var message: String = ""
+        var balanceDate: String = ""
 ): Serializable

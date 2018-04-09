@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/rate_app"
                 style="@style/AppTheme.SettingsItem"
-                android:onClick="rateApp" />
+                android:id="@+id/rateApp" />
 
             <View
                 android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/faq"
                 style="@style/AppTheme.SettingsItem"
-                android:onClick="faq" />
+                android:id="@+id/faq" />
 
             <View
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/privacy"
                 style="@style/AppTheme.SettingsItem"
-                android:onClick="privacy"/>
+                android:id="@+id/privacy"/>
 
             <View
                 android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/contact_us"
                 style="@style/AppTheme.SettingsItem"
-                android:onClick="contact"/>
+                android:id="@+id/contact"/>
 
             <View
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/about_app"
                 style="@style/AppTheme.SettingsItem"
-                android:onClick="about"/>
+                android:id="@+id/about"/>
 
             <View
                 android:layout_width="match_parent"

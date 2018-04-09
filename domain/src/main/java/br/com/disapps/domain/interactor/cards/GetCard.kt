@@ -10,8 +10,8 @@ import br.com.disapps.domain.executor.PostExecutionThread
 /**
  * Created by dnso on 15/03/2018.
  */
-class GetCard(var cardRepository: CardsRepository, var threadExecutor: ThreadExecutor,
-              var postExecutionThread: PostExecutionThread) : SingleUseCase<Card?, GetCard.Params>(threadExecutor, postExecutionThread) {
+class GetCard(val cardRepository: CardsRepository, val threadExecutor: ThreadExecutor,
+              val postExecutionThread: PostExecutionThread) : SingleUseCase<Card?, GetCard.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: Params): Single<Card?> {
         return this.cardRepository.card(params.card)

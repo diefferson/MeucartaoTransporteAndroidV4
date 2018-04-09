@@ -1,7 +1,7 @@
 package br.com.disapps.data.repository
 
 import br.com.disapps.data.entity.mappers.*
-import br.com.disapps.data.repository.dataSource.cards.CardsDataSourceFactory
+import br.com.disapps.data.dataSource.factory.CardsDataSourceFactory
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.model.Extract
 import br.com.disapps.domain.repository.CardsRepository
@@ -11,7 +11,7 @@ import io.reactivex.Single
 /**
  * Created by dnso on 15/03/2018.
  */
-class CardsDataRepository( private var cardsDataSourceFactory: CardsDataSourceFactory) : CardsRepository {
+class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFactory) : CardsRepository {
 
     override fun saveCard(card: Card): Completable {
         return cardsDataSourceFactory

@@ -1,7 +1,7 @@
-package br.com.disapps.data.repository.dataSource.lines
+package br.com.disapps.data.dataSource
 
 import br.com.disapps.data.entity.Linha
-import br.com.disapps.data.repository.dataSource.DataSource
+import br.com.disapps.data.dataSource.DataSource
 import io.reactivex.Completable
 import io.reactivex.Single
 

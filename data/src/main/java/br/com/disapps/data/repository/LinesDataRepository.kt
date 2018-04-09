@@ -2,7 +2,7 @@ package br.com.disapps.data.repository
 
 import br.com.disapps.data.entity.mappers.toLineBO
 import br.com.disapps.data.entity.mappers.toLineDTO
-import br.com.disapps.data.repository.dataSource.lines.LinesDataSourceFactory
+import br.com.disapps.data.dataSource.factory.LinesDataSourceFactory
 import br.com.disapps.domain.model.Line
 import br.com.disapps.domain.repository.LinesRepository
 import io.reactivex.Completable
@@ -11,7 +11,7 @@ import io.reactivex.Single
 /**
  * Created by dnso on 15/03/2018.
  */
-class LinesDataRepository(private var linesDataSourceFactory: LinesDataSourceFactory) : LinesRepository{
+class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFactory) : LinesRepository{
 
     override fun saveLine(line: Line): Completable {
         return linesDataSourceFactory
@@ -19,7 +19,7 @@ class LinesDataRepository(private var linesDataSourceFactory: LinesDataSourceFac
                 .saveLine(line.toLineDTO())
     }
 
-    override fun saveAllFromJson(json: String): Completable {
+    override fun saveAllLinesFromJson(json: String): Completable {
         return linesDataSourceFactory
                 .create()
                 .saveAllFromJson(json)

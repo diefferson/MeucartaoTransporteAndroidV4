@@ -1,9 +1,9 @@
-package br.com.disapps.data.repository.dataSource.cards
+package br.com.disapps.data.dataSource
 
 import br.com.disapps.data.entity.Cartao
 import br.com.disapps.data.entity.Extrato
 import br.com.disapps.data.entity.RequestCartao
-import br.com.disapps.data.repository.dataSource.DataSource
+import br.com.disapps.data.dataSource.DataSource
 import io.reactivex.Completable
 import io.reactivex.Single
 

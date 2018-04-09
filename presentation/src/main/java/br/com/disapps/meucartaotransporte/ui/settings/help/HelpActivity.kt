@@ -10,6 +10,7 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
+import kotlinx.android.synthetic.main.activity_help.*
 import org.koin.android.architecture.ext.getViewModel
 
 class HelpActivity : AppCompatActivity(){
@@ -18,6 +19,33 @@ class HelpActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_help)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        onClickActions()
+    }
+
+    private fun onClickActions() {
+
+        rateApp.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_app))))
+        }
+
+        faq.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_faq))))
+        }
+
+        privacy.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_privacy))))
+        }
+
+        contact.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse(getString(R.string.mailto)))
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_subject))
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.mail_title)))
+        }
+
+        about.setOnClickListener {
+            AboutActivity.launch(this)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -29,28 +57,6 @@ class HelpActivity : AppCompatActivity(){
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    fun rateApp(view: View){
-        startActivity( Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_app))) )
-    }
-
-    fun faq(view: View){
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_faq))))
-    }
-
-    fun privacy(view: View){
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_privacy))))
-    }
-
-    fun contact(view:View){
-        val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse(getString(R.string.mailto)))
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_subject))
-        startActivity(Intent.createChooser(emailIntent, getString(R.string.mail_title)))
-    }
-
-    fun about(view: View){
-        AboutActivity.launch(this)
     }
 
     companion object {

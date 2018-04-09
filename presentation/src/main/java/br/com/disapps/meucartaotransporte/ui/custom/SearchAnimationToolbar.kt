@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
@@ -22,7 +21,6 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-
 import br.com.disapps.meucartaotransporte.R
 
 class SearchAnimationToolbar : FrameLayout, TextWatcher {
@@ -101,14 +99,13 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
 
         searchMenuItem = searchToolbar.menu.findItem(R.id.lib_search_toolbar_action_filter_search)
 
-        MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
-            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                // Do something when collapsed
-                collapse()
+        searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 return true
             }
 
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                collapse()
                 return true
             }
         })

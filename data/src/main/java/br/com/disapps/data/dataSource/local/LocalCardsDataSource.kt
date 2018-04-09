@@ -1,18 +1,18 @@
-package br.com.disapps.data.repository.dataSource.cards
+package br.com.disapps.data.dataSource.local
 
 import br.com.disapps.data.entity.Cartao
 import br.com.disapps.data.entity.Extrato
 import br.com.disapps.data.entity.RequestCartao
+import br.com.disapps.data.dataSource.CardsDataSource
 import br.com.disapps.data.storage.database.Database
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.realm.Realm
 
 /**
  * Created by dnso on 15/03/2018.
  */
-class LocalCardsDataSource(private var database: Database) : CardsDataSource {
+class LocalCardsDataSource(private val database: Database) : CardsDataSource {
 
     override fun saveCard(cartao: Cartao): Completable {
         return  Completable.defer {
@@ -73,6 +73,6 @@ class LocalCardsDataSource(private var database: Database) : CardsDataSource {
     }
 
     override fun getExtract(requestCartao: RequestCartao): Single<List<Extrato>> {
-        TODO("not implemented, cloud only")
+        return Single.error<List<Extrato>>(Throwable("not implemented,  cloud only"))
     }
 }

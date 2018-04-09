@@ -6,11 +6,11 @@ import br.com.disapps.domain.repository.LinesRepository
 import io.reactivex.Completable
 import br.com.disapps.domain.executor.PostExecutionThread
 
-class SaveAllLinesJson(var linesRepository: LinesRepository, var threadExecutor: ThreadExecutor,
-                       var postExecutionThread: PostExecutionThread): CompletableUseCase<SaveAllLinesJson.Params>(threadExecutor, postExecutionThread){
+class SaveAllLinesJson(val linesRepository: LinesRepository, val threadExecutor: ThreadExecutor,
+                       val postExecutionThread: PostExecutionThread): CompletableUseCase<SaveAllLinesJson.Params>(threadExecutor, postExecutionThread){
 
     override fun buildUseCaseObservable(params: Params):Completable {
-        return linesRepository.saveAllFromJson(params.json)
+        return linesRepository.saveAllLinesFromJson(params.json)
     }
 
     class Params (val json: String)
