@@ -34,7 +34,7 @@ class ExtractActivity : BaseActivity(){
 
     override fun onResume() {
         super.onResume()
-        val card = intent.extras.getSerializable(CARD) as CardVO
+        val card = intent.getSerializableExtra(CARD) as CardVO
         viewModel.getExtract(card.code, card.cpf)
     }
 
@@ -48,7 +48,7 @@ class ExtractActivity : BaseActivity(){
         private const val CARD = "card"
         fun launch(context: Context,card : CardVO){
             context.startActivity( Intent(context, ExtractActivity::class.java).apply {
-                putExtras(Bundle().apply { putSerializable(CARD, card) })
+                putExtra(CARD, card)
             })
         }
     }

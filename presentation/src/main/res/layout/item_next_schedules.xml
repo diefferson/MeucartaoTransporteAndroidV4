@@ -53,7 +53,7 @@
        <br.com.disapps.meucartaotransporte.ui.custom.CustomSchedule
            android:id="@+id/next_schedule_1"
            android:layout_width="0dp"
-           android:layout_height="wrap_content"
+           android:layout_height="35dp"
            app:isAdapt="true"
            app:schedule="5:50"
            style="@style/AppTheme.Schedule"
@@ -64,7 +64,7 @@
         <br.com.disapps.meucartaotransporte.ui.custom.CustomSchedule
             android:id="@+id/next_schedule_2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             app:isAdapt="true"
             app:schedule="5:50"
             style="@style/AppTheme.Schedule"
@@ -75,7 +75,7 @@
         <br.com.disapps.meucartaotransporte.ui.custom.CustomSchedule
             android:id="@+id/next_schedule_3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             app:isAdapt="true"
             app:schedule="5:50"
             style="@style/AppTheme.Schedule"

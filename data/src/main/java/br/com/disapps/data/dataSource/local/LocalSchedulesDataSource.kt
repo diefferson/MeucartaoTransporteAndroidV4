@@ -1,8 +1,11 @@
 package br.com.disapps.data.dataSource.local
 
 import br.com.disapps.data.dataSource.SchedulesDataSource
+import br.com.disapps.data.entity.Horario
 import br.com.disapps.data.entity.HorarioLinha
+import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.storage.database.Database
+import br.com.disapps.domain.model.Schedule
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.realm.Realm
@@ -14,7 +17,8 @@ class LocalSchedulesDataSource(private val database: Database) : SchedulesDataSo
             val realm = database.getDatabase() as Realm
             try {
                 realm.beginTransaction()
-                realm.createOrUpdateAllFromJson(HorarioLinha::class.java, json)
+                realm.delete(HorarioLinha::class.java)
+                realm.createAllFromJson(HorarioLinha::class.java, json)
                 realm.commitTransaction()
                 Completable.complete()
             }catch (ec: Exception){
@@ -25,7 +29,41 @@ class LocalSchedulesDataSource(private val database: Database) : SchedulesDataSo
         }
     }
 
+    override fun getLineSchedulesDays(codeLine: String): Single<List<Int>> {
+        val realm = database.getDatabase() as Realm
+        val days = realm.copyFromRealm(realm.where(HorarioLinha::class.java)
+                            .equalTo("codigoLinha", codeLine)
+                            .distinct("dia")
+                            .findAll()
+                            .sort("dia"))
+        realm.close()
+        return Single.just(days.map { it.dia })
+    }
+
+    override fun getLineSchedules(codeLine: String, day: Int): Single<List<HorarioLinha>> {
+        val realm = database.getDatabase() as Realm
+        val schedules = realm.copyFromRealm(realm.where(HorarioLinha::class.java)
+                .equalTo("codigoLinha", codeLine)
+                .equalTo("dia", day)
+                .findAll())
+        realm.close()
+
+        return Single.just(schedules)
+    }
+
+    override fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): Single<List<Horario>> {
+        val realm = database.getDatabase() as Realm
+        val schedules = realm.copyFromRealm(realm.where(HorarioLinha::class.java)
+                                .equalTo("codigoLinha", codeLine)
+                                .equalTo("dia", day)
+                                .equalTo("numPonto", codePoint).findAll())
+        realm.close()
+
+        return Single.just(schedules.flatMap { s -> s.horarios })
+    }
+
     override fun jsonSchedules(): Single<String> {
         return Single.error<String>(Throwable("not implemented,  cloud only"))
     }
+
 }

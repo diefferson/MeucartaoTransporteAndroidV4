@@ -5,6 +5,6 @@ package br.com.disapps.domain.model
  */
 data class Schedule(
     var schedulesTable: String,
-    var adapt: String,
+    var adapt: Boolean,
     var time: String
 )

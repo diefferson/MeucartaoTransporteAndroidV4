@@ -10,5 +10,5 @@ data class LineSchedule(
     var busStopName: String,
     var busStopCode: String,
     var schedules: List<Schedule>,
-    var nextSchedules: List<Schedule>
+    var nextSchedules: List<Schedule> = ArrayList()
 )

@@ -1,33 +1,30 @@
 package br.com.disapps.meucartaotransporte.ui.line
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.FrameLayout
-import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.model.LineVO
-import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
-import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
-import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItineariesFragment
+import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItinerariesFragment
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesFragment
 import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesFragment
-import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
-import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
+import br.com.disapps.meucartaotransporte.util.extensions.toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
 import org.koin.android.architecture.ext.viewModel
 
 class LineActivity : BaseFragmentActivity(){
-
 
     override val viewModel by viewModel<LineViewModel>()
 
@@ -47,26 +44,50 @@ class LineActivity : BaseFragmentActivity(){
 
     override fun setIsTabsVisible(visible: Boolean) { viewModel.isTabsVisible = visible }
 
-    override fun setSearchQuery(query: String) {}
-
-    override fun onSearchAction(isOpen: Boolean) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         setDisplayHomeAsUpEnabled()
-        viewModel
+
+        viewModel.line = intent.extras.getSerializable(LINE) as LineVO
+
+        setTitle(viewModel.line.name)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_line, menu)
+
+        if (viewModel.line.favorite) {
+            menu.getItem(0).setIcon(R.drawable.star)
+        } else {
+            menu.getItem(0).setIcon(R.drawable.star_outline)
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            R.id.action_fav_line ->{ toast("fav")}
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_schedules -> {
-                viewModel.actualFragment = NextSchedulesFragment.newInstance()
+                viewModel.actualFragment = NextSchedulesFragment.newInstance(viewModel.line.code)
                 replaceFragment(viewModel.actualFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_itineraries -> {
-                viewModel.actualFragment = ItineariesFragment.newInstance()
+                viewModel.actualFragment = ItinerariesFragment.newInstance()
                 replaceFragment(viewModel.actualFragment )
                 return@OnNavigationItemSelectedListener true
             }

@@ -47,7 +47,7 @@ class IntroActivity : BaseActivity(){
 
         btn_next.setOnClickListener { view_pager.currentItem = view_pager.currentItem+1 }
 
-        viewModel.downloadLines()
+        viewModel.initData()
 
         viewModel.isComplete.observe(this, Observer {
             if(it!= null && it){

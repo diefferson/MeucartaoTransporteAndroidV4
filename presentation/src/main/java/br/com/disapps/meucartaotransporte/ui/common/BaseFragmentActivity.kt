@@ -32,11 +32,6 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     abstract val tabs : TabLayout
     abstract val appBar : AppBarLayout
     abstract val initialFragment : BaseFragment
-    abstract fun setSearchQuery(query: String)
-    abstract fun onSearchAction(isOpen: Boolean)
-    abstract fun getIsTabsVisible(): Boolean
-    abstract fun setIsTabsVisible(visible : Boolean)
-
     private var binding: ViewDataBinding? = null
     private val loading by lazy { CustomProgressDialog(this) }
 
@@ -167,6 +162,10 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         setSearchQuery(query.clean().toLowerCase())
     }
 
+    open fun setSearchQuery(query: String){}
+    open fun onSearchAction(isOpen: Boolean){}
+    open fun getIsTabsVisible(): Boolean { return false}
+    open fun setIsTabsVisible(visible : Boolean){}
 
     private fun showTabs() {
         if(!getIsTabsVisible()){

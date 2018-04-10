@@ -9,14 +9,9 @@ import io.realm.annotations.Ignore
  */
 
 open class HorarioLinha :  RealmObject() {
-
     var codigoLinha: String = ""
     var dia: Int = 0
     var ponto: String = ""
     var numPonto: String = ""
     var horarios: RealmList<Horario> = RealmList()
-
-    @Ignore
-    var proximosHorarios: List<Horario> = ArrayList()
-
 }
