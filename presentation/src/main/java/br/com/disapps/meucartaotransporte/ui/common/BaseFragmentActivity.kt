@@ -115,6 +115,7 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         }
 
         if(!fragment.hasTabs){
+            toolbar.onBackPressed()
             appBar.setExpanded(true)
             hideTabs(true)
         }
@@ -130,6 +131,7 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         }
 
         if(!fragment.hasTabs){
+            toolbar.onBackPressed()
             appBar.setExpanded(true)
             hideTabs(true)
         }

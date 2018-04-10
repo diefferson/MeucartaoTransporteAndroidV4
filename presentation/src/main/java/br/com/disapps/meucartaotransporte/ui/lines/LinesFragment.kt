@@ -59,7 +59,11 @@ class LinesFragment : BaseFragment() {
 
         mainViewModel.onSearchAction.observe(this, Observer {
             if(it!= null && it){
-                view_pager.currentItem= 1
+                if((view_pager.adapter as LinesPageAdapter).hasFavorite){
+                    view_pager.currentItem = 1
+                }else{
+                    view_pager.currentItem = 0
+                }
             }
         })
     }

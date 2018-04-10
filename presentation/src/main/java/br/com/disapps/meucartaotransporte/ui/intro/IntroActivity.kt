@@ -40,7 +40,11 @@ class IntroActivity : BaseActivity(){
 
         setupViewPager()
 
-        btn_skip.setOnClickListener { MainActivity.launch(this) }
+        btn_skip.setOnClickListener {
+            MainActivity.launch(this)
+            finish()
+        }
+
         btn_next.setOnClickListener { view_pager.currentItem = view_pager.currentItem+1 }
 
         viewModel.downloadLines()
@@ -76,8 +80,7 @@ class IntroActivity : BaseActivity(){
     companion object {
 
         fun launch(context: Context){
-            val intent = Intent(context, IntroActivity::class.java)
-            context.startActivity(intent)
+            context.startActivity(Intent(context, IntroActivity::class.java))
         }
     }
 }
