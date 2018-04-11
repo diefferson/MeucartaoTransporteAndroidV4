@@ -8,17 +8,12 @@
             type="br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/extract_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/extract_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_extract"
-            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
-
-    </android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_extract"
+        android:scrollbars="vertical"
+        tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
 </layout>

@@ -8,7 +8,9 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardActivity
+import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_cards.*
+import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel
 
 /**
@@ -20,17 +22,16 @@ class CardsFragment : BaseFragment(){
         hasTabs = true
     }
 
-    override val viewModel by viewModel<CardsViewModel>()
+    override val viewModel : BaseViewModel
+            get() = getViewModel()
 
     override val fragmentLayout = R.layout.fragment_cards
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setHasOptionsMenu(true)
         view_pager.adapter = CardsPageAdapter(childFragmentManager, context!!)
         iAppActivityListener.setupTabs(view_pager)
-        scroll_view.isFillViewport =true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

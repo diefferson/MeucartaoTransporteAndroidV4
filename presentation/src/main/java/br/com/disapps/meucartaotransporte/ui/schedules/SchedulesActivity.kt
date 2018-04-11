@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
+import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import kotlinx.android.synthetic.main.activity_schedules.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -18,7 +19,9 @@ class SchedulesActivity : BaseActivity (){
     override val activityLayout = R.layout.activity_schedules
 
     private val listAdapter : SchedulesListAdapter by lazy {
-        SchedulesListAdapter(ArrayList(), 0)
+        SchedulesListAdapter(ArrayList(), 0).apply {
+            emptyView = inflateView(R.layout.empty_view, schedules_recycler )
+        }
     }
 
     private lateinit var schedulesDetail : SchedulesDetail

@@ -21,8 +21,11 @@ class IntroViewModel(val getAllLinesJsonUseCase: GetAllLinesJson,
     private var schedulesComplete = false
 
     fun initData(){
-        downloadLines()
-        downloadSchedules()
+        if(!isRequested){
+            isRequested = true
+            downloadLines()
+            downloadSchedules()
+        }
     }
 
     private fun downloadLines(){

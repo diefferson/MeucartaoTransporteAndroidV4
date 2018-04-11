@@ -9,7 +9,6 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 class SchedulesViewModel(private val getAllPointSchedulesUseCase: GetAllPointSchedules) : BaseViewModel(){
 
     val schedules = MutableLiveData<List<Schedule>>()
-    private var isRequested = false
 
     fun getSchedules(codeLine:String, day: Int, codePoint : String){
         if(!isRequested){
@@ -21,5 +20,10 @@ class SchedulesViewModel(private val getAllPointSchedulesUseCase: GetAllPointSch
                 }
             }, GetAllPointSchedules.Params(codeLine, day, codePoint))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getAllPointSchedulesUseCase.dispose()
     }
 }

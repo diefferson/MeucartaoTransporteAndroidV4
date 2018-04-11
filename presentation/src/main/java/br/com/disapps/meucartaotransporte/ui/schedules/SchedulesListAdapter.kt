@@ -6,11 +6,8 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.validateSchedule
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import java.util.*
 
 class SchedulesListAdapter(data: List<Schedule>, var day : Int= 0) : BaseQuickAdapter<Schedule, BaseViewHolder>(R.layout.item_schedule, data){
-
-    private var initialTime = Calendar.getInstance()
 
     override fun convert(helper: BaseViewHolder, item: Schedule) {
         helper.setText(R.id.schedule, item.time)

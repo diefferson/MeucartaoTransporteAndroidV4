@@ -8,12 +8,9 @@ import br.com.disapps.domain.model.Schedule
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.validateSchedule
 
-import java.util.*
 class NextSchedulesDayViewModel(private val getLineSchedulesUseCase: GetLineSchedules) : BaseViewModel(){
 
     val nextSchedules = MutableLiveData<List<LineSchedule>>()
-
-    private var isRequested  = false
 
     fun getNextSchedules(codeLine:String, day:Int){
         if(!isRequested){
@@ -38,4 +35,8 @@ class NextSchedulesDayViewModel(private val getLineSchedulesUseCase: GetLineSche
         return schedules.filter { validateSchedule(it, day) }.take(3)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        getLineSchedulesUseCase.dispose()
+    }
 }

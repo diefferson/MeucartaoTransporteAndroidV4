@@ -10,7 +10,6 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
 class BalanceViewModel(val getCardUseCase: GetCard) : BaseViewModel(){
 
-    private var isRequested  = false
     val isSuccess = MutableLiveData<Boolean>()
     val card = MutableLiveData<CardVO>()
 

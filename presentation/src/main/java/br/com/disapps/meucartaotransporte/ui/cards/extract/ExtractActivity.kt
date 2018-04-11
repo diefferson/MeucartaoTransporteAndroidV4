@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
+import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import kotlinx.android.synthetic.main.activity_extract.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -18,7 +20,9 @@ class ExtractActivity : BaseActivity(){
     override val activityLayout = R.layout.activity_extract
 
     private val adapter : ExtractListAdapter by lazy {
-        ExtractListAdapter(ArrayList())
+        ExtractListAdapter(ArrayList()).apply {
+            emptyView = inflateView(R.layout.empty_view, extract_recycler )
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

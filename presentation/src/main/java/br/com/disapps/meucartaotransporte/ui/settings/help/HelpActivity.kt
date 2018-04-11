@@ -6,12 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import kotlinx.android.synthetic.main.activity_help.*
-import org.koin.android.architecture.ext.getViewModel
 
 class HelpActivity : AppCompatActivity(){
 

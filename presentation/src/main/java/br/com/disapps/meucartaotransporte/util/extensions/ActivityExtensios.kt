@@ -26,8 +26,8 @@ fun fromHtml(html: String): Spanned {
     }
 }
 
-fun Activity.inflateView(resource: Int, viewGroup: View): View =
-        layoutInflater.inflate(resource, viewGroup.parent as ViewGroup, false)
+fun Activity.inflateView(resource: Int, viewGroup: View, attachToRoot : Boolean = false): View =
+        layoutInflater.inflate(resource, viewGroup.parent as ViewGroup, attachToRoot)
 
 fun Activity.validateConnection(): Boolean {
     val connected: Boolean

@@ -10,11 +10,8 @@ import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
-import br.com.disapps.meucartaotransporte.util.extensions.toast
-import kotlinx.android.synthetic.main.fragment_list_lines.*
 import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
 import org.koin.android.architecture.ext.getViewModel
-import org.koin.android.architecture.ext.viewModel
 
 class NextSchedulesDayFragment : BaseFragment(){
 
@@ -25,7 +22,10 @@ class NextSchedulesDayFragment : BaseFragment(){
 
     private val listAdapter : NextScheduleDayListAdapter by lazy {
         NextScheduleDayListAdapter(ArrayList()).apply {
-            setOnItemClickListener { adapter, view, position ->
+
+            emptyView = activity?.inflateView(R.layout.empty_view, next_schedules_recycler )
+
+            setOnItemClickListener { adapter, _, position ->
                     SchedulesActivity.launch(context!!, SchedulesDetail(
                             lineCode= (adapter.data[position] as LineSchedule).lineCode,
                             day =  (adapter.data[position] as LineSchedule).day,

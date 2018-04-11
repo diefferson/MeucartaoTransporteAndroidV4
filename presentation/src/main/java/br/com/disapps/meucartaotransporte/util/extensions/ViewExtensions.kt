@@ -1,17 +1,6 @@
 package br.com.disapps.meucartaotransporte.util.extensions
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
-import android.view.View
-import android.widget.EditText
-import android.widget.TextView
 import java.text.Normalizer
-import java.util.regex.Pattern
-
-fun TextView.setMutableText(owner: LifecycleOwner, mutableText: MutableLiveData<String>){
-    mutableText.observe(owner, Observer { this.text = it.toString() })
-}
 
 fun String.isCPF(): Boolean{
     val cpfClean = this.replace(".", "").replace("-", "")

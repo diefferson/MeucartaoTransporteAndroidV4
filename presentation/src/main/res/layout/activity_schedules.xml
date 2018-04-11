@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/item_schedule"
         tools:itemCount="4"
-        android:orientation="horizontal"
+        android:scrollbars="vertical"
         tools:layoutManager="android.support.v7.widget.GridLayoutManager" />
 
 </layout>

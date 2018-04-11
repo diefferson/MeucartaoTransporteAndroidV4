@@ -13,7 +13,6 @@ import br.com.disapps.domain.interactor.cards.*
 import br.com.disapps.domain.interactor.lines.*
 import br.com.disapps.meucartaotransporte.executor.UIThread
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceViewModel
-import br.com.disapps.meucartaotransporte.ui.cards.CardsViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel
 import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
@@ -64,7 +63,6 @@ object AppInject {
 
     private val viewModelModule = applicationContext {
         viewModel { BaseViewModel() }
-        viewModel { CardsViewModel() }
         viewModel { ItinerariesViewModel() }
         viewModel { LinesViewModel(getLinesUseCase = get(), updateLineUseCase = get()) }
         viewModel { MainViewModel() }

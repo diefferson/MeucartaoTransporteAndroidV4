@@ -29,7 +29,9 @@ class AllLinesFragment : BaseFragment() {
 
     private val listAdapter:LinesListAdapter by lazy{
         LinesListAdapter(viewModel.lines).apply {
+
             emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.fav_line -> {

@@ -8,7 +8,6 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 class NextSchedulesViewModel(val getLineScheduleDaysUseCase: GetLineScheduleDays) : BaseViewModel(){
 
     val days = MutableLiveData<List<Int>>()
-    private var isRequested = false
 
     fun getSchedulesDays(codeLine : String){
         if(!isRequested){
@@ -19,5 +18,10 @@ class NextSchedulesViewModel(val getLineScheduleDaysUseCase: GetLineScheduleDays
                 }
             }, GetLineScheduleDays.Params(codeLine))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getLineScheduleDaysUseCase.dispose()
     }
 }

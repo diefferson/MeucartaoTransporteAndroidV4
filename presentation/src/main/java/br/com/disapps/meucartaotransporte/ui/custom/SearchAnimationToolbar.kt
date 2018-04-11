@@ -62,31 +62,23 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
         val searchHintColor = typedArray.getColor(R.styleable.SearchAnimationToolbar_searchHintColor, Color.GRAY)
 
         toolbar.title = toolbarTitle
-        toolbar.setTitleTextColor(toolbarTitleColor)
-        searchToolbar.setBackgroundColor(searchBackgroundColor)
-        txtSearch.setTextColor(searchTextColor)
-        txtSearch.setHintTextColor(searchHintColor)
+        setTitleTextColor(toolbarTitleColor)
+        setSearchTextColor(searchTextColor)
+        setSearchHintColor(searchHintColor)
+        setSearchBackgroundColor(searchBackgroundColor)
 
         if (!TextUtils.isEmpty(toolbarSubtitle)) {
-            toolbar.subtitle = toolbarSubtitle
-            toolbar.setSubtitleTextColor(toolbarSubtitleColor)
+            setToolbarSubtitle(toolbarSubtitle)
+            setToolbarSubtitleColor(toolbarSubtitleColor)
         }
 
         if (!TextUtils.isEmpty(searchHint)) {
-            txtSearch.hint = searchHint
+            setSearchHint(searchHint)
         }
 
         typedArray.recycle()
-
     }
 
-    fun setSearchTextColor(color: Int) {
-        txtSearch.setTextColor(color)
-    }
-
-    fun setSearchHintColor(color: Int) {
-        txtSearch.setHintTextColor(color)
-    }
 
     private fun inflateAndBindViews() {
         View.inflate(context, R.layout.view_search_toolbar, this@SearchAnimationToolbar)
@@ -120,7 +112,6 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
         val closeButton = searchView.findViewById<View>(R.id.search_close_btn) as ImageView
         closeButton.setImageResource(R.drawable.ic_close_grey_24dp)
 
-
         // set hint and the text colors
         txtSearch = searchView.findViewById<View>(android.support.v7.appcompat.R.id.search_src_text) as EditText
         txtSearch.addTextChangedListener(this@SearchAnimationToolbar)
@@ -132,7 +123,6 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
 
             false
         })
-
     }
 
     override fun onDetachedFromWindow() {
@@ -154,7 +144,7 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
     private fun circleReveal(isShow: Boolean) {
 
         var width = toolbar.width
-        width -= resources.getDimensionPixelSize(R.dimen.abc_action_button_min_width_material) / 2
+        width -= resources.getDimensionPixelSize(R.dimen.action_button_min_width) / 2
 
         val cx = width
         val cy = toolbar.height / 2
@@ -182,15 +172,11 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
             searchToolbar.visibility = View.VISIBLE
             notifySearchExpanded()
         } else {
-            notifySearchCallapsed()
+            notifySearchCollapsed()
         }
 
         // start the animation
         anim.start()
-    }
-
-    fun setSearchHint(hint: String) {
-        txtSearch.hint = hint
     }
 
     fun onBackPressed(): Boolean {
@@ -198,27 +184,16 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
         if (!isInSearchMode) {
             return false
         }
-
         collapse()
         searchMenuItem.collapseActionView()
         return true
-    }
-
-
-    fun setTitle(title: String) {
-        toolbar.title = title
-        toolbar.invalidate()
-    }
-
-    fun setTitleTextColor(color: Int) {
-        toolbar.setTitleTextColor(color)
     }
 
     fun setOnSearchQueryChangedListener(onSearchQueryChangedListener: OnSearchQueryChangedListener) {
         this.onSearchQueryChangedListener = onSearchQueryChangedListener
     }
 
-    private fun notifySearchCallapsed() {
+    private fun notifySearchCollapsed() {
         if (this.onSearchQueryChangedListener != null) {
             this.onSearchQueryChangedListener!!.onSearchCollapsed()
         }
@@ -247,7 +222,6 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
     override fun afterTextChanged(s: Editable) {
-
         if (!currentQuery.equals(s.toString(), ignoreCase = true)) {
             currentQuery = s.toString()
             notifySearchQueryChanged(currentQuery)
@@ -280,7 +254,41 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
         txtSearch.setText(query)
     }
 
+    fun setTitle(title: String) {
+        toolbar.title = title
+        toolbar.invalidate()
+    }
+
+    fun setTitleTextColor(color: Int) {
+        toolbar.setTitleTextColor(color)
+    }
+
+    fun setToolbarSubtitleColor(toolbarSubtitleColor: Int) {
+        toolbar.setSubtitleTextColor(toolbarSubtitleColor)
+    }
+
+    fun setSearchBackgroundColor(searchBackgroundColor: Int) {
+        searchToolbar.setBackgroundColor(searchBackgroundColor)
+    }
+
+    fun setSearchTextColor(color: Int) {
+        txtSearch.setTextColor(color)
+    }
+
+    fun setSearchHintColor(color: Int) {
+        txtSearch.setHintTextColor(color)
+    }
+
+    fun setSearchHint(hint: String) {
+        txtSearch.hint = hint
+    }
+
+    fun setToolbarSubtitle(toolbarSubtitle: String) {
+        toolbar.subtitle = toolbarSubtitle
+    }
+
     interface OnSearchQueryChangedListener {
+
         fun onSearchCollapsed()
 
         fun onSearchQueryChanged(query: String)

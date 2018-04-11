@@ -11,7 +11,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "br.com.disapps.meucartaotransporte"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode versionMajor * 1000000 + versionMinor * 1000 + versionPatch * 100
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
@@ -74,6 +74,7 @@ dependencies {
     implementation presentationDependencies.baseRecyclerView
     implementation presentationDependencies.recyclerviewFastscroll
     implementation presentationDependencies.pageIndicatorVersion
+    implementation presentationDependencies.lottie
     kapt presentationDependencies.archCompiler
 
     // Instrumentation test dependencies

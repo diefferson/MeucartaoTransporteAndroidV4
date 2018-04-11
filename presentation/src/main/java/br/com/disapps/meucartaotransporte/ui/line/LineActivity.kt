@@ -1,6 +1,5 @@
 package br.com.disapps.meucartaotransporte.ui.line
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -43,7 +42,6 @@ class LineActivity : BaseFragmentActivity(){
     override fun getIsTabsVisible() = viewModel.isTabsVisible
 
     override fun setIsTabsVisible(visible: Boolean) { viewModel.isTabsVisible = visible }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

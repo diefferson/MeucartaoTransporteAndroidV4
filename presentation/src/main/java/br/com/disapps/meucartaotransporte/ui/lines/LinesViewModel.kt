@@ -17,11 +17,9 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 class LinesViewModel(private val getLinesUseCase: GetLines,
                      private val updateLineUseCase: UpdateLine) : BaseViewModel(){
 
-    private var isRequested  = false
     val hasFavorite = MutableLiveData<Boolean>()
     val isUpdatedLines = MutableLiveData<Boolean>()
     val isUpdatedFavorites = MutableLiveData<Boolean>()
-
     val lines = ArrayList<LineVO>()
     val favoriteLines = ArrayList<LineVO>()
     val linesFiltered = ArrayList<LineVO>()

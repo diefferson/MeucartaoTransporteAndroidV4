@@ -16,18 +16,16 @@ class BalanceActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val card = intent.extras.getSerializable(CARD) as CardVO
+        val card = intent.getSerializableExtra(CARD) as CardVO
         viewModel.getCard(card.code, card.cpf)
     }
 
     companion object {
         private const val CARD = "card"
         fun launch(context: Context,card : CardVO){
-            val intent = Intent(context, BalanceActivity::class.java)
-            val params = Bundle()
-            params.putSerializable(CARD, card)
-            intent.putExtras(params)
-            context.startActivity(intent)
+            context.startActivity(Intent(context, BalanceActivity::class.java).apply {
+                putExtra(CARD, card)
+            })
         }
     }
 }

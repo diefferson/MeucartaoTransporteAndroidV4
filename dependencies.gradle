@@ -13,7 +13,7 @@ ext {
 
     //Android
     androidBuildToolsVersion = "27.0.3"
-    androidMinSdkVersion = 15
+    androidMinSdkVersion = 16
     androidTargetSdkVersion = 27
     androidCompileSdkVersion = 27
 
@@ -36,6 +36,7 @@ ext {
     baseRecyclerViewVersion = '2.9.35'
     materialScrollBarVersion = '13.2.3'
     recyclerviewFastscroll = '1.0.17'
+    lottieVersion = '2.5.4'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -68,6 +69,7 @@ ext {
             baseRecyclerView:   "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
             pageIndicatorVersion:  "com.romandanylyk:pageindicatorview:${pageIndicatorVersion}",
             recyclerviewFastscroll:  "com.simplecityapps:recyclerview-fastscroll:${recyclerviewFastscroll}",
+            lottie:              "com.airbnb.android:lottie:${lottieVersion}",
     ]
 
     presentationTestDependencies = [

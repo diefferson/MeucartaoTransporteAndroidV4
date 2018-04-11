@@ -18,7 +18,6 @@ class RegisterCardActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         btn_register.setOnClickListener { viewModel.consult() }
         viewModelObservers()
     }
@@ -31,7 +30,6 @@ class RegisterCardActivity : BaseActivity(){
     }
 
     companion object {
-
         fun launch(context: Context){
             context.startActivity(Intent(context, RegisterCardActivity::class.java))
         }

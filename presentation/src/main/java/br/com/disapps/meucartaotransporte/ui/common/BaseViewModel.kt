@@ -7,6 +7,7 @@ import br.com.disapps.meucartaotransporte.util.SingleLiveEvent
 
 open class BaseViewModel : ViewModel(){
 
+    protected var isRequested  = false
     protected val errorEvent: SingleLiveEvent<KnownError> = SingleLiveEvent()
     protected val loadingEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
 

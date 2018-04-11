@@ -30,7 +30,6 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
         val view = initDataBinding(inflater,container)
-        iAppActivityListener.setTitle(getString(R.string.app_name))
         setupLoading()
         setupError()
         return view
