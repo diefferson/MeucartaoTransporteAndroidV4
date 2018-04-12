@@ -9,14 +9,26 @@ class NextScheduleDayListAdapter(data: List<LineSchedule>) : BaseQuickAdapter<Li
 
     override fun convert(helper: CustomViewHolder, item: LineSchedule) {
         helper.setText(R.id.name_point, item.busStopName)
+
         if(item.nextSchedules.isNotEmpty()){
+            helper.setGone(R.id.next_schedule_1, true)
             helper.setSchedule(R.id.next_schedule_1, item.nextSchedules[0])
+        }else{
+            helper.setGone(R.id.next_schedule_1, false)
         }
+
         if(item.nextSchedules.size > 1){
+            helper.setGone(R.id.next_schedule_2, true)
             helper.setSchedule(R.id.next_schedule_2, item.nextSchedules[1])
+        }else{
+            helper.setGone(R.id.next_schedule_2, false)
         }
+
         if(item.nextSchedules.size > 2){
+            helper.setGone(R.id.next_schedule_3, true)
             helper.setSchedule(R.id.next_schedule_3, item.nextSchedules[2])
+        }else{
+            helper.setGone(R.id.next_schedule_3, false)
         }
     }
 }

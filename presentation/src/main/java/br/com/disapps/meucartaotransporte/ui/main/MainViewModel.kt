@@ -9,10 +9,7 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
  * Created by dnso on 09/03/2018.
  */
 class MainViewModel : BaseViewModel(){
-
-    var actualFragment: BaseFragment = CardsFragment.newInstance()
     val searchText = MutableLiveData<String>()
     val onSearchAction = MutableLiveData<Boolean>()
     var isTabsVisible = true
-
 }

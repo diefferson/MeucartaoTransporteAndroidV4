@@ -21,7 +21,7 @@ class ExtractActivity : BaseActivity(){
 
     private val adapter : ExtractListAdapter by lazy {
         ExtractListAdapter(ArrayList()).apply {
-            emptyView = inflateView(R.layout.empty_view, extract_recycler )
+            emptyView = inflateView(R.layout.loading_view, extract_recycler )
         }
     }
 
@@ -44,7 +44,10 @@ class ExtractActivity : BaseActivity(){
 
     private fun observeViewModel(){
         viewModel.extract.observe(this, Observer {
-            adapter.setNewData(it)
+            adapter.apply {
+                emptyView = inflateView(R.layout.empty_view, extract_recycler )
+                setNewData(it)
+            }
         })
     }
 

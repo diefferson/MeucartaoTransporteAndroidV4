@@ -27,7 +27,7 @@ class MyCardsFragment : BaseFragment(){
     private val adapter: CardsListAdapter by lazy {
         CardsListAdapter(ArrayList()).apply {
 
-            emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler )
+            emptyView = activity?.inflateView(R.layout.loading_view, cards_recycler )
 
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
@@ -57,7 +57,10 @@ class MyCardsFragment : BaseFragment(){
 
     private fun observeViewModel(){
         viewModel.cards.observe(this, Observer {
-            adapter.setNewData(it)
+            adapter.apply {
+                emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler )
+                setNewData(it)
+            }
         })
     }
 

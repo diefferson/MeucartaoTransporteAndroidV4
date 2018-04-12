@@ -31,7 +31,6 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
     abstract val toolbar : SearchAnimationToolbar
     abstract val tabs : TabLayout
     abstract val appBar : AppBarLayout
-    abstract val initialFragment : BaseFragment
     private var binding: ViewDataBinding? = null
     private val loading by lazy { CustomProgressDialog(this) }
 
@@ -44,7 +43,6 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         setupToolbar()
         setupLoading()
         setupError()
-        replaceFragment(initialFragment)
     }
 
     override fun onBackPressed() {

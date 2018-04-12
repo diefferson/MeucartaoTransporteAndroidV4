@@ -14,15 +14,33 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <TextView
-            android:id="@+id/ic_line"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/roundedImage"
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/circle_green"
-            android:gravity="center_vertical|center_horizontal"
-            tools:text="123"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_height="50dp">
+
+            <br.com.disapps.meucartaotransporte.ui.custom.RoundedColorView
+                android:id="@+id/ic_line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:backgroundColor="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/line_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                tools:text="123"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@id/ic_line"
+                app:layout_constraintBottom_toBottomOf="@id/ic_line"
+                app:layout_constraintStart_toStartOf="@id/ic_line"
+                app:layout_constraintEnd_toEndOf="@id/ic_line" />
+
+        </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="0dp"

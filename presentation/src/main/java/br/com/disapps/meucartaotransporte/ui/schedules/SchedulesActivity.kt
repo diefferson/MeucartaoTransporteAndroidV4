@@ -9,6 +9,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.getCustomTheme
 import kotlinx.android.synthetic.main.activity_schedules.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -18,36 +19,44 @@ class SchedulesActivity : BaseActivity (){
 
     override val activityLayout = R.layout.activity_schedules
 
-    private val listAdapter : SchedulesListAdapter by lazy {
-        SchedulesListAdapter(ArrayList(), 0).apply {
-            emptyView = inflateView(R.layout.empty_view, schedules_recycler )
-        }
-    }
-
     private lateinit var schedulesDetail : SchedulesDetail
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        schedulesDetail = intent.getSerializableExtra(SCHEDULES_DETAIL) as SchedulesDetail
-
-        schedules_recycler.apply {
-            layoutManager = GridLayoutManager(context,4)
-            adapter = this@SchedulesActivity.listAdapter.apply { day = schedulesDetail.day }
+    private val listAdapter : SchedulesListAdapter by lazy {
+        SchedulesListAdapter(ArrayList(), 0).apply {
+            emptyView = inflateView(R.layout.loading_view, schedules_recycler )
         }
-
-        observeViewModel()
     }
 
-    private fun observeViewModel(){
-        viewModel.schedules.observe(this, Observer {
-            listAdapter.setNewData(it)
-        })
+    override fun onCreate(savedInstanceState: Bundle?) {
+        schedulesDetail = intent.getSerializableExtra(SCHEDULES_DETAIL) as SchedulesDetail
+        setTheme(getCustomTheme(schedulesDetail.lineColor, true))
+        super.onCreate(savedInstanceState)
+
+        initRecyclerView()
+        observeViewModel()
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.getSchedules(schedulesDetail.lineCode, schedulesDetail.day, schedulesDetail.busStopCode)
+    }
+
+    private fun initRecyclerView() {
+        schedules_recycler.apply {
+            layoutManager = GridLayoutManager(context, 4)
+            adapter = this@SchedulesActivity.listAdapter.apply {
+                day = schedulesDetail.day
+            }
+        }
+    }
+
+    private fun observeViewModel(){
+        viewModel.schedules.observe(this, Observer {
+            listAdapter.apply {
+                emptyView = inflateView(R.layout.empty_view, schedules_recycler )
+                setNewData(it)
+            }
+        })
     }
 
     companion object {

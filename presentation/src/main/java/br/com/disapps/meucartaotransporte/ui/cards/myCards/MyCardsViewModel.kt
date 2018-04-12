@@ -20,30 +20,18 @@ class MyCardsViewModel(val getCardsUseCase: GetCards,
     val cards = MutableLiveData<List<CardVO>>()
 
     fun getCards(){
-        loadingEvent.value = true
         getCardsUseCase.execute(object : DefaultSingleObserver<List<Card>>() {
-
-            override fun onError(e: Throwable) {
-                loadingEvent.value = false
-            }
-
             override fun onSuccess(t: List<Card>) {
-                loadingEvent.value = false
                 cards.value = t.toCardVO()
             }
+
         }, Unit)
     }
 
     fun deleteCard(card: CardVO){
-        loadingEvent.value = true
         deleteCardUseCase.execute(object : DefaultCompletableObserver(){
             override fun onComplete() {
                 getCards()
-                loadingEvent.value = false
-            }
-
-            override fun onError(e: Throwable) {
-                loadingEvent.value = false
             }
         },DeleteCard.Params(card.toCardBO()))
     }

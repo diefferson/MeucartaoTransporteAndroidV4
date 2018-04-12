@@ -15,16 +15,12 @@ class ExtractViewModel(val getExtractUseCase: GetExtract) : BaseViewModel(){
     fun getExtract(code: String, cpf: String) {
         if(!isRequested){
             isRequested = true
-            loadingEvent.value = true
             getExtractUseCase.execute(object : DefaultSingleObserver<List<Extract>>() {
-
                 override fun onError(e: Throwable) {
-                    loadingEvent.value = false
                     errorEvent.value = KnownError("Erro!")
                 }
 
                 override fun onSuccess(t: List<Extract>) {
-                    loadingEvent.value = false
                     extract.value = t
                 }
 

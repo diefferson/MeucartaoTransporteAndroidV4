@@ -2,16 +2,17 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+        <item name="toolbarStyle">@style/AppTheme.AppBarOverlay</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.ToolbarStyle" parent="AppTheme.AppBarOverlay"/>
+
 
     <style name="AppTheme.DrawerActionBar">
         <item name="elevation">0dp</item>
@@ -24,12 +25,116 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.Blue">
+        <item name="colorPrimary">@color/line_blue</item>
+        <item name="colorPrimaryDark">@color/line_blue</item>
+        <item name="colorAccent">@color/line_blue</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.BlueLight">
+        <item name="colorPrimary">@color/line_blue_light</item>
+        <item name="colorPrimaryDark">@color/line_blue_light</item>
+        <item name="colorAccent">@color/line_blue_light</item>
+    </style>
 
-    <style name="AppTheme.ToolbarStyle" parent="AppTheme.AppBarOverlay"/>
+    <style name="AppTheme.Red">
+        <item name="colorPrimary">@color/line_red</item>
+        <item name="colorPrimaryDark">@color/line_red</item>
+        <item name="colorAccent">@color/line_red</item>
+    </style>
+
+    <style name="AppTheme.Grey">
+        <item name="colorPrimary">@color/line_grey</item>
+        <item name="colorPrimaryDark">@color/line_grey</item>
+        <item name="colorAccent">@color/line_grey</item>
+    </style>
+
+    <style name="AppTheme.Green">
+        <item name="colorPrimary">@color/line_green</item>
+        <item name="colorPrimaryDark">@color/line_green</item>
+        <item name="colorAccent">@color/line_green</item>
+    </style>
+
+    <style name="AppTheme.Yellow">
+        <item name="colorPrimary">@color/line_yellow</item>
+        <item name="colorPrimaryDark">@color/line_yellow</item>
+        <item name="colorAccent">@color/line_yellow</item>
+    </style>
+
+    <style name="AppTheme.Orange">
+        <item name="colorPrimary">@color/line_orange</item>
+        <item name="colorPrimaryDark">@color/line_orange</item>
+        <item name="colorAccent">@color/line_orange</item>
+    </style>
+
+    <style name="AppTheme.White">
+        <item name="colorPrimary">@color/line_white</item>
+        <item name="colorPrimaryDark">@color/line_white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Ccd">
+        <item name="colorPrimary">@color/line_ccd</item>
+        <item name="colorPrimaryDark">@color/line_ccd</item>
+        <item name="colorAccent">@color/line_ccd</item>
+    </style>
+
+    <style name="AppTheme.Blue.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.BlueLight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Red.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Grey.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Green.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Yellow.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Orange.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.White.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Ccd.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
 
     <style name="AppTheme.TextTitle">
         <item name="android:textColor">@color/textDark</item>
@@ -67,7 +172,7 @@
         <item name="cardCornerRadius">2dp</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">4dp</item>
-        <item name="cardBackgroundColor">@color/colorAccent</item>
+        <item name="cardBackgroundColor">?colorAccent</item>
     </style>
 
 </resources>

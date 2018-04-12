@@ -1,5 +1,6 @@
 package br.com.disapps.meucartaotransporte.util.extensions
 
+import android.view.View
 import java.text.Normalizer
 
 fun String.isCPF(): Boolean{
@@ -70,5 +71,14 @@ fun String.isCPF(): Boolean{
 
 fun String.clean() : String {
     return Normalizer.normalize(this, Normalizer.Form.NFD).replace("\\p{InCombiningDiacriticalMarks}".toRegex(), "")
+}
 
+/**
+ * Extension function to get the center of a view
+ * @return Pair containing (x|y)
+ */
+fun View.getCenter(): Pair<Float, Float> {
+    val cx = this.x + this.width / 2
+    val cy = this.y + this.height / 2
+    return Pair(cx, cy)
 }

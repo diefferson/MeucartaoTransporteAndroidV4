@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout android:id="@+id/vAppBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.ToolbarStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/collapsingToolbarBackground"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <br.com.disapps.meucartaotransporte.ui.custom.RoundedColorView
+            android:id="@+id/roundedImage"
+            android:layout_width="@dimen/rounded_color_size"
+            android:layout_height="@dimen/rounded_color_size"
+            android:transitionName="@string/roundedColorView_transitionName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:backgroundColor="?android:colorPrimary"/>
+
+        <br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
+            android:id="@+id/vToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:searchHint="@string/search_hint"
+            android:background="@drawable/transparent"
+            app:searchTextColor="@color/textDark"
+            app:searchHintColor="@color/textLight"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/vTabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@drawable/transparent"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="fixed"
+            app:elevation="2dp"
+            app:tabGravity="fill"
+            app:layout_constraintTop_toBottomOf="@id/vToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.AppBarLayout>

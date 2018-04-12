@@ -54,12 +54,11 @@
            android:id="@+id/next_schedule_1"
            android:layout_width="0dp"
            android:layout_height="35dp"
-           app:isAdapt="true"
-           app:schedule="5:50"
            style="@style/AppTheme.Schedule"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintEnd_toStartOf="@id/next_schedule_2"
-           app:layout_constraintTop_toBottomOf="@id/next_schedules"/>
+           app:layout_constraintTop_toBottomOf="@id/next_schedules"
+           android:visibility="gone"/>
 
         <br.com.disapps.meucartaotransporte.ui.custom.CustomSchedule
             android:id="@+id/next_schedule_2"
@@ -70,7 +69,8 @@
             style="@style/AppTheme.Schedule"
             app:layout_constraintStart_toEndOf="@id/next_schedule_1"
             app:layout_constraintEnd_toStartOf="@id/next_schedule_3"
-            app:layout_constraintTop_toBottomOf="@id/next_schedules"/>
+            app:layout_constraintTop_toBottomOf="@id/next_schedules"
+            android:visibility="gone"/>
 
         <br.com.disapps.meucartaotransporte.ui.custom.CustomSchedule
             android:id="@+id/next_schedule_3"
@@ -81,7 +81,8 @@
             style="@style/AppTheme.Schedule"
             app:layout_constraintStart_toEndOf="@id/next_schedule_2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/next_schedules"/>
+            app:layout_constraintTop_toBottomOf="@id/next_schedules"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/vw_divider2"

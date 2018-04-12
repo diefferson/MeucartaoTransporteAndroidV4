@@ -9,7 +9,6 @@ import android.support.design.widget.TabLayout
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
-import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
@@ -22,23 +21,35 @@ import org.koin.android.architecture.ext.viewModel
 class MainActivity : BaseFragmentActivity(){
 
     override val viewModel by viewModel<MainViewModel>()
-
     override val activityLayout = R.layout.activity_main
-
     override val container: FrameLayout by lazy { vContainer  }
-
     override val toolbar: SearchAnimationToolbar by lazy { vToolbar }
-
     override val tabs: TabLayout by lazy { vTabs }
-
     override val appBar: AppBarLayout by lazy { vAppBar }
-
-    override val initialFragment: BaseFragment by lazy { viewModel.actualFragment }
-
+    private var fragmentSelected = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        setupActualFragment(savedInstanceState)
+    }
+
+    private fun setupActualFragment(savedInstanceState: Bundle?){
+
+        savedInstanceState?.let {
+            fragmentSelected = it.getInt(FRAGMENT_SELECTED, 0)
+        }
+
+        when(fragmentSelected){
+            0 ->replaceFragment( CardsFragment.newInstance())
+            1->replaceFragment(LinesFragment.newInstance() )
+            2->replaceFragment(SettingsFragment.newInstance())
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putInt(FRAGMENT_SELECTED, fragmentSelected)
     }
 
     override fun getIsTabsVisible() = viewModel.isTabsVisible
@@ -58,18 +69,18 @@ class MainActivity : BaseFragmentActivity(){
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_cards -> {
-                viewModel.actualFragment = CardsFragment.newInstance()
-                replaceFragment(viewModel.actualFragment)
+                fragmentSelected  = 0
+                replaceFragment( CardsFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_lines -> {
-                viewModel.actualFragment = LinesFragment.newInstance()
-                replaceFragment(viewModel.actualFragment )
+                fragmentSelected  = 1
+                replaceFragment(LinesFragment.newInstance() )
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_settings -> {
-                viewModel.actualFragment = SettingsFragment.newInstance()
-                replaceFragment(viewModel.actualFragment)
+                fragmentSelected  = 2
+                replaceFragment(SettingsFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -77,6 +88,7 @@ class MainActivity : BaseFragmentActivity(){
     }
 
     companion object {
+        private const val FRAGMENT_SELECTED = "fragmentSelected"
         fun launch(context: Context){
             val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)

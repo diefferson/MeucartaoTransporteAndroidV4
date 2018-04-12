@@ -7,6 +7,8 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="action_button_min_width">48dp</dimen>
+    <dimen name="rounded_color_size">48dp</dimen>
+    <dimen name="rounded_color_margin">8dp</dimen>
 
     <!-- Intro Screen -->
     <dimen name="dots_height">30dp</dimen>

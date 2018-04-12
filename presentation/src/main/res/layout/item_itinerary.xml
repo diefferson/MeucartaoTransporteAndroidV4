@@ -21,12 +21,10 @@
         app:layout_constraintBottom_toBottomOf="@id/type_point"
         app:layout_constraintTop_toTopOf="@id/name_point"/>
 
-    <TextView
+    <br.com.disapps.meucartaotransporte.ui.custom.RoundedColorView
         android:id="@+id/ic_it_item"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/circle_blue_light"
-        android:text=""
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@id/vw_divider1"

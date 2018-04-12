@@ -30,7 +30,7 @@ class AllLinesFragment : BaseFragment() {
     private val listAdapter:LinesListAdapter by lazy{
         LinesListAdapter(viewModel.lines).apply {
 
-            emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+            emptyView = activity?.inflateView(R.layout.loading_view, lines_recycler )
 
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
@@ -39,21 +39,26 @@ class AllLinesFragment : BaseFragment() {
                     }
                 }
             }
-            setOnItemClickListener { adapter, _, position -> LineActivity.launch(context!!, adapter.data[position] as LineVO)  }
+
+            setOnItemClickListener { adapter, view, position ->
+                LineActivity.launch(context!!, adapter.data[position] as LineVO, view.findViewById(R.id.roundedImage))
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecycler()
+        observeViewModel()
+    }
 
+    private fun initRecycler() {
         lines_recycler.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
             adapter = this@AllLinesFragment.listAdapter
             itemAnimator = DefaultItemAnimator()
         }
-
-        observeViewModel()
     }
 
     private fun observeViewModel(){
@@ -63,6 +68,7 @@ class AllLinesFragment : BaseFragment() {
         })
 
         mainViewModel.onSearchAction.observe(this, Observer {
+            listAdapter.emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
             if(it!= null && it){
                 viewModel.linesFiltered.clear()
                 viewModel.linesFiltered.addAll(viewModel.lines)

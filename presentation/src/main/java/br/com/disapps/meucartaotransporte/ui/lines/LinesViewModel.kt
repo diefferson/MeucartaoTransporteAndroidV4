@@ -36,19 +36,11 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
     fun getLines(refresh :Boolean = false){
 
         if(!isRequested || refresh) {
-
             isRequested = true
-            loadingEvent.value = true
 
             getLinesUseCase.execute(object : DefaultSingleObserver<List<Line>>() {
 
-                override fun onError(e: Throwable) {
-                    loadingEvent.value = false
-                }
-
                 override fun onSuccess(t: List<Line>) {
-                    loadingEvent.value = false
-
                     favoriteLines.clear()
                     lines.clear()
 
