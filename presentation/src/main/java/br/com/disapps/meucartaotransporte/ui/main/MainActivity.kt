@@ -1,5 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.main
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -31,19 +32,25 @@ class MainActivity : BaseFragmentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        setupActualFragment(savedInstanceState)
+        viewModel.getInitialScreen()
+        viewModel.initialScreen.observe(this, Observer {
+            setupActualFragment(savedInstanceState, it?:0)
+        })
     }
 
-    private fun setupActualFragment(savedInstanceState: Bundle?){
+    private fun setupActualFragment(savedInstanceState: Bundle?, initialFragment: Int){
 
         savedInstanceState?.let {
             fragmentSelected = it.getInt(FRAGMENT_SELECTED, 0)
+        }?: run{
+            fragmentSelected = initialFragment
         }
 
-        when(fragmentSelected){
-            0 ->replaceFragment( CardsFragment.newInstance())
-            1->replaceFragment(LinesFragment.newInstance() )
-            2->replaceFragment(SettingsFragment.newInstance())
+        navigation.selectedItemId = when(fragmentSelected){
+            0 -> R.id.nav_cards
+            1-> R.id.nav_lines
+            2-> R.id.nav_settings
+            else -> R.id.nav_cards
         }
     }
 

@@ -17,7 +17,7 @@ class SettingsViewModel(private val getInitialScreenUseCase: GetInitialScreen,
 
     val initialScreen = MutableLiveData<String>()
 
-    fun getInitialSreen(){
+    fun getInitialScreen(){
         getInitialScreenUseCase.execute(object : DefaultSingleObserver<String>(){
             override fun onSuccess(t: String) {
                 initialScreen.value = t
@@ -29,7 +29,7 @@ class SettingsViewModel(private val getInitialScreenUseCase: GetInitialScreen,
         saveInitialScreenUseCase.execute(object : DefaultCompletableObserver(){
             override fun onComplete() {
                 super.onComplete()
-                getInitialSreen()
+                getInitialScreen()
             }
         }, SaveInitialScreen.Params(initialScreen))
     }

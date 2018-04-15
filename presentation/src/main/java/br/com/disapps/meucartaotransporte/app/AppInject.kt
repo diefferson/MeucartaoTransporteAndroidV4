@@ -67,7 +67,7 @@ object AppInject {
         viewModel { BaseViewModel() }
         viewModel { ItinerariesViewModel() }
         viewModel { LinesViewModel(getLinesUseCase = get(), updateLineUseCase = get()) }
-        viewModel { MainViewModel() }
+        viewModel { MainViewModel(getInitialScreenUseCase = get()) }
         viewModel { QuickFindViewModel() }
         viewModel { SettingsViewModel(getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
         viewModel { ShapesViewModel() }
