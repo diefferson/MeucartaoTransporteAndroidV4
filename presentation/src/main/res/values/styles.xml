@@ -14,7 +14,7 @@
     <style name="AppTheme.ToolbarStyle" parent="AppTheme.AppBarOverlay"/>
 
 
-    <style name="AppTheme.DrawerActionBar">
+    <style name="AppTheme.TranslucentStatusBar">
         <item name="elevation">0dp</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

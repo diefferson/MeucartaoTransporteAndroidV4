@@ -65,7 +65,7 @@
         <activity
             android:name=".ui.settings.help.AboutActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.DrawerActionBar"/>
+            android:theme="@style/AppTheme.TranslucentStatusBar"/>
 
         <activity
             android:name=".ui.intro.IntroActivity"

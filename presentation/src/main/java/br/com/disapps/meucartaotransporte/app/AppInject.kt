@@ -27,6 +27,8 @@ import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.domain.executor.PostExecutionThread
 import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
+import br.com.disapps.domain.interactor.preferences.GetInitialScreen
+import br.com.disapps.domain.interactor.preferences.SaveInitialScreen
 import br.com.disapps.domain.interactor.schedules.*
 import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
@@ -67,7 +69,7 @@ object AppInject {
         viewModel { LinesViewModel(getLinesUseCase = get(), updateLineUseCase = get()) }
         viewModel { MainViewModel() }
         viewModel { QuickFindViewModel() }
-        viewModel { SettingsViewModel() }
+        viewModel { SettingsViewModel(getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
         viewModel { ShapesViewModel() }
         viewModel { MyCardsViewModel(getCardsUseCase = get(), deleteCardUseCase = get()) }
         viewModel { BalanceViewModel(getCardUseCase = get()) }
@@ -100,6 +102,8 @@ object AppInject {
         factory { GetLineScheduleDays( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetLineSchedules( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetAllPointSchedules( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { SaveInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {
@@ -108,6 +112,7 @@ object AppInject {
         bean { ItinerariesDataRepository( itinerariesDataSourceFactory = get()) as ItinerariesRepository }
         bean { ShapesDataRepository( shapesDataSourceFactory = get()) as ShapesRepository }
         bean { SchedulesDataRepository( schedulesDataSourceFactory = get()) as SchedulesRepository }
+        bean { PreferencesDataRepository( preferences = get()) as PreferencesRepository }
     }
 
     private val dataSourceFactoryModule : Module = applicationContext {

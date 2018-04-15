@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/tela_inicial"
+                android:id="@+id/initial_screen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -36,10 +36,11 @@
                     style="@style/AppTheme.TextTitle"/>
 
                 <TextView
-                    android:id="@+id/tela_inicial_value"
+                    android:id="@+id/initial_screen_value"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:text="@{viewModel.initialScreen}"
                     tools:text="@string/cards"
                     style="@style/AppTheme.SettingsValue"/>
 
@@ -74,6 +75,7 @@
                 android:background="@color/divider"/>
 
             <TextView
+                android:id="@+id/share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/share"

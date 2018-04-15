@@ -1,4 +1,4 @@
-package br.com.disapps.data.storage.preferences
+package br.com.disapps.domain.model
 
 /**
  * Created by dnso on 13/03/2018.

@@ -4,11 +4,10 @@
         <!--<item name="elevation">0dp</item>-->
     <!--</style>-->
 
-    <style name="AppTheme.DrawerActionBar">
+    <style name="AppTheme.TranslucentStatusBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="elevation">0dp</item>
     </style>
 

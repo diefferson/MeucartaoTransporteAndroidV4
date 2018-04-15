@@ -3,6 +3,7 @@ package br.com.disapps.data.storage.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import br.com.disapps.data.BuildConfig
+import br.com.disapps.domain.model.InitialScreen
 
 /**
  * Created by dnso on 13/03/2018.
@@ -47,8 +48,8 @@ class Preferences(var context:Context) {
         mPreferences.edit().putBoolean(PRO_ACCESS, isPro).apply()
     }
 
-    fun setInitialScreen(scren : InitialScreen){
-        mPreferences.edit().putString(INITIAL_SCREEN, scren.toString()).apply()
+    fun setInitialScreen(screen : InitialScreen){
+        mPreferences.edit().putString(INITIAL_SCREEN, screen.toString()).apply()
     }
 
     fun setIsFirstAcess(firstAccess: Boolean){
