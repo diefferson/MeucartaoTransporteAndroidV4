@@ -51,6 +51,7 @@ class IntroActivity : BaseActivity(){
 
         viewModel.isComplete.observe(this, Observer {
             if(it!= null && it){
+                viewModel.saveIsFirstAccess()
                 toast("sucesso")
             }
         })

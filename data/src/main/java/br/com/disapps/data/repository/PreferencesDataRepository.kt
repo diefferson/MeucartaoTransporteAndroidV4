@@ -19,4 +19,22 @@ class PreferencesDataRepository(private val preferences:Preferences) : Preferenc
             Completable.complete()
         }
     }
+
+    override fun getIsFirstAccess(): Single<Boolean> {
+        return Single.just(  preferences.isFirstAccess==0)
+    }
+
+    override fun setIsFirstAccess(isFirst: Boolean): Completable {
+
+        var firstAccess= 0
+
+        if(!isFirst){
+            firstAccess = 1
+        }
+
+        return Completable.defer {
+            preferences.setIsFirstAccess(firstAccess)
+            Completable.complete()
+        }
+    }
 }

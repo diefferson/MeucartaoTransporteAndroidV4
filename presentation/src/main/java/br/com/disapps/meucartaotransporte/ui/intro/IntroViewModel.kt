@@ -4,8 +4,10 @@ import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
 import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.SingleUseCase
 import br.com.disapps.domain.interactor.lines.GetAllLinesJson
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
+import br.com.disapps.domain.interactor.preferences.SaveIsFirstAccess
 import br.com.disapps.domain.interactor.schedules.GetAllSchedulesJson
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
@@ -13,7 +15,8 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 class IntroViewModel(val getAllLinesJsonUseCase: GetAllLinesJson,
                      val saveAllLinesJsonUseCase: SaveAllLinesJson,
                      val getAllSchedulesJsonUseCase: GetAllSchedulesJson,
-                     val saveAllSchedulesJsonUseCase: SaveAllSchedulesJson) : BaseViewModel(){
+                     val saveAllSchedulesJsonUseCase: SaveAllSchedulesJson,
+                     val saveIsFirstAccessUseCase: SaveIsFirstAccess) : BaseViewModel(){
 
 
     val isComplete = MutableLiveData<Boolean>().apply { value = false }
@@ -66,6 +69,12 @@ class IntroViewModel(val getAllLinesJsonUseCase: GetAllLinesJson,
                 }
             }
         }, SaveAllSchedulesJson.Params(json))
+    }
+
+    fun saveIsFirstAccess(){
+        saveIsFirstAccessUseCase.execute(object : DefaultCompletableObserver(){
+
+        }, SaveIsFirstAccess.Params(false))
     }
 
     override fun onCleared() {

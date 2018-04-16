@@ -8,4 +8,6 @@ interface PreferencesRepository{
 
     fun getInitialScreen() : Single<String>
     fun saveInitialScreen(initialScreen: InitialScreen) : Completable
+    fun getIsFirstAccess() : Single<Boolean>
+    fun setIsFirstAccess(isFirst : Boolean) : Completable
 }

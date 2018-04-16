@@ -28,7 +28,9 @@ import br.com.disapps.domain.executor.PostExecutionThread
 import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
 import br.com.disapps.domain.interactor.preferences.GetInitialScreen
+import br.com.disapps.domain.interactor.preferences.GetIsFirstAccess
 import br.com.disapps.domain.interactor.preferences.SaveInitialScreen
+import br.com.disapps.domain.interactor.preferences.SaveIsFirstAccess
 import br.com.disapps.domain.interactor.schedules.*
 import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
@@ -67,20 +69,20 @@ object AppInject {
     private val viewModelModule = applicationContext {
         viewModel { BaseViewModel() }
         viewModel { ItinerariesViewModel() }
-        viewModel { LinesViewModel(getLinesUseCase = get(), updateLineUseCase = get()) }
-        viewModel { MainViewModel(getInitialScreenUseCase = get()) }
+        viewModel { LinesViewModel( get(), get()) }
+        viewModel { MainViewModel( get()) }
         viewModel { QuickFindViewModel() }
-        viewModel { SettingsViewModel(getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
+        viewModel { SettingsViewModel( get(),  get()) }
         viewModel { ShapesViewModel() }
-        viewModel { MyCardsViewModel(getCardsUseCase = get(), deleteCardUseCase = get()) }
-        viewModel { BalanceViewModel(getCardUseCase = get()) }
-        viewModel { RegisterCardViewModel(hasCardUseCase = get(), saveCardUseCase = get(), getCardUseCase = get()) }
-        viewModel { ExtractViewModel(getExtractUseCase = get() ) }
-        viewModel { IntroViewModel(getAllLinesJsonUseCase = get(), saveAllLinesJsonUseCase = get(), getAllSchedulesJsonUseCase = get(), saveAllSchedulesJsonUseCase = get() ) }
-        viewModel { LineViewModel(updateLineUseCase = get()) }
-        viewModel { NextSchedulesViewModel(getLineScheduleDaysUseCase = get()) }
-        viewModel { NextSchedulesDayViewModel(getLineSchedulesUseCase = get()) }
-        viewModel { SchedulesViewModel(getAllPointSchedulesUseCase = get()) }
+        viewModel { MyCardsViewModel( get(),  get()) }
+        viewModel { BalanceViewModel( get()) }
+        viewModel { RegisterCardViewModel( get(),  get(), get()) }
+        viewModel { ExtractViewModel( get() ) }
+        viewModel { IntroViewModel( get(),  get(), get(), get(), get() ) }
+        viewModel { LineViewModel( get()) }
+        viewModel { NextSchedulesViewModel( get()) }
+        viewModel { NextSchedulesDayViewModel( get()) }
+        viewModel { SchedulesViewModel( get()) }
         viewModel { DataUsageViewModel() }
     }
 
@@ -106,6 +108,8 @@ object AppInject {
         factory { GetAllPointSchedules( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { SaveIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {

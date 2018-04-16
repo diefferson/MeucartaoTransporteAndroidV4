@@ -13,7 +13,7 @@ class Preferences(var context:Context) {
     companion object {
         val PRO_ACCESS = "acessoPro"
         val INITIAL_SCREEN = "telaInicial"
-        val FIRST_ACCESS = "firstAccess"
+        val FIRST_ACCESS = "first"
         val METROPOLITAN_SHAPES = "shapesMetropolitana"
         val CURITIBA_SHAPES = "shapesCuritiba"
         val LINES_PERIOD = "periodoLinhas"
@@ -31,8 +31,8 @@ class Preferences(var context:Context) {
     val isPro: Boolean
         get() = mPreferences.getBoolean(PRO_ACCESS, false)
 
-    val isFirstAccess: Boolean
-        get() = mPreferences.getBoolean(FIRST_ACCESS, false)
+    val isFirstAccess: Int
+        get() = mPreferences.getInt(FIRST_ACCESS, 0)
 
     val initialScreen : String
         get() = mPreferences.getString(INITIAL_SCREEN, InitialScreen.CARDS.toString())
@@ -52,8 +52,8 @@ class Preferences(var context:Context) {
         mPreferences.edit().putString(INITIAL_SCREEN, screen.toString()).apply()
     }
 
-    fun setIsFirstAcess(firstAccess: Boolean){
-        mPreferences.edit().putBoolean(FIRST_ACCESS, firstAccess).apply()
+    fun setIsFirstAccess(firstAccess: Int){
+        mPreferences.edit().putInt(FIRST_ACCESS, firstAccess).apply()
     }
 
     fun setIsMetropolianShapes(isMetropolianShapes :Boolean){
