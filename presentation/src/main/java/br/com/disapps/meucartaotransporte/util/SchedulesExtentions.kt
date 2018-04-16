@@ -54,6 +54,16 @@ private fun validateWeekday(day : Int): Calendar  {
     }
 }
 
+fun getDayWeek(): Int {
+    val day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+    if (day == 1) {
+        return 2
+    }
+    return if (day == 7) {
+        1
+    } else 0
+}
+
 private fun setInitialTime(isMidnight:Boolean = false): Calendar {
     return  if(isMidnight){
         Calendar.getInstance().apply {
@@ -107,23 +117,19 @@ fun getThemePrimaryColor(context: Context): Int {
     return value.data
 }
 
-fun getToolbarTitleTextColor(context: Context, colorName:String) : IntArray {
-    return when (colorName) {
-        "white" ->  intArrayOf(ContextCompat.getColor(context,R.color.textDark), ContextCompat.getColor(context,R.color.tab_inactive))
-        else ->  intArrayOf(ContextCompat.getColor(context,R.color.textColorPrimary), ContextCompat.getColor(context,R.color.tab_inactive_white))
-    }
-}
-
 fun getAccentColorStateList(context: Context): ColorStateList {
     val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf(-android.R.attr.state_checked))
     val colors =  intArrayOf(getThemeAccentColor(context),ContextCompat.getColor(context,R.color.navigation_inactive))
     return  ColorStateList(states, colors)
 }
 
-fun getTabsColorStateList(context: Context, colorName:String): ColorStateList {
-    val states = arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf(-android.R.attr.state_selected))
-    val colors = getToolbarTitleTextColor(context,colorName)
-    return  ColorStateList(states, colors)
+fun getDayName(context: Context, day : Int) : String{
+    return when(day){
+        1 -> context.getString(R.string.useful_day)
+        2 -> context.getString(R.string.saturday)
+        else -> context.getString(R.string.sunday)
+    }
+
 }
 
 

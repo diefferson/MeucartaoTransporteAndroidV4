@@ -2,7 +2,6 @@ package br.com.disapps.meucartaotransporte.ui.lines.favoritesLines
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
@@ -32,12 +31,9 @@ class FavoritesLinesFragment : BaseFragment() {
 
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
-                    R.id.fav_line -> {
-                        viewModel.favoriteLine(adapter.data[position] as LineVO)
-                    }
+                    R.id.fav_line -> { viewModel.favoriteLine(adapter.data[position] as LineVO) }
                 }
             }
-
             setOnItemClickListener { adapter, view, position -> LineActivity.launch(context!!, adapter.data[position] as LineVO, view.findViewById(R.id.roundedImage))  }
         }
     }
@@ -52,8 +48,6 @@ class FavoritesLinesFragment : BaseFragment() {
         lines_recycler.apply {
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
             adapter = this@FavoritesLinesFragment.listAdapter
-            itemAnimator = DefaultItemAnimator()
-            setHasFixedSize(true)
         }
     }
 

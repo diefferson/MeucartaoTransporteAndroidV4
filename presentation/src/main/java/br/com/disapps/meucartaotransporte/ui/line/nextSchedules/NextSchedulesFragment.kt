@@ -7,6 +7,8 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayFragment
+import br.com.disapps.meucartaotransporte.util.getDayName
+import br.com.disapps.meucartaotransporte.util.getDayWeek
 import kotlinx.android.synthetic.main.fragment_next_schedules.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -42,13 +44,14 @@ class NextSchedulesFragment : BaseFragment(){
                     val dayFragment = NextSchedulesDayFragment.newInstance(day)
 
                     when (day) {
-                        1 -> adapter.addFragment(dayFragment, resources.getString(R.string.useful_day))
-                        2 -> adapter.addFragment(dayFragment, resources.getString(R.string.saturday))
-                        else -> adapter.addFragment(dayFragment, resources.getString(R.string.sunday))
+                        1 -> adapter.addFragment(dayFragment, getDayName(context!!,day))
+                        2 -> adapter.addFragment(dayFragment,  getDayName(context!!,day))
+                        else -> adapter.addFragment(dayFragment, getDayName(context!!,day))
                     }
                 }
 
                 view_pager.adapter = adapter
+                view_pager.currentItem = getDayWeek()
                 iAppActivityListener.setupTabs(view_pager)
 
             }

@@ -60,7 +60,8 @@
 
         <activity
             android:name=".ui.schedules.SchedulesActivity"
-            android:label="@string/schedules"/>
+            android:label="@string/schedules"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".ui.settings.help.AboutActivity"

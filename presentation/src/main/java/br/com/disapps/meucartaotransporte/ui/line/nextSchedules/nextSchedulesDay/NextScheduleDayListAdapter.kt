@@ -9,8 +9,9 @@ class NextScheduleDayListAdapter(data: List<LineSchedule>) : BaseQuickAdapter<Li
 
     override fun convert(helper: CustomViewHolder, item: LineSchedule) {
         helper.setText(R.id.name_point, item.busStopName)
-
+        var hasSchedules = false
         if(item.nextSchedules.isNotEmpty()){
+            hasSchedules = true
             helper.setGone(R.id.next_schedule_1, true)
             helper.setSchedule(R.id.next_schedule_1, item.nextSchedules[0])
         }else{
@@ -30,5 +31,8 @@ class NextScheduleDayListAdapter(data: List<LineSchedule>) : BaseQuickAdapter<Li
         }else{
             helper.setGone(R.id.next_schedule_3, false)
         }
+
+        helper.setVisible(R.id.empty_schedules, !hasSchedules)
+
     }
 }

@@ -2,7 +2,6 @@ package br.com.disapps.meucartaotransporte.ui.lines.allLines
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
@@ -23,22 +22,18 @@ import org.koin.android.architecture.ext.viewModel
 class AllLinesFragment : BaseFragment() {
 
     override val viewModel by viewModel<LinesViewModel>()
-
     override val fragmentLayout = R.layout.fragment_list_lines
-
     private val mainViewModel by viewModel<MainViewModel>()
 
     private val listAdapter:LinesListAdapter by lazy{
         LinesListAdapter(viewModel.lines).apply {
 
             emptyView = activity?.inflateView(R.layout.loading_view, lines_recycler )
-            openLoadAnimation(BaseQuickAdapter.ALPHAIN )
+            openLoadAnimation(BaseQuickAdapter.ALPHAIN)
 
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
-                    R.id.fav_line -> {
-                        viewModel.favoriteLine(adapter.data[position] as LineVO)
-                    }
+                    R.id.fav_line -> { viewModel.favoriteLine(adapter.data[position] as LineVO) }
                 }
             }
 
@@ -56,10 +51,8 @@ class AllLinesFragment : BaseFragment() {
 
     private fun initRecycler() {
         lines_recycler.apply {
-            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
             adapter = this@AllLinesFragment.listAdapter
-            itemAnimator = DefaultItemAnimator()
         }
     }
 

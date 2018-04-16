@@ -10,7 +10,9 @@ import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import br.com.disapps.meucartaotransporte.util.getCustomTheme
+import br.com.disapps.meucartaotransporte.util.getDayName
 import kotlinx.android.synthetic.main.activity_schedules.*
+import kotlinx.android.synthetic.main.include_toolbar_schedules.*
 import org.koin.android.architecture.ext.viewModel
 
 class SchedulesActivity : BaseActivity (){
@@ -29,8 +31,14 @@ class SchedulesActivity : BaseActivity (){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         schedulesDetail = intent.getSerializableExtra(SCHEDULES_DETAIL) as SchedulesDetail
-        setTheme(getCustomTheme(schedulesDetail.lineColor, true))
+        setTheme(getCustomTheme(schedulesDetail.lineColor))
         super.onCreate(savedInstanceState)
+
+        setSupportActionBar(vToolbar)
+        day.text = getDayName(this, schedulesDetail.day)
+        pointer.text = schedulesDetail.busStopName
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         initRecyclerView()
         observeViewModel()

@@ -20,7 +20,6 @@ import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItinerariesFragment
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesFragment
 import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesFragment
-import br.com.disapps.meucartaotransporte.util.extensions.toast
 import br.com.disapps.meucartaotransporte.util.getAccentColorStateList
 import br.com.disapps.meucartaotransporte.util.getCustomTheme
 import kotlinx.android.synthetic.main.activity_line.*
@@ -91,7 +90,14 @@ class LineActivity : BaseFragmentActivity(){
                 onBackPressed()
                 return true
             }
-            R.id.action_fav_line ->{ toast("fav")}
+            R.id.action_fav_line ->{
+                viewModel.favoriteLine()
+                if(viewModel.line.favorite){
+                    item.setIcon(R.drawable.star)
+                }else{
+                    item.setIcon(R.drawable.star_outline)
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }

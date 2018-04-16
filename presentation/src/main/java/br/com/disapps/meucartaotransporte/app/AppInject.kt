@@ -76,7 +76,7 @@ object AppInject {
         viewModel { RegisterCardViewModel(hasCardUseCase = get(), saveCardUseCase = get(), getCardUseCase = get()) }
         viewModel { ExtractViewModel(getExtractUseCase = get() ) }
         viewModel { IntroViewModel(getAllLinesJsonUseCase = get(), saveAllLinesJsonUseCase = get(), getAllSchedulesJsonUseCase = get(), saveAllSchedulesJsonUseCase = get() ) }
-        viewModel { LineViewModel() }
+        viewModel { LineViewModel(updateLineUseCase = get()) }
         viewModel { NextSchedulesViewModel(getLineScheduleDaysUseCase = get()) }
         viewModel { NextSchedulesDayViewModel(getLineSchedulesUseCase = get()) }
         viewModel { SchedulesViewModel(getAllPointSchedulesUseCase = get()) }

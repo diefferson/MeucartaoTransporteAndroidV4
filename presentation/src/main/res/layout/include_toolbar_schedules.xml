@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout android:id="@+id/vAppBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.ToolbarStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/vToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_gravity="bottom"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/calendar_blank"/>
+        <TextView
+            android:id="@+id/day"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textColor="@color/textColorPrimary"
+            tools:text="Sábado"/>
+        <View
+            android:layout_gravity="bottom"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/map_marker"/>
+
+        <TextView
+            android:id="@+id/pointer"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textColor="@color/textColorPrimary"
+            tools:text="Terminal Sítio Cercado"/>
+
+    </LinearLayout>
+
+</android.support.design.widget.AppBarLayout>

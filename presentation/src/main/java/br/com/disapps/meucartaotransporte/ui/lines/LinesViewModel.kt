@@ -33,39 +33,41 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
         return line.searchableName.contains(query) || line.code.toLowerCase().startsWith(query)
     }
 
-    fun getLines(refresh :Boolean = false){
-
-        if(!isRequested || refresh) {
-            isRequested = true
-
-            getLinesUseCase.execute(object : DefaultSingleObserver<List<Line>>() {
-
-                override fun onSuccess(t: List<Line>) {
-                    favoriteLines.clear()
-                    lines.clear()
-
-                    lines.addAll(t.toLineVO())
-                    favoriteLines.addAll(t.toLineVO().filter { line->line.favorite })
-
-                    if(!refresh){
-                        hasFavorite.value = favoriteLines.isNotEmpty()
-                    }
-
-                    isUpdatedLines.value = true
-                    isUpdatedFavorites.value = true
-
+    fun getLines(refresh : Boolean = false){
+        getLinesUseCase.execute(object : DefaultSingleObserver<List<Line>>() {
+            override fun onSuccess(t: List<Line>) {
+                updateLines(t.toLineVO())
+                updateFavorites(t.toLineVO().filter { line->line.favorite })
+                if(!isRequested && !refresh){
+                    isRequested = true
+                    hasFavorite.value = favoriteLines.isNotEmpty()
                 }
-            }, Unit)
-        }
+            }
+        }, Unit)
     }
 
     fun favoriteLine(line: LineVO){
         line.favorite = !line.favorite
-        updateLineUseCase.execute(object : DefaultCompletableObserver(){
-            override fun onComplete() {
-                getLines(true)
+        updateLines(lines.map{
+            if(it.code == line.code){
+                it.favorite = line.favorite
             }
-        },UpdateLine.Params(line.toLineBO()))
+            it
+        })
+        updateFavorites(lines.filter { l->l.favorite })
+        updateLineUseCase.execute(object : DefaultCompletableObserver(){},UpdateLine.Params(line.toLineBO()))
+    }
+
+    private fun updateLines(listLines : List<LineVO>){
+        lines.clear()
+        lines.addAll(listLines)
+        isUpdatedLines.value = true
+    }
+
+    private fun updateFavorites(lines : List<LineVO>){
+        favoriteLines.clear()
+        favoriteLines.addAll(lines)
+        isUpdatedFavorites.value = true
     }
 
     override fun onCleared() {

@@ -175,5 +175,6 @@
     <string name="schedules">Horários</string>
     <string name="itinerary">Itinerário</string>
     <string name="roundedColorView_transitionName">backgroundColorImage</string>
+    <string name="empty_schedules">Nenhum horário disponível hoje</string>
 
 </resources>
