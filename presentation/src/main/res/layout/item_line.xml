@@ -55,6 +55,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 tools:text="Capao Raso "
                 android:textColor="#FF000000"

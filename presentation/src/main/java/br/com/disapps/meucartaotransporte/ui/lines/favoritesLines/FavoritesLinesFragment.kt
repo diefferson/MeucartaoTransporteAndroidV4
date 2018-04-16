@@ -12,6 +12,7 @@ import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_LEFT
 import kotlinx.android.synthetic.main.fragment_list_lines.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -27,6 +28,7 @@ class FavoritesLinesFragment : BaseFragment() {
 
         LinesListAdapter(viewModel.favoriteLines).apply {
             emptyView = activity?.inflateView(R.layout.loading_view, lines_recycler )
+            openLoadAnimation(SLIDEIN_LEFT)
 
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
