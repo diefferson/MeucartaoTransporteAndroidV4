@@ -64,7 +64,10 @@ class AllLinesFragment : BaseFragment() {
     private fun observeViewModel(){
 
         viewModel.isUpdatedLines.observe(this, Observer {
-            listAdapter.notifyDataSetChanged()
+            listAdapter.apply {
+                emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+                notifyDataSetChanged()
+            }
         })
 
         mainViewModel.onSearchAction.observe(this, Observer {
@@ -81,7 +84,10 @@ class AllLinesFragment : BaseFragment() {
         mainViewModel.searchText.observe(this, Observer {
             if(it!= null){
                 viewModel.filterLines(it)
-                listAdapter.notifyDataSetChanged()
+                listAdapter.apply {
+                    emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+                    notifyDataSetChanged()
+                }
             }
         })
     }
