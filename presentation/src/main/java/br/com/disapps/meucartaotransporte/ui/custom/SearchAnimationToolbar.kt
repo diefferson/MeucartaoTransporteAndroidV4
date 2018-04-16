@@ -120,9 +120,15 @@ class SearchAnimationToolbar : FrameLayout, TextWatcher {
                 notifySearchSubmitted(txtSearch.text.toString())
                 return@OnEditorActionListener true
             }
-
             false
         })
+
+        txtSearch.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                onBackPressed()
+            }
+        }
+
     }
 
     override fun onDetachedFromWindow() {
