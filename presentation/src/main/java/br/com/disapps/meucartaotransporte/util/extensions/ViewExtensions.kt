@@ -1,7 +1,16 @@
 package br.com.disapps.meucartaotransporte.util.extensions
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.os.Build
+import android.support.customtabs.CustomTabsIntent
+import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.view.View
+import br.com.disapps.meucartaotransporte.R
 import java.text.Normalizer
+
 
 fun String.isCPF(): Boolean{
     val cpfClean = this.replace(".", "").replace("-", "")
@@ -81,4 +90,29 @@ fun View.getCenter(): Pair<Float, Float> {
     val cx = this.x + this.width / 2
     val cy = this.y + this.height / 2
     return Pair(cx, cy)
+}
+
+fun getBitmapFromVectorDrawable(context: Context, drawableId: Int): Bitmap {
+    var drawable = ContextCompat.getDrawable(context, drawableId)
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        drawable = DrawableCompat.wrap(drawable!!).mutate()
+    }
+
+    val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth,
+            drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    drawable.setBounds(0, 0, canvas.width, canvas.height)
+    drawable.draw(canvas)
+
+    return bitmap
+}
+
+fun Context.getCustomChromeTabs(): CustomTabsIntent {
+    return CustomTabsIntent.Builder(null).apply {
+        setToolbarColor(ContextCompat.getColor(this@getCustomChromeTabs, R.color.colorPrimary))
+        setCloseButtonIcon(getBitmapFromVectorDrawable(this@getCustomChromeTabs, R.drawable.ic_arrow_back_white))
+        setStartAnimations(this@getCustomChromeTabs, R.anim.slide_in_right,  R.anim.slide_out_left)
+        setExitAnimations(this@getCustomChromeTabs, R.anim.slide_in_left, R.anim.slide_out_right)
+        setShowTitle(true)
+    }.build()
 }

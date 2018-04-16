@@ -77,6 +77,8 @@ dependencies {
     implementation presentationDependencies.lottie
     kapt presentationDependencies.archCompiler
 
+    implementation presentationDependencies.customtabs
+
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit
     androidTestImplementation presentationTestDependencies.junit

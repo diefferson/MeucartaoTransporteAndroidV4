@@ -2,12 +2,18 @@ package br.com.disapps.meucartaotransporte.ui.settings.help
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import br.com.disapps.meucartaotransporte.R
 import kotlinx.android.synthetic.main.activity_help.*
+import android.support.customtabs.CustomTabsIntent
+import android.support.v4.content.ContextCompat
+import br.com.disapps.meucartaotransporte.util.extensions.getBitmapFromVectorDrawable
+import br.com.disapps.meucartaotransporte.util.extensions.getCustomChromeTabs
+
 
 class HelpActivity : AppCompatActivity(){
 
@@ -22,15 +28,15 @@ class HelpActivity : AppCompatActivity(){
     private fun onClickActions() {
 
         rateApp.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_app))))
+            this.getCustomChromeTabs().launchUrl(this, Uri.parse(resources.getString(R.string.url_app)))
         }
 
         faq.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_faq))))
+            this.getCustomChromeTabs().launchUrl(this, Uri.parse(resources.getString(R.string.url_faq)))
         }
 
         privacy.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_privacy))))
+            this.getCustomChromeTabs().launchUrl(this, Uri.parse(resources.getString(R.string.url_privacy)))
         }
 
         contact.setOnClickListener {

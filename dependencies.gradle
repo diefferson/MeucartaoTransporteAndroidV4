@@ -71,6 +71,7 @@ ext {
             pageIndicatorVersion:  "com.romandanylyk:pageindicatorview:${pageIndicatorVersion}",
             recyclerviewFastscroll:  "com.simplecityapps:recyclerview-fastscroll:${recyclerviewFastscroll}",
             lottie:              "com.airbnb.android:lottie:${lottieVersion}",
+            customtabs:              "com.android.support:customtabs:${supportLibraryVersion}",
     ]
 
     presentationTestDependencies = [
