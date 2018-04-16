@@ -144,7 +144,7 @@
     <string name="metropolitan_region">Região Metropolitana</string>
     <string name="update_points">Atualizar Itinerários</string>
     <string name="update_shapes">Atualizar Trajetos</string>
-    <string name="download_points">Baixar Itinerários</string>
+    <string name="download_itineraries">Baixar Itinerários</string>
     <string name="download_shapes">Baixar Trajetos</string>
     <string name="item_card_code">Codigo:</string>
     <string name="item_card_cpf">CPF:</string>

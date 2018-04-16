@@ -10,7 +10,7 @@
             android:id="@+id/adapt"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/adapt"
+            app:srcCompat="@drawable/adapt"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintEnd_toStartOf="@id/schedule"
             app:layout_constraintStart_toStartOf="parent"

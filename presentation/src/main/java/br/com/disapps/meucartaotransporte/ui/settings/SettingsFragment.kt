@@ -7,6 +7,7 @@ import android.view.View
 import br.com.disapps.domain.model.InitialScreen
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
+import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.architecture.ext.viewModel
@@ -27,6 +28,7 @@ class SettingsFragment : BaseFragment(){
         help.setOnClickListener { HelpActivity.launch(context!!) }
         initial_screen.setOnClickListener { initialScreen() }
         share.setOnClickListener { shareIt() }
+        data_usage.setOnClickListener { DataUsageActivity.launch(context!!) }
     }
 
     override fun onResume() {

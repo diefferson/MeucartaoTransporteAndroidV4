@@ -73,6 +73,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.SplashTheme"/>
 
+        <activity
+            android:name=".ui.settings.dataUsage.DataUsageActivity"
+            android:label="@string/data_usage" />
+
     </application>
 
 </manifest>
