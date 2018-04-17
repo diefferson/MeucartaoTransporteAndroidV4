@@ -190,7 +190,7 @@
     <string name="update_shapes_success">Trajetos atualizados com sucesso!</string>
     <string name="update_shapes_error">Erro ao atualizar trajetos</string>
     <string name="updating_itineraries">Atualizando itinerários…</string>
-    <string name="updating_schedules">Autlizando horários…</string>
+    <string name="updating_schedules">Atualizando horários…</string>
     <string name="weekly">semanal</string>
     <string name="monthly">mensal</string>
     <string name="yearly">anual</string>

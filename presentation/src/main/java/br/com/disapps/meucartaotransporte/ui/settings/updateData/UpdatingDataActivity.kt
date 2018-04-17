@@ -14,9 +14,10 @@ import br.com.disapps.meucartaotransporte.services.UpdateLinesService
 import br.com.disapps.meucartaotransporte.services.UpdateSchedulesService
 import br.com.disapps.meucartaotransporte.services.UpdateShapesService
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
+import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
+import br.com.disapps.meucartaotransporte.util.showNotification
 import kotlinx.android.synthetic.main.activity_updating_data.*
 import org.koin.android.architecture.ext.getViewModel
-import org.koin.android.architecture.ext.viewModel
 
 class UpdatingDataActivity : BaseActivity(){
 
@@ -41,6 +42,7 @@ class UpdatingDataActivity : BaseActivity(){
         viewModel.events.observe(this, Observer {
             it?.let {
                 loading_message.text = it.message
+                showNotification(it.message)
                 if(it.status != EventStatus.START ){
                     back_button.visibility = View.VISIBLE
                 }
@@ -49,8 +51,8 @@ class UpdatingDataActivity : BaseActivity(){
     }
 
     private fun setupUpdate(){
-        viewModel.getUpdateDataEvent()
         updateData = intent.extras.getSerializable(UPDATE) as UpdateData
+        viewModel.getUpdateDataEvent(updateData)
         when(updateData){
             UpdateData.LINES -> UpdateLinesService.startService(this)
             UpdateData.SCHEDULES -> UpdateSchedulesService.startService(this)
@@ -59,6 +61,10 @@ class UpdatingDataActivity : BaseActivity(){
             UpdateData.CWB_SHAPES -> UpdateShapesService.startService(this, City.CWB)
             UpdateData.MET_SHAPES -> UpdateShapesService.startService(this, City.MET)
         }
+    }
+
+    private fun showNotification(text:String){
+        showNotification(this, getUpdateDataNotification(updateData).channel, getUpdateDataNotification(updateData).id, text)
     }
 
     companion object {
