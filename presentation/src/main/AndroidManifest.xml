@@ -77,6 +77,21 @@
             android:name=".ui.settings.dataUsage.DataUsageActivity"
             android:label="@string/data_usage" />
 
+        <activity
+            android:name=".ui.settings.dataUsage.UpdatingDataActivity"
+            android:label="@string/updating_base"
+            android:theme="@style/AppTheme.TranslucentStatusBar"/>
+
+        <service
+            android:name=".services.updateLines.UpdateLinesService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="ATUALIZA_LINHAS_SERVICE" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

@@ -56,6 +56,7 @@
     <string name="card_state">Estado: %1$s</string>
     <string name="updated">Atualizado em</string>
     <string name="card_updated">Atualizado em: %1$s </string>
+    <string name="last_updated">Última atualização: %1$s </string>
     <string name="rate_app">Avaliar App </string>
 
     <!-- BUTTONS-->
@@ -140,6 +141,7 @@
     <string name="desc_slide9">Veja o posicionamento de cada veículo da linha em tempo real</string>
     <string name="download_now">Baixar Agora</string>
     <string name="updating_shapes">Atualizando Shapes</string>
+    <string name="updating_lines">Atualizando Linhas…</string>
     <string name="curitiba">Curitiba</string>
     <string name="metropolitan_region">Região Metropolitana</string>
     <string name="update_points">Atualizar Itinerários</string>
@@ -176,5 +178,8 @@
     <string name="itinerary">Itinerário</string>
     <string name="roundedColorView_transitionName">backgroundColorImage</string>
     <string name="empty_schedules">Nenhum horário disponível hoje</string>
+    <string name="update_lines_success">Linhas atualizadas com sucesso!</string>
+    <string name="update_lines_error">Erro ao atualizar linhas, tente novamente mais tarde.</string>
+    <string name="back">Voltar</string>
 
 </resources>

@@ -77,12 +77,8 @@
 
             <Button
                 android:id="@+id/btn_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/AppTheme.InputLayout"
-                android:background="@color/normalButton"
-                android:text="@string/btn_register"
-                android:textColor="@android:color/white" />
+                style="@style/AppTheme.Button"
+                android:text="@string/btn_register" />
 
         </LinearLayout>
 

@@ -5,16 +5,17 @@ import br.com.disapps.data.api.RestApi
 import br.com.disapps.data.dataSource.LinesDataSource
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.dataSource.local.LocalLinesDataSource
+import br.com.disapps.data.storage.preferences.Preferences
 
 /**
  * Created by dnso on 15/03/2018.
  */
-class LinesDataSourceFactory(private val database: Database, private val restApi: RestApi) : DataSourceFactory {
+class LinesDataSourceFactory(private val database: Database, private val restApi: RestApi, private val preferences: Preferences) : DataSourceFactory {
 
     override fun create(useCloud: Boolean): LinesDataSource {
         return if(useCloud)
             CloudLinesDataSource(restApi)
         else
-            LocalLinesDataSource(database)
+            LocalLinesDataSource(database, preferences)
     }
 }

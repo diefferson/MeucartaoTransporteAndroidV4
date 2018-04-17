@@ -7,7 +7,12 @@ import java.util.*
 import android.content.res.ColorStateList
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
+import java.text.SimpleDateFormat
 
+fun formatDate(date : Date):String{
+     val df = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault() )
+    return df.format(date)
+}
 
 fun validateSchedule(schedule: Schedule, day :Int): Boolean {
 

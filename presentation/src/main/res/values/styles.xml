@@ -180,6 +180,16 @@
         <item name="android:layout_marginTop">20dp</item>
     </style>
 
+    <style name="AppTheme.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="backgroundTint">@color/normalButton</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="AppTheme.Schedule">
         <item name="android:layout_margin">4dp</item>
         <item name="cardCornerRadius">2dp</item>

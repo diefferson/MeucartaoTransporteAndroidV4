@@ -54,12 +54,8 @@
 
             <Button
                 android:id="@+id/btn_quick_find"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/AppTheme.InputLayout"
-                android:background="@color/normalButton"
-                android:text="@string/consult"
-                android:textColor="@android:color/white" />
+                style="@style/AppTheme.Button"
+                android:text="@string/consult" />
 
         </LinearLayout>
 

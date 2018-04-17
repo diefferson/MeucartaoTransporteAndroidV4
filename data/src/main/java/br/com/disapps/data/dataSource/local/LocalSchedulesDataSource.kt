@@ -5,12 +5,13 @@ import br.com.disapps.data.entity.Horario
 import br.com.disapps.data.entity.HorarioLinha
 import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.storage.database.Database
+import br.com.disapps.data.storage.preferences.Preferences
 import br.com.disapps.domain.model.Schedule
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.realm.Realm
 
-class LocalSchedulesDataSource(private val database: Database) : SchedulesDataSource{
+class LocalSchedulesDataSource(private val database: Database, private val preferences: Preferences) : SchedulesDataSource{
 
     override fun saveAllFromJson(json: String): Completable {
         return Completable.defer {
@@ -20,6 +21,7 @@ class LocalSchedulesDataSource(private val database: Database) : SchedulesDataSo
                 realm.delete(HorarioLinha::class.java)
                 realm.createAllFromJson(HorarioLinha::class.java, json)
                 realm.commitTransaction()
+                preferences.setSchedulesDate()
                 Completable.complete()
             }catch (ec: Exception){
                 Completable.error(ec)

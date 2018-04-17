@@ -3,6 +3,7 @@ package br.com.disapps.data.dataSource.local
 import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.dataSource.LinesDataSource
 import br.com.disapps.data.storage.database.Database
+import br.com.disapps.data.storage.preferences.Preferences
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.realm.Realm
@@ -10,7 +11,7 @@ import io.realm.Realm
 /**
  * Created by dnso on 15/03/2018.
  */
-class LocalLinesDataSource(private val database: Database): LinesDataSource {
+class LocalLinesDataSource(private val database: Database, private val preferences: Preferences): LinesDataSource {
 
     override fun saveLine(linha: Linha): Completable{
         return Completable.defer {
@@ -35,6 +36,7 @@ class LocalLinesDataSource(private val database: Database): LinesDataSource {
                 realm.beginTransaction()
                 realm.createOrUpdateAllFromJson(Linha::class.java, json)
                 realm.commitTransaction()
+                preferences.setLinesDate()
                 Completable.complete()
             }catch (ec: Exception){
                 Completable.error(ec)

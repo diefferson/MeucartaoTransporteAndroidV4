@@ -37,4 +37,28 @@ class PreferencesDataRepository(private val preferences:Preferences) : Preferenc
             Completable.complete()
         }
     }
+
+    override fun getDateLines(): Single<Long> {
+        return Single.just(preferences.dateLines)
+    }
+
+    override fun getDateSchedules(): Single<Long> {
+        return Single.just(preferences.dateSchedules)
+    }
+
+    override fun getDateCwbItineraries(): Single<Long> {
+        return Single.just(preferences.dateCwbItineraries)
+    }
+
+    override fun getDateMetItineraries(): Single<Long> {
+        return Single.just(preferences.dateMetItineraries)
+    }
+
+    override fun getDateCwbShapes(): Single<Long> {
+        return Single.just(preferences.dateCwbShapes)
+    }
+
+    override fun getDateMetShapes(): Single<Long> {
+        return Single.just(preferences.dateMetShapes)
+    }
 }

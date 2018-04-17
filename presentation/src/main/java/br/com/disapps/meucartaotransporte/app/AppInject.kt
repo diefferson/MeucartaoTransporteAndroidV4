@@ -27,10 +27,7 @@ import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.domain.executor.PostExecutionThread
 import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
-import br.com.disapps.domain.interactor.preferences.GetInitialScreen
-import br.com.disapps.domain.interactor.preferences.GetIsFirstAccess
-import br.com.disapps.domain.interactor.preferences.SaveInitialScreen
-import br.com.disapps.domain.interactor.preferences.SaveIsFirstAccess
+import br.com.disapps.domain.interactor.preferences.*
 import br.com.disapps.domain.interactor.schedules.*
 import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
@@ -83,7 +80,7 @@ object AppInject {
         viewModel { NextSchedulesViewModel( get()) }
         viewModel { NextSchedulesDayViewModel( get()) }
         viewModel { SchedulesViewModel( get()) }
-        viewModel { DataUsageViewModel() }
+        viewModel { DataUsageViewModel(get()) }
     }
 
     private val useCaseModule: Module = applicationContext {
@@ -110,6 +107,12 @@ object AppInject {
         factory { SaveInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetDateCwbItineraries( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetDateCwbShapes( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetDateLines( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetDateMetItineraries( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetDateMetShapes( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetDateSchedules( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {
@@ -123,9 +126,9 @@ object AppInject {
 
     private val dataSourceFactoryModule : Module = applicationContext {
         bean { CardsDataSourceFactory(database = get(), restApi = get()) }
-        bean { LinesDataSourceFactory(database = get(), restApi = get()) }
+        bean { LinesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
         bean { ItinerariesDataSourceFactory(database = get(), restApi = get()) }
         bean { ShapesDataSourceFactory(database = get(), restApi = get()) }
-        bean { SchedulesDataSourceFactory(database = get(), restApi = get()) }
+        bean { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
     }
 }
