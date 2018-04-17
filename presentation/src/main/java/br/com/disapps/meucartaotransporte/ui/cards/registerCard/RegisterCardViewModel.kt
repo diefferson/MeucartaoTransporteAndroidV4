@@ -12,9 +12,9 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.clean
 import br.com.disapps.meucartaotransporte.util.extensions.isCPF
 
-class RegisterCardViewModel(val hasCardUseCase: HasCard,
-                            val saveCardUseCase: SaveCard,
-                            val getCardUseCase: GetCard) : BaseViewModel(){
+class RegisterCardViewModel(private val hasCardUseCase: HasCard,
+                            private val saveCardUseCase: SaveCard,
+                            private val getCardUseCase: GetCard) : BaseViewModel(){
 
     val code = MutableLiveData<String>()
     val cpf = MutableLiveData<String>()

@@ -1,40 +1,54 @@
 package br.com.disapps.meucartaotransporte.ui.settings.dataUsage
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.preferences.GetDataUsage
+import br.com.disapps.domain.model.DataUsage
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.formatDate
 import java.util.*
 
-class DataUsageViewModel(val preferences: Preferences):BaseViewModel(){
+class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage):BaseViewModel(){
 
-    val dateLines = MutableLiveData<String>().apply { value = "" }
-    val dateSchedules  = MutableLiveData<String>().apply { value = "" }
-    val dateCwbItineraries  = MutableLiveData<String>().apply { value = "" }
-    val dateCwbShapes  = MutableLiveData<String>().apply { value = "" }
-    val dateMetItineraries  = MutableLiveData<String>().apply { value = "" }
-    val dateMetShapes  = MutableLiveData<String>().apply { value = "" }
-
+    val periodLines = MutableLiveData<String>()
+    val periodSchedules = MutableLiveData<String>()
+    val dateLines = MutableLiveData<String>()
+    val dateSchedules  = MutableLiveData<String>()
+    val dateCwbItineraries  = MutableLiveData<String>()
+    val dateCwbShapes  = MutableLiveData<String>()
+    val dateMetItineraries  = MutableLiveData<String>()
+    val dateMetShapes  = MutableLiveData<String>()
 
     fun init(){
-        dateLines.value = formatDate(Date(preferences.dateLines))
-        dateSchedules.value = formatDate(Date(preferences.dateSchedules))
+        getDataUsageUseCase.execute(object : DefaultSingleObserver<DataUsage>(){
+            override fun onSuccess(t: DataUsage) {
+                periodLines.value = t.periodLines
+                periodSchedules.value = t.periodSchedules
+                dateLines.value = formatDate(Date(t.dateUpdateLines))
+                dateSchedules.value = formatDate(Date(t.dateUpdateSchedules))
 
-        if(preferences.dateCwbItineraries >0){
-            dateCwbItineraries.value = formatDate(Date(preferences.dateCwbItineraries))
-        }
+                if(t.dateUpdateCwbItineraries >0){
+                    dateCwbItineraries.value = formatDate(Date(t.dateUpdateCwbItineraries))
+                }
 
-        if(preferences.dateCwbShapes > 0){
-            dateCwbShapes.value = formatDate(Date(preferences.dateCwbShapes))
-        }
+                if(t.dateUpdateCwbShapes > 0){
+                    dateCwbShapes.value = formatDate(Date(t.dateUpdateCwbShapes))
+                }
 
-        if(preferences.dateMetItineraries > 0){
-            dateMetItineraries.value = formatDate(Date(preferences.dateMetItineraries))
-        }
+                if(t.dateUpdateMetItineraries > 0){
+                    dateMetItineraries.value = formatDate(Date(t.dateUpdateMetItineraries))
+                }
 
-        if(preferences.dateMetShapes > 0){
-            dateMetShapes.value = formatDate(Date(preferences.dateMetShapes))
-        }
+                if(t.dateUpdateMetShapes > 0){
+                    dateMetShapes.value = formatDate(Date(t.dateUpdateMetShapes))
+                }
+            }
+
+        }, Unit)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        getDataUsageUseCase.dispose()
+    }
 }

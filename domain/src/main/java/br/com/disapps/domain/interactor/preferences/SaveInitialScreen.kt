@@ -12,7 +12,7 @@ class SaveInitialScreen(private val preferencesRepository: PreferencesRepository
 
 
     override fun buildUseCaseObservable(params: Params): Completable {
-        return preferencesRepository.saveInitialScreen(params.initialScreen)
+        return preferencesRepository.setInitialScreen(params.initialScreen)
     }
 
     class Params(val initialScreen: InitialScreen)

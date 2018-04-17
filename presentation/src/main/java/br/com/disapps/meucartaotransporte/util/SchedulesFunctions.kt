@@ -134,7 +134,33 @@ fun getDayName(context: Context, day : Int) : String{
         2 -> context.getString(R.string.saturday)
         else -> context.getString(R.string.sunday)
     }
+}
 
+fun getPeriodItems(context: Context) : Array<String>{
+    return arrayOf(context.getString(R.string.weekly),
+            context.getString(R.string.monthly),
+            context.getString(R.string.yearly),
+            context.getString(R.string.manual))
+}
+
+fun getPeriodPosition(context: Context, period: String): Int {
+    return when (period) {
+        context.getString(R.string.weekly) -> 0
+        context.getString(R.string.monthly) -> 1
+        context.getString(R.string.yearly) -> 2
+        context.getString(R.string.manual) -> 3
+        else -> 0
+    }
+}
+
+fun getPeriodName(context: Context, position: Int): String {
+    return when (position) {
+        0 -> context.getString(R.string.weekly)
+        1 -> context.getString(R.string.monthly)
+        2 -> context.getString(R.string.yearly)
+        3 -> context.getString(R.string.manual)
+        else -> context.getString(R.string.weekly)
+    }
 }
 
 

@@ -3,10 +3,8 @@ package br.com.disapps.data.dataSource.local
 import br.com.disapps.data.dataSource.SchedulesDataSource
 import br.com.disapps.data.entity.Horario
 import br.com.disapps.data.entity.HorarioLinha
-import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
-import br.com.disapps.domain.model.Schedule
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.realm.Realm

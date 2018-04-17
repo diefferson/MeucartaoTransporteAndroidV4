@@ -32,6 +32,8 @@
     <string name="privacy">Termos e Política de Privacidade</string>
     <string name="faq">FAQ</string>
     <string name="update">Atualização</string>
+    <string name="update_lines">Atualização Linhas</string>
+    <string name="update_schedules">Atualização Schedules</string>
     <string name="update_now">Atualizar Agora</string>
     <string name="itinerary_unavailable">Itinerário não disponível</string>
     <string name="shape_unavailable">Trajeto não disponível</string>
@@ -140,7 +142,7 @@
     <string name="title_slide9">Linhas em tempo real</string>
     <string name="desc_slide9">Veja o posicionamento de cada veículo da linha em tempo real</string>
     <string name="download_now">Baixar Agora</string>
-    <string name="updating_shapes">Atualizando Shapes</string>
+    <string name="updating_shapes">Atualizando Trajetos…</string>
     <string name="updating_lines">Atualizando Linhas…</string>
     <string name="curitiba">Curitiba</string>
     <string name="metropolitan_region">Região Metropolitana</string>
@@ -181,5 +183,16 @@
     <string name="update_lines_success">Linhas atualizadas com sucesso!</string>
     <string name="update_lines_error">Erro ao atualizar linhas, tente novamente mais tarde.</string>
     <string name="back">Voltar</string>
-
+    <string name="update_schedules_success">Horários atualizados com sucesso!</string>
+    <string name="update_schedules_error">Erro ao atualizar horários</string>
+    <string name="update_itineraries_success">Itinerários atualizados com sucesso!</string>
+    <string name="update_itineraries_error">Erro ao atualizar itinerarios</string>
+    <string name="update_shapes_success">Trajetos atualizados com sucesso!</string>
+    <string name="update_shapes_error">Erro ao atualizar trajetos</string>
+    <string name="updating_itineraries">Atualizando itinerários…</string>
+    <string name="updating_schedules">Autlizando horários…</string>
+    <string name="weekly">semanal</string>
+    <string name="monthly">mensal</string>
+    <string name="yearly">anual</string>
+    <string name="manual">manual</string>
 </resources>

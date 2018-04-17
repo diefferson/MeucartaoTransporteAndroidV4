@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageViewModel"/>
@@ -42,6 +43,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="@{viewModel.periodLines == null ? View.INVISIBLE : View.VISIBLE}"
+                    android:text="@{viewModel.periodLines}"
                     tools:text="Semanal"
                     style="@style/AppTheme.SettingsValue"/>
 
@@ -71,6 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="@{viewModel.dateLines == null ? View.INVISIBLE : View.VISIBLE}"
                     android:text="@{@string/last_updated(viewModel.dateLines)}"
                     tools:text="Ultima atualização: 31/03/2018v17:01:57"
                     style="@style/AppTheme.SettingsValue"/>
@@ -102,6 +106,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="@{viewModel.periodSchedules == null ? View.INVISIBLE : View.VISIBLE}"
+                    android:text="@{viewModel.periodSchedules}"
                     tools:text="Mensal"
                     style="@style/AppTheme.SettingsValue" />
 
@@ -131,6 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="@{viewModel.dateSchedules == null ? View.INVISIBLE : View.VISIBLE}"
                     android:text="@{@string/last_updated(viewModel.dateSchedules)}"
                     tools:text="Ultima atualização: 31/03/2018v17:01:57"
                     style="@style/AppTheme.SettingsValue" />
@@ -162,6 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="@{viewModel.dateCwbItineraries == null ? View.INVISIBLE : View.VISIBLE}"
                     android:text="@{@string/last_updated(viewModel.dateCwbItineraries)}"
                     tools:text="Ultima atualização: 31/03/2018v17:01:57"
                     style="@style/AppTheme.SettingsValue" />
@@ -193,6 +201,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="@{viewModel.dateCwbShapes == null ? View.INVISIBLE : View.VISIBLE}"
                     android:text="@{@string/last_updated(viewModel.dateCwbShapes)}"
                     tools:text="Ultima atualização: 31/03/2018v17:01:57"
                     style="@style/AppTheme.SettingsValue"/>
@@ -224,6 +233,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="@{viewModel.dateMetItineraries == null ? View.INVISIBLE : View.VISIBLE}"
                     android:text="@{@string/last_updated(viewModel.dateMetItineraries)}"
                     tools:text="Ultima atualização: 31/03/2018v17:01:57"
                     style="@style/AppTheme.SettingsValue" />
@@ -254,6 +264,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="@{viewModel.dateMetShapes == null ? View.INVISIBLE : View.VISIBLE}"
                     android:text="@{@string/last_updated(viewModel.dateMetShapes)}"
                     tools:text="Ultima atualização: 31/03/2018v17:01:57"
                     style="@style/AppTheme.SettingsValue"/>

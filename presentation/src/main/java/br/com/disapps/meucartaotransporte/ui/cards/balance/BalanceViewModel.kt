@@ -8,7 +8,7 @@ import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.model.mappers.toCardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
-class BalanceViewModel(val getCardUseCase: GetCard) : BaseViewModel(){
+class BalanceViewModel(private val getCardUseCase: GetCard) : BaseViewModel(){
 
     val isSuccess = MutableLiveData<Boolean>()
     val card = MutableLiveData<CardVO>()

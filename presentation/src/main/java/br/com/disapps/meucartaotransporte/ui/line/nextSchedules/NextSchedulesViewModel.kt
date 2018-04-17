@@ -5,7 +5,7 @@ import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.schedules.GetLineScheduleDays
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
-class NextSchedulesViewModel(val getLineScheduleDaysUseCase: GetLineScheduleDays) : BaseViewModel(){
+class NextSchedulesViewModel(private val getLineScheduleDaysUseCase: GetLineScheduleDays) : BaseViewModel(){
 
     val days = MutableLiveData<List<Int>>()
 

@@ -3,6 +3,7 @@ package br.com.disapps.domain.interactor.itineraries
 import br.com.disapps.domain.executor.PostExecutionThread
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.base.SingleUseCase
+import br.com.disapps.domain.model.City
 import br.com.disapps.domain.repository.ItinerariesRepository
 import io.reactivex.Single
 
@@ -13,5 +14,5 @@ class GetAllItinerariesJson(val itinerariesRepository: ItinerariesRepository, va
         return itinerariesRepository.jsonItineraries(params.city)
     }
 
-    class Params(val city : String)
+    class Params(val city : City)
 }

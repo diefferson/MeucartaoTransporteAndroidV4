@@ -8,7 +8,7 @@ import br.com.disapps.domain.model.Extract
 import br.com.disapps.meucartaotransporte.model.KnownError
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
-class ExtractViewModel(val getExtractUseCase: GetExtract) : BaseViewModel(){
+class ExtractViewModel(private val getExtractUseCase: GetExtract) : BaseViewModel(){
 
     val extract = MutableLiveData<List<Extract>>()
 

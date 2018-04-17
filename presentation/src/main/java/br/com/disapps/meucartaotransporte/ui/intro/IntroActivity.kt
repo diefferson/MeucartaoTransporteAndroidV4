@@ -7,9 +7,10 @@ import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.services.UpdateLinesService
+import br.com.disapps.meucartaotransporte.services.UpdateSchedulesService
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
-import br.com.disapps.meucartaotransporte.util.extensions.toast
 import kotlinx.android.synthetic.main.activity_intro.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -34,7 +35,6 @@ class IntroActivity : BaseActivity(){
         )
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,16 +47,23 @@ class IntroActivity : BaseActivity(){
 
         btn_next.setOnClickListener { view_pager.currentItem = view_pager.currentItem+1 }
 
-        viewModel.initData()
+        if(!viewModel.isRequested){
+            setupUpdate()
+        }
 
         viewModel.isComplete.observe(this, Observer {
             if(it!= null && it){
-                viewModel.saveIsFirstAccess()
-                toast("sucesso")
+                btn_skip.visibility = View.VISIBLE
             }
         })
     }
 
+
+    private fun setupUpdate(){
+        UpdateLinesService.startService(this)
+        UpdateSchedulesService.startService(this)
+        viewModel.initData()
+    }
     private fun setupViewPager() {
         view_pager.apply {
             adapter = IntroPageAdapter(this@IntroActivity, layouts)
@@ -79,7 +86,6 @@ class IntroActivity : BaseActivity(){
     }
 
     companion object {
-
         fun launch(context: Context){
             context.startActivity(Intent(context, IntroActivity::class.java))
         }

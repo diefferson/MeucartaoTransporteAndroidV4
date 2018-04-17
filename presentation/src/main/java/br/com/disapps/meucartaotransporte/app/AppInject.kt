@@ -3,6 +3,7 @@ package br.com.disapps.meucartaotransporte.app
 import android.content.Context
 import br.com.disapps.data.api.RestClient
 import br.com.disapps.data.dataSource.factory.*
+import br.com.disapps.data.events.RxBus
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.database.RealmDatabase
 import br.com.disapps.data.executor.JobExecutor
@@ -25,6 +26,7 @@ import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.domain.executor.PostExecutionThread
+import br.com.disapps.domain.interactor.events.*
 import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
 import br.com.disapps.domain.interactor.preferences.*
@@ -37,6 +39,7 @@ import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesVie
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageViewModel
+import br.com.disapps.meucartaotransporte.ui.settings.updateData.UpdatingDataViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -57,8 +60,10 @@ object AppInject {
     private val applicationModule: Module = applicationContext {
         bean("applicationContext") { App.instance!! as Context }
         bean { RealmDatabase(get("applicationContext")) as Database }
+        bean { Preferences(get("applicationContext")) as PreferencesRepository}
         bean { Preferences(get("applicationContext"))}
         bean { RestClient().api }
+        bean { RxBus() }
         bean { UIThread() as PostExecutionThread }
         bean { JobExecutor() as  ThreadExecutor }
     }
@@ -67,20 +72,21 @@ object AppInject {
         viewModel { BaseViewModel() }
         viewModel { ItinerariesViewModel() }
         viewModel { LinesViewModel( get(), get()) }
-        viewModel { MainViewModel( get()) }
+        viewModel { MainViewModel(get()) }
         viewModel { QuickFindViewModel() }
-        viewModel { SettingsViewModel( get(),  get()) }
+        viewModel { SettingsViewModel(get(), get()) }
         viewModel { ShapesViewModel() }
         viewModel { MyCardsViewModel( get(),  get()) }
         viewModel { BalanceViewModel( get()) }
         viewModel { RegisterCardViewModel( get(),  get(), get()) }
         viewModel { ExtractViewModel( get() ) }
-        viewModel { IntroViewModel( get(),  get(), get(), get(), get() ) }
+        viewModel { IntroViewModel( get(),  get(), get()) }
         viewModel { LineViewModel( get()) }
         viewModel { NextSchedulesViewModel( get()) }
         viewModel { NextSchedulesDayViewModel( get()) }
         viewModel { SchedulesViewModel( get()) }
-        viewModel { DataUsageViewModel(get()) }
+        viewModel { DataUsageViewModel(getDataUsageUseCase = get()) }
+        viewModel { UpdatingDataViewModel(get()) }
     }
 
     private val useCaseModule: Module = applicationContext {
@@ -103,16 +109,19 @@ object AppInject {
         factory { GetLineScheduleDays( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetLineSchedules( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetAllPointSchedules( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetUpdateDataEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetUpdateLinesEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetUpdateSchedulesEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetUpdateCwbItinerariesEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetUpdateCwbShapesEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetUpdateMetItinerariesEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetUpdateMetShapesEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { PostEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SaveInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetDataUsage( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { SaveInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetDateCwbItineraries( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetDateCwbShapes( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetDateLines( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetDateMetItineraries( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetDateMetShapes( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetDateSchedules( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {
@@ -121,14 +130,14 @@ object AppInject {
         bean { ItinerariesDataRepository( itinerariesDataSourceFactory = get()) as ItinerariesRepository }
         bean { ShapesDataRepository( shapesDataSourceFactory = get()) as ShapesRepository }
         bean { SchedulesDataRepository( schedulesDataSourceFactory = get()) as SchedulesRepository }
-        bean { PreferencesDataRepository( preferences = get()) as PreferencesRepository }
+        bean { EventsDataRepository( rxBus = get()) as EventsRepository }
     }
 
     private val dataSourceFactoryModule : Module = applicationContext {
         bean { CardsDataSourceFactory(database = get(), restApi = get()) }
         bean { LinesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
-        bean { ItinerariesDataSourceFactory(database = get(), restApi = get()) }
-        bean { ShapesDataSourceFactory(database = get(), restApi = get()) }
+        bean { ItinerariesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
+        bean { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
         bean { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
     }
 }

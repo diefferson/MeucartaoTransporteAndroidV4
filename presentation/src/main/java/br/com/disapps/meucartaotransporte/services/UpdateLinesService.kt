@@ -1,15 +1,17 @@
-package br.com.disapps.meucartaotransporte.services.updateLines
+package br.com.disapps.meucartaotransporte.services
 
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
 import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.lines.GetAllLinesJson
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
+import br.com.disapps.domain.model.EventStatus
+import br.com.disapps.domain.model.UpdateDataEvent
+import br.com.disapps.domain.model.UpdateLinesEvent
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.services.BaseService
 import br.com.disapps.meucartaotransporte.util.showNotification
 import org.koin.android.ext.android.inject
 
@@ -17,34 +19,38 @@ class UpdateLinesService : BaseService(){
 
     private val getAllLinesJsonUseCase: GetAllLinesJson by inject()
     private val saveAllLinesJsonUseCase: SaveAllLinesJson by inject()
-    private val isComplete = MutableLiveData<Boolean>()
-    private var manual = false
+    private val postEvent : PostEvent by inject()
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
 
-        intent.extras?.getBoolean(IS_MANUAL, false)?.let{
-            manual = it
-        }
+        isManual = intent.extras.getBoolean(IS_MANUAL)
 
-        if(manual){
-            showNotification(this, NOTIFICATION_CHANEL,  NOTIFICATION_ID, getString(R.string.updating_lines) )
-        }
-
-        updateLines()
-
-        if(manual){
+        if(isManual){
+            postMessage(EventStatus.START,getString(R.string.updating_lines))
             isComplete.observe(this, Observer {
                 if(it != null){
                     if(it){
-                        showNotification(this, NOTIFICATION_CHANEL, NOTIFICATION_ID, getString(R.string.update_lines_success))
+                        postMessage(EventStatus.COMPLETE, getString(R.string.update_lines_success))
                     }else{
-                        showNotification(this, NOTIFICATION_CHANEL, NOTIFICATION_ID, getString(R.string.update_lines_error))
+                        postMessage( EventStatus.ERROR, getString(R.string.update_lines_error))
                     }
                 }
             })
         }
 
+        updateLines()
+
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        getAllLinesJsonUseCase.dispose()
+        saveAllLinesJsonUseCase.dispose()
+    }
+
+    private fun postMessage(status: EventStatus, message : String){
+        postEvent.execute(object : DefaultCompletableObserver(){}, PostEvent.Params(UpdateLinesEvent(status, message)))
     }
 
     private fun updateLines(){
@@ -73,8 +79,6 @@ class UpdateLinesService : BaseService(){
 
     companion object {
         private const val IS_MANUAL = "manual"
-        private const val NOTIFICATION_ID = 853
-        private const val NOTIFICATION_CHANEL = "UPDATES"
         fun startService(context: Context){
             context.startService(Intent(context, UpdateLinesService::class.java).apply {
                 putExtra(IS_MANUAL, true)

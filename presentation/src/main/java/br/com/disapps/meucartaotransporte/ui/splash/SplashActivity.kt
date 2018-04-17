@@ -1,11 +1,11 @@
 package br.com.disapps.meucartaotransporte.ui.splash
 
-import android.support.v7.app.AppCompatActivity
-import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.preferences.GetIsFirstAccess
 import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
+import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import org.koin.android.ext.android.inject
 
 
@@ -32,5 +32,10 @@ class SplashActivity : AppCompatActivity(){
                 finish()
             }
         }, Unit)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        getIsFirstAccessUseCase.dispose()
     }
 }

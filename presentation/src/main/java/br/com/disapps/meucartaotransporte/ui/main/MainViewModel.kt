@@ -16,6 +16,7 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen) : Bas
     val initialScreen  = MutableLiveData<Int>()
 
     fun getInitialScreen(){
+        initialScreen.value = 0
         getInitialScreenUseCase.execute(object : DefaultSingleObserver<String>(){
             override fun onSuccess(t: String) {
                 initialScreen.value = if(InitialScreen.CARDS.toString() == t){
@@ -25,5 +26,10 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen) : Bas
                 }
             }
         }, Unit)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getInitialScreenUseCase.dispose()
     }
 }

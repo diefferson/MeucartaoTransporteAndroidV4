@@ -4,10 +4,14 @@ import android.app.Service
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.MutableLiveData
 import android.content.Intent
 import android.os.IBinder
 
 abstract class BaseService : Service(), LifecycleOwner {
+
+    protected val isComplete = MutableLiveData<Boolean>()
+    protected var isManual = false
 
     private val mLifecycleRegistry: LifecycleRegistry by lazy {
         LifecycleRegistry(this)
@@ -28,7 +32,6 @@ abstract class BaseService : Service(), LifecycleOwner {
         super.onDestroy()
         mLifecycleRegistry.markState(Lifecycle.State.DESTROYED)
     }
-
 
     override fun onBind(p0: Intent?): IBinder? {
         return null

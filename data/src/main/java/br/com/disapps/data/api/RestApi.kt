@@ -1,13 +1,13 @@
 package br.com.disapps.data.api
 
-import br.com.disapps.data.entity.RequestCartao
 import br.com.disapps.data.entity.RetornoCartao
 import br.com.disapps.data.entity.RetornoExtrato
 import br.com.disapps.data.entity.Veiculo
 import com.google.gson.JsonArray
-import io.reactivex.Observable
 import io.reactivex.Single
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 /**
  * Created by dnso on 12/03/2018.

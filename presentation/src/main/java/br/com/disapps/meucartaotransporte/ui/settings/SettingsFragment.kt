@@ -18,7 +18,6 @@ import org.koin.android.architecture.ext.viewModel
 class SettingsFragment : BaseFragment(){
 
     override val viewModel by viewModel<SettingsViewModel>()
-
     override val fragmentLayout = R.layout.fragment_settings
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +39,7 @@ class SettingsFragment : BaseFragment(){
 
         val items = arrayOf<CharSequence>(getString(R.string.cards),getString(R.string.lines))
 
-        val position: Int = if (InitialScreen.CARDS.toString() == viewModel.initialScreen.value) {
+        val position = if (InitialScreen.CARDS.toString() == viewModel.initialScreen.value) {
             0
         } else {
             1
@@ -57,7 +56,6 @@ class SettingsFragment : BaseFragment(){
             }
             setPositiveButton("Ok", null)
         }.show()
-
     }
 
     private fun shareIt() {

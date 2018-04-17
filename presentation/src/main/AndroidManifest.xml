@@ -78,17 +78,47 @@
             android:label="@string/data_usage" />
 
         <activity
-            android:name=".ui.settings.dataUsage.UpdatingDataActivity"
+            android:name=".ui.settings.updateData.UpdatingDataActivity"
             android:label="@string/updating_base"
             android:theme="@style/AppTheme.TranslucentStatusBar"/>
 
         <service
-            android:name=".services.updateLines.UpdateLinesService"
+            android:name=".services.UpdateLinesService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
-                <action android:name="ATUALIZA_LINHAS_SERVICE" />
+                <action android:name="UPDATE_LINES_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.UpdateSchedulesService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="UPDATE_SCHEDULES_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.UpdateShapesService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="UPDATE_SHAPES_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.UpdateItinerariesService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="UPDATE_ITINERARIES_SERVICE" />
             </intent-filter>
         </service>
 

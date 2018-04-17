@@ -11,9 +11,8 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 /**
  * Created by dnso on 12/03/2018.
  */
-class SettingsViewModel(private val getInitialScreenUseCase: GetInitialScreen,
-                        private val saveInitialScreenUseCase: SaveInitialScreen) : BaseViewModel(){
-
+class SettingsViewModel(private var getInitialScreenUseCase: GetInitialScreen,
+                        private var saveInitialScreenUseCase: SaveInitialScreen) : BaseViewModel(){
 
     val initialScreen = MutableLiveData<String>()
 
@@ -33,7 +32,6 @@ class SettingsViewModel(private val getInitialScreenUseCase: GetInitialScreen,
             }
         }, SaveInitialScreen.Params(initialScreen))
     }
-
 
     override fun onCleared() {
         super.onCleared()

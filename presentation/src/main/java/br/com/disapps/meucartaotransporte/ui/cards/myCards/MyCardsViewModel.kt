@@ -14,8 +14,8 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 /**
  * Created by dnso on 14/03/2018.
  */
-class MyCardsViewModel(val getCardsUseCase: GetCards,
-                       val deleteCardUseCase: DeleteCard) : BaseViewModel(){
+class MyCardsViewModel(private val getCardsUseCase: GetCards,
+                       private val deleteCardUseCase: DeleteCard) : BaseViewModel(){
 
     val cards = MutableLiveData<List<CardVO>>()
 

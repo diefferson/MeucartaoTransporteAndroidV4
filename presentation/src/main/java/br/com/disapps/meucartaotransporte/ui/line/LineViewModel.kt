@@ -18,4 +18,9 @@ class LineViewModel( private val updateLineUseCase: UpdateLine) : BaseViewModel(
         line.favorite = !line.favorite
         updateLineUseCase.execute(object : DefaultCompletableObserver(){},UpdateLine.Params(line.toLineBO()))
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        updateLineUseCase.dispose()
+    }
 }
