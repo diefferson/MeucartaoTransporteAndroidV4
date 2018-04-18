@@ -3,6 +3,7 @@ package br.com.disapps.data.repository
 import br.com.disapps.data.entity.mappers.toLineBO
 import br.com.disapps.data.entity.mappers.toLineDTO
 import br.com.disapps.data.dataSource.factory.LinesDataSourceFactory
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.Line
 import br.com.disapps.domain.repository.LinesRepository
 import io.reactivex.Completable
@@ -39,10 +40,10 @@ class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFac
                 .map{ l -> l.toLineBO() }
     }
 
-    override fun jsonLines(): Single<String> {
+    override fun jsonLines(downloadProgressListener: DownloadProgressListener): Single<String> {
         return linesDataSourceFactory
                 .create(true)
-                .jsonLines()
+                .jsonLines(downloadProgressListener)
     }
 
     override fun updateLine(line: Line): Completable {

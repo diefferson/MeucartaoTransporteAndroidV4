@@ -1,5 +1,6 @@
 package br.com.disapps.domain.repository
 
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.domain.model.Schedule
 import io.reactivex.Completable
@@ -7,7 +8,7 @@ import io.reactivex.Single
 
 interface SchedulesRepository{
 
-    fun jsonSchedules() : Single<String>
+    fun jsonSchedules(downloadProgressListener: DownloadProgressListener) : Single<String>
 
     fun saveAllFromJson(json : String): Completable
 

@@ -5,6 +5,7 @@ import br.com.disapps.data.entity.Horario
 import br.com.disapps.data.entity.HorarioLinha
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.realm.Realm
@@ -62,7 +63,7 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
         return Single.just(schedules.flatMap { s -> s.horarios })
     }
 
-    override fun jsonSchedules(): Single<String> {
+    override fun jsonSchedules( downloadProgressListener: DownloadProgressListener): Single<String> {
         return Single.error<String>(Throwable("not implemented,  cloud only"))
     }
 

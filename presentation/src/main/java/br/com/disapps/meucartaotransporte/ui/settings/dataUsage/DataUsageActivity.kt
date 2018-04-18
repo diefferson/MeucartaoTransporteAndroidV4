@@ -4,10 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.model.UpdateData
+import br.com.disapps.meucartaotransporte.services.UpdateItinerariesService
+import br.com.disapps.meucartaotransporte.services.UpdateLinesService
+import br.com.disapps.meucartaotransporte.services.UpdateSchedulesService
+import br.com.disapps.meucartaotransporte.services.UpdateShapesService
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.ui.settings.updateData.UpdatingDataActivity
 import br.com.disapps.meucartaotransporte.util.getPeriodItems
 import br.com.disapps.meucartaotransporte.util.getPeriodPosition
 import kotlinx.android.synthetic.main.activity_data_usage.*
@@ -25,12 +28,14 @@ class DataUsageActivity : BaseActivity(){
 
         period_update_lines.setOnClickListener { periodLines() }
         period_update_schedules.setOnClickListener { periodSchedules() }
-        update_line.setOnClickListener { UpdatingDataActivity.launch(this, UpdateData.LINES)}
-        update_schedule.setOnClickListener { UpdatingDataActivity.launch(this, UpdateData.SCHEDULES)}
-        update_cwb_itineraries.setOnClickListener { UpdatingDataActivity.launch(this, UpdateData.CWB_ITINERARIES)}
-        update_cwb_shapes.setOnClickListener { UpdatingDataActivity.launch(this, UpdateData.CWB_SHAPES)}
-        update_met_itineraries.setOnClickListener { UpdatingDataActivity.launch(this, UpdateData.MET_ITINERARIES)}
-        update_met_shapes.setOnClickListener { UpdatingDataActivity.launch(this, UpdateData.MET_SHAPES)}
+
+        update_line.setOnClickListener { UpdateLinesService.startService(this) }
+        update_schedule.setOnClickListener { UpdateSchedulesService.startService(this)}
+        update_cwb_shapes.setOnClickListener { UpdateShapesService.startService(this, City.CWB)}
+        update_met_shapes.setOnClickListener { UpdateShapesService.startService(this, City.MET)}
+        update_cwb_itineraries.setOnClickListener { UpdateItinerariesService.startService(this, City.CWB)}
+        update_met_itineraries.setOnClickListener { UpdateItinerariesService.startService(this, City.MET)}
+
     }
 
     private fun periodLines() {

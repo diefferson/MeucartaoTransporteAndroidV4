@@ -4,6 +4,7 @@ import br.com.disapps.data.dataSource.ShapesDataSource
 import br.com.disapps.data.entity.Shape
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -35,7 +36,7 @@ class LocalShapesDataSource(private val database: Database, private val preferen
         }
     }
 
-    override fun jsonShapes(city: City): Single<String> {
+    override fun jsonShapes(city: City,  downloadProgressListener: DownloadProgressListener): Single<String> {
         return Single.error<String>(Throwable("not implemented,  cloud only"))
     }
 }

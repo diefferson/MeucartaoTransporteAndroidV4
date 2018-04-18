@@ -4,6 +4,7 @@ import br.com.disapps.data.dataSource.ItinerariesDataSource
 import br.com.disapps.data.entity.Ponto
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -35,7 +36,7 @@ class LocalItinerariesDataSource(private val database: Database, private val pre
         }
     }
 
-    override fun jsonItineraries(city: City): Single<String> {
+    override fun jsonItineraries(city: City, downloadProgressListener: DownloadProgressListener): Single<String> {
         return Single.error<String>(Throwable("not implemented,  cloud only"))
     }
 }

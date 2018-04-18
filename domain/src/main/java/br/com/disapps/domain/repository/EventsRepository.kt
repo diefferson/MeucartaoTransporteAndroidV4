@@ -9,8 +9,4 @@ interface EventsRepository{
     fun getUpdateDataEvent() : Observable<UpdateDataEvent>
     fun getUpdateLinesEvent() : Observable<UpdateLinesEvent>
     fun getUpdateSchedulesEvent() : Observable<UpdateSchedulesEvent>
-    fun getUpdateCwbItinerariesEvent() : Observable<UpdateCwbItinerariesEvent>
-    fun getUpdateMetItinerariesEvent() : Observable<UpdateMetItinerariesEvent>
-    fun getUpdateCwbShapesEvent() : Observable<UpdateCwbShapesEvent>
-    fun getUpdateMetShapesEvent() : Observable<UpdateMetShapesEvent>
 }

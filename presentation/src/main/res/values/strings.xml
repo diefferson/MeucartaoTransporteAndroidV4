@@ -195,4 +195,6 @@
     <string name="monthly">mensal</string>
     <string name="yearly">anual</string>
     <string name="manual">manual</string>
+    <string name="saving_data">Salvando dados...</string>
+    <string name="wait_for_actual_proccess">Aguarde o fim do processo atual</string>
 </resources>

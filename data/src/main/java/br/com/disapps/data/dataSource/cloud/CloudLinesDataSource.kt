@@ -1,8 +1,10 @@
 package br.com.disapps.data.dataSource.cloud
 
+import br.com.disapps.data.api.DownloadClient.getRetrofitDownloadClient
 import br.com.disapps.data.api.RestApi
 import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.dataSource.LinesDataSource
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -11,8 +13,9 @@ import io.reactivex.Single
  */
 class CloudLinesDataSource(private val restApi: RestApi) : LinesDataSource {
 
-    override fun jsonLines(): Single<String> {
-        return restApi.listaLinhas().map { it.toString() }
+    override fun jsonLines(downloadProgressListener: DownloadProgressListener): Single<String> {
+        return getRetrofitDownloadClient(downloadProgressListener)
+                .listaLinhas().map { it.toString() }
     }
 
     override fun saveLine(linha: Linha): Completable {

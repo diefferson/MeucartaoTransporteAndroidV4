@@ -26,20 +26,4 @@ class EventsDataRepository(private val rxBus: RxBus) : EventsRepository{
     override fun getUpdateSchedulesEvent(): Observable<UpdateSchedulesEvent> {
         return rxBus.toObservable(UpdateSchedulesEvent::class.java)
     }
-
-    override fun getUpdateCwbItinerariesEvent(): Observable<UpdateCwbItinerariesEvent> {
-        return rxBus.toObservable(UpdateCwbItinerariesEvent::class.java)
-    }
-
-    override fun getUpdateMetItinerariesEvent(): Observable<UpdateMetItinerariesEvent> {
-        return rxBus.toObservable(UpdateMetItinerariesEvent::class.java)
-    }
-
-    override fun getUpdateCwbShapesEvent(): Observable<UpdateCwbShapesEvent> {
-        return rxBus.toObservable(UpdateCwbShapesEvent::class.java)
-    }
-
-    override fun getUpdateMetShapesEvent(): Observable<UpdateMetShapesEvent> {
-        return rxBus.toObservable(UpdateMetShapesEvent::class.java)
-    }
 }

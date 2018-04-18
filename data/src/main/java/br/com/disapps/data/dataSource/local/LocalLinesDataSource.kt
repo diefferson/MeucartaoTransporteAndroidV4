@@ -4,6 +4,7 @@ import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.dataSource.LinesDataSource
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.realm.Realm
@@ -76,7 +77,7 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
         }
     }
 
-    override fun jsonLines(): Single<String> {
+    override fun jsonLines( downloadProgressListener: DownloadProgressListener): Single<String> {
         return Single.error<String>(Throwable("not implemented,  cloud only"))
     }
 }

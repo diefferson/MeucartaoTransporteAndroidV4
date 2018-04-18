@@ -7,13 +7,27 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.model.UpdateDataNotification
 
-fun showNotification(context: Context,channel : String,  notificationId : Int, text : String) {
+/* Simple notification*/
+fun showCustomNotification(context: Context, channel : String, notificationId : Int, text : String,sortKey :String = "",  progress: Int = 0, infinityProgress: Boolean = false) {
 
     val mBuilder = NotificationCompat.Builder(context, channel)
             .setContentTitle(context.resources.getString(R.string.app_name))
             .setContentText(text)
-            .setProgress(100, 0, true)
             .setSmallIcon(R.drawable.bus)
+
+    if(sortKey != ""){
+        mBuilder.setSortKey(sortKey)
+    }
+
+    if(progress >0){
+        mBuilder.setProgress(100, progress,false)
+        mBuilder.setOngoing(true)
+    }
+
+    if(infinityProgress){
+        mBuilder.setProgress(100, 100, true)
+        mBuilder.setOngoing(true)
+    }
 
     val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
 

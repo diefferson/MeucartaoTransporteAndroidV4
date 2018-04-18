@@ -3,6 +3,7 @@ package br.com.disapps.data.repository
 import br.com.disapps.data.dataSource.factory.SchedulesDataSourceFactory
 import br.com.disapps.data.entity.mappers.toLineScheduleBO
 import br.com.disapps.data.entity.mappers.toScheduleBO
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.domain.model.Schedule
 import br.com.disapps.domain.repository.SchedulesRepository
@@ -11,10 +12,10 @@ import io.reactivex.Single
 
 class SchedulesDataRepository( private val schedulesDataSourceFactory: SchedulesDataSourceFactory) : SchedulesRepository {
 
-    override fun jsonSchedules(): Single<String> {
+    override fun jsonSchedules(downloadProgressListener: DownloadProgressListener): Single<String> {
         return  schedulesDataSourceFactory
                 .create(true)
-                .jsonSchedules()
+                .jsonSchedules(downloadProgressListener)
     }
 
     override fun saveAllFromJson(json: String): Completable {

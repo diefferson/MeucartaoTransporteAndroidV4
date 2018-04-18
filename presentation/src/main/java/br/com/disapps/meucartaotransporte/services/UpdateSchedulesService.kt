@@ -3,41 +3,55 @@ package br.com.disapps.meucartaotransporte.services
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
 import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.schedules.GetAllSchedulesJson
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.EventStatus
-import br.com.disapps.domain.model.UpdateDataEvent
+import br.com.disapps.domain.model.UpdateLinesEvent
 import br.com.disapps.domain.model.UpdateSchedulesEvent
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.model.UpdateData
+import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
+import br.com.disapps.meucartaotransporte.util.showCustomNotification
 import org.koin.android.ext.android.inject
 
 class UpdateSchedulesService : BaseService(){
 
     private val getAllSchedulesJsonUseCase : GetAllSchedulesJson by inject()
     private val saveAllSchedulesJsonUseCase : SaveAllSchedulesJson by inject()
-    private val postEvent : PostEvent by inject()
+    private val postEventUseCase : PostEvent by inject()
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
 
-        isManual = intent.extras.getBoolean(IS_MANUAL)
+        if(!isRunning){
+            isRunning = true
+            isManual = intent.extras.getBoolean(IS_MANUAL)
 
-        if(isManual){
-            postMessage(EventStatus.START,  getString(R.string.updating_schedules) )
-            isComplete.observe(this, Observer {
-                if(it != null){
-                    if(it){
-                        postMessage(EventStatus.COMPLETE, getString(R.string.update_schedules_success))
-                    }else{
-                        postMessage( EventStatus.ERROR, getString(R.string.update_schedules_error))
+            if(isManual){
+                showNotification(text = getString(R.string.updating_schedules), infinityProgress = true)
+                postEvent(EventStatus.START)
+                isComplete.observe(this, Observer {
+                    if(it != null){
+                        if(it){
+                            postEvent(EventStatus.COMPLETE)
+                            showNotification(text =  getString(R.string.update_schedules_success))
+                        }else{
+                            postEvent(EventStatus.ERROR)
+                            showNotification(text =  getString(R.string.update_schedules_error))
+                        }
+                        stopSelf()
                     }
-                }
-            })
-        }
+                })
+            }
 
-        updateSchedules()
+            updateSchedules()
+        }else{
+            Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
+        }
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -46,10 +60,12 @@ class UpdateSchedulesService : BaseService(){
         super.onDestroy()
         getAllSchedulesJsonUseCase.dispose()
         saveAllSchedulesJsonUseCase.dispose()
+        postEventUseCase.dispose()
     }
 
-    private fun postMessage(status: EventStatus, message : String){
-        postEvent.execute(object : DefaultCompletableObserver(){}, PostEvent.Params(UpdateSchedulesEvent(status, message)))
+    private fun postEvent(eventStatus: EventStatus){
+        postEventUseCase.execute(object : DefaultCompletableObserver(){
+        }, PostEvent.Params(UpdateSchedulesEvent(eventStatus)))
     }
 
     private fun updateSchedules(){
@@ -61,10 +77,13 @@ class UpdateSchedulesService : BaseService(){
             override fun onError(e: Throwable) {
                 isComplete.value = false
             }
-        }, Unit)
+        }, GetAllSchedulesJson.Params(updateProgressListener))
     }
 
     private fun saveSchedules(json:String){
+
+        showNotification(text = getString(R.string.saving_data), infinityProgress = true)
+
         saveAllSchedulesJsonUseCase.execute(object : DefaultCompletableObserver(){
             override fun onComplete() {
                 isComplete.value = true
@@ -74,6 +93,23 @@ class UpdateSchedulesService : BaseService(){
                 isComplete.value = false
             }
         }, SaveAllSchedulesJson.Params(json))
+
+    }
+
+    private val updateProgressListener  = object : DownloadProgressListener {
+        override fun onAttachmentDownloadUpdate(percent: Int) {
+            showNotification(text = getString(R.string.updating_schedules), progress =  percent)
+        }
+    }
+
+    private fun showNotification(text:String, progress :Int = 0, infinityProgress: Boolean = false){
+        showCustomNotification(context = this@UpdateSchedulesService,
+                channel = getUpdateDataNotification(UpdateData.SCHEDULES).channel,
+                notificationId = getUpdateDataNotification(UpdateData.SCHEDULES).id,
+                text = text,
+                sortKey = "2",
+                progress = progress,
+                infinityProgress = infinityProgress)
     }
 
     companion object {

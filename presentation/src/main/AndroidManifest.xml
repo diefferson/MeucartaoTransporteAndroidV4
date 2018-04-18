@@ -77,11 +77,6 @@
             android:name=".ui.settings.dataUsage.DataUsageActivity"
             android:label="@string/data_usage" />
 
-        <activity
-            android:name=".ui.settings.updateData.UpdatingDataActivity"
-            android:label="@string/updating_base"
-            android:theme="@style/AppTheme.TranslucentStatusBar"/>
-
         <service
             android:name=".services.UpdateLinesService"
             android:enabled="true"
