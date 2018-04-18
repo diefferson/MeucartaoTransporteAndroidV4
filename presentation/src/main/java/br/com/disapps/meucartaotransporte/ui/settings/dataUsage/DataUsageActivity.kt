@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import br.com.disapps.domain.model.City
+import br.com.disapps.domain.model.PeriodUpdate
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.services.UpdateItinerariesService
 import br.com.disapps.meucartaotransporte.services.UpdateLinesService
@@ -21,6 +22,10 @@ class DataUsageActivity : BaseActivity(){
     override val viewModel by viewModel<DataUsageViewModel>()
     override val activityLayout = R.layout.activity_data_usage
 
+    private val periodUpdateItems :Array<String> by lazy {
+        getPeriodItems(this@DataUsageActivity)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,31 +33,33 @@ class DataUsageActivity : BaseActivity(){
 
         period_update_lines.setOnClickListener { periodLines() }
         period_update_schedules.setOnClickListener { periodSchedules() }
-
         update_line.setOnClickListener { UpdateLinesService.startService(this) }
         update_schedule.setOnClickListener { UpdateSchedulesService.startService(this)}
         update_cwb_shapes.setOnClickListener { UpdateShapesService.startService(this, City.CWB)}
         update_met_shapes.setOnClickListener { UpdateShapesService.startService(this, City.MET)}
         update_cwb_itineraries.setOnClickListener { UpdateItinerariesService.startService(this, City.CWB)}
         update_met_itineraries.setOnClickListener { UpdateItinerariesService.startService(this, City.MET)}
-
     }
 
     private fun periodLines() {
-        val period = "semanal"
+        val position = getPeriodPosition(this, viewModel.periodLines.value)
         AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.update_lines))
-            setSingleChoiceItems(getPeriodItems(this@DataUsageActivity), getPeriodPosition(this@DataUsageActivity, period), { d, n ->  })
-            setPositiveButton("OK", { _, _ -> period_update_lines_value.text = period } )
+            setPositiveButton("OK",null )
+            setSingleChoiceItems(periodUpdateItems, position,{ _, item ->
+                viewModel.savePeriodUpdateLines(PeriodUpdate.getPeriodUpdate(item))
+            })
         }.show()
     }
 
     private fun periodSchedules() {
-        val period = "semanal"
+        val position = getPeriodPosition(this, viewModel.periodSchedules.value)
         AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.update_schedules))
-            setSingleChoiceItems(getPeriodItems(this@DataUsageActivity), getPeriodPosition(this@DataUsageActivity, period), { d, n ->  })
-            setPositiveButton("OK", { _, _ -> period_update_schedules_value.text = period })
+            setPositiveButton("OK",null)
+            setSingleChoiceItems(periodUpdateItems,position, { _, item ->
+                viewModel.savePeriodUpdateSchedules(PeriodUpdate.getPeriodUpdate(item))
+            })
         }.show()
     }
 

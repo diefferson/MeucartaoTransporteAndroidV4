@@ -7,6 +7,7 @@ import java.util.*
 import android.content.res.ColorStateList
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
+import br.com.disapps.domain.model.PeriodUpdate
 import java.text.SimpleDateFormat
 
 fun formatDate(date : Date):String{
@@ -143,7 +144,7 @@ fun getPeriodItems(context: Context) : Array<String>{
             context.getString(R.string.manual))
 }
 
-fun getPeriodPosition(context: Context, period: String): Int {
+fun getPeriodPosition(context: Context, period: String?): Int {
     return when (period) {
         context.getString(R.string.weekly) -> 0
         context.getString(R.string.monthly) -> 1
@@ -153,15 +154,6 @@ fun getPeriodPosition(context: Context, period: String): Int {
     }
 }
 
-fun getPeriodName(context: Context, position: Int): String {
-    return when (position) {
-        0 -> context.getString(R.string.weekly)
-        1 -> context.getString(R.string.monthly)
-        2 -> context.getString(R.string.yearly)
-        3 -> context.getString(R.string.manual)
-        else -> context.getString(R.string.weekly)
-    }
-}
 
 
 

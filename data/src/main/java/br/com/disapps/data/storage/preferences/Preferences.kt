@@ -2,10 +2,10 @@ package br.com.disapps.data.storage.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.provider.ContactsContract
 import br.com.disapps.data.BuildConfig
 import br.com.disapps.domain.model.DataUsage
 import br.com.disapps.domain.model.InitialScreen
+import br.com.disapps.domain.model.PeriodUpdate
 import br.com.disapps.domain.repository.PreferencesRepository
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -127,12 +127,24 @@ class Preferences(var context:Context) : PreferencesRepository {
         mPreferences.edit().putLong(DATE_METROPOLITAN_ITINERARIES,Calendar.getInstance().timeInMillis ).apply()
     }
 
+    override fun setPeriodUpdateLines(period: PeriodUpdate): Completable {
+        return Completable.defer {
+            mPreferences.edit().putString(LINES_PERIOD, period.toString()).apply()
+            Completable.complete()
+        }
+    }
+
+    override fun setPeriodUpdateSchedules(period: PeriodUpdate): Completable {
+        return Completable.defer {
+            mPreferences.edit().putString(SCHEDULERS_PERIOD, period.toString()).apply()
+            Completable.complete()
+        }
+    }
+
     companion object {
         const val PRO_ACCESS = "acessoPro"
         const val INITIAL_SCREEN = "telaInicial"
         const val FIRST_ACCESS = "first"
-        const val METROPOLITAN_SHAPES = "shapesMetropolitana"
-        const val CURITIBA_SHAPES = "shapesCuritiba"
         const val LINES_PERIOD = "periodoLinhas"
         const val LINES_DATE = "dataLinhas"
         const val SCHEDULERS_PERIOD = "periodoHorarios"
@@ -141,7 +153,5 @@ class Preferences(var context:Context) : PreferencesRepository {
         const val DATE_CURITIBA_SHAPES= "dataShapesCuritiba"
         const val DATE_METROPOLITAN_ITINERARIES= "dataPontosMetropolitana"
         const val DATE_METROPOLITAN_SHAPES= "dataShapesMetropolitana"
-        const val HAS_SERVICE_WORK = "serviceWork"
-        const val IS_MANUAL_SERVICE = "manual"
     }
 }

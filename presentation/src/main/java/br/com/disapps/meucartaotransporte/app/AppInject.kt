@@ -84,7 +84,7 @@ object AppInject {
         viewModel { NextSchedulesViewModel( get()) }
         viewModel { NextSchedulesDayViewModel( get()) }
         viewModel { SchedulesViewModel( get()) }
-        viewModel { DataUsageViewModel(getDataUsageUseCase = get()) }
+        viewModel { DataUsageViewModel(get(), get(), get()) }
     }
 
     private val useCaseModule: Module = applicationContext {
@@ -116,6 +116,8 @@ object AppInject {
         factory { GetDataUsage( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { SavePeriodUpdateLines( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { SavePeriodUpdateSchedules( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {

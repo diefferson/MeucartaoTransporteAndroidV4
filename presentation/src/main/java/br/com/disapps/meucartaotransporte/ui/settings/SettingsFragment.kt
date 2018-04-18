@@ -37,7 +37,7 @@ class SettingsFragment : BaseFragment(){
 
     private fun initialScreen() {
 
-        val items = arrayOf<CharSequence>(getString(R.string.cards),getString(R.string.lines))
+        val items = arrayOf(getString(R.string.cards),getString(R.string.lines))
 
         val position = if (InitialScreen.CARDS.toString() == viewModel.initialScreen.value) {
             0
@@ -47,14 +47,14 @@ class SettingsFragment : BaseFragment(){
 
         AlertDialog.Builder(context!!).apply {
             setTitle(getString(R.string.initial_screen))
-            setSingleChoiceItems(items, position) { _, n ->
+            setPositiveButton("Ok", null)
+            setSingleChoiceItems(items, position, { _, n ->
                 if (n == 0) {
                     viewModel.saveInitialScreen(InitialScreen.CARDS)
                 } else {
                     viewModel.saveInitialScreen(InitialScreen.LINES)
                 }
-            }
-            setPositiveButton("Ok", null)
+            })
         }.show()
     }
 

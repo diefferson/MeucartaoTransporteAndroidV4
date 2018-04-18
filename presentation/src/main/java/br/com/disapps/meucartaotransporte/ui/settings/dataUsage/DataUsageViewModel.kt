@@ -1,14 +1,20 @@
 package br.com.disapps.meucartaotransporte.ui.settings.dataUsage
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
 import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.preferences.GetDataUsage
+import br.com.disapps.domain.interactor.preferences.SavePeriodUpdateLines
+import br.com.disapps.domain.interactor.preferences.SavePeriodUpdateSchedules
 import br.com.disapps.domain.model.DataUsage
+import br.com.disapps.domain.model.PeriodUpdate
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.formatDate
 import java.util.*
 
-class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage):BaseViewModel(){
+class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage,
+                         private val savePeriodUpdateLinesUseCase: SavePeriodUpdateLines,
+                         private val savePeriodUpdateSchedulesUseCase: SavePeriodUpdateSchedules):BaseViewModel(){
 
     val periodLines = MutableLiveData<String>()
     val periodSchedules = MutableLiveData<String>()
@@ -47,8 +53,26 @@ class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage):BaseView
         }, Unit)
     }
 
+    fun savePeriodUpdateLines(periodUpdate: PeriodUpdate){
+        savePeriodUpdateLinesUseCase.execute(object : DefaultCompletableObserver(){
+            override fun onComplete() {
+                init()
+            }
+        }, SavePeriodUpdateLines.Params(periodUpdate))
+    }
+
+    fun savePeriodUpdateSchedules(periodUpdate: PeriodUpdate){
+        savePeriodUpdateSchedulesUseCase.execute(object : DefaultCompletableObserver(){
+            override fun onComplete() {
+                init()
+            }
+        },SavePeriodUpdateSchedules.Params(periodUpdate))
+    }
+
     override fun onCleared() {
         super.onCleared()
         getDataUsageUseCase.dispose()
+        savePeriodUpdateLinesUseCase.dispose()
+        savePeriodUpdateSchedulesUseCase.dispose()
     }
 }
