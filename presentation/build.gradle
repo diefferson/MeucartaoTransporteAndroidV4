@@ -75,6 +75,11 @@ dependencies {
     implementation presentationDependencies.recyclerviewFastscroll
     implementation presentationDependencies.pageIndicatorVersion
     implementation presentationDependencies.lottie
+    implementation presentationDependencies.firebaseCore
+    implementation presentationDependencies.firebaseMessaging
+    implementation presentationDependencies.playServicesLocation
+    implementation presentationDependencies.playServicesMap
+
     kapt presentationDependencies.archCompiler
 
     implementation presentationDependencies.customtabs
@@ -106,3 +111,5 @@ dependencies {
         exclude module: 'design'
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

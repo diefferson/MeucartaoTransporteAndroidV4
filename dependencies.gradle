@@ -38,6 +38,8 @@ ext {
     materialScrollBarVersion = '13.2.3'
     recyclerviewFastscroll = '1.0.17'
     lottieVersion = '2.5.4'
+    firebaseVersion = '15.0.0'
+    playServicesVersion = '15.0.0'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -72,6 +74,10 @@ ext {
             recyclerviewFastscroll:  "com.simplecityapps:recyclerview-fastscroll:${recyclerviewFastscroll}",
             lottie:              "com.airbnb.android:lottie:${lottieVersion}",
             customtabs:              "com.android.support:customtabs:${supportLibraryVersion}",
+            firebaseCore:           "com.google.firebase:firebase-core:${firebaseVersion}",
+            firebaseMessaging:      "com.google.firebase:firebase-messaging:${firebaseVersion}",
+            playServicesLocation:   "com.google.android.gms:play-services-location:${playServicesVersion}",
+            playServicesMap:        "com.google.android.gms:play-services-maps:${playServicesVersion}",
     ]
 
     presentationTestDependencies = [

@@ -30,7 +30,7 @@ class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFa
         return cardsDataSourceFactory
                 .create(true)
                 .card(card.toRequestCardDTO())
-                .map{ c -> c.toCardBO() }
+                .map{ it.toCardBO() }
     }
 
     override fun hasCard(card: Card): Single<Boolean> {
@@ -49,6 +49,6 @@ class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFa
         return cardsDataSourceFactory
                 .create(true)
                 .getExtract(card.toRequestExtractDTO())
-                .map { e -> e.toExtractBO() }
+                .map { it.toExtractBO() }
     }
 }

@@ -1,12 +1,11 @@
-package br.com.disapps.meucartaotransporte.ui.line.nextSchedules
+package br.com.disapps.meucartaotransporte.ui.common
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-
 import java.util.ArrayList
 
-class NextSchedulesPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+class BasePageAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 
     private val mFragmentList = ArrayList<Fragment>()
     private val mFragmentTitleList = ArrayList<String>()

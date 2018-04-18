@@ -8,9 +8,9 @@
             type="br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-    </android.support.constraint.ConstraintLayout>
 </layout>

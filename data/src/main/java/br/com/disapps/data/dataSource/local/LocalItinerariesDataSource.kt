@@ -36,6 +36,21 @@ class LocalItinerariesDataSource(private val database: Database, private val pre
         }
     }
 
+    override fun getItineraryDirections(codeLine: String): Single<List<String>> {
+        val realm = database.getDatabase() as Realm
+        val directions = realm.copyFromRealm(realm.where(Ponto::class.java).equalTo("codigoLinha", codeLine).distinct("sentido").findAll())
+        return Single.just(directions.map { it.sentido })
+    }
+
+    override fun getItinerary(codeLine: String, direction: String): Single<List<Ponto>> {
+        val realm = database.getDatabase() as Realm
+        val itinerary = realm.copyFromRealm(realm.where(Ponto::class.java)
+                            .equalTo("codigoLinha", codeLine)
+                            .equalTo("sentido", direction)
+                            .findAll().sort("sequencia"))
+        return Single.just(itinerary)
+    }
+
     override fun jsonItineraries(city: City, downloadProgressListener: DownloadProgressListener): Single<String> {
         return Single.error<String>(Throwable("not implemented,  cloud only"))
     }

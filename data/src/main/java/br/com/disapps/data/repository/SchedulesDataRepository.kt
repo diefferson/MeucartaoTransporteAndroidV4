@@ -32,13 +32,13 @@ class SchedulesDataRepository( private val schedulesDataSourceFactory: Schedules
         return schedulesDataSourceFactory
                 .create()
                 .getLineSchedules(codeLine, day)
-                .map{ s -> s.toLineScheduleBO()}
+                .map{ it.toLineScheduleBO()}
     }
 
     override fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): Single<List<Schedule>> {
         return schedulesDataSourceFactory
                 .create()
                 .getAllPointSchedules(codeLine,day, codePoint)
-                .map { s -> s.toScheduleBO() }
+                .map { it.toScheduleBO() }
     }
 }

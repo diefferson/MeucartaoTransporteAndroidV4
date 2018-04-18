@@ -28,6 +28,8 @@ import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.domain.executor.PostExecutionThread
 import br.com.disapps.domain.interactor.events.*
 import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
+import br.com.disapps.domain.interactor.itineraries.GetItinerary
+import br.com.disapps.domain.interactor.itineraries.GetItineraryDirections
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
 import br.com.disapps.domain.interactor.preferences.*
 import br.com.disapps.domain.interactor.schedules.*
@@ -35,6 +37,7 @@ import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
+import br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirection.ItineraryDirectionViewModel
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesViewModel
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesViewModel
@@ -69,7 +72,7 @@ object AppInject {
 
     private val viewModelModule = applicationContext {
         viewModel { BaseViewModel() }
-        viewModel { ItinerariesViewModel() }
+        viewModel { ItinerariesViewModel(get()) }
         viewModel { LinesViewModel( get(), get()) }
         viewModel { MainViewModel(get()) }
         viewModel { QuickFindViewModel() }
@@ -85,6 +88,7 @@ object AppInject {
         viewModel { NextSchedulesDayViewModel( get()) }
         viewModel { SchedulesViewModel( get()) }
         viewModel { DataUsageViewModel(get(), get(), get()) }
+        viewModel { ItineraryDirectionViewModel(get()) }
     }
 
     private val useCaseModule: Module = applicationContext {
@@ -100,6 +104,8 @@ object AppInject {
         factory { UpdateLine( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetAllItinerariesJson( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveAllItinerariesJson( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetItineraryDirections( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetItinerary( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetAllShapesJson( shapesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveAllShapesJson( shapesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetAllSchedulesJson( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }

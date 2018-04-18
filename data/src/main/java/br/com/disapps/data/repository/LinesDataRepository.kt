@@ -30,14 +30,14 @@ class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFac
         return linesDataSourceFactory
                 .create()
                 .lines()
-                .map{ l -> l.toLineBO() }
+                .map{ it.toLineBO() }
     }
 
     override fun line(line : Line): Single<Line> {
         return linesDataSourceFactory
                 .create()
                 .line(line.toLineDTO())
-                .map{ l -> l.toLineBO() }
+                .map{ it.toLineBO() }
     }
 
     override fun jsonLines(downloadProgressListener: DownloadProgressListener): Single<String> {

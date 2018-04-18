@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
+import br.com.disapps.meucartaotransporte.ui.common.BasePageAdapter
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayFragment
 import br.com.disapps.meucartaotransporte.util.getDayName
@@ -37,7 +38,7 @@ class NextSchedulesFragment : BaseFragment(){
         viewModel.days.observe(this, Observer { daysList->
             daysList?.let {
 
-                val adapter = NextSchedulesPagerAdapter(childFragmentManager)
+                val adapter = BasePageAdapter(childFragmentManager)
 
                 daysList.forEach { day ->
 

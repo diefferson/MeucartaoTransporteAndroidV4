@@ -18,8 +18,8 @@
         android:background="#c5c5c5"
         app:layout_constraintStart_toStartOf="@id/ic_it_item"
         app:layout_constraintEnd_toEndOf="@id/ic_it_item"
-        app:layout_constraintBottom_toBottomOf="@id/type_point"
-        app:layout_constraintTop_toTopOf="@id/name_point"/>
+        app:layout_constraintBottom_toBottomOf="@id/type"
+        app:layout_constraintTop_toTopOf="@id/name"/>
 
     <br.com.disapps.meucartaotransporte.ui.custom.RoundedColorView
         android:id="@+id/ic_it_item"
@@ -32,7 +32,7 @@
 
 
     <TextView
-        android:id="@+id/name_point"
+        android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
@@ -44,11 +44,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/ic_it_item"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/type_point"
+        app:layout_constraintBottom_toTopOf="@id/type"
         app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
-        android:id="@+id/type_point"
+        android:id="@+id/type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -57,7 +57,7 @@
         tools:text="Plataforma"
         android:textColor="#c1c1c1"
         android:textSize="13sp"
-        app:layout_constraintTop_toBottomOf="@id/name_point"
+        app:layout_constraintTop_toBottomOf="@id/name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/ic_it_item"
         app:layout_constraintEnd_toEndOf="parent"/>
