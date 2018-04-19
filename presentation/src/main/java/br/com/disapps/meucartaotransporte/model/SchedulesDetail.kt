@@ -2,7 +2,7 @@ package br.com.disapps.meucartaotransporte.model
 
 import java.io.Serializable
 
-class SchedulesDetail(
+data class SchedulesDetail(
         var lineCode: String,
         var day : Int,
         var busStopName: String,

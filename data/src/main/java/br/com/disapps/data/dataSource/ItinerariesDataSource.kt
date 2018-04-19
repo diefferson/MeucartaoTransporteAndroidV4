@@ -16,4 +16,6 @@ interface ItinerariesDataSource : DataSource{
 
     fun getItinerary(codeLine: String, direction: String) : Single<List<Ponto>>
 
+    fun getAllItineraries(codeLine: String) : Single<List<Ponto>>
+
 }

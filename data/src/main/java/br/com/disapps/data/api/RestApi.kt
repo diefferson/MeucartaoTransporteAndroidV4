@@ -4,6 +4,7 @@ import br.com.disapps.data.entity.RetornoCartao
 import br.com.disapps.data.entity.RetornoExtrato
 import br.com.disapps.data.entity.Veiculo
 import com.google.gson.JsonArray
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -29,7 +30,7 @@ interface RestApi {
 
     @FormUrlEncoded
     @POST("listaVeiculos")
-    fun listaVeiculos(@Field("l") l: String): Single<List<Veiculo>>
+    fun listaVeiculos(@Field("l") l: String): Observable<List<Veiculo>>
 
     @FormUrlEncoded
     @POST("cartao")

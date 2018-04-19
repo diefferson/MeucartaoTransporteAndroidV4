@@ -4,6 +4,7 @@ import br.com.disapps.data.entity.Cartao
 import br.com.disapps.data.entity.Extrato
 import br.com.disapps.data.entity.RequestCartao
 import br.com.disapps.data.dataSource.CardsDataSource
+import br.com.disapps.data.entity.Shape
 import br.com.disapps.data.storage.database.Database
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -14,9 +15,14 @@ import io.realm.Realm
  */
 class LocalCardsDataSource(private val database: Database) : CardsDataSource {
 
+    companion object {
+        private const val CODE = "codigo"
+        private val CLAZZ = Cartao::class.java
+    }
+
     override fun saveCard(cartao: Cartao): Completable {
+        val realm = database.getDatabase() as Realm
         return  Completable.defer {
-            val realm = database.getDatabase() as Realm
             try {
                 realm.beginTransaction()
                 realm.copyToRealm(cartao)
@@ -32,35 +38,39 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
 
     override fun cards(): Single<List<Cartao>> {
         val realm = database.getDatabase() as Realm
-        val cards = realm.copyFromRealm(realm.where(Cartao::class.java).findAll().toList())
+        val cards = realm.copyFromRealm(realm.where(CLAZZ).findAll())
         realm.close()
         return Single.just(cards)
     }
 
     override fun card(requestCartao: RequestCartao): Single<Cartao?> {
         val realm = database.getDatabase() as Realm
-        val card = realm.where(Cartao::class.java).equalTo("codigo", requestCartao.codigo).findFirst()
+        val card = realm.where(CLAZZ)
+                        .equalTo(CODE, requestCartao.codigo)
+                        .findFirst()
+
         realm.close()
         return Single.just(card)
     }
 
     override fun hasCard(cartao: Cartao): Single<Boolean> {
         val realm = database.getDatabase() as Realm
-        return if (realm.where(Cartao::class.java).equalTo("codigo", cartao.codigo).findAll().size > 0) {
-            realm.close()
-            Single.just(true)
-        }else{
-            realm.close()
-            Single.just(false)
-        }
+        val hasCards = realm.where(CLAZZ)
+                            .equalTo(CODE, cartao.codigo)
+                            .findAll().size > 0
+        realm.close()
+        return Single.just(hasCards)
     }
 
     override fun deleteCard(cartao: Cartao): Completable {
+        val realm = database.getDatabase() as Realm
         return  Completable.defer {
-            val realm = database.getDatabase() as Realm
             try {
                 realm.beginTransaction()
-                val card = realm.where(Cartao::class.java).equalTo("codigo", cartao.codigo).findFirst()
+                val card = realm.where(CLAZZ)
+                                .equalTo(CODE, cartao.codigo)
+                                .findFirst()
+
                 card?.deleteFromRealm()
                 realm.commitTransaction()
                 Completable.complete()

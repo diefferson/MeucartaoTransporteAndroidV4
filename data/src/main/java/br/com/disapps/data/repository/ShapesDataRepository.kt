@@ -1,8 +1,10 @@
 package br.com.disapps.data.repository
 
 import br.com.disapps.data.dataSource.factory.ShapesDataSourceFactory
+import br.com.disapps.data.entity.mappers.toShapeBO
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
+import br.com.disapps.domain.model.Shape
 import br.com.disapps.domain.repository.ShapesRepository
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -20,4 +22,12 @@ class ShapesDataRepository( private val shapesDataSourceFactory: ShapesDataSourc
                 .create()
                 .saveAllFromJson(json, city)
     }
+
+    override fun getShapes(codeLine: String): Single<List<Shape>> {
+        return shapesDataSourceFactory
+                .create()
+                .getShapes(codeLine)
+                .map { it.toShapeBO() }
+    }
+
 }

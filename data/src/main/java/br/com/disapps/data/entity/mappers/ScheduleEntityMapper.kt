@@ -15,6 +15,6 @@ fun Horario.toScheduleBO() = Schedule(
         adapt = this.adapt == "ELEVADOR"
 )
 
-fun List<Schedule>.toScheduleDTO()= this.map { s ->s.toScheduleDTO() }
+fun List<Schedule>.toScheduleDTO()= this.map { it.toScheduleDTO() }
 
-fun List<Horario>.toScheduleBO() = this.map { s->s.toScheduleBO() }
+fun List<Horario>.toScheduleBO() = this.map { it.toScheduleBO() }

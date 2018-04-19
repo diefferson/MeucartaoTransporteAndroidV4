@@ -28,6 +28,7 @@
     <color name="textDark">#FF000000</color>
     <color name="textLight">#c1c1c1</color>
     <color name="divider">#c1c1c1</color>
+    <color name="polyline">#00B3FD</color>
 
 
     <!-- Screens background -->

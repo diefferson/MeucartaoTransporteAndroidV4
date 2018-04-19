@@ -1,5 +1,6 @@
 package br.com.disapps.data.dataSource
 
+import br.com.disapps.data.entity.Shape
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
 import io.reactivex.Completable
@@ -10,4 +11,6 @@ interface ShapesDataSource : DataSource{
     fun jsonShapes(city: City, downloadProgressListener: DownloadProgressListener) : Single<String>
 
     fun saveAllFromJson(json : String, city: City): Completable
+
+    fun getShapes(codeLine : String) : Single<List<Shape>>
 }

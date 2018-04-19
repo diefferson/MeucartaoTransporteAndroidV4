@@ -26,14 +26,13 @@ import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.domain.executor.PostExecutionThread
+import br.com.disapps.domain.interactor.buses.GetAllBuses
 import br.com.disapps.domain.interactor.events.*
-import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
-import br.com.disapps.domain.interactor.itineraries.GetItinerary
-import br.com.disapps.domain.interactor.itineraries.GetItineraryDirections
-import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
+import br.com.disapps.domain.interactor.itineraries.*
 import br.com.disapps.domain.interactor.preferences.*
 import br.com.disapps.domain.interactor.schedules.*
 import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
+import br.com.disapps.domain.interactor.shapes.GetShapes
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
@@ -72,23 +71,23 @@ object AppInject {
 
     private val viewModelModule = applicationContext {
         viewModel { BaseViewModel() }
-        viewModel { ItinerariesViewModel(get()) }
-        viewModel { LinesViewModel( get(), get()) }
-        viewModel { MainViewModel(get()) }
+        viewModel { ItinerariesViewModel( getItineraryDirectionsUseCase = get()) }
+        viewModel { LinesViewModel( getLinesUseCase = get(), updateLineUseCase =  get()) }
+        viewModel { MainViewModel( getInitialScreenUseCase = get()) }
         viewModel { QuickFindViewModel() }
-        viewModel { SettingsViewModel(get(), get()) }
-        viewModel { ShapesViewModel() }
-        viewModel { MyCardsViewModel( get(),  get()) }
-        viewModel { BalanceViewModel( get()) }
-        viewModel { RegisterCardViewModel( get(),  get(), get()) }
-        viewModel { ExtractViewModel( get() ) }
-        viewModel { IntroViewModel( get(),  get(), get()) }
-        viewModel { LineViewModel( get()) }
-        viewModel { NextSchedulesViewModel( get()) }
-        viewModel { NextSchedulesDayViewModel( get()) }
-        viewModel { SchedulesViewModel( get()) }
-        viewModel { DataUsageViewModel(get(), get(), get()) }
-        viewModel { ItineraryDirectionViewModel(get()) }
+        viewModel { SettingsViewModel( getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
+        viewModel { ShapesViewModel( getShapesUseCase = get(), getAllItinerariesUseCase = get(), getAllBusesUseCase = get()) }
+        viewModel { MyCardsViewModel( getCardsUseCase = get(), deleteCardUseCase =  get()) }
+        viewModel { BalanceViewModel( getCardUseCase = get()) }
+        viewModel { RegisterCardViewModel( hasCardUseCase = get(), saveCardUseCase =  get(), getCardUseCase =  get()) }
+        viewModel { ExtractViewModel( getExtractUseCase = get() ) }
+        viewModel { IntroViewModel( getUpdateLinesEventUseCase = get(),getUpdateSchedulesEventUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
+        viewModel { LineViewModel( updateLineUseCase = get()) }
+        viewModel { NextSchedulesViewModel( getLineScheduleDaysUseCase = get()) }
+        viewModel { NextSchedulesDayViewModel( getLineSchedulesUseCase = get()) }
+        viewModel { SchedulesViewModel( getAllPointSchedulesUseCase = get()) }
+        viewModel { DataUsageViewModel( getDataUsageUseCase = get(), savePeriodUpdateLinesUseCase =  get(), savePeriodUpdateSchedulesUseCase =  get()) }
+        viewModel { ItineraryDirectionViewModel(getItineraryUseCase = get()) }
     }
 
     private val useCaseModule: Module = applicationContext {
@@ -106,8 +105,10 @@ object AppInject {
         factory { SaveAllItinerariesJson( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetItineraryDirections( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetItinerary( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetAllItineraries( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetAllShapesJson( shapesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveAllShapesJson( shapesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetShapes( shapesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetAllSchedulesJson( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SaveAllSchedulesJson( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetLineScheduleDays( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
@@ -124,6 +125,7 @@ object AppInject {
         factory { SaveIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SavePeriodUpdateLines( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { SavePeriodUpdateSchedules( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetAllBuses( busesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {
@@ -133,6 +135,7 @@ object AppInject {
         bean { ShapesDataRepository( shapesDataSourceFactory = get()) as ShapesRepository }
         bean { SchedulesDataRepository( schedulesDataSourceFactory = get()) as SchedulesRepository }
         bean { EventsDataRepository( rxBus = get()) as EventsRepository }
+        bean { BusesDataRepository( busesDataSourceFactory = get()) as BusesRepository }
     }
 
     private val dataSourceFactoryModule : Module = applicationContext {
@@ -141,5 +144,6 @@ object AppInject {
         bean { ItinerariesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
         bean { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
         bean { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
+        bean { BusesDataSourceFactory(database = get(), restApi = get()) }
     }
 }

@@ -14,6 +14,8 @@ interface ItinerariesRepository{
 
     fun getItineraryDirections(codeLine:String) :Single<List<String>>
 
+    fun getAllItineraries(codeLine: String) : Single<List<BusStop>>
+
     fun getItinerary(codeLine: String, direction: String) : Single<List<BusStop>>
 
 }

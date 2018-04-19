@@ -23,6 +23,6 @@ fun Card.toCardDTO() = Cartao().apply {
     dataSaldo = this@toCardDTO.balanceDate
 }
 
-fun List<Cartao>.toCardBO() = this.map{ c-> c.toCardBO() }
+fun List<Cartao>.toCardBO() = this.map{ it.toCardBO() }
 
-fun List<Card>.toCardDTO() = this.map{ c -> c.toCardDTO() }
+fun List<Card>.toCardDTO() = this.map{ it.toCardDTO() }

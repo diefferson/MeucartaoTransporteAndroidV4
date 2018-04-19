@@ -35,4 +35,11 @@ class ItinerariesDataRepository( private val itinerariesDataSourceFactory: Itine
                 .getItinerary(codeLine, direction)
                 .map { it.toBusStopBO() }
     }
+
+    override fun getAllItineraries(codeLine: String): Single<List<BusStop>> {
+        return itinerariesDataSourceFactory
+                .create()
+                .getAllItineraries(codeLine)
+                .map { it.toBusStopBO() }
+    }
 }

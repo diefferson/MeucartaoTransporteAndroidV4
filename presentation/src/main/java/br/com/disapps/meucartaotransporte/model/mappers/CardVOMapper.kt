@@ -23,6 +23,6 @@ fun CardVO.toCardBO()= Card(
     balanceDate = this.balanceDate
 )
 
-fun List<Card>.toCardVO() = this.map { c -> c.toCardVO() }
+fun List<Card>.toCardVO() = this.map { it.toCardVO() }
 
-fun List<CardVO>.toCardBO()= this.map { c -> c.toCardBO() }
+fun List<CardVO>.toCardBO()= this.map { it.toCardBO() }

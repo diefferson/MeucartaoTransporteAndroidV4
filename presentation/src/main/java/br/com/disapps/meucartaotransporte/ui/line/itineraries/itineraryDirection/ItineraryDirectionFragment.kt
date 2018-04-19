@@ -21,9 +21,7 @@ class ItineraryDirectionFragment : BaseFragment(){
     private val lineViewModel  by viewModel<LineViewModel>()
 
     private val listAdapter : ItineraryDirectionListAdapter by lazy {
-        ItineraryDirectionListAdapter(ArrayList(), lineViewModel.line.color).apply {
-            //emptyView = activity?.inflateView(R.layout.loading_view, itinerary_recycler)
-        }
+        ItineraryDirectionListAdapter(ArrayList(), lineViewModel.line.color)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

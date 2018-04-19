@@ -27,7 +27,7 @@ fun Ponto.toBusStopBO()= BusStop(
 
 )
 
-fun List<BusStop>.toBusStopDTO() = this.map { l -> l.toBusStopDTO() }
+fun List<BusStop>.toBusStopDTO() = this.map { it.toBusStopDTO() }
 
-fun List<Ponto>.toBusStopBO()= this.map { l -> l.toBusStopBO() }
+fun List<Ponto>.toBusStopBO()= this.map { it.toBusStopBO() }
 

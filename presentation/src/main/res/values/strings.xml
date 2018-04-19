@@ -59,6 +59,7 @@
     <string name="card_state">Estado: %1$s</string>
     <string name="updated">Atualizado em</string>
     <string name="card_updated">Atualizado em: %1$s </string>
+    <string name="bus_updated">Atualizado: %1$s </string>
     <string name="last_updated">Última atualização: %1$s </string>
     <string name="direction">Sent. %1$s </string>
     <string name="rate_app">Avaliar App </string>

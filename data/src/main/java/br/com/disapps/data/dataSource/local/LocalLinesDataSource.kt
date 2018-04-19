@@ -14,9 +14,15 @@ import io.realm.Realm
  */
 class LocalLinesDataSource(private val database: Database, private val preferences: Preferences): LinesDataSource {
 
+    companion object {
+        private const val CODE = "codigo"
+        private const val NAME = "nome"
+        private val CLAZZ = Linha::class.java
+    }
+
     override fun saveLine(linha: Linha): Completable{
+        val realm = database.getDatabase() as Realm
         return Completable.defer {
-            val realm = database.getDatabase() as Realm
             try {
                 realm.beginTransaction()
                 realm.copyToRealmOrUpdate(linha)
@@ -31,11 +37,11 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
     }
 
     override fun saveAllFromJson(json: String): Completable {
+        val realm = database.getDatabase() as Realm
         return Completable.defer {
-            val realm = database.getDatabase() as Realm
             try {
                 realm.beginTransaction()
-                realm.createOrUpdateAllFromJson(Linha::class.java, json)
+                realm.createOrUpdateAllFromJson(CLAZZ, json)
                 realm.commitTransaction()
                 preferences.setLinesDate()
                 Completable.complete()
@@ -49,14 +55,18 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
 
     override fun lines(): Single<List<Linha>> {
         val realm = database.getDatabase() as Realm
-        val lines = realm.copyFromRealm(realm.where(Linha::class.java).findAll().sort("nome").toList())
+        val lines = realm.copyFromRealm(realm.where(CLAZZ)
+                                            .findAll()
+                                            .sort(NAME))
         realm.close()
         return Single.just(lines)
     }
 
     override fun line(linha: Linha): Single<Linha> {
         val realm = database.getDatabase() as Realm
-        val line = realm.where(Linha::class.java).equalTo("codigo", linha.codigo).findFirst()
+        val line = realm.where(CLAZZ)
+                        .equalTo(CODE, linha.codigo)
+                        .findFirst()
         realm.close()
         return Single.just(line)
     }

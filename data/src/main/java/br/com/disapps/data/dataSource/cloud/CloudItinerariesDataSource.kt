@@ -27,4 +27,8 @@ class CloudItinerariesDataSource(private val restApi: RestApi) : ItinerariesData
     override fun getItinerary(codeLine: String, direction: String): Single<List<Ponto>> {
         return Single.error(Throwable("not implemented, only local"))
     }
+
+    override fun getAllItineraries(codeLine: String): Single<List<Ponto>> {
+        return Single.error(Throwable("not implemented, only local"))
+    }
 }

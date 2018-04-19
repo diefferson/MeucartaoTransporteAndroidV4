@@ -19,6 +19,6 @@ fun Linha.toLineBO()= Line(
     favorite = this.favorito == 1
 )
 
-fun List<Line>.toLineDTO() = this.map { l -> l.toLineDTO() }
+fun List<Line>.toLineDTO() = this.map { it.toLineDTO() }
 
-fun List<Linha>.toLineBO()= this.map { l -> l.toLineBO() }
+fun List<Linha>.toLineBO()= this.map { it.toLineBO() }

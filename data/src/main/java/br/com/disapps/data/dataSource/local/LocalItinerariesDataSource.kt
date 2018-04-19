@@ -12,13 +12,21 @@ import io.realm.Realm
 
 class LocalItinerariesDataSource(private val database: Database, private val preferences:Preferences) : ItinerariesDataSource {
 
-    override fun saveAllFromJson(json: String, city: City): Completable {
+    companion object {
+        private const val CODE_LINE = "codigoLinha"
+        private const val CODE_STOP = "numPonto"
+        private const val DIRECTION = "sentido"
+        private const val SEQUENCE = "sequencia"
+        private val CLAZZ = Ponto::class.java
+    }
 
+    override fun saveAllFromJson(json: String, city: City): Completable {
+        val realm = database.getDatabase() as Realm
         return Completable.defer {
-            val realm = database.getDatabase() as Realm
+
             try {
                 realm.beginTransaction()
-                realm.createOrUpdateAllFromJson(Ponto::class.java, json)
+                realm.createOrUpdateAllFromJson(CLAZZ, json)
                 realm.commitTransaction()
 
                 if(city == City.CWB){
@@ -38,16 +46,35 @@ class LocalItinerariesDataSource(private val database: Database, private val pre
 
     override fun getItineraryDirections(codeLine: String): Single<List<String>> {
         val realm = database.getDatabase() as Realm
-        val directions = realm.copyFromRealm(realm.where(Ponto::class.java).equalTo("codigoLinha", codeLine).distinct("sentido").findAll())
-        return Single.just(directions.map { it.sentido })
+        val directions = realm.copyFromRealm(realm.where(CLAZZ)
+                                                    .equalTo(CODE_LINE, codeLine)
+                                                    .distinct(DIRECTION)
+                                                    .findAll())
+                                                    .map { it.sentido }
+        realm.close()
+        return Single.just(directions)
     }
 
     override fun getItinerary(codeLine: String, direction: String): Single<List<Ponto>> {
         val realm = database.getDatabase() as Realm
-        val itinerary = realm.copyFromRealm(realm.where(Ponto::class.java)
-                            .equalTo("codigoLinha", codeLine)
-                            .equalTo("sentido", direction)
-                            .findAll().sort("sequencia"))
+        val itinerary = realm.copyFromRealm(realm.where(CLAZZ)
+                                                .equalTo(CODE_LINE, codeLine)
+                                                .equalTo(DIRECTION, direction)
+                                                .findAll()
+                                                .sort(SEQUENCE))
+        realm.close()
+        return Single.just(itinerary)
+    }
+
+    override fun getAllItineraries(codeLine: String): Single<List<Ponto>> {
+        val realm = database.getDatabase() as Realm
+
+        val itinerary = realm.copyFromRealm(realm.where(CLAZZ)
+                                                .equalTo(CODE_LINE, codeLine)
+                                                .distinct(CODE_STOP)
+                                                .findAll())
+
+        realm.close()
         return Single.just(itinerary)
     }
 

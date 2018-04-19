@@ -17,6 +17,6 @@ fun Extract.toExtractDTO() = Extrato().apply {
     local = this@toExtractDTO.local
 }
 
-fun List<Extrato>.toExtractBO() = this.map{ e-> e.toExtractBO() }
+fun List<Extrato>.toExtractBO() = this.map{ it.toExtractBO() }
 
-fun List<Extract>.toExtractDTO() = this.map{ e -> e.toExtractDTO() }
+fun List<Extract>.toExtractDTO() = this.map{ it.toExtractDTO() }

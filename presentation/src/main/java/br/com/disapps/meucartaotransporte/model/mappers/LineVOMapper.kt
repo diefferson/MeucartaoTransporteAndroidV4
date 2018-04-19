@@ -21,6 +21,6 @@ fun LineVO.toLineBO() = Line(
         favorite = this.favorite
 )
 
-fun List<Line>.toLineVO() = this.map { l ->l.toLineVO() }
+fun List<Line>.toLineVO() = this.map { it.toLineVO() }
 
-fun List<LineVO>.toLineBO() = this.map { l ->l.toLineBO() }
+fun List<LineVO>.toLineBO() = this.map { it.toLineBO() }

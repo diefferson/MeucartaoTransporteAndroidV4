@@ -24,7 +24,7 @@ fun HorarioLinha.toLineScheduleBO() = LineSchedule(
         schedules = horarios.toScheduleBO()
 )
 
-fun List<LineSchedule>.toLineScheduleDTO()= this.map { s ->s.toLineScheduleDTO() }
+fun List<LineSchedule>.toLineScheduleDTO()= this.map { it.toLineScheduleDTO() }
 
-fun List<HorarioLinha>.toLineScheduleBO() = this.map { s->s.toLineScheduleBO() }
+fun List<HorarioLinha>.toLineScheduleBO() = this.map { it.toLineScheduleBO() }
 
