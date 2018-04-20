@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.line.shapes
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultObserver
 import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.buses.GetAllBuses
 import br.com.disapps.domain.interactor.itineraries.GetAllItineraries

@@ -7,15 +7,12 @@ import br.com.disapps.data.events.EventBus
 import br.com.disapps.data.executor.JobContextExecutor
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.database.RealmDatabase
-import br.com.disapps.data.executor.JobExecutor
 import br.com.disapps.data.repository.*
 import br.com.disapps.data.storage.preferences.Preferences
 import br.com.disapps.domain.executor.ContextExecutor
 import br.com.disapps.domain.executor.PostExecutionContext
-import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.cards.*
 import br.com.disapps.domain.interactor.lines.*
-import br.com.disapps.meucartaotransporte.executor.UIThread
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel
 import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItinerariesViewModel
@@ -28,7 +25,6 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
-import br.com.disapps.domain.executor.PostExecutionThread
 import br.com.disapps.domain.interactor.buses.GetAllBuses
 import br.com.disapps.domain.interactor.events.*
 import br.com.disapps.domain.interactor.itineraries.*
@@ -69,8 +65,6 @@ object AppInject {
         bean { Preferences(get("applicationContext"))}
         bean { RestClient().api }
         bean { EventBus() }
-        bean { UIThread() as PostExecutionThread }
-        bean { JobExecutor() as  ThreadExecutor }
         bean { UIContext() as PostExecutionContext }
         bean { JobContextExecutor() as  ContextExecutor }
     }

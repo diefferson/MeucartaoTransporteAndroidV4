@@ -10,7 +10,6 @@ dependencies {
     def domainDependencies = rootProject.ext.domainDependencies
     def domainTestDependencies = rootProject.ext.domainTestDependencies
 
-    implementation domainDependencies.rxKotlin
     implementation domainDependencies.coroutines
     implementation domainDependencies.kotlin
 

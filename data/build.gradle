@@ -59,7 +59,6 @@ dependencies {
     testImplementation dataTestDependencies.assertj
     testImplementation dataTestDependencies.robolectric
     implementation dataDependencies.kotlin
-    implementation dataDependencies.rxKotlin
     implementation dataDependencies.coroutines
     implementation dataDependencies.okHttp
     implementation dataDependencies.okHttpLogger

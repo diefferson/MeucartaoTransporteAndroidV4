@@ -74,7 +74,6 @@ dependencies {
     implementation presentationDependencies.cardView
     implementation presentationDependencies.kotlin
     implementation presentationDependencies.koin
-    implementation presentationDependencies.rxAndroid
     implementation presentationDependencies.coroutines
     implementation presentationDependencies.coroutinesAndroid
     implementation presentationDependencies.koinArch

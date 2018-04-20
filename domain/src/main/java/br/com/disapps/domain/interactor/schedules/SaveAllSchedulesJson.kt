@@ -2,11 +2,8 @@ package br.com.disapps.domain.interactor.schedules
 
 import br.com.disapps.domain.executor.ContextExecutor
 import br.com.disapps.domain.executor.PostExecutionContext
-import br.com.disapps.domain.executor.PostExecutionThread
-import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.base.CompletableUseCase
 import br.com.disapps.domain.repository.SchedulesRepository
-import io.reactivex.Completable
 
 class SaveAllSchedulesJson(val schedulesRepository: SchedulesRepository, val contextExecutor: ContextExecutor,
                            val postExecutionContext: PostExecutionContext) : CompletableUseCase<SaveAllSchedulesJson.Params>(contextExecutor, postExecutionContext){
