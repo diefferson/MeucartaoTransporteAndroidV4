@@ -4,11 +4,14 @@ import android.content.Context
 import br.com.disapps.data.api.RestClient
 import br.com.disapps.data.dataSource.factory.*
 import br.com.disapps.data.events.RxBus
+import br.com.disapps.data.executor.JobContextExecutor
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.database.RealmDatabase
 import br.com.disapps.data.executor.JobExecutor
 import br.com.disapps.data.repository.*
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.cards.*
 import br.com.disapps.domain.interactor.lines.*
@@ -35,6 +38,7 @@ import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.GetShapes
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
+import br.com.disapps.meucartaotransporte.executor.UIContext
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirection.ItineraryDirectionViewModel
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesViewModel
@@ -67,6 +71,8 @@ object AppInject {
         bean { RxBus() }
         bean { UIThread() as PostExecutionThread }
         bean { JobExecutor() as  ThreadExecutor }
+        bean { UIContext() as PostExecutionContext }
+        bean { JobContextExecutor() as  ContextExecutor }
     }
 
     private val viewModelModule = applicationContext {
@@ -93,8 +99,8 @@ object AppInject {
     private val useCaseModule: Module = applicationContext {
         factory { GetCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetCards( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SaveCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { DeleteCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { SaveCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { DeleteCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { HasCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetExtract( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
         factory { GetAllLinesJson( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }

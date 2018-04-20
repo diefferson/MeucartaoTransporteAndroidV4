@@ -44,6 +44,13 @@ android {
 }
 
 
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
+
 dependencies {
     def dataDependencies = rootProject.ext.dataDependencies
     def dataTestDependencies = rootProject.ext.dataTestDependencies
@@ -53,6 +60,7 @@ dependencies {
     testImplementation dataTestDependencies.robolectric
     implementation dataDependencies.kotlin
     implementation dataDependencies.rxKotlin
+    implementation dataDependencies.coroutines
     implementation dataDependencies.okHttp
     implementation dataDependencies.okHttpLogger
     implementation dataDependencies.gson

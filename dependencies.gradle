@@ -40,6 +40,7 @@ ext {
     lottieVersion = '2.5.4'
     firebaseVersion = '15.0.0'
     playServicesVersion = '15.0.0'
+    coroutinesVersion = '0.22.5'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -78,6 +79,8 @@ ext {
             firebaseMessaging:      "com.google.firebase:firebase-messaging:${firebaseVersion}",
             playServicesLocation:   "com.google.android.gms:play-services-location:${playServicesVersion}",
             playServicesMap:        "com.google.android.gms:play-services-maps:${playServicesVersion}",
+            coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
+            coroutinesAndroid:          "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
     ]
 
     presentationTestDependencies = [
@@ -98,6 +101,7 @@ ext {
     domainDependencies = [
             kotlin:             "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
             rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
+            coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
     ]
 
     domainTestDependencies = [
@@ -110,6 +114,7 @@ ext {
     dataDependencies = [
             kotlin:             "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
             rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
+            coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
             okHttp:             "com.squareup.okhttp3:okhttp:${okHttpVersion}",
             okHttpLogger:       "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
             gson:               "com.google.code.gson:gson:${gsonVersion}",

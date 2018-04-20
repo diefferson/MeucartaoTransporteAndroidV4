@@ -117,7 +117,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
             buses?.forEach {
                 if(busesMarkers.size >0){
                     if(busesMarkers.containsKey(it.prefix)){
-                        animateMarkerToGB(busesMarkers[it.prefix]!!, it.getLatLng(), LatLngInterpolator.Linear())
+                        updateBus(it)
                     }else{
                        addBus(it)
                     }
@@ -126,6 +126,11 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
                 }
             }
         })
+    }
+
+    private fun updateBus(bus : Bus){
+        busesMarkers[bus.prefix]?.snippet = getString(R.string.bus_updated, bus.time)
+        animateMarkerToGB(busesMarkers[bus.prefix]!!, bus.getLatLng(), LatLngInterpolator.Linear())
     }
 
     private fun addBus(bus : Bus){

@@ -1,11 +1,11 @@
 package br.com.disapps.data.repository
 
-import br.com.disapps.data.entity.mappers.*
 import br.com.disapps.data.dataSource.factory.CardsDataSourceFactory
+import br.com.disapps.data.entity.mappers.*
+import br.com.disapps.domain.interactor.base.CompletableCallback
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.model.Extract
 import br.com.disapps.domain.repository.CardsRepository
-import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -13,10 +13,16 @@ import io.reactivex.Single
  */
 class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFactory) : CardsRepository {
 
-    override fun saveCard(card: Card): Completable {
+    override fun saveCard( card: Card, callback: CompletableCallback){
         return cardsDataSourceFactory
                 .create()
-                .saveCard(card.toCardDTO())
+                .saveCard( card.toCardDTO(), callback)
+    }
+
+    override fun deleteCard( card: Card, callback: CompletableCallback){
+        return cardsDataSourceFactory
+                .create()
+                .deleteCard(card.toCardDTO(), callback)
     }
 
     override fun cards(): Single<List<Card>> {
@@ -39,11 +45,6 @@ class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFa
                 .hasCard(card.toCardDTO())
     }
 
-    override fun deleteCard(card: Card): Completable {
-        return cardsDataSourceFactory
-                .create()
-                .deleteCard(card.toCardDTO())
-    }
 
     override fun extract(card: Card): Single<List<Extract>> {
         return cardsDataSourceFactory

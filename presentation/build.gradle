@@ -55,6 +55,12 @@ android {
 
 }
 
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
@@ -69,6 +75,8 @@ dependencies {
     implementation presentationDependencies.kotlin
     implementation presentationDependencies.koin
     implementation presentationDependencies.rxAndroid
+    implementation presentationDependencies.coroutines
+    implementation presentationDependencies.coroutinesAndroid
     implementation presentationDependencies.koinArch
     implementation presentationDependencies.archExtensions
     implementation presentationDependencies.baseRecyclerView

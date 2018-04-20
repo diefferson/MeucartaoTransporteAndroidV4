@@ -1,12 +1,11 @@
 package br.com.disapps.data.dataSource.local
 
+import br.com.disapps.data.dataSource.CardsDataSource
 import br.com.disapps.data.entity.Cartao
 import br.com.disapps.data.entity.Extrato
 import br.com.disapps.data.entity.RequestCartao
-import br.com.disapps.data.dataSource.CardsDataSource
-import br.com.disapps.data.entity.Shape
 import br.com.disapps.data.storage.database.Database
-import io.reactivex.Completable
+import br.com.disapps.domain.interactor.base.CompletableCallback
 import io.reactivex.Single
 import io.realm.Realm
 
@@ -20,19 +19,35 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
         private val CLAZZ = Cartao::class.java
     }
 
-    override fun saveCard(cartao: Cartao): Completable {
+    override fun saveCard(cartao: Cartao, callback: CompletableCallback) {
         val realm = database.getDatabase() as Realm
-        return  Completable.defer {
-            try {
-                realm.beginTransaction()
-                realm.copyToRealm(cartao)
-                realm.commitTransaction()
-                Completable.complete()
-            }catch (ec: Exception){
-                Completable.error(ec)
-            }finally {
-                realm.close()
-            }
+        return try {
+            realm.beginTransaction()
+            realm.copyToRealm(cartao)
+            realm.commitTransaction()
+            callback.onComplete()
+        }catch (ec: Exception){
+            callback.onError(ec)
+        }finally {
+            realm.close()
+        }
+    }
+
+    override fun deleteCard( cartao: Cartao, callback: CompletableCallback){
+        val realm = database.getDatabase() as Realm
+        return try {
+            realm.beginTransaction()
+            val card = realm.where(CLAZZ)
+                    .equalTo(CODE, cartao.codigo)
+                    .findFirst()
+
+            card?.deleteFromRealm()
+            realm.commitTransaction()
+            callback.onComplete()
+        }catch (ec: Exception){
+            callback.onError(ec)
+        }finally {
+            realm.close()
         }
     }
 
@@ -62,25 +77,7 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
         return Single.just(hasCards)
     }
 
-    override fun deleteCard(cartao: Cartao): Completable {
-        val realm = database.getDatabase() as Realm
-        return  Completable.defer {
-            try {
-                realm.beginTransaction()
-                val card = realm.where(CLAZZ)
-                                .equalTo(CODE, cartao.codigo)
-                                .findFirst()
 
-                card?.deleteFromRealm()
-                realm.commitTransaction()
-                Completable.complete()
-            }catch (ec: Exception){
-                Completable.error(ec)
-            }finally {
-                realm.close()
-            }
-        }
-    }
 
     override fun getExtract(requestCartao: RequestCartao): Single<List<Extrato>> {
         return Single.error<List<Extrato>>(Throwable("not implemented,  cloud only"))

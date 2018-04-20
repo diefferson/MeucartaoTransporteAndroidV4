@@ -5,6 +5,8 @@ import br.com.disapps.data.entity.Cartao
 import br.com.disapps.data.entity.Extrato
 import br.com.disapps.data.entity.RequestCartao
 import br.com.disapps.data.dataSource.CardsDataSource
+import br.com.disapps.domain.interactor.base.CompletableCallback
+import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -25,13 +27,12 @@ class CloudCardsDataSource(private val restApi: RestApi) : CardsDataSource {
         return Single.error<Boolean>(Throwable("not implemented, only local"))
     }
 
-    override fun deleteCard(cartao: Cartao): Completable {
-        return Completable.error(Throwable("not implemented, only local"))
+    override fun deleteCard( cartao: Cartao, callback: CompletableCallback){
+        return callback.onError(Throwable("not implemented, only local"))
     }
 
-
-    override fun saveCard(cartao: Cartao): Completable {
-        return Completable.error(Throwable("not implemented, only local"))
+    override fun saveCard(cartao: Cartao, callback: CompletableCallback){
+        return callback.onError(Throwable("not implemented, only local"))
     }
 
     override fun cards(): Single<List<Cartao>> {

@@ -3,16 +3,14 @@ package br.com.disapps.data.dataSource
 import br.com.disapps.data.entity.Cartao
 import br.com.disapps.data.entity.Extrato
 import br.com.disapps.data.entity.RequestCartao
-import br.com.disapps.data.dataSource.DataSource
-import io.reactivex.Completable
+import br.com.disapps.domain.interactor.base.CompletableCallback
 import io.reactivex.Single
-
 
 interface CardsDataSource : DataSource {
 
-    fun saveCard(cartao: Cartao): Completable
+    fun saveCard( cartao: Cartao, callback:CompletableCallback)
 
-    fun deleteCard(cartao: Cartao): Completable
+    fun deleteCard(cartao: Cartao, callback:CompletableCallback)
 
     fun cards() : Single<List<Cartao>>
 
