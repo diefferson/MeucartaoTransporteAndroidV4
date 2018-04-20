@@ -1,17 +1,16 @@
 package br.com.disapps.domain.interactor.events
 
-import br.com.disapps.domain.executor.PostExecutionThread
-import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.base.ObservableUseCase
-import br.com.disapps.domain.model.UpdateDataEvent
-import br.com.disapps.domain.model.UpdateLinesEvent
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
+import br.com.disapps.domain.interactor.base.BaseUseCase
+import br.com.disapps.domain.model.UpdateLinesEventComplete
 import br.com.disapps.domain.repository.EventsRepository
-import io.reactivex.Observable
+import kotlinx.coroutines.experimental.channels.ReceiveChannel
 
-class GetUpdateLinesEvent(private val eventsRepository: EventsRepository, val threadExecutor: ThreadExecutor,
-                          val postExecutionThread: PostExecutionThread): ObservableUseCase<UpdateLinesEvent, Unit>(threadExecutor, postExecutionThread){
+class GetUpdateLinesEvent(private val eventsRepository: EventsRepository,
+                          val contextExecutor: ContextExecutor, val postExecutionContext: PostExecutionContext): BaseUseCase<ReceiveChannel<UpdateLinesEventComplete>, Unit>(contextExecutor,postExecutionContext){
 
-    override fun buildUseCaseObservable(params: Unit): Observable<UpdateLinesEvent> {
+    override suspend fun buildUseCaseObservable(params: Unit): ReceiveChannel<UpdateLinesEventComplete> {
         return eventsRepository.getUpdateLinesEvent()
     }
 }

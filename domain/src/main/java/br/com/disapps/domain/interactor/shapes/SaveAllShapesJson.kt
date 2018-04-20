@@ -1,5 +1,7 @@
 package br.com.disapps.domain.interactor.shapes
 
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
 import br.com.disapps.domain.executor.PostExecutionThread
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.base.CompletableUseCase
@@ -7,10 +9,10 @@ import br.com.disapps.domain.model.City
 import br.com.disapps.domain.repository.ShapesRepository
 import io.reactivex.Completable
 
-class SaveAllShapesJson(val shapesRepository: ShapesRepository, val threadExecutor: ThreadExecutor,
-                        val postExecutionThread: PostExecutionThread) : CompletableUseCase<SaveAllShapesJson.Params>(threadExecutor, postExecutionThread){
+class SaveAllShapesJson(val shapesRepository: ShapesRepository, val contextExecutor: ContextExecutor,
+                        val postExecutionContext: PostExecutionContext) : CompletableUseCase<SaveAllShapesJson.Params>(contextExecutor, postExecutionContext){
 
-    override fun buildUseCaseObservable(params: Params): Completable {
+    override suspend fun buildUseCaseObservable(params: Params){
         return shapesRepository.saveAllFromJson(params.json, params.city)
     }
 

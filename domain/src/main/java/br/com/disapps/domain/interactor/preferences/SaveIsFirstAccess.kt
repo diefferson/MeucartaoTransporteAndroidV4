@@ -1,15 +1,17 @@
 package br.com.disapps.domain.interactor.preferences
 
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
 import br.com.disapps.domain.executor.PostExecutionThread
 import br.com.disapps.domain.executor.ThreadExecutor
 import br.com.disapps.domain.interactor.base.CompletableUseCase
 import br.com.disapps.domain.repository.PreferencesRepository
 import io.reactivex.Completable
 
-class SaveIsFirstAccess(private val preferencesRepository: PreferencesRepository, val threadExecutor: ThreadExecutor,
-                        val postExecutionThread: PostExecutionThread): CompletableUseCase<SaveIsFirstAccess.Params>(threadExecutor, postExecutionThread){
+class SaveIsFirstAccess(private val preferencesRepository: PreferencesRepository, val contextExecutor: ContextExecutor,
+                        val postExecutionContext: PostExecutionContext): CompletableUseCase<SaveIsFirstAccess.Params>(contextExecutor, postExecutionContext){
 
-    override fun buildUseCaseObservable(params: Params): Completable {
+    override suspend fun buildUseCaseObservable(params: Params){
         return preferencesRepository.setIsFirstAccess(params.isFirst)
     }
 

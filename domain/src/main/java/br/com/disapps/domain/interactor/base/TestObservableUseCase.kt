@@ -9,7 +9,7 @@ import kotlinx.coroutines.experimental.withContext
 import kotlin.coroutines.experimental.CoroutineContext
 
 /**
- * Abstract class for a TestCompletableUseCase that returns an instance of a [Observable].
+ * Abstract class for a CompletableUseCase that returns an instance of a [Observable].
  */
 abstract class TestObservableUseCase<T, in Params> internal constructor(
         private val contextExecutor: ContextExecutor,

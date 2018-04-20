@@ -36,7 +36,7 @@ class RestClient {
                 .baseUrl(BuildConfig.HOST + "/")
                 .client(httpClient!!)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
 
         api = retrofitClient.create(RestApi::class.java)

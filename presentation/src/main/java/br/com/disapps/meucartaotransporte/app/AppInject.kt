@@ -3,7 +3,7 @@ package br.com.disapps.meucartaotransporte.app
 import android.content.Context
 import br.com.disapps.data.api.RestClient
 import br.com.disapps.data.dataSource.factory.*
-import br.com.disapps.data.events.RxBus
+import br.com.disapps.data.events.EventBus
 import br.com.disapps.data.executor.JobContextExecutor
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.database.RealmDatabase
@@ -68,7 +68,7 @@ object AppInject {
         bean { Preferences(get("applicationContext")) as PreferencesRepository}
         bean { Preferences(get("applicationContext"))}
         bean { RestClient().api }
-        bean { RxBus() }
+        bean { EventBus() }
         bean { UIThread() as PostExecutionThread }
         bean { JobExecutor() as  ThreadExecutor }
         bean { UIContext() as PostExecutionContext }
@@ -97,41 +97,40 @@ object AppInject {
     }
 
     private val useCaseModule: Module = applicationContext {
-        factory { GetCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetCards( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { GetCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetCards( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { DeleteCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { HasCard( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetExtract( cardRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetAllLinesJson( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SaveAllLinesJson( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetLines( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { UpdateLine( linesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetAllItinerariesJson( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SaveAllItinerariesJson( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetItineraryDirections( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetItinerary( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetAllItineraries( itinerariesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetAllShapesJson( shapesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SaveAllShapesJson( shapesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetShapes( shapesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetAllSchedulesJson( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SaveAllSchedulesJson( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetLineScheduleDays( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetLineSchedules( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetAllPointSchedules( schedulesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetUpdateDataEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetUpdateLinesEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetUpdateSchedulesEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { PostEvent( eventsRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetDataUsage( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SaveInitialScreen( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SaveIsFirstAccess( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SavePeriodUpdateLines( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { SavePeriodUpdateSchedules( preferencesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
-        factory { GetAllBuses( busesRepository = get(), threadExecutor = get(), postExecutionThread = get()) }
+        factory { HasCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetExtract( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetAllLinesJson( linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { SaveAllLinesJson( linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetLines( linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { UpdateLine( linesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetAllItinerariesJson( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { SaveAllItinerariesJson( itinerariesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetItineraryDirections( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetItinerary( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetAllItineraries( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetAllShapesJson( shapesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { SaveAllShapesJson( shapesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetShapes( shapesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetAllSchedulesJson( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { SaveAllSchedulesJson( schedulesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetLineScheduleDays( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetLineSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetAllPointSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetUpdateLinesEvent( eventsRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetUpdateSchedulesEvent( eventsRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { PostEvent( eventsRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetIsFirstAccess( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetDataUsage( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { SaveInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { SaveIsFirstAccess( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { SavePeriodUpdateLines( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { SavePeriodUpdateSchedules( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetAllBuses( busesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {
@@ -140,7 +139,7 @@ object AppInject {
         bean { ItinerariesDataRepository( itinerariesDataSourceFactory = get()) as ItinerariesRepository }
         bean { ShapesDataRepository( shapesDataSourceFactory = get()) as ShapesRepository }
         bean { SchedulesDataRepository( schedulesDataSourceFactory = get()) as SchedulesRepository }
-        bean { EventsDataRepository( rxBus = get()) as EventsRepository }
+        bean { EventsDataRepository( eventBus = get()) as EventsRepository }
         bean { BusesDataRepository( busesDataSourceFactory = get()) as BusesRepository }
     }
 

@@ -1,16 +1,15 @@
 package br.com.disapps.domain.interactor.preferences
 
-import br.com.disapps.domain.executor.PostExecutionThread
-import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.base.SingleUseCase
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
+import br.com.disapps.domain.interactor.base.BaseUseCase
 import br.com.disapps.domain.repository.PreferencesRepository
-import io.reactivex.Single
 
-class GetInitialScreen(private val preferencesRepository: PreferencesRepository, val threadExecutor: ThreadExecutor,
-                       val postExecutionThread: PostExecutionThread) : SingleUseCase<String, Unit>(threadExecutor, postExecutionThread){
+class GetInitialScreen(private val preferencesRepository: PreferencesRepository, val contextExecutor: ContextExecutor,
+                       val postExecutionContext: PostExecutionContext) : BaseUseCase<String, Unit>(contextExecutor, postExecutionContext) {
 
 
-    override fun buildUseCaseObservable(params: Unit): Single<String> {
+    override suspend fun buildUseCaseObservable(params: Unit): String {
         return preferencesRepository.getInitialScreen()
     }
 }

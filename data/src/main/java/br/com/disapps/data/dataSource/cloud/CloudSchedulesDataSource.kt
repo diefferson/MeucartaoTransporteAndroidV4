@@ -11,24 +11,26 @@ import io.reactivex.Single
 
 class CloudSchedulesDataSource(private val restApi: RestApi) : SchedulesDataSource{
 
-    override fun jsonSchedules(downloadProgressListener: DownloadProgressListener): Single<String> {
+    override suspend fun jsonSchedules(downloadProgressListener: DownloadProgressListener): String {
         return getRetrofitDownloadClient(downloadProgressListener)
-                .listaHorarios().map { it.toString() }
+                .listaHorarios()
+                .await()
+                .toString()
     }
 
-    override fun saveAllFromJson(json: String): Completable {
-        return Completable.error(Throwable("not implemented, only local"))
+    override suspend fun saveAllFromJson(json: String) {
+        throw Throwable("not implemented, only local")
     }
 
-    override fun getLineSchedulesDays(codeLine: String): Single<List<Int>> {
-        return Single.error(Throwable("not implemented, only local"))
+    override suspend fun getLineSchedulesDays(codeLine: String): List<Int> {
+        throw Throwable("not implemented, only local")
     }
 
-    override fun getLineSchedules(codeLine: String, day: Int): Single<List<HorarioLinha>> {
-        return Single.error(Throwable("not implemented, only local"))
+    override suspend fun getLineSchedules(codeLine: String, day: Int): List<HorarioLinha> {
+        throw Throwable("not implemented, only local")
     }
 
-    override fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): Single<List<Horario>> {
-        return Single.error(Throwable("not implemented, only local"))
+    override suspend fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): List<Horario> {
+        throw Throwable("not implemented, only local")
     }
 }

@@ -1,22 +1,19 @@
 package br.com.disapps.data.dataSource
 
 import br.com.disapps.data.entity.Linha
-import br.com.disapps.data.dataSource.DataSource
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import io.reactivex.Completable
-import io.reactivex.Single
 
 interface LinesDataSource : DataSource {
 
-    fun saveLine(linha : Linha): Completable
+    suspend fun saveLine(linha : Linha)
 
-    fun saveAllFromJson(json : String): Completable
+    suspend fun saveAllFromJson(json : String)
 
-    fun lines() : Single<List<Linha>>
+    suspend fun lines() : List<Linha>
 
-    fun jsonLines(downloadProgressListener: DownloadProgressListener) : Single<String>
+    suspend fun jsonLines(downloadProgressListener: DownloadProgressListener) :String
 
-    fun line(linha: Linha) : Single<Linha>
+    suspend fun line(linha: Linha) : Linha
 
-    fun updateLine(linha: Linha): Completable
+    suspend fun updateLine(linha: Linha)
 }

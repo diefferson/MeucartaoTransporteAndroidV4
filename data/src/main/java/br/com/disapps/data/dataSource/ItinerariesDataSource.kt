@@ -3,19 +3,17 @@ package br.com.disapps.data.dataSource
 import br.com.disapps.data.entity.Ponto
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
-import io.reactivex.Completable
-import io.reactivex.Single
 
 interface ItinerariesDataSource : DataSource{
 
-    fun saveAllFromJson(json : String, city: City): Completable
+    suspend fun saveAllFromJson(json : String, city: City)
 
-    fun jsonItineraries(city: City, downloadProgressListener: DownloadProgressListener) : Single<String>
+    suspend fun jsonItineraries(city: City, downloadProgressListener: DownloadProgressListener) : String
 
-    fun getItineraryDirections(codeLine:String) :Single<List<String>>
+    suspend fun getItineraryDirections(codeLine:String) :List<String>
 
-    fun getItinerary(codeLine: String, direction: String) : Single<List<Ponto>>
+    suspend fun getItinerary(codeLine: String, direction: String) : List<Ponto>
 
-    fun getAllItineraries(codeLine: String) : Single<List<Ponto>>
+    suspend fun getAllItineraries(codeLine: String) : List<Ponto>
 
 }

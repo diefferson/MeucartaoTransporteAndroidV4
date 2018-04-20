@@ -22,7 +22,7 @@ object DownloadClient{
                 .baseUrl(BuildConfig.HOST + "/")
                 .client(okHttp.build())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build().create(RestApi::class.java)
     }
 

@@ -7,8 +7,6 @@ import br.com.disapps.domain.model.DataUsage
 import br.com.disapps.domain.model.InitialScreen
 import br.com.disapps.domain.model.PeriodUpdate
 import br.com.disapps.domain.repository.PreferencesRepository
-import io.reactivex.Completable
-import io.reactivex.Single
 import java.util.*
 
 /**
@@ -18,16 +16,16 @@ class Preferences(var context:Context) : PreferencesRepository {
 
     private val mPreferences: SharedPreferences = context.getSharedPreferences(BuildConfig.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)
 
-    override fun getIsPro(): Single<Boolean> {
-        return Single.just(mPreferences.getBoolean(PRO_ACCESS, false))
+    override suspend fun getIsPro(): Boolean {
+        return mPreferences.getBoolean(PRO_ACCESS, false)
     }
 
-    override fun getInitialScreen(): Single<String> {
-        return Single.just(mPreferences.getString(INITIAL_SCREEN, InitialScreen.CARDS.toString()))
+    override suspend fun getInitialScreen(): String {
+        return mPreferences.getString(INITIAL_SCREEN, InitialScreen.CARDS.toString())
     }
 
-    override fun getIsFirstAccess(): Single<Boolean> {
-        return Single.just(mPreferences.getInt(FIRST_ACCESS, 0)==0)
+    override suspend fun getIsFirstAccess(): Boolean {
+        return mPreferences.getInt(FIRST_ACCESS, 0)==0
     }
 
     private fun getDateLines(): Long {
@@ -62,8 +60,8 @@ class Preferences(var context:Context) : PreferencesRepository {
         return  mPreferences.getString(SCHEDULERS_PERIOD, "semanal")
     }
 
-    override fun getDataUsage(): Single<DataUsage> {
-        return Single.just(DataUsage(
+    override suspend fun getDataUsage(): DataUsage {
+        return DataUsage(
                 periodLines = getPeriodLines(),
                 periodSchedules = getPeriodSchedules(),
                 dateUpdateLines  = getDateLines(),
@@ -72,17 +70,14 @@ class Preferences(var context:Context) : PreferencesRepository {
                 dateUpdateMetItineraries = getDateMetItineraries(),
                 dateUpdateCwbShapes = getDateCwbShapes(),
                 dateUpdateMetShapes = getDateMetShapes()
-        ))
+        )
     }
 
-    override fun setIsPro(isPro :Boolean) : Completable{
-        return Completable.defer {
-            mPreferences.edit().putBoolean(PRO_ACCESS, isPro).apply()
-            Completable.complete()
-        }
+    override suspend fun setIsPro(isPro :Boolean){
+        mPreferences.edit().putBoolean(PRO_ACCESS, isPro).apply()
     }
 
-    override fun setIsFirstAccess(isFirstAccess: Boolean): Completable {
+    override suspend fun setIsFirstAccess(isFirstAccess: Boolean) {
 
         var firstAccess= 0
 
@@ -90,17 +85,11 @@ class Preferences(var context:Context) : PreferencesRepository {
             firstAccess = 1
         }
 
-        return Completable.defer {
-            mPreferences.edit().putInt(FIRST_ACCESS, firstAccess).apply()
-            Completable.complete()
-        }
+        mPreferences.edit().putInt(FIRST_ACCESS, firstAccess).apply()
     }
 
-    override fun setInitialScreen(initialScreen : InitialScreen): Completable{
-        return Completable.defer {
-            mPreferences.edit().putString(INITIAL_SCREEN, initialScreen.toString()).apply()
-            Completable.complete()
-        }
+    override suspend fun setInitialScreen(initialScreen : InitialScreen){
+        mPreferences.edit().putString(INITIAL_SCREEN, initialScreen.toString()).apply()
     }
 
     fun setLinesDate(){
@@ -127,18 +116,12 @@ class Preferences(var context:Context) : PreferencesRepository {
         mPreferences.edit().putLong(DATE_METROPOLITAN_ITINERARIES,Calendar.getInstance().timeInMillis ).apply()
     }
 
-    override fun setPeriodUpdateLines(period: PeriodUpdate): Completable {
-        return Completable.defer {
-            mPreferences.edit().putString(LINES_PERIOD, period.toString()).apply()
-            Completable.complete()
-        }
+    override suspend fun setPeriodUpdateLines(period: PeriodUpdate) {
+        mPreferences.edit().putString(LINES_PERIOD, period.toString()).apply()
     }
 
-    override fun setPeriodUpdateSchedules(period: PeriodUpdate): Completable {
-        return Completable.defer {
-            mPreferences.edit().putString(SCHEDULERS_PERIOD, period.toString()).apply()
-            Completable.complete()
-        }
+    override suspend fun setPeriodUpdateSchedules(period: PeriodUpdate) {
+        mPreferences.edit().putString(SCHEDULERS_PERIOD, period.toString()).apply()
     }
 
     companion object {

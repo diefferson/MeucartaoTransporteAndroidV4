@@ -3,18 +3,16 @@ package br.com.disapps.domain.repository
 import br.com.disapps.domain.model.DataUsage
 import br.com.disapps.domain.model.InitialScreen
 import br.com.disapps.domain.model.PeriodUpdate
-import io.reactivex.Completable
-import io.reactivex.Single
 
 interface PreferencesRepository{
-    fun getIsPro() : Single<Boolean>
-    fun getInitialScreen() : Single<String>
-    fun getIsFirstAccess() : Single<Boolean>
-    fun getDataUsage(): Single<DataUsage>
+    suspend fun getIsPro() : Boolean
+    suspend fun getInitialScreen() : String
+    suspend fun getIsFirstAccess() : Boolean
+    suspend fun getDataUsage(): DataUsage
 
-    fun setIsPro(isPro: Boolean) : Completable
-    fun setInitialScreen(initialScreen: InitialScreen) : Completable
-    fun setIsFirstAccess(isFirstAccess: Boolean) : Completable
-    fun setPeriodUpdateLines(period: PeriodUpdate) : Completable
-    fun setPeriodUpdateSchedules(period: PeriodUpdate) : Completable
+    suspend fun setIsPro(isPro: Boolean)
+    suspend fun setInitialScreen(initialScreen: InitialScreen)
+    suspend fun setIsFirstAccess(isFirstAccess: Boolean)
+    suspend fun setPeriodUpdateLines(period: PeriodUpdate)
+    suspend fun setPeriodUpdateSchedules(period: PeriodUpdate)
 }

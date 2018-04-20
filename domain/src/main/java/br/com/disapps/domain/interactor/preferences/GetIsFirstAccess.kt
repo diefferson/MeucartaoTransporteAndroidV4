@@ -1,15 +1,14 @@
 package br.com.disapps.domain.interactor.preferences
 
-import br.com.disapps.domain.executor.PostExecutionThread
-import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.base.SingleUseCase
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
+import br.com.disapps.domain.interactor.base.BaseUseCase
 import br.com.disapps.domain.repository.PreferencesRepository
-import io.reactivex.Single
 
-class GetIsFirstAccess (private val preferencesRepository: PreferencesRepository, val threadExecutor: ThreadExecutor,
-                        val postExecutionThread: PostExecutionThread): SingleUseCase<Boolean, Unit>(threadExecutor, postExecutionThread){
+class GetIsFirstAccess (private val preferencesRepository: PreferencesRepository, val contextExecutor: ContextExecutor,
+                        val postExecutionContext: PostExecutionContext): BaseUseCase<Boolean, Unit>(contextExecutor, postExecutionContext) {
 
-    override fun buildUseCaseObservable(params: Unit): Single<Boolean> {
+    override suspend fun buildUseCaseObservable(params: Unit): Boolean {
         return preferencesRepository.getIsFirstAccess()
     }
 }

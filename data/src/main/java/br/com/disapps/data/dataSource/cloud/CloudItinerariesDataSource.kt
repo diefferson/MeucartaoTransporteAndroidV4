@@ -6,29 +6,28 @@ import br.com.disapps.data.dataSource.ItinerariesDataSource
 import br.com.disapps.data.entity.Ponto
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
-import io.reactivex.Completable
-import io.reactivex.Single
 
 class CloudItinerariesDataSource(private val restApi: RestApi) : ItinerariesDataSource {
 
-    override fun jsonItineraries(city: City, downloadProgressListener: DownloadProgressListener): Single<String> {
-        return getRetrofitDownloadClient(downloadProgressListener)
-                .listaPontos(city.toString()).map { it.toString() }
+    override suspend fun jsonItineraries(city: City, downloadProgressListener: DownloadProgressListener): String {
+        return getRetrofitDownloadClient(downloadProgressListener).listaPontos(city.toString())
+                .await()
+                .toString()
     }
 
-    override fun saveAllFromJson(json: String, city: City): Completable {
-        return Completable.error(Throwable("not implemented, only local"))
+    override suspend fun saveAllFromJson(json: String, city: City) {
+        throw Throwable("not implemented, only local")
     }
 
-    override fun getItineraryDirections(codeLine: String): Single<List<String>> {
-        return Single.error(Throwable("not implemented, only local"))
+    override suspend fun getItineraryDirections(codeLine: String): List<String> {
+        throw Throwable("not implemented, only local")
     }
 
-    override fun getItinerary(codeLine: String, direction: String): Single<List<Ponto>> {
-        return Single.error(Throwable("not implemented, only local"))
+    override suspend fun getItinerary(codeLine: String, direction: String): List<Ponto> {
+        throw Throwable("not implemented, only local")
     }
 
-    override fun getAllItineraries(codeLine: String): Single<List<Ponto>> {
-        return Single.error(Throwable("not implemented, only local"))
+    override suspend fun getAllItineraries(codeLine: String): List<Ponto> {
+        throw Throwable("not implemented, only local")
     }
 }

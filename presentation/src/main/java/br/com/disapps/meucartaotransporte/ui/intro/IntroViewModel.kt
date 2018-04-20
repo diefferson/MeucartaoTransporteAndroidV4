@@ -2,14 +2,14 @@ package br.com.disapps.meucartaotransporte.ui.intro
 
 import android.arch.lifecycle.MutableLiveData
 import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultObserver
+import br.com.disapps.domain.interactor.base.DefaultSingleObserver
 import br.com.disapps.domain.interactor.events.GetUpdateLinesEvent
 import br.com.disapps.domain.interactor.events.GetUpdateSchedulesEvent
 import br.com.disapps.domain.interactor.preferences.SaveIsFirstAccess
-import br.com.disapps.domain.model.EventStatus
-import br.com.disapps.domain.model.UpdateLinesEvent
-import br.com.disapps.domain.model.UpdateSchedulesEvent
+import br.com.disapps.domain.model.UpdateLinesEventComplete
+import br.com.disapps.domain.model.UpdateSchedulesEventComplete
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
+import kotlinx.coroutines.experimental.channels.ReceiveChannel
 
 class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent,
                      private val getUpdateSchedulesEventUseCase: GetUpdateSchedulesEvent,
@@ -28,28 +28,24 @@ class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent
     }
 
     private fun updateLines(){
-        getUpdateLinesEventUseCase.execute(object : DefaultObserver<UpdateLinesEvent>() {
-            override fun onNext(t: UpdateLinesEvent) {
-                if(t.status == EventStatus.COMPLETE){
-                    linesComplete = true
-                    if(schedulesComplete){
-                        isComplete.value = true
-                        saveIsFirstAccess()
-                    }
+        getUpdateLinesEventUseCase.execute(object : DefaultSingleObserver<ReceiveChannel<UpdateLinesEventComplete>>() {
+            override fun onSuccess(t: ReceiveChannel<UpdateLinesEventComplete>) {
+                linesComplete = true
+                if (schedulesComplete) {
+                    isComplete.value = true
+                    saveIsFirstAccess()
                 }
             }
         }, Unit)
     }
 
     private fun updateSchedules(){
-        getUpdateSchedulesEventUseCase.execute(object : DefaultObserver<UpdateSchedulesEvent>() {
-            override fun onNext(t: UpdateSchedulesEvent) {
-                if(t.status == EventStatus.COMPLETE){
-                    schedulesComplete = true
-                    if(linesComplete){
-                        isComplete.value = true
-                        saveIsFirstAccess()
-                    }
+        getUpdateSchedulesEventUseCase.execute(object : DefaultSingleObserver<ReceiveChannel<UpdateSchedulesEventComplete>>() {
+            override fun onSuccess(t: ReceiveChannel<UpdateSchedulesEventComplete>) {
+                schedulesComplete = true
+                if (linesComplete) {
+                    isComplete.value = true
+                    saveIsFirstAccess()
                 }
             }
         }, Unit)

@@ -1,17 +1,15 @@
 package br.com.disapps.domain.interactor.shapes
 
-import br.com.disapps.domain.executor.PostExecutionThread
-import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.base.SingleUseCase
-
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
+import br.com.disapps.domain.interactor.base.BaseUseCase
 import br.com.disapps.domain.model.Shape
 import br.com.disapps.domain.repository.ShapesRepository
-import io.reactivex.Single
 
-class GetShapes(private val shapesRepository: ShapesRepository, val threadExecutor: ThreadExecutor,
-                val postExecutionThread: PostExecutionThread): SingleUseCase<List<Shape>, GetShapes.Params>(threadExecutor, postExecutionThread){
+class GetShapes(private val shapesRepository: ShapesRepository, val contextExecutor: ContextExecutor,
+                val postExecutionContext: PostExecutionContext): BaseUseCase<List<Shape>, GetShapes.Params>(contextExecutor, postExecutionContext) {
 
-    override fun buildUseCaseObservable(params: Params): Single<List<Shape>> {
+    override suspend fun buildUseCaseObservable(params: Params): List<Shape> {
         return shapesRepository.getShapes(params.codeLine)
     }
 

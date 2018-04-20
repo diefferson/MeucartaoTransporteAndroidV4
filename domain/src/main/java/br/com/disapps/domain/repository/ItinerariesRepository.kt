@@ -3,19 +3,17 @@ package br.com.disapps.domain.repository
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.BusStop
 import br.com.disapps.domain.model.City
-import io.reactivex.Completable
-import io.reactivex.Single
 
 interface ItinerariesRepository{
 
-    fun jsonItineraries(city : City, downloadProgressListener: DownloadProgressListener) : Single<String>
+    suspend fun jsonItineraries(city : City, downloadProgressListener: DownloadProgressListener) : String
 
-    fun saveAllFromJson(json : String, city : City): Completable
+    suspend fun saveAllFromJson(json : String, city : City)
 
-    fun getItineraryDirections(codeLine:String) :Single<List<String>>
+    suspend fun getItineraryDirections(codeLine:String) :List<String>
 
-    fun getAllItineraries(codeLine: String) : Single<List<BusStop>>
+    suspend fun getAllItineraries(codeLine: String) : List<BusStop>
 
-    fun getItinerary(codeLine: String, direction: String) : Single<List<BusStop>>
+    suspend fun getItinerary(codeLine: String, direction: String) : List<BusStop>
 
 }

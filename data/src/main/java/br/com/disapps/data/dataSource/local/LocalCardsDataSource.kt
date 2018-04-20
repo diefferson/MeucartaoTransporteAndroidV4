@@ -1,12 +1,8 @@
 package br.com.disapps.data.dataSource.local
 
 import br.com.disapps.data.dataSource.CardsDataSource
-import br.com.disapps.data.entity.Cartao
-import br.com.disapps.data.entity.Extrato
-import br.com.disapps.data.entity.RequestCartao
+import br.com.disapps.data.entity.*
 import br.com.disapps.data.storage.database.Database
-import br.com.disapps.domain.interactor.base.CompletableCallback
-import io.reactivex.Single
 import io.realm.Realm
 
 /**
@@ -19,67 +15,52 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
         private val CLAZZ = Cartao::class.java
     }
 
-    override fun saveCard(cartao: Cartao, callback: CompletableCallback) {
+    override suspend fun saveCard(cartao: Cartao){
         val realm = database.getDatabase() as Realm
-        return try {
-            realm.beginTransaction()
-            realm.copyToRealm(cartao)
-            realm.commitTransaction()
-            callback.onComplete()
-        }catch (ec: Exception){
-            callback.onError(ec)
-        }finally {
-            realm.close()
-        }
+        realm.beginTransaction()
+        realm.copyToRealm(cartao)
+        realm.commitTransaction()
+        realm.close()
     }
 
-    override fun deleteCard( cartao: Cartao, callback: CompletableCallback){
+    override suspend fun deleteCard( cartao: Cartao){
         val realm = database.getDatabase() as Realm
-        return try {
-            realm.beginTransaction()
-            val card = realm.where(CLAZZ)
-                    .equalTo(CODE, cartao.codigo)
-                    .findFirst()
+        realm.beginTransaction()
+        val card = realm.where(CLAZZ)
+                .equalTo(CODE, cartao.codigo)
+                .findFirst()
 
-            card?.deleteFromRealm()
-            realm.commitTransaction()
-            callback.onComplete()
-        }catch (ec: Exception){
-            callback.onError(ec)
-        }finally {
-            realm.close()
-        }
+        card?.deleteFromRealm()
+        realm.commitTransaction()
+        realm.close()
     }
 
-    override fun cards(): Single<List<Cartao>> {
+    override suspend fun cards(): List<Cartao> {
         val realm = database.getDatabase() as Realm
         val cards = realm.copyFromRealm(realm.where(CLAZZ).findAll())
         realm.close()
-        return Single.just(cards)
+        return cards
     }
 
-    override fun card(requestCartao: RequestCartao): Single<Cartao?> {
+    override suspend fun card(requestCartao: RequestCartao): RetornoCartao? {
         val realm = database.getDatabase() as Realm
         val card = realm.where(CLAZZ)
                         .equalTo(CODE, requestCartao.codigo)
-                        .findFirst()
-
+                        .findFirstAsync()
         realm.close()
-        return Single.just(card)
+        return RetornoCartao("", "",card)
     }
 
-    override fun hasCard(cartao: Cartao): Single<Boolean> {
+    override suspend fun hasCard(cartao: Cartao): Boolean {
         val realm = database.getDatabase() as Realm
         val hasCards = realm.where(CLAZZ)
                             .equalTo(CODE, cartao.codigo)
                             .findAll().size > 0
         realm.close()
-        return Single.just(hasCards)
+        return hasCards
     }
 
-
-
-    override fun getExtract(requestCartao: RequestCartao): Single<List<Extrato>> {
-        return Single.error<List<Extrato>>(Throwable("not implemented,  cloud only"))
+    override suspend fun getExtract(requestCartao: RequestCartao): RetornoExtrato? {
+         throw Throwable("not implemented,  cloud only")
     }
 }

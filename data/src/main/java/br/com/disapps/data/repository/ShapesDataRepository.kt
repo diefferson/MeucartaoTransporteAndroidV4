@@ -11,19 +11,19 @@ import io.reactivex.Single
 
 class ShapesDataRepository( private val shapesDataSourceFactory: ShapesDataSourceFactory) : ShapesRepository {
 
-    override fun jsonShapes(city: City, downloadProgressListener: DownloadProgressListener): Single<String> {
+    override suspend fun jsonShapes(city: City, downloadProgressListener: DownloadProgressListener): String {
         return shapesDataSourceFactory
                 .create(true)
                 .jsonShapes(city, downloadProgressListener)
     }
 
-    override fun saveAllFromJson(json: String, city: City): Completable {
+    override suspend fun saveAllFromJson(json: String, city: City) {
         return shapesDataSourceFactory
                 .create()
                 .saveAllFromJson(json, city)
     }
 
-    override fun getShapes(codeLine: String): Single<List<Shape>> {
+    override suspend fun getShapes(codeLine: String): List<Shape> {
         return shapesDataSourceFactory
                 .create()
                 .getShapes(codeLine)

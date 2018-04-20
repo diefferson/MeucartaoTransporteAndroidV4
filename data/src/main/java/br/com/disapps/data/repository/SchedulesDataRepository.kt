@@ -12,30 +12,30 @@ import io.reactivex.Single
 
 class SchedulesDataRepository( private val schedulesDataSourceFactory: SchedulesDataSourceFactory) : SchedulesRepository {
 
-    override fun jsonSchedules(downloadProgressListener: DownloadProgressListener): Single<String> {
+    override suspend fun jsonSchedules(downloadProgressListener: DownloadProgressListener): String {
         return  schedulesDataSourceFactory
                 .create(true)
                 .jsonSchedules(downloadProgressListener)
     }
 
-    override fun saveAllFromJson(json: String): Completable {
+    override suspend fun saveAllFromJson(json: String) {
         return schedulesDataSourceFactory
                 .create()
                 .saveAllFromJson(json)
     }
 
-    override fun getLineSchedulesDays(codeLine: String): Single<List<Int>> {
+    override suspend fun getLineSchedulesDays(codeLine: String): List<Int> {
         return schedulesDataSourceFactory.create().getLineSchedulesDays(codeLine)
     }
 
-    override fun getLineSchedules(codeLine: String, day: Int): Single<List<LineSchedule>> {
+    override suspend fun getLineSchedules(codeLine: String, day: Int): List<LineSchedule> {
         return schedulesDataSourceFactory
                 .create()
                 .getLineSchedules(codeLine, day)
                 .map{ it.toLineScheduleBO()}
     }
 
-    override fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): Single<List<Schedule>> {
+    override suspend fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): List<Schedule> {
         return schedulesDataSourceFactory
                 .create()
                 .getAllPointSchedules(codeLine,day, codePoint)

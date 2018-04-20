@@ -1,12 +1,10 @@
 package br.com.disapps.data.dataSource.local
 
-import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.dataSource.LinesDataSource
+import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import io.reactivex.Completable
-import io.reactivex.Single
 import io.realm.Realm
 
 /**
@@ -20,74 +18,50 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
         private val CLAZZ = Linha::class.java
     }
 
-    override fun saveLine(linha: Linha): Completable{
+    override suspend fun saveLine(linha: Linha){
         val realm = database.getDatabase() as Realm
-        return Completable.defer {
-            try {
-                realm.beginTransaction()
-                realm.copyToRealmOrUpdate(linha)
-                realm.commitTransaction()
-                Completable.complete()
-            }catch (ec: Exception){
-                Completable.error(ec)
-            }finally {
-                realm.close()
-            }
-        }
+        realm.beginTransaction()
+        realm.copyToRealmOrUpdate(linha)
+        realm.commitTransaction()
+        realm.close()
     }
 
-    override fun saveAllFromJson(json: String): Completable {
+    override suspend fun saveAllFromJson(json: String) {
         val realm = database.getDatabase() as Realm
-        return Completable.defer {
-            try {
-                realm.beginTransaction()
-                realm.createOrUpdateAllFromJson(CLAZZ, json)
-                realm.commitTransaction()
-                preferences.setLinesDate()
-                Completable.complete()
-            }catch (ec: Exception){
-                Completable.error(ec)
-            }finally {
-                realm.close()
-            }
-        }
+        realm.beginTransaction()
+        realm.createOrUpdateAllFromJson(CLAZZ, json)
+        realm.commitTransaction()
+        preferences.setLinesDate()
+        realm.close()
     }
 
-    override fun lines(): Single<List<Linha>> {
+    override suspend fun lines(): List<Linha> {
         val realm = database.getDatabase() as Realm
         val lines = realm.copyFromRealm(realm.where(CLAZZ)
                                             .findAll()
                                             .sort(NAME))
         realm.close()
-        return Single.just(lines)
+        return lines
     }
 
-    override fun line(linha: Linha): Single<Linha> {
+    override suspend fun line(linha: Linha): Linha {
         val realm = database.getDatabase() as Realm
         val line = realm.where(CLAZZ)
                         .equalTo(CODE, linha.codigo)
-                        .findFirst()
+                        .findFirstAsync()
         realm.close()
-        return Single.just(line)
+        return line
     }
 
-    override fun updateLine(linha: Linha): Completable {
-        return Completable.defer {
-            val realm = database.getDatabase() as Realm
-            try {
-                realm.beginTransaction()
-                realm.copyToRealmOrUpdate(linha)
-                realm.commitTransaction()
-                Completable.complete()
-            }catch (ec: Exception){
-                Completable.error(ec)
-            }finally {
-                realm.close()
-            }
-        }
+    override suspend fun updateLine(linha: Linha) {
+        val realm = database.getDatabase() as Realm
+        realm.beginTransaction()
+        realm.copyToRealmOrUpdate(linha)
+        realm.commitTransaction()
+        realm.close()
     }
 
-    override fun jsonLines( downloadProgressListener: DownloadProgressListener): Single<String> {
-        return Single.error<String>(Throwable("not implemented,  cloud only"))
+    override suspend fun jsonLines( downloadProgressListener: DownloadProgressListener): String {
+        throw Throwable("not implemented,  cloud only")
     }
 }

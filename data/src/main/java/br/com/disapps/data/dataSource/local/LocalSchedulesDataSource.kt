@@ -6,8 +6,6 @@ import br.com.disapps.data.entity.HorarioLinha
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import io.reactivex.Completable
-import io.reactivex.Single
 import io.realm.Realm
 
 class LocalSchedulesDataSource(private val database: Database, private val preferences: Preferences) : SchedulesDataSource{
@@ -19,25 +17,17 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
         private val CLAZZ = HorarioLinha::class.java
     }
 
-    override fun saveAllFromJson(json: String): Completable {
-        return Completable.defer {
-            val realm = database.getDatabase() as Realm
-            try {
-                realm.beginTransaction()
-                realm.delete(CLAZZ)
-                realm.createAllFromJson(CLAZZ, json)
-                realm.commitTransaction()
-                preferences.setSchedulesDate()
-                Completable.complete()
-            }catch (ec: Exception){
-                Completable.error(ec)
-            }finally {
-                realm.close()
-            }
-        }
+    override suspend fun saveAllFromJson(json: String){
+        val realm = database.getDatabase() as Realm
+        realm.beginTransaction()
+        realm.delete(CLAZZ)
+        realm.createAllFromJson(CLAZZ, json)
+        realm.commitTransaction()
+        preferences.setSchedulesDate()
+        realm.close()
     }
 
-    override fun getLineSchedulesDays(codeLine: String): Single<List<Int>> {
+    override suspend fun getLineSchedulesDays(codeLine: String): List<Int> {
         val realm = database.getDatabase() as Realm
         val days = realm.copyFromRealm(realm.where(CLAZZ)
                                             .equalTo(CODE_LINE, codeLine)
@@ -45,10 +35,10 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
                                             .findAll()
                                             .sort(DAY))
         realm.close()
-        return Single.just(days.map { it.dia })
+        return days.map { it.dia }
     }
 
-    override fun getLineSchedules(codeLine: String, day: Int): Single<List<HorarioLinha>> {
+    override suspend fun getLineSchedules(codeLine: String, day: Int): List<HorarioLinha> {
         val realm = database.getDatabase() as Realm
         val schedules = realm.copyFromRealm(realm.where(CLAZZ)
                                                 .equalTo(CODE_LINE, codeLine)
@@ -56,10 +46,10 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
                                                 .findAll())
         realm.close()
 
-        return Single.just(schedules)
+        return schedules
     }
 
-    override fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): Single<List<Horario>> {
+    override suspend fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): List<Horario> {
         val realm = database.getDatabase() as Realm
         val schedules = realm.copyFromRealm(realm.where(CLAZZ)
                                                 .equalTo(CODE_LINE, codeLine)
@@ -68,11 +58,10 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
                                                 .findAll())
                                                 .flatMap { it.horarios }
         realm.close()
-
-        return Single.just(schedules)
+        return schedules
     }
 
-    override fun jsonSchedules( downloadProgressListener: DownloadProgressListener): Single<String> {
-        return Single.error<String>(Throwable("not implemented,  cloud only"))
+    override suspend fun jsonSchedules( downloadProgressListener: DownloadProgressListener): String {
+        throw Throwable("not implemented,  cloud only")
     }
 }

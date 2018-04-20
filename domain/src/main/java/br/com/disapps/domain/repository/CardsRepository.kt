@@ -1,21 +1,19 @@
 package br.com.disapps.domain.repository
 
-import br.com.disapps.domain.interactor.base.CompletableCallback
 import br.com.disapps.domain.model.Card
 import br.com.disapps.domain.model.Extract
-import io.reactivex.Single
 
 interface CardsRepository{
 
-    fun saveCard(card : Card, callback:CompletableCallback)
+    suspend fun saveCard(card : Card)
 
-    fun deleteCard( card : Card, callback:CompletableCallback)
+    suspend fun deleteCard( card : Card)
 
-    fun cards() : Single<List<Card>>
+    suspend fun cards() : List<Card>
 
-    fun card(card : Card) : Single<Card?>
+    suspend fun card(card : Card) : Card?
 
-    fun hasCard(card : Card) : Single<Boolean>
+    suspend fun hasCard(card : Card) : Boolean
 
-    fun extract(card: Card) : Single<List<Extract>>
+    suspend fun extract(card: Card) : List<Extract>?
 }

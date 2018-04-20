@@ -1,29 +1,26 @@
 package br.com.disapps.data.dataSource.cloud
 
 import br.com.disapps.data.api.DownloadClient.getRetrofitDownloadClient
-import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.data.api.RestApi
 import br.com.disapps.data.dataSource.ShapesDataSource
 import br.com.disapps.data.entity.Shape
+import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
-import io.reactivex.Completable
-import io.reactivex.Single
-
-
 
 class CloudShapesDataSource(private val restApi: RestApi) : ShapesDataSource {
 
-    override fun jsonShapes(city: City, downloadProgressListener: DownloadProgressListener): Single<String> {
-
+    override suspend fun jsonShapes(city: City, downloadProgressListener: DownloadProgressListener): String {
         return getRetrofitDownloadClient(downloadProgressListener)
-                .listaShapes(city.toString()).map { it.toString() }
+                .listaShapes(city.toString())
+                .await()
+                .toString()
     }
 
-    override fun saveAllFromJson(json: String, city: City): Completable {
-        return Completable.error(Throwable("not implemented, only local"))
+    override suspend fun saveAllFromJson(json: String, city: City) {
+        throw Throwable("not implemented, only local")
     }
 
-    override fun getShapes(codeLine: String): Single<List<Shape>> {
-        return Single.error(Throwable("not implemented, only local"))
+    override suspend fun getShapes(codeLine: String): List<Shape> {
+        throw Throwable("not implemented, only local")
     }
 }

@@ -1,16 +1,15 @@
 package br.com.disapps.domain.interactor.preferences
 
-import br.com.disapps.domain.executor.PostExecutionThread
-import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.base.SingleUseCase
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
+import br.com.disapps.domain.interactor.base.BaseUseCase
 import br.com.disapps.domain.model.DataUsage
 import br.com.disapps.domain.repository.PreferencesRepository
-import io.reactivex.Single
 
-class GetDataUsage(private val preferencesRepository: PreferencesRepository, val threadExecutor: ThreadExecutor,
-                       val postExecutionThread: PostExecutionThread) : SingleUseCase<DataUsage, Unit>(threadExecutor, postExecutionThread){
+class GetDataUsage(private val preferencesRepository: PreferencesRepository, val contextExecutor: ContextExecutor,
+                   val postExecutionContext: PostExecutionContext) : BaseUseCase<DataUsage, Unit>(contextExecutor, postExecutionContext) {
 
-    override fun buildUseCaseObservable(params: Unit): Single<DataUsage> {
+    override suspend fun buildUseCaseObservable(params: Unit):DataUsage {
         return preferencesRepository.getDataUsage()
     }
 }

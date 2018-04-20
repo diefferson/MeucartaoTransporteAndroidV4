@@ -2,22 +2,20 @@ package br.com.disapps.domain.repository
 
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.Line
-import io.reactivex.Completable
-import io.reactivex.Single
 
 
 interface LinesRepository{
 
-    fun saveLine(line : Line): Completable
+    suspend fun saveLine(line : Line)
 
-    fun saveAllLinesFromJson(json : String): Completable
+    suspend fun saveAllLinesFromJson(json : String)
 
-    fun jsonLines(downloadProgressListener: DownloadProgressListener) : Single<String>
+    suspend fun jsonLines(downloadProgressListener: DownloadProgressListener) : String
 
-    fun lines() : Single<List<Line>>
+    suspend fun lines() : List<Line>
 
-    fun line(line: Line) : Single<Line>
+    suspend fun line(line: Line) : Line
 
-    fun updateLine(line : Line): Completable
+    suspend fun updateLine(line : Line)
 
 }

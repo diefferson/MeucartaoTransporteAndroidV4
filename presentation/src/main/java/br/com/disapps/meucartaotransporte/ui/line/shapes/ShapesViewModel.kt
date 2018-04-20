@@ -48,11 +48,11 @@ class ShapesViewModel(private val getShapesUseCase: GetShapes,
     }
 
     private fun getBuses(codeLine: String){
-        getAllBusesUseCase.execute(object : DefaultObserver<List<Bus>>(){
-            override fun onNext(t: List<Bus>) {
+        getAllBusesUseCase.execute(object : DefaultSingleObserver<List<Bus>>(){
+            override fun onSuccess(t: List<Bus>) {
                 buses.value = t
             }
-        }, GetAllBuses.Params(codeLine))
+        }, GetAllBuses.Params(codeLine), true)
     }
 
     override fun onCleared() {

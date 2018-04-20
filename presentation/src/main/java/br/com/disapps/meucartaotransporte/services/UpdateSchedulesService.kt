@@ -10,9 +10,7 @@ import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.schedules.GetAllSchedulesJson
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import br.com.disapps.domain.model.EventStatus
-import br.com.disapps.domain.model.UpdateLinesEvent
-import br.com.disapps.domain.model.UpdateSchedulesEvent
+import br.com.disapps.domain.model.*
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
@@ -33,14 +31,13 @@ class UpdateSchedulesService : BaseService(){
 
             if(isManual){
                 showNotification(text = getString(R.string.updating_schedules), infinityProgress = true)
-                postEvent(EventStatus.START)
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            postEvent(EventStatus.COMPLETE)
+                            postEvent(UpdateLinesEventComplete())
                             showNotification(text =  getString(R.string.update_schedules_success))
                         }else{
-                            postEvent(EventStatus.ERROR)
+                            postEvent(UpdateLinesEventComplete())
                             showNotification(text =  getString(R.string.update_schedules_error))
                         }
                         stopSelf()
@@ -63,9 +60,9 @@ class UpdateSchedulesService : BaseService(){
         postEventUseCase.dispose()
     }
 
-    private fun postEvent(eventStatus: EventStatus){
+    private fun postEvent(event: Event){
         postEventUseCase.execute(object : DefaultCompletableObserver(){
-        }, PostEvent.Params(UpdateSchedulesEvent(eventStatus)))
+        }, PostEvent.Params(event))
     }
 
     private fun updateSchedules(){

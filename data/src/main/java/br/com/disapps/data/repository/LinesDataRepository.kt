@@ -14,39 +14,39 @@ import io.reactivex.Single
  */
 class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFactory) : LinesRepository{
 
-    override fun saveLine(line: Line): Completable {
+    override suspend fun saveLine(line: Line) {
         return linesDataSourceFactory
                 .create()
                 .saveLine(line.toLineDTO())
     }
 
-    override fun saveAllLinesFromJson(json: String): Completable {
+    override suspend fun saveAllLinesFromJson(json: String) {
         return linesDataSourceFactory
                 .create()
                 .saveAllFromJson(json)
     }
 
-    override fun lines(): Single<List<Line>> {
+    override suspend fun lines(): List<Line> {
         return linesDataSourceFactory
                 .create()
                 .lines()
                 .map{ it.toLineBO() }
     }
 
-    override fun line(line : Line): Single<Line> {
+    override suspend fun line(line : Line): Line{
         return linesDataSourceFactory
                 .create()
                 .line(line.toLineDTO())
-                .map{ it.toLineBO() }
+                .toLineBO()
     }
 
-    override fun jsonLines(downloadProgressListener: DownloadProgressListener): Single<String> {
+    override suspend fun jsonLines(downloadProgressListener: DownloadProgressListener): String {
         return linesDataSourceFactory
                 .create(true)
                 .jsonLines(downloadProgressListener)
     }
 
-    override fun updateLine(line: Line): Completable {
+    override suspend fun updateLine(line: Line) {
         return linesDataSourceFactory
                 .create()
                 .updateLine(line.toLineDTO())

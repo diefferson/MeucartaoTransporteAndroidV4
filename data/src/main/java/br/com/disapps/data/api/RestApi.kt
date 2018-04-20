@@ -5,7 +5,8 @@ import br.com.disapps.data.entity.RetornoExtrato
 import br.com.disapps.data.entity.Veiculo
 import com.google.gson.JsonArray
 import io.reactivex.Observable
-import io.reactivex.Single
+import kotlinx.coroutines.experimental.Deferred
+import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -15,28 +16,28 @@ import retrofit2.http.POST
  */
 interface RestApi {
     @POST("listaLinhas")
-    fun listaLinhas(): Single<JsonArray>
+    fun listaLinhas(): Deferred<JsonArray>
 
     @POST("listaHorarios")
-    fun listaHorarios(): Single<JsonArray>
+    fun listaHorarios(): Deferred<JsonArray>
 
     @FormUrlEncoded
     @POST("listaPontos")
-    fun listaPontos(@Field("met") m: String): Single<JsonArray>
+    fun listaPontos(@Field("met") m: String): Deferred<JsonArray>
 
     @FormUrlEncoded
     @POST("listaShapes")
-    fun listaShapes(@Field("met") m: String): Single<JsonArray>
+    fun listaShapes(@Field("met") m: String): Deferred<JsonArray>
 
     @FormUrlEncoded
     @POST("listaVeiculos")
-    fun listaVeiculos(@Field("l") l: String): Observable<List<Veiculo>>
+    fun listaVeiculos(@Field("l") l: String): Deferred<List<Veiculo>>
 
     @FormUrlEncoded
     @POST("cartao")
-    fun saldoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Single<RetornoCartao>
+    fun saldoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Deferred<RetornoCartao>
 
     @FormUrlEncoded
     @POST("cartao")
-    fun extratoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Single<RetornoExtrato>
+    fun extratoCartao(@Field("c") c: String, @Field("d") d: String, @Field("t") t: String): Deferred<RetornoExtrato>
 }

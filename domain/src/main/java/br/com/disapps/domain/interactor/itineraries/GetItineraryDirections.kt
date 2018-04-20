@@ -1,15 +1,14 @@
 package br.com.disapps.domain.interactor.itineraries
 
-import br.com.disapps.domain.executor.PostExecutionThread
-import br.com.disapps.domain.executor.ThreadExecutor
-import br.com.disapps.domain.interactor.base.SingleUseCase
+import br.com.disapps.domain.executor.ContextExecutor
+import br.com.disapps.domain.executor.PostExecutionContext
+import br.com.disapps.domain.interactor.base.BaseUseCase
 import br.com.disapps.domain.repository.ItinerariesRepository
-import io.reactivex.Single
 
-class GetItineraryDirections(private val itinerariesRepository: ItinerariesRepository, val threadExecutor: ThreadExecutor,
-                             val postExecutionThread: PostExecutionThread): SingleUseCase<List<String>, GetItineraryDirections.Params>(threadExecutor, postExecutionThread){
+class GetItineraryDirections(private val itinerariesRepository: ItinerariesRepository, val contextExecutor: ContextExecutor,
+                             val postExecutionContext: PostExecutionContext): BaseUseCase<List<String>, GetItineraryDirections.Params>(contextExecutor, postExecutionContext){
 
-    override fun buildUseCaseObservable(params: Params): Single<List<String>> {
+    override suspend fun buildUseCaseObservable(params: Params): List<String> {
         return itinerariesRepository.getItineraryDirections(params.codeLine)
     }
 

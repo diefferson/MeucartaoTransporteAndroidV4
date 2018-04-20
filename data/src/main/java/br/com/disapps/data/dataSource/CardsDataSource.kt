@@ -1,22 +1,18 @@
 package br.com.disapps.data.dataSource
 
-import br.com.disapps.data.entity.Cartao
-import br.com.disapps.data.entity.Extrato
-import br.com.disapps.data.entity.RequestCartao
-import br.com.disapps.domain.interactor.base.CompletableCallback
-import io.reactivex.Single
+import br.com.disapps.data.entity.*
 
 interface CardsDataSource : DataSource {
 
-    fun saveCard( cartao: Cartao, callback:CompletableCallback)
+    suspend fun saveCard( cartao: Cartao)
 
-    fun deleteCard(cartao: Cartao, callback:CompletableCallback)
+    suspend fun deleteCard(cartao: Cartao)
 
-    fun cards() : Single<List<Cartao>>
+    suspend fun cards() : List<Cartao>
 
-    fun card(requestCartao: RequestCartao) : Single<Cartao?>
+    suspend fun card(requestCartao: RequestCartao) : RetornoCartao?
 
-    fun hasCard(cartao: Cartao) : Single<Boolean>
+    suspend fun hasCard(cartao: Cartao) : Boolean
 
-    fun getExtract(requestCartao: RequestCartao) : Single<List<Extrato>>
+    suspend fun getExtract(requestCartao: RequestCartao) : RetornoExtrato?
 }
