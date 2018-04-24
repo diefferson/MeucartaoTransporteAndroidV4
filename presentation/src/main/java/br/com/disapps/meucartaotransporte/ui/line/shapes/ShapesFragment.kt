@@ -145,7 +145,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     private fun clearBuses(buses : List<Bus>?){
 
         val listDisabled = ArrayList<String>()
-        busesMarkers.forEach { t, u ->
+        busesMarkers.forEach { t, _ ->
             var exists = false
             buses?.forEach {bus ->
                 if(bus.prefix == t){

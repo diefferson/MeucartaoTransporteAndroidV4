@@ -38,12 +38,12 @@ interface LatLngInterpolator {
     class Spherical : LatLngInterpolator {
 
         /* From github.com/googlemaps/android-maps-utils */
-        override fun interpolate(fraction: Float, from: LatLng, to: LatLng): LatLng {
+        override fun interpolate(fraction: Float, a: LatLng, b: LatLng): LatLng {
             // http://en.wikipedia.org/wiki/Slerp
-            val fromLat = toRadians(from.latitude)
-            val fromLng = toRadians(from.longitude)
-            val toLat = toRadians(to.latitude)
-            val toLng = toRadians(to.longitude)
+            val fromLat = toRadians(a.latitude)
+            val fromLng = toRadians(a.longitude)
+            val toLat = toRadians(b.latitude)
+            val toLng = toRadians(b.longitude)
             val cosFromLat = cos(fromLat)
             val cosToLat = cos(toLat)
 
@@ -51,15 +51,15 @@ interface LatLngInterpolator {
             val angle = computeAngleBetween(fromLat, fromLng, toLat, toLng)
             val sinAngle = sin(angle)
             if (sinAngle < 1E-6) {
-                return from
+                return a
             }
-            val a = sin((1 - fraction) * angle) / sinAngle
-            val b = sin(fraction * angle) / sinAngle
+            val from = sin((1 - fraction) * angle) / sinAngle
+            val to = sin(fraction * angle) / sinAngle
 
             // Converts from polar to vector and interpolate.
-            val x = a * cosFromLat * cos(fromLng) + b * cosToLat * cos(toLng)
-            val y = a * cosFromLat * sin(fromLng) + b * cosToLat * sin(toLng)
-            val z = a * sin(fromLat) + b * sin(toLat)
+            val x = from * cosFromLat * cos(fromLng) + to * cosToLat * cos(toLng)
+            val y = from * cosFromLat * sin(fromLng) + to * cosToLat * sin(toLng)
+            val z = from * sin(fromLat) + to * sin(toLat)
 
             // Converts interpolated vector back to polar.
             val lat = atan2(z, sqrt(x * x + y * y))
