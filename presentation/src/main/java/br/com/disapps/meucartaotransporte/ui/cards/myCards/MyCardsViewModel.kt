@@ -1,8 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.cards.myCards
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.cards.DeleteCard
 import br.com.disapps.domain.interactor.cards.GetCards
 import br.com.disapps.domain.model.Card
@@ -20,7 +20,7 @@ class MyCardsViewModel(private val getCardsUseCase: GetCards,
     val cards = MutableLiveData<List<CardVO>>()
 
     fun getCards(){
-        getCardsUseCase.execute(object : DefaultSingleObserver<List<Card>>() {
+        getCardsUseCase.execute(object : UseCaseCallback<List<Card>>() {
             override fun onSuccess(t: List<Card>) {
                 cards.value = t.toCardVO()
             }
@@ -29,7 +29,7 @@ class MyCardsViewModel(private val getCardsUseCase: GetCards,
     }
 
     fun deleteCard(card: CardVO){
-        deleteCardUseCase.execute(object : DefaultCompletableObserver(){
+        deleteCardUseCase.execute(object : UseCaseCompletableCallback(){
             override fun onComplete() {
                 getCards()
             }

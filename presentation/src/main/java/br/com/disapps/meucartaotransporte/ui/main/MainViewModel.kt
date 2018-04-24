@@ -1,7 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.main
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.preferences.GetInitialScreen
 import br.com.disapps.domain.model.InitialScreen
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
@@ -17,7 +17,7 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen) : Bas
 
     fun getInitialScreen(){
         initialScreen.value = 0
-        getInitialScreenUseCase.execute(object : DefaultSingleObserver<String>(){
+        getInitialScreenUseCase.execute(object : UseCaseCallback<String>(){
             override fun onSuccess(t: String) {
                 initialScreen.value = if(InitialScreen.CARDS.toString() == t){
                     0

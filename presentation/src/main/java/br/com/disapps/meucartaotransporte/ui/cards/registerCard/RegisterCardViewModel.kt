@@ -1,8 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.cards.registerCard
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.interactor.cards.HasCard
 import br.com.disapps.domain.interactor.cards.SaveCard
@@ -56,7 +56,7 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
 
     private fun validateHasLocalCard(){
         loadingEvent.value = true
-        hasCardUseCase.execute(object : DefaultSingleObserver<Boolean>(){
+        hasCardUseCase.execute(object : UseCaseCallback<Boolean>(){
 
             override fun onError(e: Throwable) {
                 loadingEvent.value = false
@@ -76,7 +76,7 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
     }
 
     private fun validateHasCloudCard(){
-        getCardUseCase.execute(object : DefaultSingleObserver<Card?>(){
+        getCardUseCase.execute(object : UseCaseCallback<Card?>(){
 
             override fun onError(e: Throwable) {
                 loadingEvent.value = false
@@ -97,7 +97,7 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
 
     private fun saveCard(card: Card){
 
-        saveCardUseCase.execute(object : DefaultCompletableObserver(){
+        saveCardUseCase.execute(object : UseCaseCompletableCallback(){
 
             override fun onComplete() {
                 isFinished.value = true

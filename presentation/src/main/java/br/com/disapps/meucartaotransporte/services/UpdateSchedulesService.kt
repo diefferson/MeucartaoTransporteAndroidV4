@@ -4,8 +4,8 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.schedules.GetAllSchedulesJson
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
@@ -34,10 +34,10 @@ class UpdateSchedulesService : BaseService(){
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            postEvent(UpdateLinesEventComplete())
+                            postEvent(UpdateSchedulesEventComplete())
                             showNotification(text =  getString(R.string.update_schedules_success))
                         }else{
-                            postEvent(UpdateLinesEventComplete())
+                            postEvent(UpdateSchedulesEventError())
                             showNotification(text =  getString(R.string.update_schedules_error))
                         }
                         stopSelf()
@@ -61,12 +61,12 @@ class UpdateSchedulesService : BaseService(){
     }
 
     private fun postEvent(event: Event){
-        postEventUseCase.execute(object : DefaultCompletableObserver(){
+        postEventUseCase.execute(object : UseCaseCompletableCallback(){
         }, PostEvent.Params(event))
     }
 
     private fun updateSchedules(){
-        getAllSchedulesJsonUseCase.execute(object : DefaultSingleObserver<String>(){
+        getAllSchedulesJsonUseCase.execute(object : UseCaseCallback<String>(){
             override fun onSuccess(t: String) {
                 saveSchedules(t)
             }
@@ -81,7 +81,7 @@ class UpdateSchedulesService : BaseService(){
 
         showNotification(text = getString(R.string.saving_data), infinityProgress = true)
 
-        saveAllSchedulesJsonUseCase.execute(object : DefaultCompletableObserver(){
+        saveAllSchedulesJsonUseCase.execute(object : UseCaseCompletableCallback(){
             override fun onComplete() {
                 isComplete.value = true
             }
@@ -111,9 +111,9 @@ class UpdateSchedulesService : BaseService(){
 
     companion object {
         private const val IS_MANUAL = "manual"
-        fun startService(context: Context){
+        fun startService(context: Context, manual :Boolean = true){
             context.startService(Intent(context, UpdateSchedulesService::class.java).apply {
-                putExtra(IS_MANUAL, true)
+                putExtra(IS_MANUAL, manual)
             })
         }
     }

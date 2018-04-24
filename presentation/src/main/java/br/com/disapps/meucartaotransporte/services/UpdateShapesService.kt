@@ -4,8 +4,8 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
@@ -58,7 +58,7 @@ class UpdateShapesService : BaseService(){
     }
 
     private fun updateShapes(city: City){
-        getAllShapesJsonUseCase.execute(object : DefaultSingleObserver<String>(){
+        getAllShapesJsonUseCase.execute(object : UseCaseCallback<String>(){
             override fun onSuccess(t: String) {
                 saveShapes(t, city)
             }
@@ -73,7 +73,7 @@ class UpdateShapesService : BaseService(){
 
         showNotification(text = getString(R.string.saving_data), infinityProgress = true)
 
-        saveAllShapesJsonUseCase.execute(object : DefaultCompletableObserver(){
+        saveAllShapesJsonUseCase.execute(object : UseCaseCompletableCallback(){
             override fun onComplete() {
                 isComplete.value = true
             }
@@ -113,9 +113,9 @@ class UpdateShapesService : BaseService(){
     companion object {
         private const val IS_MANUAL = "manual"
         private const val CITY = "city"
-        fun startService(context: Context, city: City){
+        fun startService(context: Context, city: City, manual :Boolean = true){
             context.startService(Intent(context, UpdateShapesService::class.java).apply {
-                putExtra(IS_MANUAL, true)
+                putExtra(IS_MANUAL, manual)
                 putExtra(CITY, city)
             })
         }

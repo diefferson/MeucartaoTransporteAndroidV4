@@ -1,7 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.line.itineraries
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.itineraries.GetItineraryDirections
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
@@ -13,7 +13,7 @@ class ItinerariesViewModel(private val getItineraryDirectionsUseCase: GetItinera
     val itineraryDirections = MutableLiveData<List<String>>()
 
     fun getItineraryDirections(codeLine : String){
-        getItineraryDirectionsUseCase.execute(object  : DefaultSingleObserver<List<String>>(){
+        getItineraryDirectionsUseCase.execute(object  : UseCaseCallback<List<String>>(){
             override fun onSuccess(t: List<String>) {
                 itineraryDirections.value = t
             }

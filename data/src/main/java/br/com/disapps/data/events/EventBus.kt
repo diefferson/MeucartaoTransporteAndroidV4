@@ -3,7 +3,7 @@ package br.com.disapps.data.events
 import kotlinx.coroutines.experimental.channels.*
 import kotlinx.coroutines.experimental.launch
 
-class EventBus constructor() {
+class EventBus {
     val bus: BroadcastChannel<Any> = ConflatedBroadcastChannel()
 
     fun send(o: Any) {
@@ -12,11 +12,8 @@ class EventBus constructor() {
         }
     }
 
-    fun <T> asChannel(klazz: Class<T>): ReceiveChannel<T> {
-        return bus.openSubscription().filter {
-            it::class.java == klazz
-        }.map {
-            it as T
-        }
+    inline fun <reified T> asChannel(): ReceiveChannel<T> {
+        return bus.openSubscription()
+                .filter { it is T }.map { it as T }
     }
 }

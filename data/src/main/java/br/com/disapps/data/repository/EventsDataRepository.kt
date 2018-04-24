@@ -12,10 +12,10 @@ class EventsDataRepository(private val eventBus: EventBus) : EventsRepository{
     }
 
     override suspend fun getUpdateLinesEvent(): ReceiveChannel<UpdateLinesEventComplete> {
-        return eventBus.asChannel(UpdateLinesEventComplete::class.java)
+        return eventBus.asChannel()
     }
 
     override suspend fun getUpdateSchedulesEvent(): ReceiveChannel<UpdateSchedulesEventComplete> {
-        return eventBus.asChannel(UpdateSchedulesEventComplete::class.java)
+        return eventBus.asChannel()
     }
 }

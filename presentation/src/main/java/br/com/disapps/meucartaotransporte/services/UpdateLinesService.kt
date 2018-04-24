@@ -4,8 +4,8 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.lines.GetAllLinesJson
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
@@ -62,12 +62,12 @@ class UpdateLinesService : BaseService(){
     }
 
     private fun postEvent(event: Event ){
-        postEventUseCase.execute(object : DefaultCompletableObserver(){
+        postEventUseCase.execute(object : UseCaseCompletableCallback(){
         }, PostEvent.Params(event))
     }
 
     private fun updateLines(){
-        getAllLinesJsonUseCase.execute(object : DefaultSingleObserver<String>(){
+        getAllLinesJsonUseCase.execute(object : UseCaseCallback<String>(){
             override fun onSuccess(t: String) {
                 saveLines(t)
             }
@@ -82,7 +82,7 @@ class UpdateLinesService : BaseService(){
 
         showNotification(text = getString(R.string.saving_data), infinityProgress = true)
 
-        saveAllLinesJsonUseCase.execute(object : DefaultCompletableObserver(){
+        saveAllLinesJsonUseCase.execute(object : UseCaseCompletableCallback(){
             override fun onComplete() {
                 isComplete.value = true
             }
@@ -111,9 +111,9 @@ class UpdateLinesService : BaseService(){
 
     companion object {
         private const val IS_MANUAL = "manual"
-        fun startService(context: Context){
+        fun startService(context: Context, manual : Boolean = true){
             context.startService(Intent(context, UpdateLinesService::class.java).apply {
-                putExtra(IS_MANUAL, true)
+                putExtra(IS_MANUAL, manual)
             })
         }
     }

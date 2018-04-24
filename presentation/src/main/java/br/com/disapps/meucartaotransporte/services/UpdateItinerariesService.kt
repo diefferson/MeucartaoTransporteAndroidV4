@@ -4,8 +4,8 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
@@ -59,7 +59,7 @@ class UpdateItinerariesService : BaseService(){
     }
 
     private fun updateItineraries(city: City){
-        getAllItinerariesJsonUseCase.execute(object : DefaultSingleObserver<String>(){
+        getAllItinerariesJsonUseCase.execute(object : UseCaseCallback<String>(){
             override fun onSuccess(t: String) {
                 saveItineraries(t, city)
             }
@@ -74,7 +74,7 @@ class UpdateItinerariesService : BaseService(){
 
         showNotification(text = getString(R.string.saving_data), infinityProgress = true)
 
-        saveAllItinerariesJsonUseCase.execute(object : DefaultCompletableObserver(){
+        saveAllItinerariesJsonUseCase.execute(object : UseCaseCompletableCallback(){
             override fun onComplete() {
                 isComplete.value = true
             }
@@ -114,9 +114,9 @@ class UpdateItinerariesService : BaseService(){
     companion object {
         private const val IS_MANUAL = "manual"
         private const val CITY = "city"
-        fun startService(context: Context, city: City){
+        fun startService(context: Context, city: City,  manual :Boolean = true){
             context.startService(Intent(context, UpdateItinerariesService::class.java).apply {
-                putExtra(IS_MANUAL, true)
+                putExtra(IS_MANUAL, manual)
                 putExtra(CITY, city)
             })
         }

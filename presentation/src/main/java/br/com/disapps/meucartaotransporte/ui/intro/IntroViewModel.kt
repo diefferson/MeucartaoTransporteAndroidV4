@@ -1,8 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.intro
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.events.GetUpdateLinesEvent
 import br.com.disapps.domain.interactor.events.GetUpdateSchedulesEvent
 import br.com.disapps.domain.interactor.preferences.SaveIsFirstAccess
@@ -28,8 +28,8 @@ class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent
     }
 
     private fun updateLines(){
-        getUpdateLinesEventUseCase.execute(object : DefaultSingleObserver<ReceiveChannel<UpdateLinesEventComplete>>() {
-            override fun onSuccess(t: ReceiveChannel<UpdateLinesEventComplete>) {
+        getUpdateLinesEventUseCase.execute(object : UseCaseCallback<UpdateLinesEventComplete>() {
+            override fun onSuccess(t: UpdateLinesEventComplete) {
                 linesComplete = true
                 if (schedulesComplete) {
                     isComplete.value = true
@@ -40,8 +40,8 @@ class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent
     }
 
     private fun updateSchedules(){
-        getUpdateSchedulesEventUseCase.execute(object : DefaultSingleObserver<ReceiveChannel<UpdateSchedulesEventComplete>>() {
-            override fun onSuccess(t: ReceiveChannel<UpdateSchedulesEventComplete>) {
+        getUpdateSchedulesEventUseCase.execute(object : UseCaseCallback<UpdateSchedulesEventComplete>() {
+            override fun onSuccess(t: UpdateSchedulesEventComplete) {
                 schedulesComplete = true
                 if (linesComplete) {
                     isComplete.value = true
@@ -52,7 +52,7 @@ class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent
     }
 
     private fun saveIsFirstAccess(){
-        saveIsFirstAccessUseCase.execute(object : DefaultCompletableObserver(){
+        saveIsFirstAccessUseCase.execute(object : UseCaseCompletableCallback(){
         }, SaveIsFirstAccess.Params(false))
     }
 

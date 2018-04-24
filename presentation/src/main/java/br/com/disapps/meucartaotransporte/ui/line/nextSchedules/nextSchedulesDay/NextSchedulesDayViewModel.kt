@@ -1,7 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.schedules.GetLineSchedules
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.domain.model.Schedule
@@ -16,7 +16,7 @@ class NextSchedulesDayViewModel(private val getLineSchedulesUseCase: GetLineSche
         if(!isRequested){
             isRequested = true
 
-            getLineSchedulesUseCase.execute(object : DefaultSingleObserver<List<LineSchedule>>(){
+            getLineSchedulesUseCase.execute(object : UseCaseCallback<List<LineSchedule>>(){
                 override fun onSuccess(t: List<LineSchedule>) {
                     nextSchedules.value = setupNextSchedules(t)
                 }

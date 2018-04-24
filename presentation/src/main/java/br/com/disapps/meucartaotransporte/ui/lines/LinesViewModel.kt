@@ -1,8 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.lines
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.lines.GetLines
 import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.domain.model.Line
@@ -34,7 +34,7 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
     }
 
     fun getLines(refresh : Boolean = false){
-        getLinesUseCase.execute(object : DefaultSingleObserver<List<Line>>() {
+        getLinesUseCase.execute(object : UseCaseCallback<List<Line>>() {
             override fun onSuccess(t: List<Line>) {
                 updateLines(t.toLineVO())
                 updateFavorites(t.toLineVO().filter { line->line.favorite })
@@ -55,7 +55,7 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
             it
         })
         updateFavorites(lines.filter { l->l.favorite })
-        updateLineUseCase.execute(object : DefaultCompletableObserver(){},UpdateLine.Params(line.toLineBO()))
+        updateLineUseCase.execute(object : UseCaseCompletableCallback(){},UpdateLine.Params(line.toLineBO()))
     }
 
     private fun updateLines(listLines : List<LineVO>){

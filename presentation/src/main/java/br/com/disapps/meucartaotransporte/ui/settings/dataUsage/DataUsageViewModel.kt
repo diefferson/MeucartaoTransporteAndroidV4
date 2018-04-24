@@ -1,8 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.settings.dataUsage
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.DefaultCompletableObserver
-import br.com.disapps.domain.interactor.base.DefaultSingleObserver
+import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
+import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.preferences.GetDataUsage
 import br.com.disapps.domain.interactor.preferences.SavePeriodUpdateLines
 import br.com.disapps.domain.interactor.preferences.SavePeriodUpdateSchedules
@@ -26,7 +26,7 @@ class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage,
     val dateMetShapes  = MutableLiveData<String>()
 
     fun init(){
-        getDataUsageUseCase.execute(object : DefaultSingleObserver<DataUsage>(){
+        getDataUsageUseCase.execute(object : UseCaseCallback<DataUsage>(){
             override fun onSuccess(t: DataUsage) {
                 periodLines.value = t.periodLines
                 periodSchedules.value = t.periodSchedules
@@ -54,7 +54,7 @@ class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage,
     }
 
     fun savePeriodUpdateLines(periodUpdate: PeriodUpdate){
-        savePeriodUpdateLinesUseCase.execute(object : DefaultCompletableObserver(){
+        savePeriodUpdateLinesUseCase.execute(object : UseCaseCompletableCallback(){
             override fun onComplete() {
                 init()
             }
@@ -62,7 +62,7 @@ class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage,
     }
 
     fun savePeriodUpdateSchedules(periodUpdate: PeriodUpdate){
-        savePeriodUpdateSchedulesUseCase.execute(object : DefaultCompletableObserver(){
+        savePeriodUpdateSchedulesUseCase.execute(object : UseCaseCompletableCallback(){
             override fun onComplete() {
                 init()
             }

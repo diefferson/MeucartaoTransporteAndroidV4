@@ -1,6 +1,6 @@
 package br.com.disapps.domain.interactor.base
 
-open class DefaultSingleObserver<T>  {
+open class UseCaseCallback<T>  {
 
     open fun onSuccess(t: T) {
         // no-op by default.
