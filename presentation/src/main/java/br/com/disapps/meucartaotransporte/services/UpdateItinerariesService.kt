@@ -4,12 +4,10 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import br.com.disapps.domain.model.*
+import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
@@ -59,30 +57,28 @@ class UpdateItinerariesService : BaseService(){
     }
 
     private fun updateItineraries(city: City){
-        getAllItinerariesJsonUseCase.execute(object : UseCaseCallback<String>(){
-            override fun onSuccess(t: String) {
-                saveItineraries(t, city)
-            }
-
-            override fun onError(e: Throwable) {
+        getAllItinerariesJsonUseCase.execute(GetAllItinerariesJson.Params(city, updateProgressListener),
+            onError ={
                 isComplete.value = false
+            },
+            onSuccess = {
+                saveItineraries(it, city)
             }
-        }, GetAllItinerariesJson.Params(city, updateProgressListener))
+        )
     }
 
     private fun saveItineraries(json:String, city: City){
 
         showNotification(text = getString(R.string.saving_data), infinityProgress = true)
 
-        saveAllItinerariesJsonUseCase.execute(object : UseCaseCompletableCallback(){
-            override fun onComplete() {
-                isComplete.value = true
-            }
-
-            override fun onError(e: Throwable) {
-                isComplete.value = false
-            }
-        }, SaveAllItinerariesJson.Params(json, city))
+        saveAllItinerariesJsonUseCase.execute(SaveAllItinerariesJson.Params(json, city),
+                onError = {
+                    isComplete.value = false
+                },
+                onComplete= {
+                    isComplete.value = true
+                }
+        )
     }
 
     private val updateProgressListener  = object :DownloadProgressListener{

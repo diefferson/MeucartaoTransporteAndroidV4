@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.line.shapes
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.buses.GetAllBuses
 import br.com.disapps.domain.interactor.itineraries.GetAllItineraries
 import br.com.disapps.domain.interactor.shapes.GetShapes
@@ -31,27 +30,21 @@ class ShapesViewModel(private val getShapesUseCase: GetShapes,
     }
 
     private fun getShapes(codeLine : String){
-        getShapesUseCase.execute(object : UseCaseCallback<List<Shape>>(){
-            override fun onSuccess(t: List<Shape>) {
-                shapes.value = t
-            }
-        },GetShapes.Params(codeLine))
+        getShapesUseCase.execute(GetShapes.Params(codeLine)){
+            shapes.value = it
+        }
     }
 
     private fun getStops(codeLine: String){
-        getAllItinerariesUseCase.execute(object : UseCaseCallback<List<BusStop>>(){
-            override fun onSuccess(t: List<BusStop>) {
-               stops.value = t
-            }
-        }, GetAllItineraries.Params(codeLine))
+        getAllItinerariesUseCase.execute(GetAllItineraries.Params(codeLine)) {
+            stops.value = it
+        }
     }
 
     private fun getBuses(codeLine: String){
-        getAllBusesUseCase.execute(object : UseCaseCallback<List<Bus>>(){
-            override fun onSuccess(t: List<Bus>) {
-                buses.value = t
-            }
-        }, GetAllBuses.Params(codeLine), true)
+        getAllBusesUseCase.execute(GetAllBuses.Params(codeLine)) {
+            buses.value = it
+        }
     }
 
     override fun onCleared() {

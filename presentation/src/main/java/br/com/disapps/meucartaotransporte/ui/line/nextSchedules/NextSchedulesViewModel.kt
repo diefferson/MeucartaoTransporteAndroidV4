@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.line.nextSchedules
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.schedules.GetLineScheduleDays
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
@@ -12,11 +11,9 @@ class NextSchedulesViewModel(private val getLineScheduleDaysUseCase: GetLineSche
     fun getSchedulesDays(codeLine : String){
         if(!isRequested){
             isRequested = true
-            getLineScheduleDaysUseCase.execute(object : UseCaseCallback<List<Int>>(){
-                override fun onSuccess(t: List<Int>) {
-                    days.value = t
-                }
-            }, GetLineScheduleDays.Params(codeLine))
+            getLineScheduleDaysUseCase.execute(GetLineScheduleDays.Params(codeLine)) {
+                days.value = it
+            }
         }
     }
 

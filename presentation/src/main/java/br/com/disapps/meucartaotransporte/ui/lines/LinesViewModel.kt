@@ -1,11 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.lines
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.lines.GetLines
 import br.com.disapps.domain.interactor.lines.UpdateLine
-import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.model.mappers.toLineBO
 import br.com.disapps.meucartaotransporte.model.mappers.toLineVO
@@ -34,16 +31,15 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
     }
 
     fun getLines(refresh : Boolean = false){
-        getLinesUseCase.execute(object : UseCaseCallback<List<Line>>() {
-            override fun onSuccess(t: List<Line>) {
-                updateLines(t.toLineVO())
-                updateFavorites(t.toLineVO().filter { line->line.favorite })
-                if(!isRequested && !refresh){
-                    isRequested = true
-                    hasFavorite.value = favoriteLines.isNotEmpty()
-                }
+        getLinesUseCase.execute(Unit) {
+            updateLines(it.toLineVO())
+            updateFavorites(it.toLineVO().filter { line->line.favorite })
+            if(!isRequested && !refresh){
+                isRequested = true
+                hasFavorite.value = favoriteLines.isNotEmpty()
             }
-        }, Unit)
+        }
+
     }
 
     fun favoriteLine(line: LineVO){
@@ -55,7 +51,7 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
             it
         })
         updateFavorites(lines.filter { l->l.favorite })
-        updateLineUseCase.execute(object : UseCaseCompletableCallback(){},UpdateLine.Params(line.toLineBO()))
+        updateLineUseCase.execute(UpdateLine.Params(line.toLineBO()))
     }
 
     private fun updateLines(listLines : List<LineVO>){

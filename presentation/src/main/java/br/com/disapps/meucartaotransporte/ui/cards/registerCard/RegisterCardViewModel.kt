@@ -1,8 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.cards.registerCard
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.interactor.cards.HasCard
 import br.com.disapps.domain.interactor.cards.SaveCard
@@ -56,60 +54,50 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
 
     private fun validateHasLocalCard(){
         loadingEvent.value = true
-        hasCardUseCase.execute(object : UseCaseCallback<Boolean>(){
-
-            override fun onError(e: Throwable) {
+        hasCardUseCase.execute(HasCard.Params(getFormCard()),
+            onError ={
                 loadingEvent.value = false
                 errorEvent.value = KnownError("Erro ao verificar cartao")
-            }
+            },
 
-            override fun onSuccess(t: Boolean) {
-                if(t){
+            onSuccess = {
+                if(it){
                     loadingEvent.value = false
                     errorEvent.value = KnownError("Cartao já cadastrado")
                 }else{
                     validateHasCloudCard()
                 }
             }
-
-        }, HasCard.Params(getFormCard()))
+        )
     }
 
     private fun validateHasCloudCard(){
-        getCardUseCase.execute(object : UseCaseCallback<Card?>(){
-
-            override fun onError(e: Throwable) {
+        getCardUseCase.execute(GetCard.Params(getFormCard()),
+            onError = {
                 loadingEvent.value = false
                 errorEvent.value = KnownError("Erro ao consultar cartao")
-            }
-
-            override fun onSuccess(t: Card?) {
-                if(t!= null){
-                    t.name = name.value.toString()
-                    saveCard(t)
+            },
+            onSuccess= {
+                if(it!= null){
+                    it.name = name.value.toString()
+                    saveCard(it)
                 }else{
                     loadingEvent.value = false
                 }
             }
-
-        }, GetCard.Params(getFormCard()))
+        )
     }
 
     private fun saveCard(card: Card){
 
-        saveCardUseCase.execute(object : UseCaseCompletableCallback(){
-
-            override fun onComplete() {
-                isFinished.value = true
-                loadingEvent.value = false
-            }
-
-            override fun onError(e: Throwable) {
-                loadingEvent.value = false
-            }
-
-        },SaveCard.Params(card))
-
+        saveCardUseCase.execute(SaveCard.Params(card),
+                onError = {
+                    loadingEvent.value = false
+                }, onComplete = {
+                    isFinished.value = true
+                    loadingEvent.value = false
+                }
+        )
     }
 
     private fun getFormCard() : Card{

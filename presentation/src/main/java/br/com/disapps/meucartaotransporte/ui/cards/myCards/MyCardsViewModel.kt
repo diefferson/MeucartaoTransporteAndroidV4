@@ -1,11 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.cards.myCards
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.cards.DeleteCard
 import br.com.disapps.domain.interactor.cards.GetCards
-import br.com.disapps.domain.model.Card
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.model.mappers.toCardBO
 import br.com.disapps.meucartaotransporte.model.mappers.toCardVO
@@ -20,20 +17,15 @@ class MyCardsViewModel(private val getCardsUseCase: GetCards,
     val cards = MutableLiveData<List<CardVO>>()
 
     fun getCards(){
-        getCardsUseCase.execute(object : UseCaseCallback<List<Card>>() {
-            override fun onSuccess(t: List<Card>) {
-                cards.value = t.toCardVO()
-            }
-
-        }, Unit)
+        getCardsUseCase.execute(Unit){
+            cards.value = it.toCardVO()
+        }
     }
 
     fun deleteCard(card: CardVO){
-        deleteCardUseCase.execute(object : UseCaseCompletableCallback(){
-            override fun onComplete() {
-                getCards()
-            }
-        },DeleteCard.Params(card.toCardBO()))
+        deleteCardUseCase.execute(DeleteCard.Params(card.toCardBO())){
+            getCards()
+        }
     }
 
     override fun onCleared() {

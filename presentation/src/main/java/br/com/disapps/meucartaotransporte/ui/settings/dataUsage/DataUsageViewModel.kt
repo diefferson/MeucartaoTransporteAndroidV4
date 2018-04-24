@@ -1,12 +1,9 @@
 package br.com.disapps.meucartaotransporte.ui.settings.dataUsage
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.preferences.GetDataUsage
 import br.com.disapps.domain.interactor.preferences.SavePeriodUpdateLines
 import br.com.disapps.domain.interactor.preferences.SavePeriodUpdateSchedules
-import br.com.disapps.domain.model.DataUsage
 import br.com.disapps.domain.model.PeriodUpdate
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.formatDate
@@ -26,47 +23,40 @@ class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage,
     val dateMetShapes  = MutableLiveData<String>()
 
     fun init(){
-        getDataUsageUseCase.execute(object : UseCaseCallback<DataUsage>(){
-            override fun onSuccess(t: DataUsage) {
-                periodLines.value = t.periodLines
-                periodSchedules.value = t.periodSchedules
-                dateLines.value = formatDate(Date(t.dateUpdateLines))
-                dateSchedules.value = formatDate(Date(t.dateUpdateSchedules))
+        getDataUsageUseCase.execute(Unit) {
+            periodLines.value = it.periodLines
+            periodSchedules.value = it.periodSchedules
+            dateLines.value = formatDate(Date(it.dateUpdateLines))
+            dateSchedules.value = formatDate(Date(it.dateUpdateSchedules))
 
-                if(t.dateUpdateCwbItineraries >0){
-                    dateCwbItineraries.value = formatDate(Date(t.dateUpdateCwbItineraries))
-                }
-
-                if(t.dateUpdateCwbShapes > 0){
-                    dateCwbShapes.value = formatDate(Date(t.dateUpdateCwbShapes))
-                }
-
-                if(t.dateUpdateMetItineraries > 0){
-                    dateMetItineraries.value = formatDate(Date(t.dateUpdateMetItineraries))
-                }
-
-                if(t.dateUpdateMetShapes > 0){
-                    dateMetShapes.value = formatDate(Date(t.dateUpdateMetShapes))
-                }
+            if(it.dateUpdateCwbItineraries >0){
+                dateCwbItineraries.value = formatDate(Date(it.dateUpdateCwbItineraries))
             }
 
-        }, Unit)
+            if(it.dateUpdateCwbShapes > 0){
+                dateCwbShapes.value = formatDate(Date(it.dateUpdateCwbShapes))
+            }
+
+            if(it.dateUpdateMetItineraries > 0){
+                dateMetItineraries.value = formatDate(Date(it.dateUpdateMetItineraries))
+            }
+
+            if(it.dateUpdateMetShapes > 0){
+                dateMetShapes.value = formatDate(Date(it.dateUpdateMetShapes))
+            }
+        }
     }
 
     fun savePeriodUpdateLines(periodUpdate: PeriodUpdate){
-        savePeriodUpdateLinesUseCase.execute(object : UseCaseCompletableCallback(){
-            override fun onComplete() {
-                init()
-            }
-        }, SavePeriodUpdateLines.Params(periodUpdate))
+        savePeriodUpdateLinesUseCase.execute(SavePeriodUpdateLines.Params(periodUpdate)){
+            init()
+        }
     }
 
     fun savePeriodUpdateSchedules(periodUpdate: PeriodUpdate){
-        savePeriodUpdateSchedulesUseCase.execute(object : UseCaseCompletableCallback(){
-            override fun onComplete() {
-                init()
-            }
-        },SavePeriodUpdateSchedules.Params(periodUpdate))
+        savePeriodUpdateSchedulesUseCase.execute(SavePeriodUpdateSchedules.Params(periodUpdate)){
+            init()
+        }
     }
 
     override fun onCleared() {

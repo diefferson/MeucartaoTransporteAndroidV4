@@ -18,16 +18,16 @@ abstract class UseCaseCompletable<in Params> internal constructor(
     /**
      * Executes the current use case.
      */
-    fun execute(completableCallback: UseCaseCompletableCallback, params: Params) {
-        async(contextExecutor.scheduler, parent = executionJob) {
+    fun execute(params: Params, onError: (e: Throwable) -> Unit = {}, onComplete: () -> Unit = {}) {
+        launch(contextExecutor.scheduler, parent = executionJob) {
             try {
                 buildUseCaseObservable(params)
                 withContext(postExecutionContext.scheduler) {
-                    completableCallback.onComplete()
+                    onComplete()
                 }
             } catch (e: Exception) {
                 withContext(postExecutionContext.scheduler) {
-                    completableCallback.onError(e)
+                    onError(e)
                 }
             }
         }

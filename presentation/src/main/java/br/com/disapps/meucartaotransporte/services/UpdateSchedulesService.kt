@@ -4,13 +4,13 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.schedules.GetAllSchedulesJson
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import br.com.disapps.domain.model.*
+import br.com.disapps.domain.model.Event
+import br.com.disapps.domain.model.UpdateSchedulesEventComplete
+import br.com.disapps.domain.model.UpdateSchedulesEventError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
@@ -61,35 +61,33 @@ class UpdateSchedulesService : BaseService(){
     }
 
     private fun postEvent(event: Event){
-        postEventUseCase.execute(object : UseCaseCompletableCallback(){
-        }, PostEvent.Params(event))
+        postEventUseCase.execute(PostEvent.Params(event))
     }
 
     private fun updateSchedules(){
-        getAllSchedulesJsonUseCase.execute(object : UseCaseCallback<String>(){
-            override fun onSuccess(t: String) {
-                saveSchedules(t)
-            }
-
-            override fun onError(e: Throwable) {
+        getAllSchedulesJsonUseCase.execute(GetAllSchedulesJson.Params(updateProgressListener),
+            onSuccess = {
+                saveSchedules(it)
+            },
+            onError = {
                 isComplete.value = false
             }
-        }, GetAllSchedulesJson.Params(updateProgressListener))
+        )
     }
 
     private fun saveSchedules(json:String){
 
         showNotification(text = getString(R.string.saving_data), infinityProgress = true)
 
-        saveAllSchedulesJsonUseCase.execute(object : UseCaseCompletableCallback(){
-            override fun onComplete() {
+        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJson.Params(json),
+            onError = {
+                isComplete.value = false
+            },
+
+            onComplete = {
                 isComplete.value = true
             }
-
-            override fun onError(e: Throwable) {
-                isComplete.value = false
-            }
-        }, SaveAllSchedulesJson.Params(json))
+        )
 
     }
 

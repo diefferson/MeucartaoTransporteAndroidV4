@@ -4,13 +4,13 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.lines.GetAllLinesJson
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import br.com.disapps.domain.model.*
+import br.com.disapps.domain.model.Event
+import br.com.disapps.domain.model.UpdateLinesEventComplete
+import br.com.disapps.domain.model.UpdateLinesEventError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
@@ -62,35 +62,33 @@ class UpdateLinesService : BaseService(){
     }
 
     private fun postEvent(event: Event ){
-        postEventUseCase.execute(object : UseCaseCompletableCallback(){
-        }, PostEvent.Params(event))
+        postEventUseCase.execute(PostEvent.Params(event))
     }
 
     private fun updateLines(){
-        getAllLinesJsonUseCase.execute(object : UseCaseCallback<String>(){
-            override fun onSuccess(t: String) {
-                saveLines(t)
-            }
-
-            override fun onError(e: Throwable) {
+        getAllLinesJsonUseCase.execute(GetAllLinesJson.Params(updateProgressListener),
+            onSuccess = {
+                saveLines(it)
+            },
+            onError =  {
                 isComplete.value = false
             }
-        }, GetAllLinesJson.Params(updateProgressListener))
+        )
     }
 
     private fun saveLines(json:String){
 
         showNotification(text = getString(R.string.saving_data), infinityProgress = true)
 
-        saveAllLinesJsonUseCase.execute(object : UseCaseCompletableCallback(){
-            override fun onComplete() {
-                isComplete.value = true
-            }
+        saveAllLinesJsonUseCase.execute(SaveAllLinesJson.Params(json),
+                onError= {
+                    isComplete.value = false
+                },
 
-            override fun onError(e: Throwable) {
-                isComplete.value = false
-            }
-        },SaveAllLinesJson.Params(json))
+                onComplete= {
+                    isComplete.value = true
+                }
+        )
     }
 
     private val updateProgressListener  = object : DownloadProgressListener {

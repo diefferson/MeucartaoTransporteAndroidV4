@@ -4,17 +4,15 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import br.com.disapps.domain.model.*
+import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
-import org.koin.android.ext.android.inject
 import br.com.disapps.meucartaotransporte.util.showCustomNotification
+import org.koin.android.ext.android.inject
 
 class UpdateShapesService : BaseService(){
 
@@ -58,30 +56,30 @@ class UpdateShapesService : BaseService(){
     }
 
     private fun updateShapes(city: City){
-        getAllShapesJsonUseCase.execute(object : UseCaseCallback<String>(){
-            override fun onSuccess(t: String) {
-                saveShapes(t, city)
-            }
+        getAllShapesJsonUseCase.execute(GetAllShapesJson.Params(city,updateProgressListener),
+            onSuccess = {
+                saveShapes(it, city)
+            },
 
-            override fun onError(e: Throwable) {
+            onError ={
                 isComplete.value = false
             }
-        }, GetAllShapesJson.Params(city,updateProgressListener))
+        )
     }
 
     private fun saveShapes(json:String, city: City){
 
         showNotification(text = getString(R.string.saving_data), infinityProgress = true)
 
-        saveAllShapesJsonUseCase.execute(object : UseCaseCompletableCallback(){
-            override fun onComplete() {
+        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(json, city),
+            onError = {
+                isComplete.value = false
+            },
+
+            onComplete = {
                 isComplete.value = true
             }
-
-            override fun onError(e: Throwable) {
-                isComplete.value = false
-            }
-        }, SaveAllShapesJson.Params(json, city))
+        )
     }
 
     private val updateProgressListener  = object : DownloadProgressListener {

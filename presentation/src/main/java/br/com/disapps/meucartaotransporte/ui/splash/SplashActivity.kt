@@ -2,7 +2,6 @@ package br.com.disapps.meucartaotransporte.ui.splash
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import br.com.disapps.domain.interactor.base.UseCaseCallback
 import br.com.disapps.domain.interactor.preferences.GetIsFirstAccess
 import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
@@ -22,16 +21,14 @@ class SplashActivity : AppCompatActivity(){
     }
 
     private fun getIsFirstAccess(){
-        getIsFirstAccessUseCase.execute(object : UseCaseCallback<Boolean>(){
-            override fun onSuccess(t: Boolean) {
-                if(t){
-                    IntroActivity.launch(this@SplashActivity)
-                }else{
-                    MainActivity.launch(this@SplashActivity)
-                }
-                finish()
+        getIsFirstAccessUseCase.execute(Unit) {
+            if(it){
+                IntroActivity.launch(this@SplashActivity)
+            }else{
+                MainActivity.launch(this@SplashActivity)
             }
-        }, Unit)
+            finish()
+        }
     }
 
     override fun onDestroy() {

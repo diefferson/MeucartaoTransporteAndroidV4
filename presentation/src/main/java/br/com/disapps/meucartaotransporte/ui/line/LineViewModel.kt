@@ -1,6 +1,5 @@
 package br.com.disapps.meucartaotransporte.ui.line
 
-import br.com.disapps.domain.interactor.base.UseCaseCompletableCallback
 import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.model.mappers.toLineBO
@@ -13,7 +12,7 @@ class LineViewModel( private val updateLineUseCase: UpdateLine) : BaseViewModel(
 
     fun favoriteLine(){
         line.favorite = !line.favorite
-        updateLineUseCase.execute(object : UseCaseCompletableCallback(){},UpdateLine.Params(line.toLineBO()))
+        updateLineUseCase.execute(UpdateLine.Params(line.toLineBO()))
     }
 
     override fun onCleared() {

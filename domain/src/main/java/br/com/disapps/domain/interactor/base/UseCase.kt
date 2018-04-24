@@ -2,8 +2,6 @@ package br.com.disapps.domain.interactor.base
 
 import br.com.disapps.domain.executor.ContextExecutor
 import br.com.disapps.domain.executor.PostExecutionContext
-import br.com.disapps.domain.model.UpdateLinesEventComplete
-import br.com.disapps.domain.model.UpdateSchedulesEventComplete
 import kotlinx.coroutines.experimental.*
 
 /**
@@ -23,26 +21,27 @@ abstract class UseCase<T, in Params> internal constructor(
     /**
      * Executes the current use case.
      */
-    open fun execute(singleObserver: UseCaseCallback<T>, params: Params, repeat:Boolean = false, repeatTime:Long = 30000) {
+    open fun execute(params: Params, repeat: Boolean = false, repeatTime: Long = 30000, onError: (e: Throwable) -> Unit = {},  onSuccess: (T) -> Unit = {}) {
 
-        async(contextExecutor.scheduler, parent = executionJob) {
+        launch(contextExecutor.scheduler, parent = executionJob) {
             do{
                 try {
                     val response  = buildUseCaseObservable(params)
 
                     withContext(postExecutionContext.scheduler) {
-                        singleObserver.onSuccess(response)
+                        onSuccess(response)
                     }
 
                 } catch (e: Exception) {
                     withContext(postExecutionContext.scheduler) {
-                        singleObserver.onError(e)
+                        onError(e)
                     }
                 }
 
                 if(repeat){
                     delay(repeatTime)
                 }
+
             }while (repeat)
         }
     }
