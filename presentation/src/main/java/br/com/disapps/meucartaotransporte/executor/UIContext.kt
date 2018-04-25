@@ -5,6 +5,5 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlin.coroutines.experimental.CoroutineContext
 
 class UIContext : PostExecutionContext{
-    override val scheduler: CoroutineContext
-        get() = UI
+    override val scheduler = UI
 }

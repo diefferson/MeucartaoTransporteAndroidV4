@@ -9,8 +9,8 @@ allprojects {
 
 ext {
 
-    apiHost = "http://meucartaotransporte.com.br/api"
-    apiHostDev = "http://meucartaotransporte.com.br/api"
+    apiHost = "https://meucartaotransporte.com.br/api"
+    apiHostDev = "https://meucartaotransporte.com.br/api"
 
     //Android
     androidBuildToolsVersion = "27.0.3"

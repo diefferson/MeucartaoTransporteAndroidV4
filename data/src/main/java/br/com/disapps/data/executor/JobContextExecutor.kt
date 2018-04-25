@@ -5,6 +5,5 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlin.coroutines.experimental.CoroutineContext
 
 class JobContextExecutor : ContextExecutor{
-    override val scheduler: CoroutineContext
-        get() = CommonPool
+    override val scheduler = CommonPool
 }
