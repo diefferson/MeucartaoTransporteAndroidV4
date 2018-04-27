@@ -48,7 +48,11 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
                         .equalTo(CODE, requestCartao.codigo)
                         .findFirstAsync()
         realm.close()
-        return RetornoCartao("", "",card)
+        return RetornoCartao().apply {
+            code = ""
+            message = ""
+            content = card
+        }
     }
 
     override suspend fun hasCard(cartao: Cartao): Boolean {

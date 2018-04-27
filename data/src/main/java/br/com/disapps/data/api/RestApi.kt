@@ -4,9 +4,7 @@ import br.com.disapps.data.entity.RetornoCartao
 import br.com.disapps.data.entity.RetornoExtrato
 import br.com.disapps.data.entity.Veiculo
 import com.google.gson.JsonArray
-import io.reactivex.Observable
 import kotlinx.coroutines.experimental.Deferred
-import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST

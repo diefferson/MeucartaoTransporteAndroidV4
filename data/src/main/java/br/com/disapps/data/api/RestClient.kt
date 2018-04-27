@@ -25,12 +25,13 @@ class RestClient {
 
             httpClient = OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
+                    .addInterceptor(HttpErrorInterceptor())
                     .build()
         } else {
             httpClient = OkHttpClient.Builder()
+                    .addInterceptor(HttpErrorInterceptor())
                     .build()
         }
-
 
         retrofitClient = Retrofit.Builder()
                 .baseUrl(BuildConfig.HOST + "/")

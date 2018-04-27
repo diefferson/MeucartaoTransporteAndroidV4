@@ -21,7 +21,7 @@ abstract class UseCase<T, in Params> internal constructor(
     /**
      * Executes the current use case.
      */
-    open fun execute(params: Params, repeat: Boolean = false, repeatTime: Long = 30000, onError: (e: Throwable) -> Unit = {},  onSuccess: (T) -> Unit = {}) {
+    open fun execute(params: Params, repeat: Boolean = false, repeatTime: Long = 30000, onError: (e: Throwable) -> Unit = {}, onSuccess: (T) -> Unit = {}) {
 
         launch(contextExecutor.scheduler, parent = executionJob) {
             do{

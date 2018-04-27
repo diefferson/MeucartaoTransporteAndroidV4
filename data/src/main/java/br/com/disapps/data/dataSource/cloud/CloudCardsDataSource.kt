@@ -1,5 +1,6 @@
 package br.com.disapps.data.dataSource.cloud
 
+import android.util.Log
 import br.com.disapps.data.api.RestApi
 import br.com.disapps.data.dataSource.CardsDataSource
 import br.com.disapps.data.entity.Cartao
@@ -13,7 +14,10 @@ import br.com.disapps.data.entity.RetornoExtrato
 class CloudCardsDataSource(private val restApi: RestApi) : CardsDataSource {
 
     override suspend fun card(requestCartao: RequestCartao): RetornoCartao? {
-        return restApi.saldoCartao(requestCartao.codigo, requestCartao.cpf, requestCartao.tipoConsulta).await()
+        val retornoCartao = restApi.saldoCartao(requestCartao.codigo, requestCartao.cpf, requestCartao.tipoConsulta).await()
+
+        Log.i("teste", "teste")
+        return retornoCartao
 
     }
 
