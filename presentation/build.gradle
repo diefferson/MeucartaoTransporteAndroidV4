@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'io.fabric'
 
 def versionMajor = 0
 def versionMinor = 0
@@ -89,6 +90,10 @@ dependencies {
     kapt presentationDependencies.archCompiler
 
     implementation presentationDependencies.customtabs
+
+    implementation(presentationDependencies.fabric) {
+        transitive = true
+    }
 
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit

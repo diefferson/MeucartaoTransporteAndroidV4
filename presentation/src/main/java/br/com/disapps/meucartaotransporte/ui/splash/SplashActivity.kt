@@ -6,7 +6,8 @@ import br.com.disapps.domain.interactor.preferences.GetIsFirstAccess
 import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import org.koin.android.ext.android.inject
-
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
 
 /**
  * Created by diefferson on 15/03/2018.
@@ -17,6 +18,7 @@ class SplashActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Fabric.with(this, Crashlytics())
         getIsFirstAccess()
     }
 

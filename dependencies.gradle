@@ -4,6 +4,7 @@ allprojects {
         jcenter()
         maven { url "https://mvnrepository.com"}
         maven { url "https://jitpack.io" }
+        maven { url 'https://maven.fabric.io/public' }
     }
 }
 
@@ -41,6 +42,7 @@ ext {
     firebaseVersion = '15.0.0'
     playServicesVersion = '15.0.0'
     coroutinesVersion = '0.22.5'
+    fabricVersion = '2.9.2@aar'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -80,6 +82,7 @@ ext {
             playServicesLocation:   "com.google.android.gms:play-services-location:${playServicesVersion}",
             playServicesMap:        "com.google.android.gms:play-services-maps:${playServicesVersion}",
             coroutinesAndroid:          "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
+            fabric:          "com.crashlytics.sdk.android:crashlytics:${fabricVersion}",
     ]
 
     presentationTestDependencies = [
