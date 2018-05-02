@@ -4,7 +4,6 @@ import br.com.disapps.data.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
@@ -25,11 +24,9 @@ class RestClient {
 
             httpClient = OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
-                    .addInterceptor(HttpErrorInterceptor())
                     .build()
         } else {
             httpClient = OkHttpClient.Builder()
-                    .addInterceptor(HttpErrorInterceptor())
                     .build()
         }
 

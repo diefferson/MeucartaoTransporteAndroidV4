@@ -42,17 +42,13 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
         return cards
     }
 
-    override suspend fun card(requestCartao: RequestCartao): RetornoCartao? {
+    override suspend fun card(requestCartao: RequestCartao): Cartao? {
         val realm = database.getDatabase() as Realm
         val card = realm.where(CLAZZ)
                         .equalTo(CODE, requestCartao.codigo)
                         .findFirstAsync()
         realm.close()
-        return RetornoCartao().apply {
-            code = ""
-            message = ""
-            content = card
-        }
+        return card
     }
 
     override suspend fun hasCard(cartao: Cartao): Boolean {
@@ -64,7 +60,7 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
         return hasCards
     }
 
-    override suspend fun getExtract(requestCartao: RequestCartao): RetornoExtrato? {
+    override suspend fun getExtract(requestCartao: RequestCartao): List<Extrato>? {
          throw Throwable("not implemented,  cloud only")
     }
 }

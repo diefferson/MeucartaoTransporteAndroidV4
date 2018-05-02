@@ -33,7 +33,7 @@ class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFa
     override suspend fun card(card: Card): Card? {
         return cardsDataSourceFactory
                 .create(true)
-                .card(card.toRequestCardDTO())?.content?.toCardBO()
+                .card(card.toRequestCardDTO())?.toCardBO()
     }
 
     override suspend fun hasCard(card: Card): Boolean {
@@ -46,7 +46,7 @@ class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFa
     override suspend fun extract(card: Card): List<Extract>? {
         return cardsDataSourceFactory
                 .create(true)
-                .getExtract(card.toRequestExtractDTO())?.content?.toExtractBO()
+                .getExtract(card.toRequestExtractDTO())?.toExtractBO()
 
     }
 }

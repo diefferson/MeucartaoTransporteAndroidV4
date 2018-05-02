@@ -10,9 +10,9 @@ interface CardsDataSource : DataSource {
 
     suspend fun cards() : List<Cartao>
 
-    suspend fun card(requestCartao: RequestCartao) : RetornoCartao?
+    suspend fun card(requestCartao: RequestCartao) : Cartao?
 
     suspend fun hasCard(cartao: Cartao) : Boolean
 
-    suspend fun getExtract(requestCartao: RequestCartao) : RetornoExtrato?
+    suspend fun getExtract(requestCartao: RequestCartao) : List<Extrato>?
 }

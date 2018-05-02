@@ -1,3 +1,3 @@
 package br.com.disapps.domain.exception
 
-class KnownException(val knownError: KnownError) : Exception()
+open class KnownException(var knownError: KnownError = KnownError.UNKNOWN_EXCEPTION) : Exception()
