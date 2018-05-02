@@ -12,4 +12,4 @@ data class BusStop(
     var sequence: Int,
     var direction: String,
     var type: String
-)
+)   
