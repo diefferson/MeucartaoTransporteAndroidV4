@@ -60,7 +60,7 @@ class LineEntityMapperTest{
         whenever(mockLinha.nome).thenReturn(FAKE_NAME)
         whenever(mockLinha.categoria).thenReturn(FAKE_CATEGORY)
         whenever(mockLinha.cor).thenReturn(FAKE_COLOR)
-        whenever(mockLinha.favorito).thenReturn(FAKE_FAVORITE)
+        whenever(mockLinha.favorito).thenReturn(FAKE_FAVORITE_INT)
     }
 
     private fun mockListBO(){
@@ -76,6 +76,7 @@ class LineEntityMapperTest{
         const val FAKE_NAME = "Interbairros IV"
         const val FAKE_CATEGORY = "Interbairros"
         const val FAKE_COLOR = "green"
-        const val FAKE_FAVORITE = 0
+        const val FAKE_FAVORITE = false
+        const val FAKE_FAVORITE_INT = 0
     }
 }

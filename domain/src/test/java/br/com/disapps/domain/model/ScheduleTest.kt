@@ -26,7 +26,7 @@ class ScheduleTest{
 
     companion object {
         const val FAKE_SCHEDULES_TABLE = "1-2"
-        const val FAKE_ADAPT = "ELEVADOR"
+        const val FAKE_ADAPT = true
         const val FAKE_TIME = "19:20"
     }
 }
