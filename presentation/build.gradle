@@ -23,23 +23,16 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            applicationIdSuffix ""
+            versionNameSuffix ""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            testCoverageEnabled true
-        }
-    }
-
-    flavorDimensions "default"
-    productFlavors {
-        dev {
+            minifyEnabled false
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-        }
-        prod {
-            applicationIdSuffix ""
-            versionNameSuffix ""
+            testCoverageEnabled true
         }
     }
 
@@ -52,8 +45,6 @@ android {
         dexInProcess = false
         javaMaxHeapSize "4g"
     }
-
-
 }
 
 kotlin {
