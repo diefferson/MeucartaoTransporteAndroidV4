@@ -39,7 +39,7 @@ ext {
     materialScrollBarVersion = '13.2.3'
     recyclerviewFastscroll = '1.0.17'
     lottieVersion = '2.5.4'
-    firebaseVersion = '15.0.0'
+    firebaseVersion = '15.0.2'
     playServicesVersion = '15.0.0'
     coroutinesVersion = '0.22.5'
     fabricVersion = '2.9.2@aar'
