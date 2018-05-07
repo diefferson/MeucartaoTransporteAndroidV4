@@ -60,8 +60,8 @@ class IntroActivity : BaseActivity(){
 
 
     private fun setupUpdate(){
-        UpdateLinesService.startService(this, false)
-        UpdateSchedulesService.startService(this, false)
+        UpdateLinesService.startService(this, true)
+        UpdateSchedulesService.startService(this, true)
         viewModel.initData()
     }
     private fun setupViewPager() {
