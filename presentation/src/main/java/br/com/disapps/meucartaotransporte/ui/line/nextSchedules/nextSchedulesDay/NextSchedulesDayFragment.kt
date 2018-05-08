@@ -12,6 +12,8 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import kotlinx.android.synthetic.main.activity_balance.*
 import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
 import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel
@@ -67,6 +69,7 @@ class NextSchedulesDayFragment : BaseFragment(){
         viewModel.nextSchedules.observe(this, Observer {
             listAdapter.apply {
                 emptyView = activity?.inflateView(R.layout.empty_view, next_schedules_recycler)
+                setFooterView(activity!!.getAdViewContentStream(next_schedules_recycler))
                 setNewData(it)
             }
         })

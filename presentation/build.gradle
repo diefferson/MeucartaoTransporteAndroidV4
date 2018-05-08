@@ -50,6 +50,7 @@ android {
 
     packagingOptions {
         exclude 'publicsuffixes.gz'
+        exclude 'META-INF/rxjava.properties'
     }
 }
 

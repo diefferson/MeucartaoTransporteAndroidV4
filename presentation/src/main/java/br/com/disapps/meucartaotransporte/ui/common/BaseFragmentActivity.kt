@@ -17,6 +17,7 @@ import br.com.disapps.meucartaotransporte.util.extensions.toast
 import android.animation.ValueAnimator
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.util.extensions.clean
+import com.appodeal.ads.Appodeal
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -43,6 +44,11 @@ abstract class BaseFragmentActivity: AppCompatActivity(),
         setupToolbar()
         setupLoading()
         setupError()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Appodeal.cache(this, Appodeal.NATIVE)
     }
 
     override fun onBackPressed() {

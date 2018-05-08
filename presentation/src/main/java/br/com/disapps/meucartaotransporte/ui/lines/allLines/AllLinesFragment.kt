@@ -30,11 +30,11 @@ class AllLinesFragment : BaseFragment() {
             emptyView = activity.inflateView(R.layout.loading_view, lines_recycler )
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
-                    R.id.fav_line -> { viewModel.favoriteLine(adapter.data[position] as LineVO) }
+                    R.id.fav_line -> { viewModel.favoriteLine((adapter.data[position] as LinesListAdapter.ItemListLines).line!!) }
                 }
             }
             setOnItemClickListener { adapter, view, position ->
-                LineActivity.launch(context!!, adapter.data[position] as LineVO, view.findViewById(R.id.roundedImage))
+                LineActivity.launch(context!!, (adapter.data[position] as LinesListAdapter.ItemListLines).line!!, view.findViewById(R.id.roundedImage))
             }
         }
     }

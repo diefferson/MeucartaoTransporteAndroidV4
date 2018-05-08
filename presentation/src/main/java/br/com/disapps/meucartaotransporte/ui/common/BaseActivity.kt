@@ -10,6 +10,7 @@ import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
 import br.com.disapps.meucartaotransporte.util.extensions.toast
+import com.appodeal.ads.Appodeal
 
 /**
  * Created by diefferson on 09/03/2018.
@@ -27,6 +28,11 @@ abstract class BaseActivity: AppCompatActivity(){
         setupLoading()
         setupError()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Appodeal.cache(this, Appodeal.NATIVE)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

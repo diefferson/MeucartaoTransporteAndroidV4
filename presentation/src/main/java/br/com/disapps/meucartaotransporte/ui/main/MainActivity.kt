@@ -61,6 +61,7 @@ class MainActivity : BaseFragmentActivity(){
         }else{
             if(gettingOut){
                 super.onBackPressed()
+                finish()
             }else{
                 gettingOut = true
                 Appodeal.show(this, Appodeal.INTERSTITIAL)

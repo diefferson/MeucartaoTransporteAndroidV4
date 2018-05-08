@@ -8,6 +8,8 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import kotlinx.android.synthetic.main.activity_balance.*
 import kotlinx.android.synthetic.main.fragment_itinerary_direction.*
 import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel
@@ -48,6 +50,7 @@ class ItineraryDirectionFragment : BaseFragment(){
         viewModel.itinerary.observe(this, Observer {
             listAdapter.apply {
                 emptyView = activity?.inflateView(R.layout.loading_view, itinerary_recycler)
+                setFooterView(activity!!.getAdViewContentStream(itinerary_recycler))
                 setNewData(it)
             }
         })

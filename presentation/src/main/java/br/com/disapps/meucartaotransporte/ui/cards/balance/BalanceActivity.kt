@@ -9,6 +9,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
 import kotlinx.android.synthetic.main.activity_balance.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -47,6 +48,7 @@ class BalanceActivity : BaseActivity() {
         viewModel.card.observe(this, Observer {
             adapter.apply {
                 emptyView = inflateView(R.layout.empty_view, balance_recycler )
+                setFooterView(getAdViewContentStream(balance_recycler))
                 setNewData(arrayListOf(it))
             }
         })

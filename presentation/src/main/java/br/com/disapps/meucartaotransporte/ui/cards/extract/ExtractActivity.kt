@@ -10,6 +10,8 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import kotlinx.android.synthetic.main.activity_balance.*
 import kotlinx.android.synthetic.main.activity_extract.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -46,6 +48,7 @@ class ExtractActivity : BaseActivity(){
         viewModel.extract.observe(this, Observer {
             adapter.apply {
                 emptyView = inflateView(R.layout.empty_view, extract_recycler )
+                setFooterView(getAdViewContentStream(extract_recycler))
                 setNewData(it)
             }
         })

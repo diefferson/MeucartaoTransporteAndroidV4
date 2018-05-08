@@ -1,5 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.databinding.DataBindingUtil
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.extensions.toast
+import com.appodeal.ads.Appodeal
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -33,6 +35,11 @@ abstract class BaseFragment : Fragment() {
         setupLoading()
         setupError()
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Appodeal.cache(activity!!, Appodeal.NATIVE)
     }
 
     private fun initDataBinding(inflater: LayoutInflater, container: ViewGroup?) : View?{

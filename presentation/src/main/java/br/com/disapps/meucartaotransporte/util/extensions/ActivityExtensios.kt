@@ -11,8 +11,6 @@ import android.widget.Toast
 import android.text.Html
 import android.text.Spanned
 
-
-
 fun Activity.toast(message : String){
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
