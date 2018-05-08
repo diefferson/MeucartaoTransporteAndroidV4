@@ -9,10 +9,10 @@ import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter
+import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter.Companion.objectToItem
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
-import com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_BOTTOM
 import kotlinx.android.synthetic.main.fragment_list_lines.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -26,14 +26,13 @@ class AllLinesFragment : BaseFragment() {
     private val mainViewModel by viewModel<MainViewModel>()
 
     private val listAdapter:LinesListAdapter by lazy{
-        LinesListAdapter(viewModel.lines).apply {
-            emptyView = activity?.inflateView(R.layout.loading_view, lines_recycler )
+        LinesListAdapter(objectToItem(viewModel.lines), activity!!).apply {
+            emptyView = activity.inflateView(R.layout.loading_view, lines_recycler )
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.fav_line -> { viewModel.favoriteLine(adapter.data[position] as LineVO) }
                 }
             }
-
             setOnItemClickListener { adapter, view, position ->
                 LineActivity.launch(context!!, adapter.data[position] as LineVO, view.findViewById(R.id.roundedImage))
             }
@@ -57,7 +56,7 @@ class AllLinesFragment : BaseFragment() {
 
         viewModel.isUpdatedLines.observe(this, Observer {
             listAdapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+                emptyView = activity.inflateView(R.layout.empty_view, lines_recycler )
                 notifyDataSetChanged()
             }
         })
@@ -67,9 +66,9 @@ class AllLinesFragment : BaseFragment() {
             if(it!= null && it){
                 viewModel.linesFiltered.clear()
                 viewModel.linesFiltered.addAll(viewModel.lines)
-                listAdapter.setNewData(viewModel.linesFiltered)
+                listAdapter.setNewData(objectToItem(viewModel.linesFiltered))
             }else{
-                listAdapter.setNewData(viewModel.lines)
+                listAdapter.setNewData(objectToItem(viewModel.lines))
             }
         })
 
@@ -77,7 +76,7 @@ class AllLinesFragment : BaseFragment() {
             if(it!= null){
                 viewModel.filterLines(it)
                 listAdapter.apply {
-                    emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+                    emptyView = activity.inflateView(R.layout.empty_view, lines_recycler )
                     notifyDataSetChanged()
                 }
             }

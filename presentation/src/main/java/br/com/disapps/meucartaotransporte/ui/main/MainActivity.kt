@@ -8,16 +8,24 @@ import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
 import android.widget.FrameLayout
+import br.com.disapps.meucartaotransporte.BuildConfig
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
+import br.com.disapps.meucartaotransporte.util.extensions.toast
+import com.appodeal.ads.Appodeal
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
 import org.koin.android.architecture.ext.viewModel
+import android.widget.Toast
+import com.appodeal.ads.NativeAd
+import com.appodeal.ads.NativeCallbacks
+
+
 
 class MainActivity : BaseFragmentActivity(){
 
@@ -28,14 +36,37 @@ class MainActivity : BaseFragmentActivity(){
     override val tabs: TabLayout by lazy { vTabs }
     override val appBar: AppBarLayout by lazy { vAppBar }
     private var fragmentSelected = 0
+    private var gettingOut = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initAppodeal()
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         viewModel.getInitialScreen()
         viewModel.initialScreen.observe(this, Observer {
             setupActualFragment(savedInstanceState, it?:0)
         })
+    }
+
+    private fun initAppodeal() {
+        Appodeal.setAutoCacheNativeIcons(true)
+        Appodeal.setAutoCacheNativeMedia(false)
+        Appodeal.initialize(this, BuildConfig.APPODEAL_APPKEY, Appodeal.INTERSTITIAL or Appodeal.BANNER or Appodeal.NATIVE or Appodeal.MREC)
+    }
+
+    override fun onBackPressed() {
+        if(toolbar.isSearchExpanded){
+            toolbar.onBackPressed()
+        }else{
+            if(gettingOut){
+                super.onBackPressed()
+            }else{
+                gettingOut = true
+                Appodeal.show(this, Appodeal.INTERSTITIAL)
+                toast(getString(R.string.press_to_exit))
+            }
+        }
     }
 
     private fun setupActualFragment(savedInstanceState: Bundle?, initialFragment: Int){

@@ -26,12 +26,14 @@ android {
             minifyEnabled true
             applicationIdSuffix ""
             versionNameSuffix ""
+            buildConfigField 'String', 'APPODEAL_APPKEY', "\"83afaed2b8417ec012d70d06673c5cfc69d403fdab1e34a4\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
+            buildConfigField 'String', 'APPODEAL_APPKEY', "\"de34bc5f4d9328ba124fc4320ef780a0158265c00806dce8\""
             testCoverageEnabled true
         }
     }

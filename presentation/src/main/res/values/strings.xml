@@ -200,4 +200,6 @@
     <string name="manual">manual</string>
     <string name="saving_data">Salvando dados...</string>
     <string name="wait_for_actual_proccess">Aguarde o fim do processo atual</string>
+    <string name="press_to_exit">Presssione mais uma vez para sair</string>
+    <string name="nativeAdMessage">Ad</string>
 </resources>

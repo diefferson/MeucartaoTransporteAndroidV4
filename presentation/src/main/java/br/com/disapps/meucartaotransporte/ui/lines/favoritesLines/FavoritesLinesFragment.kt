@@ -9,6 +9,7 @@ import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter
+import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter.Companion.objectToItem
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
@@ -24,8 +25,8 @@ class FavoritesLinesFragment : BaseFragment() {
 
     private val listAdapter: LinesListAdapter by lazy{
 
-        LinesListAdapter(viewModel.favoriteLines).apply {
-            emptyView = activity?.inflateView(R.layout.loading_view, lines_recycler )
+        LinesListAdapter(objectToItem(viewModel.favoriteLines),activity!!).apply {
+            emptyView = activity.inflateView(R.layout.loading_view, lines_recycler )
 
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
@@ -52,7 +53,7 @@ class FavoritesLinesFragment : BaseFragment() {
     private fun observeViewModel(){
         viewModel.isUpdatedFavorites.observe(this, Observer {
             listAdapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+                emptyView = activity.inflateView(R.layout.empty_view, lines_recycler )
                 notifyDataSetChanged()
             }
         })
