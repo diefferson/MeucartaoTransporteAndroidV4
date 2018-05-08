@@ -81,6 +81,7 @@ ext {
             firebaseMessaging:      "com.google.firebase:firebase-messaging:${firebaseVersion}",
             playServicesLocation:   "com.google.android.gms:play-services-location:${playServicesVersion}",
             playServicesMap:        "com.google.android.gms:play-services-maps:${playServicesVersion}",
+            playServicesAds:        "com.google.android.gms:play-services-ads:${playServicesVersion}",
             coroutinesAndroid:          "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
             fabric:          "com.crashlytics.sdk.android:crashlytics:${fabricVersion}",
     ]

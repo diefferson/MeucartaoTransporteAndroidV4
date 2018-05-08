@@ -18,7 +18,7 @@ android {
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        multiDexEnabled = true
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -45,6 +45,10 @@ android {
         dexInProcess = false
         javaMaxHeapSize "4g"
     }
+
+    packagingOptions {
+        exclude 'publicsuffixes.gz'
+    }
 }
 
 kotlin {
@@ -53,11 +57,19 @@ kotlin {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
     implementation project(':domain')
     implementation project(':data')
+    implementation 'com.android.support:multidex:1.0.3'
     implementation presentationDependencies.appCompatV7
     implementation presentationDependencies.supportV4
     implementation presentationDependencies.supportDesign
@@ -77,6 +89,7 @@ dependencies {
     implementation presentationDependencies.firebaseMessaging
     implementation presentationDependencies.playServicesLocation
     implementation presentationDependencies.playServicesMap
+    implementation presentationDependencies.playServicesAds
 
     kapt presentationDependencies.archCompiler
 
@@ -112,6 +125,10 @@ dependencies {
         exclude module: 'recyclerview-v7'
         exclude module: 'design'
     }
+    
+    //ads
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs/aar', include: ['*.aar'])
 }
 
 apply plugin: 'com.google.gms.google-services'
