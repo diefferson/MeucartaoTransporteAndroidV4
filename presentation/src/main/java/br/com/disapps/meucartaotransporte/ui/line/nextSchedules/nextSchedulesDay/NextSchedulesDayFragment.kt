@@ -3,7 +3,6 @@ package br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDa
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.meucartaotransporte.R
@@ -11,9 +10,8 @@ import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
-import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.inflateView
 import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
-import kotlinx.android.synthetic.main.activity_balance.*
 import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
 import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel

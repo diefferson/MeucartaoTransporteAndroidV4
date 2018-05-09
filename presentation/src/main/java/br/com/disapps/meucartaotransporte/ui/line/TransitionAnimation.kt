@@ -13,7 +13,7 @@ import android.view.Window
 import android.view.animation.AccelerateDecelerateInterpolator
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.RoundedColorView
-import br.com.disapps.meucartaotransporte.util.extensions.getCenter
+import br.com.disapps.meucartaotransporte.util.getCenter
 import br.com.disapps.meucartaotransporte.util.setListener
 import br.com.disapps.meucartaotransporte.util.getThemePrimaryColor
 

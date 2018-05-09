@@ -10,12 +10,9 @@ import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
-import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.inflateView
 import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
-import br.com.disapps.meucartaotransporte.util.getEmptyView
-import kotlinx.android.synthetic.main.activity_balance.*
 import kotlinx.android.synthetic.main.fragment_my_cards.*
-import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel
 
 /**

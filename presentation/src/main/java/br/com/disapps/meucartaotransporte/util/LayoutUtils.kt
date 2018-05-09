@@ -4,7 +4,6 @@ import android.app.Activity
 import android.view.View
 import android.widget.EditText
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.util.extensions.inflateView
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.native_ad.views.NativeAdViewContentStream
 import com.appodeal.ads.native_ad.views.NativeAdViewNewsFeed

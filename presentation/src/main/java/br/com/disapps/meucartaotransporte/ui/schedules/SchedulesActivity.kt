@@ -8,11 +8,10 @@ import android.support.v7.widget.GridLayoutManager
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.inflateView
 import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
 import br.com.disapps.meucartaotransporte.util.getCustomTheme
 import br.com.disapps.meucartaotransporte.util.getDayName
-import kotlinx.android.synthetic.main.activity_balance.*
 import kotlinx.android.synthetic.main.activity_schedules.*
 import kotlinx.android.synthetic.main.include_toolbar_schedules.*
 import org.koin.android.architecture.ext.viewModel

@@ -1,4 +1,4 @@
-package br.com.disapps.meucartaotransporte.util.extensions
+package br.com.disapps.meucartaotransporte.util
 
 import android.app.Activity
 import android.content.Context

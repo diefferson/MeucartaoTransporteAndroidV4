@@ -5,45 +5,47 @@ import br.com.disapps.data.api.RestClient
 import br.com.disapps.data.dataSource.factory.*
 import br.com.disapps.data.events.EventBus
 import br.com.disapps.data.executor.JobContextExecutor
+import br.com.disapps.data.repository.*
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.database.RealmDatabase
-import br.com.disapps.data.repository.*
 import br.com.disapps.data.storage.preferences.Preferences
 import br.com.disapps.domain.executor.ContextExecutor
 import br.com.disapps.domain.executor.PostExecutionContext
-import br.com.disapps.domain.interactor.cards.*
-import br.com.disapps.domain.interactor.lines.*
-import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceViewModel
-import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel
-import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItinerariesViewModel
-import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
-import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
-import br.com.disapps.meucartaotransporte.ui.cards.myCards.MyCardsViewModel
-import br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel
-import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel
-import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
-import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
-import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
-import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.domain.interactor.buses.GetAllBuses
-import br.com.disapps.domain.interactor.events.*
+import br.com.disapps.domain.interactor.cards.*
+import br.com.disapps.domain.interactor.events.GetUpdateLinesEvent
+import br.com.disapps.domain.interactor.events.GetUpdateSchedulesEvent
+import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.itineraries.*
+import br.com.disapps.domain.interactor.lines.GetAllLinesJson
+import br.com.disapps.domain.interactor.lines.GetLines
+import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
+import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.domain.interactor.preferences.*
 import br.com.disapps.domain.interactor.schedules.*
 import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.GetShapes
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
-import br.com.disapps.meucartaotransporte.BuildConfig
-import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.executor.UIContext
+import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceViewModel
+import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel
+import br.com.disapps.meucartaotransporte.ui.cards.myCards.MyCardsViewModel
+import br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel
+import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel
+import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
+import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
+import br.com.disapps.meucartaotransporte.ui.line.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirection.ItineraryDirectionViewModel
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesViewModel
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayViewModel
+import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
+import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
+import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesViewModel
+import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageViewModel
-import br.com.disapps.meucartaotransporte.util.iab.IabHelper
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -70,14 +72,13 @@ object AppInject {
         bean { EventBus() }
         bean { UIContext() as PostExecutionContext }
         bean { JobContextExecutor() as  ContextExecutor }
-        factory { IabHelper(get("applicationContext")) }
     }
 
     private val viewModelModule = applicationContext {
         viewModel { BaseViewModel() }
         viewModel { ItinerariesViewModel( getItineraryDirectionsUseCase = get()) }
         viewModel { LinesViewModel( getLinesUseCase = get(), updateLineUseCase =  get()) }
-        viewModel { MainViewModel( getInitialScreenUseCase = get()) }
+        viewModel { MainViewModel( getInitialScreenUseCase = get(), getIsProUseCase = get(), setIsProUseCase = get()) }
         viewModel { QuickFindViewModel() }
         viewModel { SettingsViewModel( getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
         viewModel { ShapesViewModel( getShapesUseCase = get(), getAllItinerariesUseCase = get(), getAllBusesUseCase = get()) }
@@ -125,6 +126,8 @@ object AppInject {
         factory { GetIsFirstAccess( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetDataUsage( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { SetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveIsFirstAccess( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { SavePeriodUpdateLines( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { SavePeriodUpdateSchedules( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }

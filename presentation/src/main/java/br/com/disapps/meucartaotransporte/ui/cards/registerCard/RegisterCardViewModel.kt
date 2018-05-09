@@ -7,8 +7,8 @@ import br.com.disapps.domain.interactor.cards.SaveCard
 import br.com.disapps.domain.model.Card
 import br.com.disapps.meucartaotransporte.model.KnownError
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
-import br.com.disapps.meucartaotransporte.util.extensions.clean
-import br.com.disapps.meucartaotransporte.util.extensions.isCPF
+import br.com.disapps.meucartaotransporte.util.clean
+import br.com.disapps.meucartaotransporte.util.isCPF
 
 class RegisterCardViewModel(private val hasCardUseCase: HasCard,
                             private val saveCardUseCase: SaveCard,

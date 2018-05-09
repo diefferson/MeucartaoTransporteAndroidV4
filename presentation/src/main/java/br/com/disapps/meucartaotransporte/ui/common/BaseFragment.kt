@@ -1,8 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
@@ -12,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.util.extensions.toast
+import br.com.disapps.meucartaotransporte.util.toast
 import com.appodeal.ads.Appodeal
 
 /**

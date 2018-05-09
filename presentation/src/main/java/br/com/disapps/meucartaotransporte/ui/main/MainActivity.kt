@@ -17,7 +17,7 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
-import br.com.disapps.meucartaotransporte.util.extensions.toast
+import br.com.disapps.meucartaotransporte.util.toast
 import com.appodeal.ads.Appodeal
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
@@ -49,6 +49,14 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
         viewModel.getInitialScreen()
         viewModel.initialScreen.observe(this, Observer {
             setupActualFragment(savedInstanceState, it?:0)
+        })
+
+        viewModel.isPro.observe(this, Observer {
+            if(it!= null && it){
+                Appodeal.setCustomRule(MainViewModel.SKU_PRO, true)
+            }else{
+                Appodeal.setCustomRule(MainViewModel.SKU_PRO, false)
+            }
         })
     }
 
@@ -154,7 +162,6 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
 
     private fun initInAppBilling() {
         viewModel.iabHelper = IabHelper(this)
-        viewModel.iabHelper?.enableDebugLogging(true)
         viewModel.iabHelper?.startSetup(object : IabHelper.OnIabSetupFinishedListener {
 
             override fun onIabSetupFinished(result: IabResult) {

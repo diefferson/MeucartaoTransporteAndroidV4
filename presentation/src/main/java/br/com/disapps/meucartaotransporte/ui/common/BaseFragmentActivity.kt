@@ -13,10 +13,10 @@ import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
-import br.com.disapps.meucartaotransporte.util.extensions.toast
+import br.com.disapps.meucartaotransporte.util.toast
 import android.animation.ValueAnimator
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
-import br.com.disapps.meucartaotransporte.util.extensions.clean
+import br.com.disapps.meucartaotransporte.util.clean
 import com.appodeal.ads.Appodeal
 
 /**
