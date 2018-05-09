@@ -48,11 +48,19 @@ class ItineraryDirectionFragment : BaseFragment(){
     private fun observeViewModel(){
         viewModel.itinerary.observe(this, Observer {
             listAdapter.apply {
-                emptyView = activity?.inflateView(R.layout.loading_view, itinerary_recycler)
-                setFooterView(activity!!.getAdViewContentStream(itinerary_recycler))
                 setNewData(it)
+                setAdapterViews()
             }
         })
+    }
+
+    private fun setAdapterViews(){
+        try {
+            listAdapter.apply {
+                emptyView = activity?.inflateView(R.layout.empty_view, itinerary_recycler)
+                setFooterView(activity!!.getAdViewContentStream())
+            }
+        } catch(e : Exception){}
     }
 
     companion object {

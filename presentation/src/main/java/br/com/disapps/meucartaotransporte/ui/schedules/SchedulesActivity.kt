@@ -62,11 +62,19 @@ class SchedulesActivity : BaseActivity (){
     private fun observeViewModel(){
         viewModel.schedules.observe(this, Observer {
             listAdapter.apply {
-                emptyView = inflateView(R.layout.empty_view, schedules_recycler )
-                setFooterView(getAdViewContentStream(schedules_recycler))
                 setNewData(it)
+                setAdapterViews()
             }
         })
+    }
+
+    private fun setAdapterViews(){
+        try {
+            listAdapter.apply {
+                emptyView = inflateView(R.layout.empty_view, schedules_recycler)
+                setFooterView(getAdViewContentStream())
+            }
+        } catch(e : Exception){}
     }
 
     companion object {

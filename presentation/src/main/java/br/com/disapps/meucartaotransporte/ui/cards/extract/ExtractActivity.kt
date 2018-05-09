@@ -45,11 +45,19 @@ class ExtractActivity : BaseActivity(){
     private fun observeViewModel(){
         viewModel.extract.observe(this, Observer {
             adapter.apply {
-                emptyView = inflateView(R.layout.empty_view, extract_recycler )
-                setFooterView(getAdViewContentStream(extract_recycler))
                 setNewData(it)
+                setAdapterViews()
             }
         })
+    }
+
+    private fun setAdapterViews(){
+        try {
+            adapter.apply {
+                emptyView = inflateView(R.layout.empty_view, extract_recycler)
+                setFooterView(getAdViewContentStream())
+            }
+        } catch(e : Exception){}
     }
 
     companion object {

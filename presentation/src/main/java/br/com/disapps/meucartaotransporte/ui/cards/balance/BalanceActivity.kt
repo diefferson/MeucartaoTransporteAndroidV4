@@ -47,9 +47,8 @@ class BalanceActivity : BaseActivity() {
     private fun observeViewModel(){
         viewModel.card.observe(this, Observer {
             adapter.apply {
-                emptyView = inflateView(R.layout.empty_view, balance_recycler )
-                setFooterView(getAdViewContentStream(balance_recycler))
                 setNewData(arrayListOf(it))
+                setAdapterViews()
             }
         })
 
@@ -58,6 +57,15 @@ class BalanceActivity : BaseActivity() {
                 adapter.emptyView = inflateView(R.layout.empty_view, balance_recycler )
             }
         })
+    }
+
+    private fun setAdapterViews(){
+        try {
+            adapter.apply {
+                emptyView = inflateView(R.layout.empty_view, balance_recycler)
+                setFooterView(getAdViewContentStream())
+            }
+        } catch(e : Exception){}
     }
 
     companion object {

@@ -7,6 +7,9 @@ import br.com.disapps.meucartaotransporte.R
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.native_ad.views.NativeAdViewContentStream
 import com.appodeal.ads.native_ad.views.NativeAdViewNewsFeed
+import com.appodeal.ads.native_ad.views.NativeAdViewAppWall
+
+
 
 fun Activity.getEmptyView(message: String,viewGroup: View): View {
     val layout = this.inflateView(R.layout.empty_view,viewGroup )
@@ -14,20 +17,20 @@ fun Activity.getEmptyView(message: String,viewGroup: View): View {
     return layout
 }
 
-fun Activity.getAdViewContentStream(viewGroup: View): View {
+fun Activity.getAdViewContentStream(): View {
     Appodeal.cache(this, Appodeal.NATIVE)
-    val adView = this.inflateView(R.layout.item_ads_large, viewGroup) as NativeAdViewContentStream
+    val nativeAdView = NativeAdViewContentStream(this)
     val nativeAd = Appodeal.getNativeAds(1)
     if(nativeAd.size >0){
-        adView.setNativeAd(nativeAd[0])
+         nativeAdView.setNativeAd(nativeAd[0])
     }
     Appodeal.cache(this, Appodeal.NATIVE)
-    return adView
+    return nativeAdView
 }
 
-fun Activity.getAdViewNewsFeed(viewGroup: View): View {
+fun Activity.getAdViewNewsFeed(): View {
     Appodeal.cache(this, Appodeal.NATIVE)
-    val adView = this.inflateView(R.layout.item_ads, viewGroup) as NativeAdViewNewsFeed
+    val adView = NativeAdViewNewsFeed(this)
     val nativeAd = Appodeal.getNativeAds(1)
     if(nativeAd.size >0){
         adView.setNativeAd(nativeAd[0])

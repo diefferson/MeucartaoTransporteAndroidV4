@@ -66,11 +66,19 @@ class NextSchedulesDayFragment : BaseFragment(){
     private fun observeViewModel(){
         viewModel.nextSchedules.observe(this, Observer {
             listAdapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, next_schedules_recycler)
-                setFooterView(activity!!.getAdViewContentStream(next_schedules_recycler))
                 setNewData(it)
+                setAdapterViews()
             }
         })
+    }
+
+    private fun setAdapterViews(){
+        try {
+            listAdapter.apply {
+                emptyView = activity?.inflateView(R.layout.empty_view, next_schedules_recycler)
+                setFooterView(activity!!.getAdViewContentStream())
+            }
+        } catch(e : Exception){}
     }
 
     companion object {

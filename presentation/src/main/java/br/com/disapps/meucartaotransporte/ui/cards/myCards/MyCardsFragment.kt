@@ -13,6 +13,7 @@ import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.util.inflateView
 import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
 import kotlinx.android.synthetic.main.fragment_my_cards.*
+import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
 import org.koin.android.architecture.ext.viewModel
 
 /**
@@ -58,11 +59,19 @@ class MyCardsFragment : BaseFragment(){
     private fun observeViewModel(){
         viewModel.cards.observe(this, Observer {
             adapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler )
-                setFooterView(activity!!.getAdViewContentStream(cards_recycler))
                 setNewData(it)
+                setAdapterViews()
             }
         })
+    }
+
+    private fun setAdapterViews(){
+        try {
+            adapter.apply {
+                emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler)
+                setFooterView(activity!!.getAdViewContentStream())
+            }
+        } catch(e : Exception){}
     }
 
     private fun confirmDeleteCard(cardVO: CardVO){
