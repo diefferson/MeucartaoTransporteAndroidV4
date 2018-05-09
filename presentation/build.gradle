@@ -27,6 +27,7 @@ android {
             applicationIdSuffix ""
             versionNameSuffix ""
             buildConfigField 'String', 'APPODEAL_APPKEY', "\"83afaed2b8417ec012d70d06673c5cfc69d403fdab1e34a4\""
+            buildConfigField 'String', 'GOOGLE_PLAY_PUB_KEY', "\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqW3dO9Bvfme9nBzVl9tUAKTBFbr6cC20GGmxWFrpcUp5dtdbzdKv7GinkKbMLwe7Ymxz0LupkqMTQmXL3Pc0R0jtYrYpOnrSSYP6i2u3Ln/uMxaOe4D68+nsJHRBylNesGsX61FQrY0PNXyGBoZ5yU6/8F9mPmDpQ00CM+ERVtSc2ZpXyMeBEVobsqpRkbpk3hO/7cxmeHDzhS17C7KNxAcaZrgjfazl0AjXAOjPtXdCYwm+lQnd/5DmqhJwYeoO59gd9gYbjt4orVrDFRMQReJNiKUlHQOr18fIzL+Y/GLE2os0vZhHZ+30kVpkTca5uv6nesTGw8+CpvwuBtCDSwIDAQAB\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -34,6 +35,7 @@ android {
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
             buildConfigField 'String', 'APPODEAL_APPKEY', "\"de34bc5f4d9328ba124fc4320ef780a0158265c00806dce8\""
+            buildConfigField 'String', 'GOOGLE_PLAY_PUB_KEY', "\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqW3dO9Bvfme9nBzVl9tUAKTBFbr6cC20GGmxWFrpcUp5dtdbzdKv7GinkKbMLwe7Ymxz0LupkqMTQmXL3Pc0R0jtYrYpOnrSSYP6i2u3Ln/uMxaOe4D68+nsJHRBylNesGsX61FQrY0PNXyGBoZ5yU6/8F9mPmDpQ00CM+ERVtSc2ZpXyMeBEVobsqpRkbpk3hO/7cxmeHDzhS17C7KNxAcaZrgjfazl0AjXAOjPtXdCYwm+lQnd/5DmqhJwYeoO59gd9gYbjt4orVrDFRMQReJNiKUlHQOr18fIzL+Y/GLE2os0vZhHZ+30kVpkTca5uv6nesTGw8+CpvwuBtCDSwIDAQAB\""
             testCoverageEnabled true
         }
     }

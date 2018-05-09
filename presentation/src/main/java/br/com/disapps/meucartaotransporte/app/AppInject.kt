@@ -34,6 +34,8 @@ import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.GetShapes
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
+import br.com.disapps.meucartaotransporte.BuildConfig
+import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.executor.UIContext
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirection.ItineraryDirectionViewModel
@@ -41,6 +43,7 @@ import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.NextSchedulesVie
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageViewModel
+import br.com.disapps.meucartaotransporte.util.iab.IabHelper
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -67,6 +70,7 @@ object AppInject {
         bean { EventBus() }
         bean { UIContext() as PostExecutionContext }
         bean { JobContextExecutor() as  ContextExecutor }
+        factory { IabHelper(get("applicationContext")) }
     }
 
     private val viewModelModule = applicationContext {

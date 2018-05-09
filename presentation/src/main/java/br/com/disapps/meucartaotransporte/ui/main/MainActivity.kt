@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
 import org.koin.android.architecture.ext.viewModel
 import android.widget.Toast
+import com.appodeal.ads.InterstitialCallbacks
 import com.appodeal.ads.NativeAd
 import com.appodeal.ads.NativeCallbacks
 
@@ -61,11 +62,23 @@ class MainActivity : BaseFragmentActivity(){
         }else{
             if(gettingOut){
                 super.onBackPressed()
-                finish()
             }else{
                 gettingOut = true
-                Appodeal.show(this, Appodeal.INTERSTITIAL)
                 toast(getString(R.string.press_to_exit))
+                Appodeal.show(this, Appodeal.INTERSTITIAL)
+                Appodeal.setInterstitialCallbacks(object : InterstitialCallbacks {
+                    override fun onInterstitialLoaded(b: Boolean) {}
+
+                    override fun onInterstitialFailedToLoad() {}
+
+                    override fun onInterstitialShown() {}
+
+                    override fun onInterstitialClicked() {}
+
+                    override fun onInterstitialClosed() {
+                        finish()
+                    }
+                })
             }
         }
     }
