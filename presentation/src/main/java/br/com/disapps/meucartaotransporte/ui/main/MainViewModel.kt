@@ -6,12 +6,12 @@ import br.com.disapps.domain.interactor.preferences.GetInitialScreen
 import br.com.disapps.domain.interactor.preferences.GetIsPro
 import br.com.disapps.domain.interactor.preferences.SetIsPro
 import br.com.disapps.domain.model.InitialScreen
+import br.com.disapps.meucartaotransporte.model.InAppBillingStatus
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.iab.IabHelper
 import br.com.disapps.meucartaotransporte.util.iab.IabResult
 import br.com.disapps.meucartaotransporte.util.iab.Inventory
 import br.com.disapps.meucartaotransporte.util.iab.Purchase
-import com.appodeal.ads.Appodeal
 
 /**
  * Created by dnso on 09/03/2018.
@@ -24,7 +24,7 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen,
     val searchText = MutableLiveData<String>()
     val onSearchAction = MutableLiveData<Boolean>()
     val isPro = MutableLiveData<Boolean>()
-    val resultInAppBilling = MutableLiveData<String>()
+    val resultInAppBilling = MutableLiveData<InAppBillingStatus>()
     var isTabsVisible = true
     var iabHelper: IabHelper? = null
 
@@ -45,7 +45,7 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen,
         try {
             iabHelper?.launchPurchaseFlow(activity, SKU_PRO,RC_REQUEST,mPurchaseFinishedListener, "")
         } catch (e: IabHelper.IabAsyncInProgressException) {
-            resultInAppBilling.value = "Erro ao iniciar o fluxo de compras. Outra operação assíncrona em andamento."
+            resultInAppBilling.value = InAppBillingStatus.ERROR_INIT
         }
     }
 
@@ -53,52 +53,37 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen,
         try {
             iabHelper?.queryInventoryAsync(mGotInventoryListener)
         } catch (e: IabHelper.IabAsyncInProgressException) {
-            resultInAppBilling.value = "Erro ao consultar o inventário. Outra operação assíncrona em andamento."
+            resultInAppBilling.value = InAppBillingStatus.ERROR_QUERY
         }
     }
 
-    //Ouvinte que é chamado quando terminamos de consultar os itens e assinaturas que possuímos
     private var mGotInventoryListener: IabHelper.QueryInventoryFinishedListener = object : IabHelper.QueryInventoryFinishedListener {
         override fun onQueryInventoryFinished(result: IabResult, inventory: Inventory?) {
             if (result.isFailure) {
-                resultInAppBilling.value = "Falha ao consultar inventário: $result"
+                resultInAppBilling.value = InAppBillingStatus.ERROR_QUERY_INVENTORY
                 return
             }
 
             val premiumPurchase = inventory?.getPurchase(SKU_PRO)
-            setIsProUseCase.execute(SetIsPro.Params( premiumPurchase != null && verifyDeveloperPayload(premiumPurchase)))
-            isPro.value = premiumPurchase != null && verifyDeveloperPayload(premiumPurchase)
+            setIsProUseCase.execute(SetIsPro.Params( premiumPurchase != null))
+            isPro.value = premiumPurchase != null
         }
     }
 
-
-    //Chamada de retorno quando a compra estiver concluída
     private var mPurchaseFinishedListener: IabHelper.OnIabPurchaseFinishedListener = object : IabHelper.OnIabPurchaseFinishedListener {
         override fun onIabPurchaseFinished(result: IabResult, purchase: Purchase?) {
 
             if (result.isFailure) {
-                resultInAppBilling.value = "Erro ao comprar: $result"
-                return
-            }
-
-            if (!verifyDeveloperPayload(purchase)) {
-                resultInAppBilling.value = "Erro ao comprar. Falha na verificação de autenticidade."
                 return
             }
 
             if (purchase!!.sku == SKU_PRO) {
-                resultInAppBilling.value = "Obrigado por assinar a versão PRO"
+                resultInAppBilling.value = InAppBillingStatus.SUCCESS
                 iabHelper?.flagEndAsync()
                 setIsProUseCase.execute(SetIsPro.Params(true))
                 isPro.value = true
             }
         }
-    }
-
-    /** Verifies the developer payload of a purchase.  */
-    internal fun verifyDeveloperPayload(p: Purchase?): Boolean {
-        val payload = p?.developerPayload
-        return true
     }
 
     override fun onCleared() {

@@ -8,23 +8,26 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
-import android.util.Log
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BuildConfig
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.model.InAppBillingStatus
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
+import br.com.disapps.meucartaotransporte.util.alertNeutral
+import br.com.disapps.meucartaotransporte.util.iab.IabBroadcastReceiver
+import br.com.disapps.meucartaotransporte.util.iab.IabHelper
+import br.com.disapps.meucartaotransporte.util.iab.IabResult
 import br.com.disapps.meucartaotransporte.util.toast
 import com.appodeal.ads.Appodeal
+import com.appodeal.ads.InterstitialCallbacks
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
 import org.koin.android.architecture.ext.viewModel
-import br.com.disapps.meucartaotransporte.util.iab.*
-import com.appodeal.ads.InterstitialCallbacks
 
 class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastListener{
 
@@ -44,18 +47,35 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
 
         initAppodeal()
         initInAppBilling()
+        observeViewModel(savedInstanceState)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
         viewModel.getInitialScreen()
+    }
+
+    private fun observeViewModel(savedInstanceState: Bundle?) {
+
         viewModel.initialScreen.observe(this, Observer {
-            setupActualFragment(savedInstanceState, it?:0)
+            setupActualFragment(savedInstanceState, it ?: 0)
         })
 
         viewModel.isPro.observe(this, Observer {
-            if(it!= null && it){
+            if (it != null && it) {
                 Appodeal.setCustomRule(MainViewModel.SKU_PRO, true)
-            }else{
+            } else {
                 Appodeal.setCustomRule(MainViewModel.SKU_PRO, false)
+            }
+        })
+
+        viewModel.resultInAppBilling.observe(this, Observer {
+            it?.let {
+                when (it) {
+                    InAppBillingStatus.ERROR_INIT -> alertNeutral(getString(R.string.inapp_error_init))
+                    InAppBillingStatus.ERROR_QUERY -> alertNeutral(getString(R.string.inapp_error_query))
+                    InAppBillingStatus.ERROR_QUERY_INVENTORY -> alertNeutral(getString(R.string.inapp_error_inventory))
+                    InAppBillingStatus.SUCCESS -> alertNeutral(getString(R.string.inapp_success))
+                }
             }
         })
     }
@@ -145,7 +165,6 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
         false
     }
 
-
     public override fun onDestroy() {
         super.onDestroy()
         mBroadcastReceiver?.let{ unregisterReceiver(mBroadcastReceiver) }
@@ -166,17 +185,12 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
 
             override fun onIabSetupFinished(result: IabResult) {
 
-                if (!result.isSuccess) {
-                    Log.d(TAG, "Problema ao configurar a faturação no aplicativo: $result")
-                }
-
                 if (viewModel.iabHelper == null) return
 
                 mBroadcastReceiver = IabBroadcastReceiver(this@MainActivity)
                 val broadcastFilter = IntentFilter(IabBroadcastReceiver.ACTION)
                 registerReceiver(mBroadcastReceiver, broadcastFilter)
 
-                Log.d(TAG, "Configuração bem sucedida. Consultando inventário.")
                 viewModel.queryInventoryAsync()
             }
         })
@@ -187,7 +201,6 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
     }
 
     companion object {
-        private const val TAG = "MainActivity"
         private const val FRAGMENT_SELECTED = "fragmentSelected"
         fun launch(context: Context){
             val intent = Intent(context, MainActivity::class.java)

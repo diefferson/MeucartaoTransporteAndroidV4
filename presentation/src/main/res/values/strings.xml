@@ -202,4 +202,11 @@
     <string name="wait_for_actual_proccess">Aguarde o fim do processo atual</string>
     <string name="press_to_exit">Presssione mais uma vez para sair</string>
     <string name="nativeAdMessage">Ad</string>
+
+
+    <!--in app billing -->
+    <string name="inapp_error_init">Erro ao iniciar o fluxo de compras. Outra operação assíncrona em andamento</string>
+    <string name="inapp_error_query">Erro ao consultar o inventário. Outra operação assíncrona em andamento.</string>
+    <string name="inapp_error_inventory">Falha ao consultar inventário</string>
+    <string name="inapp_success">Obrigado por assinar a versão PRO</string>
 </resources>
