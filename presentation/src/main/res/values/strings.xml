@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Clean Architecture</string>
+    <string name="app_name">Meu Cartão Transporte</string>
     <string name="url_app">https://play.google.com/store/apps/details?id=br.com.disapps.meucartaotransporte</string>
     <string name="google_play_public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqW3dO9Bvfme9nBzVl9tUAKTBFbr6cC20GGmxWFrpcUp5dtdbzdKv7GinkKbMLwe7Ymxz0LupkqMTQmXL3Pc0R0jtYrYpOnrSSYP6i2u3Ln/uMxaOe4D68+nsJHRBylNesGsX61FQrY0PNXyGBoZ5yU6/8F9mPmDpQ00CM+ERVtSc2ZpXyMeBEVobsqpRkbpk3hO/7cxmeHDzhS17C7KNxAcaZrgjfazl0AjXAOjPtXdCYwm+lQnd/5DmqhJwYeoO59gd9gYbjt4orVrDFRMQReJNiKUlHQOr18fIzL+Y/GLE2os0vZhHZ+30kVpkTca5uv6nesTGw8+CpvwuBtCDSwIDAQAB</string>
     <string name="url_faq">https://meucartaotransporte.com.br/faq</string>

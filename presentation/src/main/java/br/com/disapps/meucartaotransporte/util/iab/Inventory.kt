@@ -23,8 +23,8 @@ import java.util.HashMap
  * An Inventory is returned by such methods as [IabHelper.queryInventory].
  */
 class Inventory internal constructor() {
-    internal var mSkuMap: MutableMap<String, SkuDetails> = HashMap()
-    internal var mPurchaseMap: MutableMap<String, Purchase> = HashMap()
+    private var mSkuMap: MutableMap<String, SkuDetails> = HashMap()
+    private var mPurchaseMap: MutableMap<String, Purchase> = HashMap()
 
     /** Returns a list of all owned product IDs.  */
     internal val allOwnedSkus: List<String>

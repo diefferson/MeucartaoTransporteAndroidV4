@@ -3,10 +3,12 @@ package br.com.disapps.meucartaotransporte.ui.main
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
+import android.util.Log
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BuildConfig
 import br.com.disapps.meucartaotransporte.R
@@ -21,14 +23,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
 import org.koin.android.architecture.ext.viewModel
-import android.widget.Toast
+import br.com.disapps.meucartaotransporte.util.iab.*
 import com.appodeal.ads.InterstitialCallbacks
-import com.appodeal.ads.NativeAd
-import com.appodeal.ads.NativeCallbacks
 
-
-
-class MainActivity : BaseFragmentActivity(){
+class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastListener{
 
     override val viewModel by viewModel<MainViewModel>()
     override val activityLayout = R.layout.activity_main
@@ -39,9 +37,13 @@ class MainActivity : BaseFragmentActivity(){
     private var fragmentSelected = 0
     private var gettingOut = false
 
+    internal var mBroadcastReceiver: IabBroadcastReceiver? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         initAppodeal()
+        initInAppBilling()
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         viewModel.getInitialScreen()
@@ -68,13 +70,9 @@ class MainActivity : BaseFragmentActivity(){
                 Appodeal.show(this, Appodeal.INTERSTITIAL)
                 Appodeal.setInterstitialCallbacks(object : InterstitialCallbacks {
                     override fun onInterstitialLoaded(b: Boolean) {}
-
                     override fun onInterstitialFailedToLoad() {}
-
                     override fun onInterstitialShown() {}
-
                     override fun onInterstitialClicked() {}
-
                     override fun onInterstitialClosed() {
                         finish()
                     }
@@ -139,7 +137,50 @@ class MainActivity : BaseFragmentActivity(){
         false
     }
 
+
+    public override fun onDestroy() {
+        super.onDestroy()
+        mBroadcastReceiver?.let{ unregisterReceiver(mBroadcastReceiver) }
+        viewModel.iabHelper?.disposeWhenFinished()
+        viewModel.iabHelper = null
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (viewModel.iabHelper == null) return
+        if (!viewModel.iabHelper!!.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun initInAppBilling() {
+        viewModel.iabHelper = IabHelper(this)
+        viewModel.iabHelper?.enableDebugLogging(true)
+        viewModel.iabHelper?.startSetup(object : IabHelper.OnIabSetupFinishedListener {
+
+            override fun onIabSetupFinished(result: IabResult) {
+
+                if (!result.isSuccess) {
+                    Log.d(TAG, "Problema ao configurar a faturação no aplicativo: $result")
+                }
+
+                if (viewModel.iabHelper == null) return
+
+                mBroadcastReceiver = IabBroadcastReceiver(this@MainActivity)
+                val broadcastFilter = IntentFilter(IabBroadcastReceiver.ACTION)
+                registerReceiver(mBroadcastReceiver, broadcastFilter)
+
+                Log.d(TAG, "Configuração bem sucedida. Consultando inventário.")
+                viewModel.queryInventoryAsync()
+            }
+        })
+    }
+
+    override fun receivedBroadcast() {
+        viewModel.queryInventoryAsync()
+    }
+
     companion object {
+        private const val TAG = "MainActivity"
         private const val FRAGMENT_SELECTED = "fragmentSelected"
         fun launch(context: Context){
             val intent = Intent(context, MainActivity::class.java)

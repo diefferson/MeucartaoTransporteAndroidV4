@@ -23,7 +23,7 @@ package br.com.disapps.meucartaotransporte.util.iab
  * can also inquire whether a result is a success or a failure by
  * calling [.isSuccess] and [.isFailure].
  */
-class IabResult(response: Int, message: String?) {
+class IabResult(response: Int = 0, message: String?) {
     var response: Int = 0
         internal set
     var message: String
@@ -35,10 +35,11 @@ class IabResult(response: Int, message: String?) {
 
     init {
         this.response = response
-        if (message == null || message.trim { it <= ' ' }.length == 0) {
-            this.message = IabHelper.getResponseDesc(response)
+
+        if (message == null || message.trim { it <= ' ' }.isEmpty()) {
+            this.message = IabHelper.getResponseDesc(this.response)
         } else {
-            this.message = message + " (response: " + IabHelper.getResponseDesc(response) + ")"
+            this.message = "$message (response:"+ IabHelper.getResponseDesc(this.response)+")"
         }
     }
 

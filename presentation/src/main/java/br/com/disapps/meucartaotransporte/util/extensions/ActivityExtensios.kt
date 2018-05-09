@@ -36,6 +36,13 @@ fun Activity.validateConnection(): Boolean {
     return connected
 }
 
+fun Activity.alertNeutral(message: String) {
+    val bld = android.app.AlertDialog.Builder(this)
+    bld.setMessage(message)
+    bld.setNeutralButton("OK", null)
+    bld.create().show()
+}
+
 fun Activity.alert( titulo: String, mensagem: String) {
 
     val builder = AlertDialog.Builder(this)

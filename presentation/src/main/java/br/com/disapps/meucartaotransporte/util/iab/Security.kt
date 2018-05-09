@@ -38,15 +38,15 @@ import java.security.spec.X509EncodedKeySpec
  * purchases as verified.
  */
 object Security {
-    private val TAG = "IABUtil/Security"
+    private const val TAG = "IABUtil/Security"
 
-    private val KEY_FACTORY_ALGORITHM = "RSA"
-    private val SIGNATURE_ALGORITHM = "SHA1withRSA"
+    private const val KEY_FACTORY_ALGORITHM = "RSA"
+    private const val SIGNATURE_ALGORITHM = "SHA1withRSA"
 
     /**
      * Verifies that the data was signed with the given signature, and returns
      * the verified purchase. The data is in JSON format and signed
-     * with a private key. The data also contains the [PurchaseState]
+     * with a private key. The data also contains the PurchaseState
      * and product ID of the purchase.
      * @param base64PublicKey the base64-encoded public key to use for verifying.
      * @param signedData the signed JSON string (signed, not encrypted)
@@ -70,7 +70,7 @@ object Security {
      * @param encodedPublicKey Base64-encoded public key
      * @throws IllegalArgumentException if encodedPublicKey is invalid
      */
-    fun generatePublicKey(encodedPublicKey: String): PublicKey {
+    private fun generatePublicKey(encodedPublicKey: String): PublicKey {
         try {
             val decodedKey = Base64.decode(encodedPublicKey, Base64.DEFAULT)
             val keyFactory = KeyFactory.getInstance(KEY_FACTORY_ALGORITHM)
@@ -93,7 +93,7 @@ object Security {
      * @param signature server signature
      * @return true if the data and signature match
      */
-    fun verify(publicKey: PublicKey, signedData: String, signature: String): Boolean {
+    private fun verify(publicKey: PublicKey, signedData: String, signature: String): Boolean {
         val signatureBytes: ByteArray
         try {
             signatureBytes = Base64.decode(signature, Base64.DEFAULT)

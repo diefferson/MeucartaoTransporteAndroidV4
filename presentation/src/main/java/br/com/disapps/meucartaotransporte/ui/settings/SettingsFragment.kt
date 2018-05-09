@@ -8,6 +8,8 @@ import android.view.View
 import br.com.disapps.domain.model.InitialScreen
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
+import br.com.disapps.meucartaotransporte.ui.main.MainActivity
+import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
 import br.com.disapps.meucartaotransporte.util.iab.IabHelper
@@ -24,8 +26,7 @@ class SettingsFragment : BaseFragment(){
 
     override val viewModel by viewModel<SettingsViewModel>()
     override val fragmentLayout = R.layout.fragment_settings
-
-    val iabHelper : IabHelper by inject()
+    private val mainViewModel: MainViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,65 +79,11 @@ class SettingsFragment : BaseFragment(){
         ))
     }
 
-    fun removeAds() {
-
-        val payload = ""
-
-
-        try {
-
-            iabHelper.launchPurchaseFlow(activity!!, SKU_PRO, RC_REQUEST, mPurchaseFinishedListener, payload)
-
-        } catch (e: IabHelper.IabAsyncInProgressException) {
-            complain("Erro ao iniciar o fluxo de compras. Outra operação assíncrona em andamento.")
-        }
-    }
-
-    //Chamada de retorno quando a compra estiver concluída
-    internal var mPurchaseFinishedListener: IabHelper.OnIabPurchaseFinishedListener = object : IabHelper.OnIabPurchaseFinishedListener {
-        override fun onIabPurchaseFinished(result: IabResult, purchase: Purchase?) {
-            if (iabHelper == null) return
-
-            if (result.isFailure) {
-                //complain("Erro ao comprar: " + result);
-                return
-            }
-            if (!verifyDeveloperPayload(purchase)) {
-                //complain("Erro ao comprar. Falha na verificação de autenticidade.");
-                return
-            }
-
-            if (purchase!!.sku == SKU_PRO) {
-                alert("Obrigado por assinar a versão PRO")
-                iabHelper.flagEndAsync()
-            }
-        }
-
-    }
-
-    /** Verifies the developer payload of a purchase.  */
-    internal fun verifyDeveloperPayload(p: Purchase?): Boolean {
-        val payload = p?.developerPayload
-
-        return true
-    }
-
-    internal fun complain(message: String) {
-        Log.e("TAG", "**** Inapp Error: $message")
-        alert(message)
-    }
-
-    internal fun alert(message: String) {
-        val bld = android.app.AlertDialog.Builder(context)
-        bld.setMessage(message)
-        bld.setNeutralButton("OK", null)
-        bld.create().show()
+    private fun removeAds() {
+        mainViewModel.launchPurchaseFlow(activity!!)
     }
 
     companion object {
-        internal val SKU_PRO = "remove_ads"
-
-        internal val RC_REQUEST = 10001
         fun newInstance() = SettingsFragment()
     }
 

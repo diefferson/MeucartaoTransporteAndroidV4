@@ -26,11 +26,11 @@ class IabException @JvmOverloads constructor(r: IabResult, cause: Exception? = n
     var result: IabResult
         internal set
 
-    constructor(response: Int, message: String) : this(IabResult(response, message)) {}
+    constructor(response: Int, message: String) : this(IabResult(response, message))
 
     init {
         result = r
     }
 
-    constructor(response: Int, message: String, cause: Exception) : this(IabResult(response, message), cause) {}
+    constructor(response: Int, message: String, cause: Exception) : this(IabResult(response, message), cause)
 }

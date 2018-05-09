@@ -22,18 +22,14 @@ import org.json.JSONObject
  * Represents an in-app product's listing details.
  */
 class SkuDetails @Throws(JSONException::class)
-constructor(private val mItemType: String, private val mJson: String) {
+constructor(private val mJson: String) {
     val sku: String
     val type: String
-    val price: String
-    val priceAmountMicros: Long
-    val priceCurrencyCode: String
+    private val price: String
+    private val priceAmountMicros: Long
+    private val priceCurrencyCode: String
     val title: String
     val description: String
-
-    @Throws(JSONException::class)
-    constructor(jsonSkuDetails: String) : this(IabHelper.ITEM_TYPE_INAPP, jsonSkuDetails) {
-    }
 
     init {
         val o = JSONObject(mJson)

@@ -50,6 +50,6 @@ class IabBroadcastReceiver(private val mListener: IabBroadcastListener?) : Broad
         /**
          * The Intent action that this Receiver should filter for.
          */
-        val ACTION = "com.android.vending.billing.PURCHASES_UPDATED"
+        const val ACTION = "com.android.vending.billing.PURCHASES_UPDATED"
     }
 }
