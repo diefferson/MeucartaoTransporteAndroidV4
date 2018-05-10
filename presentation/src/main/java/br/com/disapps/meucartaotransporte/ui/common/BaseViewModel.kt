@@ -2,7 +2,7 @@ package br.com.disapps.meucartaotransporte.ui.common
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.LiveData
-import br.com.disapps.meucartaotransporte.model.KnownError
+import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.util.SingleLiveEvent
 
 open class BaseViewModel : ViewModel(){

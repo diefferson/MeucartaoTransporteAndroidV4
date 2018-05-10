@@ -209,4 +209,7 @@
     <string name="inapp_error_query">Erro ao consultar o inventário. Outra operação assíncrona em andamento.</string>
     <string name="inapp_error_inventory">Falha ao consultar inventário</string>
     <string name="inapp_success">Obrigado por assinar a versão PRO</string>
+    <string name="known_more">Saiba Mais</string>
+    <string name="card_link_message">O cartão informado não é vinculado a o CPF informado no sistema de bilhetagem eletrônica (SBE), mas calma esse não é o fim, clique no botão a baixo e saiba mais.</string>
+    <string name="alert">Eita!!</string>
 </resources>

@@ -3,13 +3,17 @@ package br.com.disapps.meucartaotransporte.ui.cards.balance
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Button
+import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.inflateView
 import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import br.com.disapps.meucartaotransporte.util.getCustomChromeTabs
 import kotlinx.android.synthetic.main.activity_balance.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -52,9 +56,17 @@ class BalanceActivity : BaseActivity() {
             }
         })
 
-        viewModel.onError.observe(this, Observer {
-            if(it!= null && it){
-                adapter.emptyView = inflateView(R.layout.empty_view, balance_recycler )
+        viewModel.getErrorObservable().observe(this, Observer {error ->
+            error?.let {
+                when(it){
+                    KnownError.LINK_DOCUMENT_CARD_EXCEPTION -> {
+                        val view = inflateView(R.layout.error_link_document_card, balance_recycler )
+                        view.findViewById<Button>(R.id.known_more).setOnClickListener {  getCustomChromeTabs().launchUrl(this, Uri.parse(resources.getString(R.string.url_app))) }
+                        adapter.emptyView = view
+
+                    }
+                    else -> adapter.emptyView = inflateView(R.layout.empty_view, balance_recycler )
+                }
             }
         })
     }

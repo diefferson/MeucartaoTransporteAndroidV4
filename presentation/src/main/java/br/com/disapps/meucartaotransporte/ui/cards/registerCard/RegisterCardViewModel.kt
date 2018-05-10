@@ -1,11 +1,11 @@
 package br.com.disapps.meucartaotransporte.ui.cards.registerCard
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.interactor.cards.HasCard
 import br.com.disapps.domain.interactor.cards.SaveCard
 import br.com.disapps.domain.model.Card
-import br.com.disapps.meucartaotransporte.model.KnownError
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.clean
 import br.com.disapps.meucartaotransporte.util.isCPF
@@ -55,15 +55,14 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
     private fun validateHasLocalCard(){
         loadingEvent.value = true
         hasCardUseCase.execute(HasCard.Params(getFormCard()),
-            onError ={
+            onError = {
                 loadingEvent.value = false
-                errorEvent.value = KnownError("Erro ao verificar cartao")
+                errorEvent.value = KnownError.UNKNOWN_EXCEPTION
             },
-
             onSuccess = {
                 if(it){
                     loadingEvent.value = false
-                    errorEvent.value = KnownError("Cartao já cadastrado")
+                    errorEvent.value = KnownError.UNKNOWN_EXCEPTION
                 }else{
                     validateHasCloudCard()
                 }
@@ -75,7 +74,7 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
         getCardUseCase.execute(GetCard.Params(getFormCard()),
             onError = {
                 loadingEvent.value = false
-                errorEvent.value = KnownError("Erro ao consultar cartao")
+                errorEvent.value = KnownError.UNKNOWN_EXCEPTION
             },
             onSuccess= {
                 if(it!= null){

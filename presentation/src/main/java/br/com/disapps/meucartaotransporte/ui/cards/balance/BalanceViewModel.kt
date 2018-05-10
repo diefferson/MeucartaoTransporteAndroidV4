@@ -1,6 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.cards.balance
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.exception.KnownError
+import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.model.Card
 import br.com.disapps.meucartaotransporte.model.CardVO
@@ -9,7 +11,6 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
 class BalanceViewModel(private val getCardUseCase: GetCard) : BaseViewModel(){
 
-    val onError = MutableLiveData<Boolean>()
     val card = MutableLiveData<CardVO>()
 
     fun getCard(code: String, cpf: String){
@@ -20,7 +21,11 @@ class BalanceViewModel(private val getCardUseCase: GetCard) : BaseViewModel(){
                     if(it!= null) card.value = it.toCardVO()
                 },
                 onError ={
-                    onError.value = true
+                    if(it is KnownException){
+                        errorEvent.value = it.knownError
+                    }else{
+                        errorEvent.value = KnownError.UNKNOWN_EXCEPTION
+                    }
                 }
             )
         }

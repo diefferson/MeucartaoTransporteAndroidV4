@@ -60,12 +60,12 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun setupError(){
-        viewModel.getErrorObservable().observe(this, Observer {
-            if(it != null){
-                activity?.toast(it.message)
-            }else{
-                activity?.toast(getString(R.string.unknow_error))
-            }
-        })
+//        viewModel.getErrorObservable().observe(this, Observer {
+//            if(it != null){
+//                activity?.toast(it.message)
+//            }else{
+//                activity?.toast(getString(R.string.unknow_error))
+//            }
+//        })
     }
 }

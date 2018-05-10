@@ -65,12 +65,12 @@ abstract class BaseActivity: AppCompatActivity(){
     }
 
     private fun setupError(){
-        viewModel.getErrorObservable().observe(this, Observer {
-            if(it != null){
-                toast(it.message)
-            }else{
-                toast(getString(R.string.unknow_error))
-            }
-        })
+//        viewModel.getErrorObservable().observe(this, Observer {
+//            if(it != null){
+//                toast(it.message)
+//            }else{
+//                toast(getString(R.string.unknow_error))
+//            }
+//        })
     }
 }
