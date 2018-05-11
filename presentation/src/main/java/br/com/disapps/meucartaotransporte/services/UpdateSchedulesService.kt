@@ -23,11 +23,11 @@ class UpdateSchedulesService : BaseService(){
     private val saveAllSchedulesJsonUseCase : SaveAllSchedulesJson by inject()
     private val postEventUseCase : PostEvent by inject()
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         if(!isRunning){
             isRunning = true
-            isManual = intent.extras.getBoolean(IS_MANUAL)
+            isManual = intent?.extras?.getBoolean(IS_MANUAL)?:false
 
             if(isManual){
                 showNotification(text = getString(R.string.updating_schedules), infinityProgress = true)

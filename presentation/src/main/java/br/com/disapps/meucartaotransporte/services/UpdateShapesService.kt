@@ -20,12 +20,18 @@ class UpdateShapesService : BaseService(){
     private val saveAllShapesJsonUseCase : SaveAllShapesJson by inject()
     private var city  = City.CWB
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         if(!isRunning){
             isRunning = true
-            city = intent.extras.getSerializable(CITY) as City
-            isManual = intent.extras.getBoolean(IS_MANUAL)
+
+            intent?.extras?.getSerializable(CITY)?.let {
+                city = it as City
+            }?: run {
+                city = City.CWB
+            }
+
+            isManual = intent?.extras?.getBoolean(IS_MANUAL)?:false
 
             if(isManual){
                 showNotification(text =  getString(R.string.updating_shapes), infinityProgress = true )
