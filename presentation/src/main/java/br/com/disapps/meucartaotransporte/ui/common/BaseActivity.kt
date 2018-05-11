@@ -10,9 +10,7 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
 import br.com.disapps.meucartaotransporte.util.inflateView
-import br.com.disapps.meucartaotransporte.util.toast
 import com.appodeal.ads.Appodeal
 
 /**
@@ -23,7 +21,6 @@ abstract class BaseActivity: AppCompatActivity(){
     abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
     private var binding: ViewDataBinding? = null
-    protected val loading by lazy { CustomProgressDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

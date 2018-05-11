@@ -115,6 +115,7 @@ fun Activity.getOfflineView():View{
 
     val rootView = findViewById<ViewGroup>(android.R.id.content)
     val view = inflateView(R.layout.offline_view, rootView)
+    val button = view.findViewById<Button>(R.id.back)
     val animation = view.findViewById<LottieAnimationView>(R.id.animation_view)
     animation.addAnimatorListener(object : Animator.AnimatorListener{
         override fun onAnimationRepeat(animation: Animator?) {}
@@ -122,6 +123,10 @@ fun Activity.getOfflineView():View{
         override fun onAnimationStart(animation: Animator?) {}
         override fun onAnimationEnd(animation: Animator?) {
             view.findViewById<TextView>(R.id.offlineText).visibility = View.VISIBLE
+            button.apply {
+                visibility = View.VISIBLE
+                setOnClickListener { finish() }
+            }
         }
     })
 

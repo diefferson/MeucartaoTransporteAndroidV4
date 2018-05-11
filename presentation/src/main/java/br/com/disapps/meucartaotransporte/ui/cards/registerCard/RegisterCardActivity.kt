@@ -7,10 +7,9 @@ import android.os.Bundle
 import android.view.View
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.getErrorView
-import br.com.disapps.meucartaotransporte.util.getLoadingView
-import br.com.disapps.meucartaotransporte.util.hideKeyboard
+import br.com.disapps.meucartaotransporte.util.*
 import kotlinx.android.synthetic.main.activity_register_card.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -24,7 +23,14 @@ class RegisterCardActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         btn_register.setOnClickListener {
             hideKeyboard()
-            viewModel.consult()
+            if(validateConnection()){
+                viewModel.consult()
+            }else{
+                result_container.removeAllViews()
+                result_container.addView(getOfflineView())
+                content.visibility = View.INVISIBLE
+                result_container.visibility = View.VISIBLE
+            }
         }
 
         viewModelObservers()
