@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import br.com.disapps.meucartaotransporte.util.inflateView
 import com.appodeal.ads.Appodeal
 
@@ -56,7 +57,7 @@ abstract class BaseActivity: AppCompatActivity(){
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it != null){
                 val rootView = this.findViewById<ViewGroup>(android.R.id.content)
-                val loadingView= inflateView(R.layout.loading_view, rootView)
+                val loadingView= getLoadingView()
                 if(it){
                     rootView.addView(loadingView)
                 }else{

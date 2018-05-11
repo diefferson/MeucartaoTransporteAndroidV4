@@ -7,8 +7,9 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
-import br.com.disapps.meucartaotransporte.util.inflateView
 import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import br.com.disapps.meucartaotransporte.util.getEmptyView
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_itinerary_direction.*
 import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel
@@ -21,7 +22,7 @@ class ItineraryDirectionFragment : BaseFragment(){
     override val fragmentLayout = R.layout.fragment_itinerary_direction
     private val lineViewModel  by viewModel<LineViewModel>()
 
-    private val listAdapter : ItineraryDirectionListAdapter by lazy {
+    private val adapter : ItineraryDirectionListAdapter by lazy {
         ItineraryDirectionListAdapter(ArrayList(), lineViewModel.line.color)
     }
 
@@ -41,26 +42,26 @@ class ItineraryDirectionFragment : BaseFragment(){
     private fun initRecyclerView() {
         itinerary_recycler.apply {
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
-            adapter = this@ItineraryDirectionFragment.listAdapter
+            adapter = this@ItineraryDirectionFragment.adapter
         }
     }
 
     private fun observeViewModel(){
         viewModel.itinerary.observe(this, Observer {
-            listAdapter.apply {
+            adapter.apply {
                 setNewData(it)
-                setAdapterViews()
+                emptyView = activity?.getEmptyView(getString(R.string.no_results))
+                setFooterView(activity!!.getAdViewContentStream())
             }
         })
     }
 
-    private fun setAdapterViews(){
-        try {
-            listAdapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, itinerary_recycler)
-                setFooterView(activity!!.getAdViewContentStream())
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null && it){
+                adapter.emptyView = activity?.getLoadingView()
             }
-        } catch(e : Exception){}
+        })
     }
 
     companion object {

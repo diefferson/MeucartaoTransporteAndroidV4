@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.util.clean
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import br.com.disapps.meucartaotransporte.util.inflateView
 
 /**
@@ -93,7 +94,7 @@ abstract class BaseFragmentActivity: BaseActivity(),
 
     override fun showLoading() {
         val rootView = this.findViewById<ViewGroup>(android.R.id.content)
-        val loadingView = inflateView(R.layout.loading_view, rootView)
+        val loadingView = getLoadingView()
         rootView.addView(loadingView)
     }
 

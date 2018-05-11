@@ -24,6 +24,7 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
     fun filterLines(query:String){
         linesFiltered.clear()
         linesFiltered.addAll(lines.filter { filter(it, query) })
+        isUpdatedLines.value = true
     }
 
     private fun filter(line: LineVO, query: String) : Boolean{
@@ -31,15 +32,17 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
     }
 
     fun getLines(refresh : Boolean = false){
+        loadingEvent.value = true
         getLinesUseCase.execute(Unit) {
+            loadingEvent.value = false
             updateLines(it.toLineVO())
             updateFavorites(it.toLineVO().filter { line->line.favorite })
             if(!isRequested && !refresh){
                 isRequested = true
+
                 hasFavorite.value = favoriteLines.isNotEmpty()
             }
         }
-
     }
 
     fun favoriteLine(line: LineVO){
