@@ -8,12 +8,12 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
-import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
-import br.com.disapps.meucartaotransporte.util.inflateView
+import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import br.com.disapps.meucartaotransporte.util.getEmptyView
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_my_cards.*
-import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
 import org.koin.android.architecture.ext.viewModel
 
 /**
@@ -27,9 +27,6 @@ class MyCardsFragment : BaseFragment(){
 
     private val adapter: CardsListAdapter by lazy {
         CardsListAdapter(ArrayList()).apply {
-
-            emptyView = activity?.inflateView(R.layout.loading_view, cards_recycler )
-
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.btn_card_balance -> BalanceActivity.launch(context!!, adapter.data[position] as CardVO)
@@ -42,12 +39,7 @@ class MyCardsFragment : BaseFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        cards_recycler.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = this@MyCardsFragment.adapter
-        }
-
+        initRecyclerView()
         observeViewModel()
     }
 
@@ -56,22 +48,29 @@ class MyCardsFragment : BaseFragment(){
         viewModel.getCards()
     }
 
+    private fun initRecyclerView() {
+        cards_recycler.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@MyCardsFragment.adapter
+        }
+    }
+
     private fun observeViewModel(){
         viewModel.cards.observe(this, Observer {
             adapter.apply {
                 setNewData(it)
-                setAdapterViews()
+                emptyView = activity?.getEmptyView(getString(R.string.no_cards))
+                setFooterView(activity!!.getAdViewContentStream())
             }
         })
     }
 
-    private fun setAdapterViews(){
-        try {
-            adapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler)
-                setFooterView(activity!!.getAdViewContentStream())
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null && it ){
+                adapter.emptyView = activity?.getLoadingView()
             }
-        } catch(e : Exception){}
+        })
     }
 
     private fun confirmDeleteCard(cardVO: CardVO){

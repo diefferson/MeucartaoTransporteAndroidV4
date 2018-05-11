@@ -108,7 +108,7 @@
     <string name="action_share_subject">Aplicativo Meu Cartão Transporte</string>
     <string name="action_add_card">Novo Cartão</string>
     <string name="download_data">É necessário realizar o download da base inicial de onibus.\n Certifique-se de estar conectado à internet e clique em Baixar Dados.</string>
-    <string name="no_cards">Clique no botão + para cadastrar um cartão.</string>
+    <string name="no_cards">Sem cartões cadastrados \nClique no botão + para cadastrar um cartão.</string>
     <string name="no_favorites">Sem favoritos</string>
     <string name="update_message">*Os valores podem conter um atraso de até 48 horas para a atualização.</string>
     <string name="data_origin">As informações são consultadas diretamente ao sistema da URBS, disponível no endereço http://www.urbs.curitiba.pr.gov.br, podendo ter um atraso de até 48 horas para atualizações de dados como  saldo e extrato do cartão.</string>
@@ -222,5 +222,6 @@
     <string name="tray_again">Tentar Novamente</string>
     <string name="not_fault">Não foi culpa minha...</string>
     <string name="offline">Você está Offline</string>
+    <string name="funy">Engraçadinho</string>
 
 </resources>

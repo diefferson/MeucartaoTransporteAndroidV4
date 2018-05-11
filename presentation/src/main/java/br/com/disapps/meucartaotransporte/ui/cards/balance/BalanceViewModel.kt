@@ -5,7 +5,7 @@ import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.model.Card
-import br.com.disapps.meucartaotransporte.exception.UiError
+import br.com.disapps.meucartaotransporte.exception.UiException
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.model.mappers.toCardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
@@ -19,19 +19,17 @@ class BalanceViewModel(private val getCardUseCase: GetCard) : BaseViewModel(){
             loadingEvent.value = true
             isRequested = true
             getCardUseCase.execute(GetCard.Params(Card(code,cpf)),
+                onError ={
+                    loadingEvent.value = false
+                    exceptionEvent.value = if(it is KnownException){
+                        UiException(it.knownError, it.message?:"")
+                    }else{
+                        UiException(KnownError.UNKNOWN_EXCEPTION,"")
+                    }
+                },
                 onSuccess = {
                     loadingEvent.value = false
                     if(it!= null) card.value = it.toCardVO()
-
-                },
-                onError ={
-                    loadingEvent.value = false
-                    if(it is KnownException){
-                        errorEvent.value = UiError(it.knownError, it.message?:"")
-                    }else{
-                        errorEvent.value = UiError(KnownError.UNKNOWN_EXCEPTION,"")
-                    }
-
                 }
             )
         }

@@ -8,59 +8,69 @@ import android.support.v7.widget.LinearLayoutManager
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.inflateView
-import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import br.com.disapps.meucartaotransporte.util.*
 import kotlinx.android.synthetic.main.activity_extract.*
 import org.koin.android.architecture.ext.viewModel
 
 class ExtractActivity : BaseActivity(){
 
     override val viewModel by viewModel<ExtractViewModel>()
-
     override val activityLayout = R.layout.activity_extract
-
-    private val adapter : ExtractListAdapter by lazy {
-        ExtractListAdapter(ArrayList()).apply {
-            emptyView = inflateView(R.layout.loading_view, extract_recycler )
-        }
-    }
+    private val adapter : ExtractListAdapter by lazy { ExtractListAdapter(ArrayList()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        extract_recycler.apply {
-            layoutManager = LinearLayoutManager(this@ExtractActivity)
-            adapter = this@ExtractActivity.adapter
-        }
-
+        initRecyclerView()
         observeViewModel()
     }
 
     override fun onResume() {
         super.onResume()
         val card = intent.getSerializableExtra(CARD) as CardVO
-        viewModel.getExtract(card.code, card.cpf)
+
+        if(validateConnection()){
+            viewModel.getExtract(card.code, card.cpf)
+            isRecreated = false
+        }else{
+            adapter.emptyView = getOfflineView()
+        }
+    }
+
+    private fun initRecyclerView() {
+        extract_recycler.apply {
+            layoutManager = LinearLayoutManager(this@ExtractActivity)
+            adapter = this@ExtractActivity.adapter
+        }
     }
 
     private fun observeViewModel(){
         viewModel.extract.observe(this, Observer {
             adapter.apply {
                 setNewData(it)
-                setAdapterViews()
+                emptyView = getEmptyView(getString(R.string.no_results))
+                setFooterView(getAdViewContentStream())
             }
         })
     }
 
-    private fun setAdapterViews(){
-        try {
-            adapter.apply {
-                emptyView = inflateView(R.layout.empty_view, extract_recycler)
-                setFooterView(getAdViewContentStream())
+    override fun setupError() {
+        viewModel.getErrorObservable().observe(this, Observer {error ->
+            error?.let {
+                adapter.emptyView = getErrorView(it)
             }
-        } catch(e : Exception){}
+        })
+    }
+
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null && it ){
+                adapter.emptyView = getLoadingView()
+            }
+        })
     }
 
     companion object {
+        var isRecreated = false
         private const val CARD = "card"
         fun launch(context: Context,card : CardVO){
             context.startActivity( Intent(context, ExtractActivity::class.java).apply {
