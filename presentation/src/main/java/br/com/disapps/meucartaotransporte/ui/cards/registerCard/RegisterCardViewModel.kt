@@ -6,6 +6,7 @@ import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.interactor.cards.HasCard
 import br.com.disapps.domain.interactor.cards.SaveCard
 import br.com.disapps.domain.model.Card
+import br.com.disapps.meucartaotransporte.exception.UiError
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.clean
 import br.com.disapps.meucartaotransporte.util.isCPF
@@ -57,12 +58,12 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
         hasCardUseCase.execute(HasCard.Params(getFormCard()),
             onError = {
                 loadingEvent.value = false
-                errorEvent.value = KnownError.UNKNOWN_EXCEPTION
+                errorEvent.value = UiError( KnownError.UNKNOWN_EXCEPTION, "")
             },
             onSuccess = {
                 if(it){
                     loadingEvent.value = false
-                    errorEvent.value = KnownError.UNKNOWN_EXCEPTION
+                    errorEvent.value = UiError(KnownError.UNKNOWN_EXCEPTION, "")
                 }else{
                     validateHasCloudCard()
                 }
@@ -74,7 +75,7 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
         getCardUseCase.execute(GetCard.Params(getFormCard()),
             onError = {
                 loadingEvent.value = false
-                errorEvent.value = KnownError.UNKNOWN_EXCEPTION
+                errorEvent.value = UiError(KnownError.UNKNOWN_EXCEPTION, "")
             },
             onSuccess= {
                 if(it!= null){

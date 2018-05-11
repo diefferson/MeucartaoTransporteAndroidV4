@@ -213,5 +213,14 @@
     <string name="known_more">Saiba Mais</string>
     <string name="card_link_message">Sem resultado para o dados informados, confira seus dados ou clique para saber mais.</string>
     <string name="alert">Eita!!</string>
+    <string name="vish">Vish!!</string>
+    <string name="invalid_card">Cartão inválido ou inexistente.</string>
+    <string name="inactive_card">Este cartão se encontra inativo ou bloqueado.</string>
+    <string name="invalid_line">Linha inválida ou inexistente.</string>
+    <string name="gave_bad">Deu ruim...</string>
+    <string name="network_generic_error">Não foi possível realizar a consulta, nossos servidores deram um migué, tente novamente mais tarde.</string>
+    <string name="tray_again">Tentar Novamente</string>
+    <string name="not_fault">Não foi culpa minha...</string>
+    <string name="offline">Você está Offline</string>
 
 </resources>
