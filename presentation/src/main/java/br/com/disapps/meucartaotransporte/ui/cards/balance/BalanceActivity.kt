@@ -61,7 +61,7 @@ class BalanceActivity : BaseActivity() {
                 when(it){
                     KnownError.LINK_DOCUMENT_CARD_EXCEPTION -> {
                         val view = inflateView(R.layout.error_link_document_card, balance_recycler )
-                        view.findViewById<Button>(R.id.known_more).setOnClickListener {  getCustomChromeTabs().launchUrl(this, Uri.parse(resources.getString(R.string.url_app))) }
+                        view.findViewById<Button>(R.id.known_more).setOnClickListener {  getCustomChromeTabs().launchUrl(this, Uri.parse(resources.getString(R.string.url_balance_card))) }
                         adapter.emptyView = view
 
                     }
