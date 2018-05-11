@@ -33,12 +33,12 @@ class DataUsageActivity : BaseActivity(){
 
         period_update_lines.setOnClickListener { periodLines() }
         period_update_schedules.setOnClickListener { periodSchedules() }
-        update_line.setOnClickListener { UpdateLinesService.startService(this) }
-        update_schedule.setOnClickListener { UpdateSchedulesService.startService(this)}
-        update_cwb_shapes.setOnClickListener { UpdateShapesService.startService(this, City.CWB)}
-        update_met_shapes.setOnClickListener { UpdateShapesService.startService(this, City.MET)}
-        update_cwb_itineraries.setOnClickListener { UpdateItinerariesService.startService(this, City.CWB)}
-        update_met_itineraries.setOnClickListener { UpdateItinerariesService.startService(this, City.MET)}
+        update_line.setOnClickListener { UpdateLinesService.startService(this, true) }
+        update_schedule.setOnClickListener { UpdateSchedulesService.startService(this, true)}
+        update_cwb_shapes.setOnClickListener { UpdateShapesService.startService(this, City.CWB, true)}
+        update_met_shapes.setOnClickListener { UpdateShapesService.startService(this, City.MET, true)}
+        update_cwb_itineraries.setOnClickListener { UpdateItinerariesService.startService(this, City.CWB, true)}
+        update_met_itineraries.setOnClickListener { UpdateItinerariesService.startService(this, City.MET, true)}
     }
 
     private fun periodLines() {
