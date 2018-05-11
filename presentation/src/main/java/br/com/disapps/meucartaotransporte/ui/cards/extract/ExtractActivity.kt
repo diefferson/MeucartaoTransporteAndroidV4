@@ -24,12 +24,17 @@ class ExtractActivity : BaseActivity(){
         observeViewModel()
     }
 
+    override fun recreate() {
+        isRecreated = true
+        super.recreate()
+    }
+
     override fun onResume() {
         super.onResume()
         val card = intent.getSerializableExtra(CARD) as CardVO
 
         if(validateConnection()){
-            viewModel.getExtract(card.code, card.cpf)
+            viewModel.getExtract(card.code, card.cpf, isRecreated)
             isRecreated = false
         }else{
             adapter.emptyView = getOfflineView()
