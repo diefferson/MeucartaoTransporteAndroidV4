@@ -86,7 +86,7 @@ class AllLinesFragment : BaseFragment() {
     override fun setupLoading() {
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it!= null && it){
-                adapter.emptyView = activity?.getLoadingView()
+                //adapter.emptyView = activity?.getLoadingView()
             }
         })
     }

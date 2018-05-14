@@ -9,8 +9,8 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
+import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextScheduleDayListAdapter.Companion.objectToItem
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
-import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
@@ -25,20 +25,20 @@ class NextSchedulesDayFragment : BaseFragment(){
     override val fragmentLayout = R.layout.fragment_next_schedules_day
     private val lineViewModel  by viewModel<LineViewModel>()
 
-    private val adapter : NextScheduleDayListAdapter by lazy {
-
-        NextScheduleDayListAdapter(ArrayList()).apply {
+    private val adapter:NextScheduleDayListAdapter by lazy {
+        NextScheduleDayListAdapter(ArrayList(), activity!!).apply {
             setOnItemClickListener { adapter, _, position ->
                     SchedulesActivity.launch(context!!, SchedulesDetail(
-                            lineCode = (adapter.data[position] as LineSchedule).lineCode,
-                            day =  (adapter.data[position] as LineSchedule).day,
-                            busStopName = (adapter.data[position] as LineSchedule).busStopName,
-                            busStopCode = (adapter.data[position] as LineSchedule).busStopCode,
+                            lineCode = (adapter.data[position] as NextScheduleDayListAdapter.ItemListLineSchedule).lineSchedule!!.lineCode,
+                            day =  (adapter.data[position] as NextScheduleDayListAdapter.ItemListLineSchedule).lineSchedule!!.day,
+                            busStopName = (adapter.data[position] as NextScheduleDayListAdapter.ItemListLineSchedule).lineSchedule!!.busStopName,
+                            busStopCode = (adapter.data[position] as NextScheduleDayListAdapter.ItemListLineSchedule).lineSchedule!!.busStopCode,
                             lineColor = lineViewModel.line.color
                     ))
             }
         }
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,9 +63,11 @@ class NextSchedulesDayFragment : BaseFragment(){
     private fun observeViewModel(){
         viewModel.nextSchedules.observe(this, Observer {
             adapter.apply {
-                setNewData(it)
+                if(it!= null){
+                   setNewData(objectToItem(it))
+                }
                 emptyView = activity?.getEmptyView(getString(R.string.no_results))
-                setFooterView(activity!!.getAdViewContentStream())
+                //addFooterView(activity!!.getAdViewContentStream())
             }
         })
     }
@@ -77,6 +79,7 @@ class NextSchedulesDayFragment : BaseFragment(){
             }
         })
     }
+
     companion object {
         private const val DAY = "day"
         fun newInstance(day: Int) = NextSchedulesDayFragment().apply {
