@@ -47,9 +47,7 @@ class IntroActivity : BaseActivity(){
 
         btn_next.setOnClickListener { view_pager.currentItem = view_pager.currentItem+1 }
 
-        if(!viewModel.isRequested){
-            setupUpdate()
-        }
+        setupUpdate()
 
         viewModel.isComplete.observe(this, Observer {
             if(it!= null && it){
@@ -60,10 +58,9 @@ class IntroActivity : BaseActivity(){
 
 
     private fun setupUpdate(){
-        UpdateLinesService.startService(this, true)
-        UpdateSchedulesService.startService(this, true)
         viewModel.initData()
     }
+
     private fun setupViewPager() {
         view_pager.apply {
             adapter = IntroPageAdapter(this@IntroActivity, layouts)

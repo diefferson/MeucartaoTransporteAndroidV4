@@ -33,4 +33,8 @@ class CloudSchedulesDataSource(private val restApi: RestApi) : SchedulesDataSour
     override suspend fun getAllPointSchedules(codeLine: String, day: Int, codePoint: String): List<Horario> {
         throw Throwable("not implemented, only local")
     }
+
+    override suspend fun initSchedules() {
+        throw Throwable("not implemented, only local")
+    }
 }

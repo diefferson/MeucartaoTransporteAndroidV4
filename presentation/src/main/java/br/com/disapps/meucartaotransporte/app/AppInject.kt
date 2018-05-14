@@ -17,10 +17,7 @@ import br.com.disapps.domain.interactor.events.GetUpdateLinesEvent
 import br.com.disapps.domain.interactor.events.GetUpdateSchedulesEvent
 import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.itineraries.*
-import br.com.disapps.domain.interactor.lines.GetAllLinesJson
-import br.com.disapps.domain.interactor.lines.GetLines
-import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
-import br.com.disapps.domain.interactor.lines.UpdateLine
+import br.com.disapps.domain.interactor.lines.*
 import br.com.disapps.domain.interactor.preferences.*
 import br.com.disapps.domain.interactor.schedules.*
 import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
@@ -72,6 +69,7 @@ object AppInject {
         bean { EventBus() }
         bean { UIContext() as PostExecutionContext }
         bean { JobContextExecutor() as  ContextExecutor }
+        bean { (get("applicationContext") as Context).assets  }
     }
 
     private val viewModelModule = applicationContext {
@@ -86,7 +84,7 @@ object AppInject {
         viewModel { BalanceViewModel( getCardUseCase = get()) }
         viewModel { RegisterCardViewModel( hasCardUseCase = get(), saveCardUseCase =  get(), getCardUseCase =  get()) }
         viewModel { ExtractViewModel( getExtractUseCase = get() ) }
-        viewModel { IntroViewModel( getUpdateLinesEventUseCase = get(),getUpdateSchedulesEventUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
+        viewModel { IntroViewModel( initLinesUseCase = get(),initSchedulesUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
         viewModel { LineViewModel( updateLineUseCase = get()) }
         viewModel { NextSchedulesViewModel( getLineScheduleDaysUseCase = get()) }
         viewModel { NextSchedulesDayViewModel( getLineSchedulesUseCase = get()) }
@@ -132,6 +130,8 @@ object AppInject {
         factory { SavePeriodUpdateLines( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { SavePeriodUpdateSchedules( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { GetAllBuses( busesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { InitLines(linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { InitSchedules(schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {
@@ -146,10 +146,10 @@ object AppInject {
 
     private val dataSourceFactoryModule : Module = applicationContext {
         bean { CardsDataSourceFactory(database = get(), restApi = get()) }
-        bean { LinesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
+        bean { LinesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
         bean { ItinerariesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
         bean { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
-        bean { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
+        bean { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
         bean { BusesDataSourceFactory(database = get(), restApi = get()) }
     }
 }

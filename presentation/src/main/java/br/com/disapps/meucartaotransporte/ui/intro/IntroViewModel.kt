@@ -1,13 +1,14 @@
 package br.com.disapps.meucartaotransporte.ui.intro
 
 import android.arch.lifecycle.MutableLiveData
-import br.com.disapps.domain.interactor.events.GetUpdateLinesEvent
-import br.com.disapps.domain.interactor.events.GetUpdateSchedulesEvent
+import android.util.Log
+import br.com.disapps.domain.interactor.lines.InitLines
 import br.com.disapps.domain.interactor.preferences.SaveIsFirstAccess
+import br.com.disapps.domain.interactor.schedules.InitSchedules
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
-class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent,
-                     private val getUpdateSchedulesEventUseCase: GetUpdateSchedulesEvent,
+class IntroViewModel(private val initLinesUseCase: InitLines,
+                     private val initSchedulesUseCase: InitSchedules,
                      private val saveIsFirstAccessUseCase: SaveIsFirstAccess) : BaseViewModel(){
 
     val isComplete = MutableLiveData<Boolean>().apply { value = false }
@@ -17,13 +18,15 @@ class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent
     fun initData(){
         if(!isRequested){
             isRequested = true
-            updateLines()
-            updateSchedules()
+            initLines()
+            initSchedules()
         }
     }
 
-    private fun updateLines(){
-        getUpdateLinesEventUseCase.execute(Unit) {
+    private fun initLines(){
+        initLinesUseCase.execute(Unit, onError = {
+            Log.i("ERROR", it.message)
+        }) {
             linesComplete = true
             if (schedulesComplete) {
                 isComplete.value = true
@@ -32,8 +35,10 @@ class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent
         }
     }
 
-    private fun updateSchedules(){
-        getUpdateSchedulesEventUseCase.execute(Unit) {
+    private fun initSchedules(){
+        initSchedulesUseCase.execute(Unit, onError = {
+            Log.i("ERROR", it.message)
+        }) {
             schedulesComplete = true
             if (linesComplete) {
                 isComplete.value = true
@@ -48,8 +53,8 @@ class IntroViewModel(private val getUpdateLinesEventUseCase: GetUpdateLinesEvent
 
     override fun onCleared() {
         super.onCleared()
-        getUpdateLinesEventUseCase.dispose()
-        getUpdateSchedulesEventUseCase.dispose()
+        initLinesUseCase.dispose()
+        initSchedulesUseCase.dispose()
         saveIsFirstAccessUseCase.dispose()
     }
 }

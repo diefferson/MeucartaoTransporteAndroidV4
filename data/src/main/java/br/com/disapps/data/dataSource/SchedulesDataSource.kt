@@ -16,4 +16,5 @@ interface SchedulesDataSource : DataSource{
 
     suspend fun getAllPointSchedules(codeLine: String, day: Int, codePoint : String) : List<Horario>
 
+    suspend fun initSchedules()
 }

@@ -1,5 +1,6 @@
 package br.com.disapps.data.dataSource.local
 
+import android.content.res.AssetManager
 import br.com.disapps.data.dataSource.SchedulesDataSource
 import br.com.disapps.data.entity.Horario
 import br.com.disapps.data.entity.HorarioLinha
@@ -7,8 +8,9 @@ import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.realm.Realm
+import java.io.InputStream
 
-class LocalSchedulesDataSource(private val database: Database, private val preferences: Preferences) : SchedulesDataSource{
+class LocalSchedulesDataSource(private val database: Database, private val preferences: Preferences, private val assetManager: AssetManager) : SchedulesDataSource{
 
     companion object {
         private const val CODE_LINE = "codigoLinha"
@@ -63,5 +65,16 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
 
     override suspend fun jsonSchedules( downloadProgressListener: DownloadProgressListener): String {
         throw Throwable("not implemented,  cloud only")
+    }
+
+    override suspend fun initSchedules() {
+        val realm = database.getDatabase() as Realm
+        val inputStream : InputStream = assetManager.open("horarios.json")
+        realm.beginTransaction()
+        realm.delete(CLAZZ)
+        realm.createAllFromJson(CLAZZ, inputStream)
+        realm.commitTransaction()
+        preferences.setSchedulesDate()
+        realm.close()
     }
 }

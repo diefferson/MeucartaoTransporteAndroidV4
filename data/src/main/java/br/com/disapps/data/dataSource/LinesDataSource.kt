@@ -16,4 +16,6 @@ interface LinesDataSource : DataSource {
     suspend fun line(linha: Linha) : Linha
 
     suspend fun updateLine(linha: Linha)
+
+    suspend fun initLines()
 }

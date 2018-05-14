@@ -41,4 +41,8 @@ class SchedulesDataRepository( private val schedulesDataSourceFactory: Schedules
                 .getAllPointSchedules(codeLine,day, codePoint)
                 .map { it.toScheduleBO() }
     }
+
+    override suspend fun initSchedules() {
+        return schedulesDataSourceFactory.create().initSchedules()
+    }
 }

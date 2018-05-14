@@ -18,4 +18,6 @@ interface LinesRepository{
 
     suspend fun updateLine(line : Line)
 
+    suspend fun initLines()
+
 }

@@ -2,15 +2,19 @@ package br.com.disapps.data.dataSource.local
 
 import br.com.disapps.data.dataSource.LinesDataSource
 import br.com.disapps.data.entity.Linha
+import android.content.res.AssetManager
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.realm.Realm
+import java.io.InputStream
+import java.nio.charset.Charset
+
 
 /**
  * Created by dnso on 15/03/2018.
  */
-class LocalLinesDataSource(private val database: Database, private val preferences: Preferences): LinesDataSource {
+class LocalLinesDataSource(private val database: Database, private val preferences: Preferences,private val assetManager: AssetManager  ): LinesDataSource {
 
     companion object {
         private const val CODE = "codigo"
@@ -63,5 +67,15 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
 
     override suspend fun jsonLines( downloadProgressListener: DownloadProgressListener): String {
         throw Throwable("not implemented,  cloud only")
+    }
+
+    override suspend fun initLines() {
+        val realm = database.getDatabase() as Realm
+        val inputStream : InputStream = assetManager.open("linhas.json")
+        realm.beginTransaction()
+        realm.createOrUpdateAllFromJson(CLAZZ, inputStream)
+        realm.commitTransaction()
+        preferences.setLinesDate()
+        realm.close()
     }
 }
