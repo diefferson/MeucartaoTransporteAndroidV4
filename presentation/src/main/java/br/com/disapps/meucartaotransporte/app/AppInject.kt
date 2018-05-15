@@ -76,12 +76,12 @@ object AppInject {
 
     private val viewModelModule = applicationContext {
         viewModel { BaseViewModel() }
-        viewModel { ItinerariesViewModel( getItineraryDirectionsUseCase = get()) }
+        viewModel { ItinerariesViewModel( getItineraryDirectionsUseCase = get(), getIsDownloadedCwbItinerariesUseCase = get(), getIsDownloadedMetropolitanItinerariesUseCase = get()) }
         viewModel { LinesViewModel( getLinesUseCase = get(), updateLineUseCase =  get()) }
         viewModel { MainViewModel( getInitialScreenUseCase = get(), getIsProUseCase = get(), setIsProUseCase = get()) }
         viewModel { QuickFindViewModel() }
         viewModel { SettingsViewModel( getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
-        viewModel { ShapesViewModel( getShapesUseCase = get(), getAllItinerariesUseCase = get(), getAllBusesUseCase = get()) }
+        viewModel { ShapesViewModel( getShapesUseCase = get(), getAllItinerariesUseCase = get(), getAllBusesUseCase = get(), getIsDownloadedCwbShapesUseCase = get(), getIsDownloadedMetropolitanShapesUseCase = get()) }
         viewModel { MyCardsViewModel( getCardsUseCase = get(), deleteCardUseCase =  get()) }
         viewModel { BalanceViewModel( getCardUseCase = get()) }
         viewModel { RegisterCardViewModel( hasCardUseCase = get(), saveCardUseCase =  get(), getCardUseCase =  get()) }
@@ -124,6 +124,10 @@ object AppInject {
         factory { PostEvent( eventsRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { GetInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetIsFirstAccess( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetIsDownloadedCwbItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetIsDownloadedMetropolitanItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetIsDownloadedCwbShapes( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetIsDownloadedMetropolitanShapes( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetDataUsage( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }

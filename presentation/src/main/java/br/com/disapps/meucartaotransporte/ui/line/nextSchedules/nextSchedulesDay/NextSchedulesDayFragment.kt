@@ -28,10 +28,10 @@ class NextSchedulesDayFragment : BaseFragment(){
         NextScheduleDayListAdapter(ArrayList(), activity!!).apply {
             setOnItemClickListener { adapter, _, position ->
                     SchedulesActivity.launch(context!!, SchedulesDetail(
-                            lineCode = (adapter.data[position] as NextScheduleDayListAdapter.ListItem).lineSchedule!!.lineCode,
-                            day =  (adapter.data[position] as NextScheduleDayListAdapter.ListItem).lineSchedule!!.day,
-                            busStopName = (adapter.data[position] as NextScheduleDayListAdapter.ListItem).lineSchedule!!.busStopName,
-                            busStopCode = (adapter.data[position] as NextScheduleDayListAdapter.ListItem).lineSchedule!!.busStopCode,
+                            lineCode = getLineSchedule(position).lineCode,
+                            day =  getLineSchedule(position).day,
+                            busStopName = getLineSchedule(position).busStopName,
+                            busStopCode = getLineSchedule(position).busStopCode,
                             lineColor = lineViewModel.line.color
                     ))
             }

@@ -7,6 +7,7 @@ import java.util.*
 import android.content.res.ColorStateList
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
+import br.com.disapps.domain.model.City
 import br.com.disapps.domain.model.PeriodUpdate
 import java.text.SimpleDateFormat
 
@@ -151,6 +152,14 @@ fun getPeriodPosition(context: Context, period: String?): Int {
         context.getString(R.string.yearly) -> 2
         context.getString(R.string.manual) -> 3
         else -> 0
+    }
+}
+
+fun getCity(lineType :String) : City{
+    return if(lineType.toUpperCase() == "METROPOLITANA"){
+        City.MET
+    }else{
+        City.CWB
     }
 }
 

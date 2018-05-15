@@ -51,7 +51,6 @@ class ItineraryDirectionFragment : BaseFragment(){
             adapter.apply {
                 setNewData(it)
                 emptyView = activity?.getEmptyView(getString(R.string.no_results))
-                setFooterView(activity!!.getAdViewContentStream())
             }
         })
     }

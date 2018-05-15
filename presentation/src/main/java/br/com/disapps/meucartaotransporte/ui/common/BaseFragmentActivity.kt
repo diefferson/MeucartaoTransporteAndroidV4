@@ -148,7 +148,7 @@ abstract class BaseFragmentActivity: BaseActivity(),
         }
     }
 
-    private fun hideTabs(force: Boolean = false) {
+    override fun hideTabs(force: Boolean) {
         if(getIsTabsVisible() || force){
             setIsTabsVisible(false)
             val scale = this.resources.displayMetrics.density

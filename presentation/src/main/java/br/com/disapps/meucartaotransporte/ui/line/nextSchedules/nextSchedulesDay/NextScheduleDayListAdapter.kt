@@ -76,6 +76,10 @@ class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) :
 
     }
 
+    fun getLineSchedule(position:Int) : LineSchedule{
+        return data[position].lineSchedule
+    }
+
     class ListItem(lineScheduleItem: LineSchedule,  typeItem : Int) : MultiItemEntity {
 
         var lineSchedule : LineSchedule = lineScheduleItem

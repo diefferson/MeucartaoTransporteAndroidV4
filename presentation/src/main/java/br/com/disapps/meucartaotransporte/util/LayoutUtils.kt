@@ -10,6 +10,7 @@ import android.widget.TextView
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.exception.UiException
+import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.native_ad.views.NativeAdViewContentStream
@@ -102,6 +103,12 @@ fun Activity.getErrorView(uiException: UiException) :View{
 fun Activity.getLoadingView() :View{
     val rootView = this.findViewById<ViewGroup>(android.R.id.content)
     return inflateView(R.layout.loading_view, rootView)
+}
+fun Activity.getDownloadDataView() : View{
+    val rootView = findViewById<ViewGroup>(android.R.id.content)
+    val view= inflateView(R.layout.download_data, rootView )
+    view.findViewById<Button>(R.id.download).setOnClickListener { DataUsageActivity.launch(this)}
+    return view
 }
 
 fun Activity.getEmptyView(message: String): View {
