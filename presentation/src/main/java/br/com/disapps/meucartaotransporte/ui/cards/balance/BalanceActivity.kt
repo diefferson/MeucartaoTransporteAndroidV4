@@ -16,7 +16,7 @@ class BalanceActivity : BaseActivity() {
 
     override val viewModel by viewModel<BalanceViewModel>()
     override val activityLayout = R.layout.activity_balance
-    private val adapter: BalanceListAdapter by lazy { BalanceListAdapter(ArrayList()) }
+    private val adapter: BalanceListAdapter by lazy { BalanceListAdapter(ArrayList(), this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,6 @@ class BalanceActivity : BaseActivity() {
         }else{
             adapter.emptyView = getOfflineView()
         }
-
     }
 
     private fun initRecyclerView(){
@@ -52,9 +51,10 @@ class BalanceActivity : BaseActivity() {
     private fun observeViewModel(){
         viewModel.card.observe(this, Observer {
             adapter.apply {
-                setNewData(arrayListOf(it))
+                if(it!= null){
+                    setNewData(BalanceListAdapter.objectToItem(arrayListOf(it)))
+                }
                 emptyView = getEmptyView(getString(R.string.no_results))
-                setFooterView(getAdViewContentStream())
             }
         })
     }

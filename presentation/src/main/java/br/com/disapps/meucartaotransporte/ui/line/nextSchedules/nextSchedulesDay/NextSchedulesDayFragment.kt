@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
@@ -29,10 +28,10 @@ class NextSchedulesDayFragment : BaseFragment(){
         NextScheduleDayListAdapter(ArrayList(), activity!!).apply {
             setOnItemClickListener { adapter, _, position ->
                     SchedulesActivity.launch(context!!, SchedulesDetail(
-                            lineCode = (adapter.data[position] as NextScheduleDayListAdapter.ItemListLineSchedule).lineSchedule!!.lineCode,
-                            day =  (adapter.data[position] as NextScheduleDayListAdapter.ItemListLineSchedule).lineSchedule!!.day,
-                            busStopName = (adapter.data[position] as NextScheduleDayListAdapter.ItemListLineSchedule).lineSchedule!!.busStopName,
-                            busStopCode = (adapter.data[position] as NextScheduleDayListAdapter.ItemListLineSchedule).lineSchedule!!.busStopCode,
+                            lineCode = (adapter.data[position] as NextScheduleDayListAdapter.ListItem).lineSchedule!!.lineCode,
+                            day =  (adapter.data[position] as NextScheduleDayListAdapter.ListItem).lineSchedule!!.day,
+                            busStopName = (adapter.data[position] as NextScheduleDayListAdapter.ListItem).lineSchedule!!.busStopName,
+                            busStopCode = (adapter.data[position] as NextScheduleDayListAdapter.ListItem).lineSchedule!!.busStopCode,
                             lineColor = lineViewModel.line.color
                     ))
             }
@@ -63,11 +62,8 @@ class NextSchedulesDayFragment : BaseFragment(){
     private fun observeViewModel(){
         viewModel.nextSchedules.observe(this, Observer {
             adapter.apply {
-                if(it!= null){
-                   setNewData(objectToItem(it))
-                }
+                setNewData(objectToItem(it))
                 emptyView = activity?.getEmptyView(getString(R.string.no_results))
-                //addFooterView(activity!!.getAdViewContentStream())
             }
         })
     }

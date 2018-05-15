@@ -66,6 +66,10 @@ class LinesFragment : BaseFragment() {
         })
     }
 
+    override fun setupLoading() {
+
+    }
+
     companion object {
         fun newInstance() = LinesFragment()
     }

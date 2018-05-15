@@ -25,12 +25,14 @@ class FavoritesLinesFragment : BaseFragment() {
 
     private val adapter: LinesListAdapter by lazy{
         LinesListAdapter(objectToItem(viewModel.favoriteLines),activity!!).apply {
-            setOnItemChildClickListener { adapter, view, position ->
+            setOnItemChildClickListener { _, view, position ->
                 when(view.id){
-                    R.id.fav_line -> { viewModel.favoriteLine((adapter.data[position] as LinesListAdapter.ItemListLines).line!!) }
+                    R.id.fav_line -> { viewModel.favoriteLine(getLine(position)) }
                 }
             }
-            setOnItemClickListener { adapter, view, position -> LineActivity.launch(context!!, (adapter.data[position] as LinesListAdapter.ItemListLines).line!!, view.findViewById(R.id.roundedImage))  }
+            setOnItemClickListener { _, view, position ->
+                LineActivity.launch(context!!,getLine(position), view.findViewById(R.id.roundedImage))
+            }
         }
     }
 
@@ -59,7 +61,7 @@ class FavoritesLinesFragment : BaseFragment() {
     override fun setupLoading() {
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it!= null && it){
-               // adapter.emptyView = activity?.getLoadingView()
+                adapter.emptyView = activity?.getLoadingView()
             }
         })
     }

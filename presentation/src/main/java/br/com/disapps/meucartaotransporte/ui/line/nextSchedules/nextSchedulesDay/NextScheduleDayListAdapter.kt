@@ -8,51 +8,66 @@ import com.appodeal.ads.Appodeal
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 
-class NextScheduleDayListAdapter(data: List<ItemListLineSchedule>,var activity: Activity) : BaseMultiItemQuickAdapter<NextScheduleDayListAdapter.ItemListLineSchedule, CustomViewHolder>(data){
+class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) : BaseMultiItemQuickAdapter<NextScheduleDayListAdapter.ListItem, CustomViewHolder>(data){
 
     init {
-        addItemType(ItemListLineSchedule.LINE_SCHEDULE_ITEM, R.layout.item_next_schedules)
-        addItemType(ItemListLineSchedule.ADS_ITEM, R.layout.item_ads)
-        Appodeal.cache(activity, Appodeal.NATIVE)
+        addItemType(ListItem.LINE_SCHEDULE_ITEM, R.layout.item_next_schedules)
+        addItemType(ListItem.ADS_FEED_ITEM, R.layout.item_ads_feed)
+        addItemType(ListItem.ADS_CONTENT_STREAM_ITEM, R.layout.item_ads_content_stream)
+        addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
     }
 
-    override fun convert(helper: CustomViewHolder, item: ItemListLineSchedule) {
+    override fun convert(helper: CustomViewHolder, item: ListItem) {
         when(item.type){
 
-            ItemListLineSchedule.ADS_ITEM ->{
+            ListItem.ADS_FEED_ITEM ->{
                 val ads = Appodeal.getNativeAds(1)
                 if(ads.size>0){
-                    helper.setNativeListAd(R.id.ads_item, ads[0])
+                    helper.setNativeAdFedd(R.id.ads_item, ads[0])
                     Appodeal.cache(activity, Appodeal.NATIVE)
                 }
             }
 
-            ItemListLineSchedule.LINE_SCHEDULE_ITEM ->{
-                helper.setText(R.id.name_point, item.lineSchedule?.busStopName)
+            ListItem.ADS_CONTENT_STREAM_ITEM ->{
+                val ads = Appodeal.getNativeAds(1)
+                if(ads.size>0){
+                    helper.setNativeAdContentStream(R.id.ads_item, ads[0])
+                    Appodeal.cache(activity, Appodeal.NATIVE)
+                }
+            }
+
+            ListItem.ADS_APP_WALL_ITEM ->{
+                val ads = Appodeal.getNativeAds(1)
+                if(ads.size>0){
+                    helper.setNativeAdAppWall(R.id.ads_item, ads[0])
+                    Appodeal.cache(activity, Appodeal.NATIVE)
+                }
+            }
+
+            ListItem.LINE_SCHEDULE_ITEM ->{
                 var hasSchedules = false
+                helper.setText(R.id.name_point, item.lineSchedule.busStopName)
 
-                item.lineSchedule?.nextSchedules?.let {
-                    if(it.isNotEmpty()){
-                        hasSchedules = true
-                        helper.setGone(R.id.next_schedule_1, true)
-                        helper.setSchedule(R.id.next_schedule_1, it[0])
-                    }else{
-                        helper.setGone(R.id.next_schedule_1, false)
-                    }
+                if(item.lineSchedule.nextSchedules.isNotEmpty()){
+                    hasSchedules = true
+                    helper.setGone(R.id.next_schedule_1, true)
+                    helper.setSchedule(R.id.next_schedule_1, item.lineSchedule.nextSchedules[0])
+                }else{
+                    helper.setGone(R.id.next_schedule_1, false)
+                }
 
-                    if(it.size > 1){
-                        helper.setGone(R.id.next_schedule_2, true)
-                        helper.setSchedule(R.id.next_schedule_2, it[1])
-                    }else{
-                        helper.setGone(R.id.next_schedule_2, false)
-                    }
+                if(item.lineSchedule.nextSchedules.size > 1){
+                    helper.setGone(R.id.next_schedule_2, true)
+                    helper.setSchedule(R.id.next_schedule_2, item.lineSchedule.nextSchedules[1])
+                }else{
+                    helper.setGone(R.id.next_schedule_2, false)
+                }
 
-                    if(it.size > 2){
-                        helper.setGone(R.id.next_schedule_3, true)
-                        helper.setSchedule(R.id.next_schedule_3, it[2])
-                    }else{
-                        helper.setGone(R.id.next_schedule_3, false)
-                    }
+                if(item.lineSchedule.nextSchedules.size > 2){
+                    helper.setGone(R.id.next_schedule_3, true)
+                    helper.setSchedule(R.id.next_schedule_3, item.lineSchedule.nextSchedules[2])
+                }else{
+                    helper.setGone(R.id.next_schedule_3, false)
                 }
 
                 helper.setVisible(R.id.empty_schedules, !hasSchedules)
@@ -61,46 +76,49 @@ class NextScheduleDayListAdapter(data: List<ItemListLineSchedule>,var activity: 
 
     }
 
-    class ItemListLineSchedule(lineScheduleItem: LineSchedule?, typeItem : Int) : MultiItemEntity {
+    class ListItem(lineScheduleItem: LineSchedule,  typeItem : Int) : MultiItemEntity {
+
+        var lineSchedule : LineSchedule = lineScheduleItem
+        var type : Int = typeItem
+
+        override fun getItemType() = type
 
         companion object {
             const val LINE_SCHEDULE_ITEM = 0
-            const val ADS_ITEM = 1
-        }
-
-        var lineSchedule : LineSchedule? = lineScheduleItem
-        var type : Int
-        init {
-            type = if(typeItem == ADS_ITEM){
-                ADS_ITEM
-            }else{
-                LINE_SCHEDULE_ITEM
-            }
-        }
-
-        override fun getItemType(): Int {
-            return type
+            const val ADS_FEED_ITEM = 1
+            const val ADS_CONTENT_STREAM_ITEM = 2
+            const val ADS_APP_WALL_ITEM = 3
         }
     }
 
     companion object {
 
-        fun objectToItem(lineScheduleItem: LineSchedule?, typeItem: Int): ItemListLineSchedule {
-            return ItemListLineSchedule(lineScheduleItem, typeItem)
+        fun objectToItem(lineScheduleItem: LineSchedule, typeItem: Int): ListItem {
+            return ListItem(lineScheduleItem, typeItem)
         }
 
-        fun objectToItem(items :List<LineSchedule>) : List<ItemListLineSchedule>{
+        fun objectToItem(items :List<LineSchedule>?) : List<ListItem>{
 
-            val list = ArrayList<ItemListLineSchedule>()
+            val list = ArrayList<ListItem>()
             var i = 0
-            items.forEach {
-                list.add(objectToItem(it, ItemListLineSchedule.LINE_SCHEDULE_ITEM))
+
+            items?.forEach {
+                list.add(objectToItem(it, ListItem.LINE_SCHEDULE_ITEM))
                 if (i % 2 == 0) {
-                    list.add(objectToItem(null, ItemListLineSchedule.ADS_ITEM))
+                    list.add(objectToItem(getEmptyLineSchedule(), ListItem.ADS_APP_WALL_ITEM))
                 }
                 i++
             }
+
+            if(list.size >0){
+                list.add(objectToItem(getEmptyLineSchedule(), ListItem.ADS_CONTENT_STREAM_ITEM))
+            }
+
             return list
+        }
+
+        private fun getEmptyLineSchedule() : LineSchedule{
+            return LineSchedule("", 0, "", "", ArrayList())
         }
     }
 }

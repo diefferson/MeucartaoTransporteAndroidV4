@@ -16,7 +16,7 @@ class ExtractActivity : BaseActivity(){
 
     override val viewModel by viewModel<ExtractViewModel>()
     override val activityLayout = R.layout.activity_extract
-    private val adapter : ExtractListAdapter by lazy { ExtractListAdapter(ArrayList()) }
+    private val adapter : ExtractListAdapter by lazy { ExtractListAdapter(ArrayList(), this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +51,8 @@ class ExtractActivity : BaseActivity(){
     private fun observeViewModel(){
         viewModel.extract.observe(this, Observer {
             adapter.apply {
-                setNewData(it)
+                setNewData(ExtractListAdapter.objectToItem(it))
                 emptyView = getEmptyView(getString(R.string.no_results))
-                setFooterView(getAdViewContentStream())
             }
         })
     }

@@ -13,7 +13,6 @@ import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import br.com.disapps.meucartaotransporte.util.inflateView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -28,13 +27,13 @@ class AllLinesFragment : BaseFragment() {
 
     private val adapter:LinesListAdapter by lazy{
         LinesListAdapter(objectToItem(viewModel.lines), activity!!).apply {
-            setOnItemChildClickListener { adapter, view, position ->
+            setOnItemChildClickListener { _, view, position ->
                 when(view.id){
-                    R.id.fav_line -> { viewModel.favoriteLine((adapter.data[position] as LinesListAdapter.ItemListLines).line!!) }
+                    R.id.fav_line -> { viewModel.favoriteLine(getLine(position)) }
                 }
             }
-            setOnItemClickListener { adapter, view, position ->
-                LineActivity.launch(context!!, (adapter.data[position] as LinesListAdapter.ItemListLines).line!!, view.findViewById(R.id.roundedImage))
+            setOnItemClickListener { _, view, position ->
+                LineActivity.launch(context!!, getLine(position), view.findViewById(R.id.roundedImage))
             }
         }
     }
@@ -86,7 +85,7 @@ class AllLinesFragment : BaseFragment() {
     override fun setupLoading() {
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it!= null && it){
-                //adapter.emptyView = activity?.getLoadingView()
+                adapter.emptyView = activity?.getLoadingView()
             }
         })
     }
