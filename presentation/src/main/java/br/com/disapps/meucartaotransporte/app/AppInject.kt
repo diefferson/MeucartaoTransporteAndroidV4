@@ -52,6 +52,8 @@ import org.koin.dsl.module.applicationContext
  */
 object AppInject {
 
+    private const val CONTEXT = "applicationContext"
+
     fun modules() : List<Module> = listOf(
             applicationModule,
             viewModelModule,
@@ -61,15 +63,15 @@ object AppInject {
     )
 
     private val applicationModule: Module = applicationContext {
-        bean("applicationContext") { App.instance!! as Context }
-        bean { RealmDatabase(get("applicationContext")) as Database }
-        bean { Preferences(get("applicationContext")) as PreferencesRepository}
-        bean { Preferences(get("applicationContext"))}
+        bean(CONTEXT) { App.instance!! as Context }
+        bean { RealmDatabase(get(CONTEXT)) as Database }
+        bean { Preferences(get(CONTEXT)) as PreferencesRepository}
+        bean { Preferences(get(CONTEXT))}
         bean { RestClient().api }
         bean { EventBus() }
         bean { UIContext() as PostExecutionContext }
         bean { JobContextExecutor() as  ContextExecutor }
-        bean { (get("applicationContext") as Context).assets  }
+        bean { get<Context>(CONTEXT).assets  }
     }
 
     private val viewModelModule = applicationContext {
