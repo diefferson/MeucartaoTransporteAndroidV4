@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
@@ -16,7 +15,6 @@ import org.koin.android.ext.android.inject
 
 class UpdateShapesService : BaseService(){
 
-    private val getAllShapesJsonUseCase : GetAllShapesJson by inject()
     private val saveAllShapesJsonUseCase : SaveAllShapesJson by inject()
     private var city  = City.CWB
 
@@ -47,7 +45,7 @@ class UpdateShapesService : BaseService(){
                 })
             }
 
-            updateShapes(city)
+            saveShapes(city)
         }else{
             Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
         }
@@ -57,27 +55,12 @@ class UpdateShapesService : BaseService(){
 
     override fun onDestroy() {
         super.onDestroy()
-        getAllShapesJsonUseCase.dispose()
         saveAllShapesJsonUseCase.dispose()
     }
 
-    private fun updateShapes(city: City){
-        getAllShapesJsonUseCase.execute(GetAllShapesJson.Params(city,updateProgressListener),
-            onSuccess = {
-                saveShapes(it, city)
-            },
+    private fun saveShapes(city: City){
 
-            onError ={
-                isComplete.value = false
-            }
-        )
-    }
-
-    private fun saveShapes(json:String, city: City){
-
-        showNotification(text = getString(R.string.saving_data), infinityProgress = true)
-
-        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(json, city),
+        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(cacheDir.absolutePath +"/shapes.json", city,updateProgressListener ),
             onError = {
                 isComplete.value = false
             },

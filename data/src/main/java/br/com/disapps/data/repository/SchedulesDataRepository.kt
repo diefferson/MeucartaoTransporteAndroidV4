@@ -12,16 +12,11 @@ import io.reactivex.Single
 
 class SchedulesDataRepository( private val schedulesDataSourceFactory: SchedulesDataSourceFactory) : SchedulesRepository {
 
-    override suspend fun jsonSchedules(downloadProgressListener: DownloadProgressListener): String {
-        return  schedulesDataSourceFactory
-                .create(true)
-                .jsonSchedules(downloadProgressListener)
-    }
 
-    override suspend fun saveAllFromJson(json: String) {
+    override suspend fun saveAllFromJson(filePath:String, downloadProgressListener: DownloadProgressListener) {
         return schedulesDataSourceFactory
                 .create()
-                .saveAllFromJson(json)
+                .saveAllFromJson(filePath, downloadProgressListener)
     }
 
     override suspend fun getLineSchedulesDays(codeLine: String): List<Int> {

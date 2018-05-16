@@ -3,12 +3,17 @@ package br.com.disapps.data.dataSource.local
 import br.com.disapps.data.dataSource.LinesDataSource
 import br.com.disapps.data.entity.Linha
 import android.content.res.AssetManager
+import br.com.disapps.data.BuildConfig
+import br.com.disapps.data.api.DownloadTask
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.domain.exception.KnownError
+import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.realm.Realm
+import java.io.File
+import java.io.FileInputStream
 import java.io.InputStream
-import java.nio.charset.Charset
 
 
 /**
@@ -30,13 +35,19 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
         realm.close()
     }
 
-    override suspend fun saveAllFromJson(json: String) {
-        val realm = database.getDatabase() as Realm
-        realm.beginTransaction()
-        realm.createOrUpdateAllFromJson(CLAZZ, json)
-        realm.commitTransaction()
-        preferences.setLinesDate()
-        realm.close()
+    override suspend fun saveAllLinesFromJson(filePath: String, downloadProgressListener: DownloadProgressListener) {
+        val result = DownloadTask(downloadProgressListener).execute(BuildConfig.DOWNLOAD_LINES, "", filePath).get()
+        if(result == "OK"){
+            val realm = database.getDatabase() as Realm
+            val fis = FileInputStream(File(filePath))
+            realm.beginTransaction()
+            realm.createOrUpdateAllFromJson(CLAZZ, fis)
+            realm.commitTransaction()
+            preferences.setLinesDate()
+            realm.close()
+        }else{
+            throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
+        }
     }
 
     override suspend fun lines(): List<Linha> {
@@ -63,10 +74,6 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
         realm.copyToRealmOrUpdate(linha)
         realm.commitTransaction()
         realm.close()
-    }
-
-    override suspend fun jsonLines( downloadProgressListener: DownloadProgressListener): String {
-        throw Throwable("not implemented,  cloud only")
     }
 
     override suspend fun initLines() {

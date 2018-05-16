@@ -11,16 +11,11 @@ import io.reactivex.Single
 
 class ShapesDataRepository( private val shapesDataSourceFactory: ShapesDataSourceFactory) : ShapesRepository {
 
-    override suspend fun jsonShapes(city: City, downloadProgressListener: DownloadProgressListener): String {
-        return shapesDataSourceFactory
-                .create(true)
-                .jsonShapes(city, downloadProgressListener)
-    }
 
-    override suspend fun saveAllFromJson(json: String, city: City) {
+    override suspend fun saveAllFromJson(filePath:String, city : City,downloadProgressListener: DownloadProgressListener) {
         return shapesDataSourceFactory
                 .create()
-                .saveAllFromJson(json, city)
+                .saveAllFromJson(filePath, city, downloadProgressListener)
     }
 
     override suspend fun getShapes(codeLine: String): List<Shape> {

@@ -1,6 +1,5 @@
 package br.com.disapps.data.dataSource.cloud
 
-import br.com.disapps.data.api.DownloadClient.getRetrofitDownloadClient
 import br.com.disapps.data.api.RestApi
 import br.com.disapps.data.dataSource.LinesDataSource
 import br.com.disapps.data.entity.Linha
@@ -11,16 +10,11 @@ import br.com.disapps.domain.listeners.DownloadProgressListener
  */
 class CloudLinesDataSource(private val restApi: RestApi) : LinesDataSource {
 
-    override suspend fun jsonLines(downloadProgressListener: DownloadProgressListener): String {
-        return getRetrofitDownloadClient(downloadProgressListener)
-                .listaLinhas().await().toString()
-    }
-
-    override suspend fun saveLine(linha: Linha) {
+    override suspend fun saveAllLinesFromJson(filePath: String, downloadProgressListener: DownloadProgressListener) {
         throw Throwable("not implemented, only local")
     }
 
-    override suspend fun saveAllFromJson(json: String){
+    override suspend fun saveLine(linha: Linha) {
         throw Throwable("not implemented, only local")
     }
 

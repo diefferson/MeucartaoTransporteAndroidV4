@@ -20,7 +20,6 @@ import br.com.disapps.domain.interactor.itineraries.*
 import br.com.disapps.domain.interactor.lines.*
 import br.com.disapps.domain.interactor.preferences.*
 import br.com.disapps.domain.interactor.schedules.*
-import br.com.disapps.domain.interactor.shapes.GetAllShapesJson
 import br.com.disapps.domain.interactor.shapes.GetShapes
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
@@ -86,7 +85,7 @@ object AppInject {
         viewModel { BalanceViewModel( getCardUseCase = get()) }
         viewModel { RegisterCardViewModel( hasCardUseCase = get(), saveCardUseCase =  get(), getCardUseCase =  get()) }
         viewModel { ExtractViewModel( getExtractUseCase = get() ) }
-        viewModel { IntroViewModel( initLinesUseCase = get(),initSchedulesUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
+        viewModel { IntroViewModel( saveAllLinesJsonUseCase = get(),saveAllSchedulesJsonUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
         viewModel { LineViewModel( updateLineUseCase = get()) }
         viewModel { NextSchedulesViewModel( getLineScheduleDaysUseCase = get()) }
         viewModel { NextSchedulesDayViewModel( getLineSchedulesUseCase = get()) }
@@ -102,19 +101,15 @@ object AppInject {
         factory { DeleteCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { HasCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetExtract( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetAllLinesJson( linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveAllLinesJson( linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetLines( linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { UpdateLine( linesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetAllItinerariesJson( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveAllItinerariesJson( itinerariesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { GetItineraryDirections( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetItinerary( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetAllItineraries( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetAllShapesJson( shapesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveAllShapesJson( shapesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { GetShapes( shapesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetAllSchedulesJson( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveAllSchedulesJson( schedulesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { GetLineScheduleDays( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetLineSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }

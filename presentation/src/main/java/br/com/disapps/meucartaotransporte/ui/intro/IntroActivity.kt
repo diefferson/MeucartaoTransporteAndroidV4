@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.services.UpdateLinesService
-import br.com.disapps.meucartaotransporte.services.UpdateSchedulesService
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_intro.*
@@ -58,7 +56,12 @@ class IntroActivity : BaseActivity(){
 
 
     private fun setupUpdate(){
-        viewModel.initData()
+        viewModel.initData(cacheDir.absolutePath)
+        viewModel.progress.observe(this, Observer {
+            it?.let {
+                progress.progress = it
+            }
+        })
     }
 
     private fun setupViewPager() {

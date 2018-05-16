@@ -4,13 +4,8 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.events.PostEvent
-import br.com.disapps.domain.interactor.schedules.GetAllSchedulesJson
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import br.com.disapps.domain.model.Event
-import br.com.disapps.domain.model.UpdateSchedulesEventComplete
-import br.com.disapps.domain.model.UpdateSchedulesEventError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
@@ -19,9 +14,7 @@ import org.koin.android.ext.android.inject
 
 class UpdateSchedulesService : BaseService(){
 
-    private val getAllSchedulesJsonUseCase : GetAllSchedulesJson by inject()
     private val saveAllSchedulesJsonUseCase : SaveAllSchedulesJson by inject()
-    private val postEventUseCase : PostEvent by inject()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -34,10 +27,8 @@ class UpdateSchedulesService : BaseService(){
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            postEvent(UpdateSchedulesEventComplete())
                             showNotification(text =  getString(R.string.update_schedules_success))
                         }else{
-                            postEvent(UpdateSchedulesEventError())
                             showNotification(text =  getString(R.string.update_schedules_error))
                         }
                         stopSelf()
@@ -45,7 +36,7 @@ class UpdateSchedulesService : BaseService(){
                 })
             }
 
-            updateSchedules()
+            saveSchedules()
         }else{
             Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
         }
@@ -55,31 +46,12 @@ class UpdateSchedulesService : BaseService(){
 
     override fun onDestroy() {
         super.onDestroy()
-        getAllSchedulesJsonUseCase.dispose()
         saveAllSchedulesJsonUseCase.dispose()
-        postEventUseCase.dispose()
     }
 
-    private fun postEvent(event: Event){
-        postEventUseCase.execute(PostEvent.Params(event))
-    }
+    private fun saveSchedules(){
 
-    private fun updateSchedules(){
-        getAllSchedulesJsonUseCase.execute(GetAllSchedulesJson.Params(updateProgressListener),
-            onSuccess = {
-                saveSchedules(it)
-            },
-            onError = {
-                isComplete.value = false
-            }
-        )
-    }
-
-    private fun saveSchedules(json:String){
-
-        showNotification(text = getString(R.string.saving_data), infinityProgress = true)
-
-        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJson.Params(json),
+        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJson.Params(cacheDir.absolutePath+"/schedules.json", updateProgressListener),
             onError = {
                 isComplete.value = false
             },

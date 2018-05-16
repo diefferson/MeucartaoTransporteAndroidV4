@@ -1,13 +1,19 @@
 package br.com.disapps.data.dataSource.local
 
 import android.content.res.AssetManager
+import br.com.disapps.data.BuildConfig
+import br.com.disapps.data.api.DownloadTask
 import br.com.disapps.data.dataSource.SchedulesDataSource
 import br.com.disapps.data.entity.Horario
 import br.com.disapps.data.entity.HorarioLinha
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.domain.exception.KnownError
+import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.realm.Realm
+import java.io.File
+import java.io.FileInputStream
 import java.io.InputStream
 
 class LocalSchedulesDataSource(private val database: Database, private val preferences: Preferences, private val assetManager: AssetManager) : SchedulesDataSource{
@@ -19,14 +25,20 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
         private val CLAZZ = HorarioLinha::class.java
     }
 
-    override suspend fun saveAllFromJson(json: String){
-        val realm = database.getDatabase() as Realm
-        realm.beginTransaction()
-        realm.delete(CLAZZ)
-        realm.createAllFromJson(CLAZZ, json)
-        realm.commitTransaction()
-        preferences.setSchedulesDate()
-        realm.close()
+    override suspend fun saveAllFromJson(filePath: String, downloadProgressListener: DownloadProgressListener) {
+        val result = DownloadTask(downloadProgressListener).execute(BuildConfig.DOWNLOAD_SCHEDULES,"", filePath).get()
+        if(result == "OK"){
+            val realm = database.getDatabase() as Realm
+            val fis = FileInputStream(File(filePath))
+            realm.beginTransaction()
+            realm.delete(CLAZZ)
+            realm.createAllFromJson(CLAZZ, fis)
+            realm.commitTransaction()
+            preferences.setSchedulesDate()
+            realm.close()
+        }else{
+            throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
+        }
     }
 
     override suspend fun getLineSchedulesDays(codeLine: String): List<Int> {
@@ -61,10 +73,6 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
                                                 .flatMap { it.horarios }
         realm.close()
         return schedules
-    }
-
-    override suspend fun jsonSchedules( downloadProgressListener: DownloadProgressListener): String {
-        throw Throwable("not implemented,  cloud only")
     }
 
     override suspend fun initSchedules() {

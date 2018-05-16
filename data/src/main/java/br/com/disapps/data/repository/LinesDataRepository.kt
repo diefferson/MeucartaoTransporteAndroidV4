@@ -20,10 +20,10 @@ class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFac
                 .saveLine(line.toLineDTO())
     }
 
-    override suspend fun saveAllLinesFromJson(json: String) {
+    override suspend fun saveAllLinesFromJson(filePath:String, downloadProgressListener: DownloadProgressListener) {
         return linesDataSourceFactory
                 .create()
-                .saveAllFromJson(json)
+                .saveAllLinesFromJson(filePath, downloadProgressListener)
     }
 
     override suspend fun lines(): List<Line> {
@@ -38,12 +38,6 @@ class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFac
                 .create()
                 .line(line.toLineDTO())
                 .toLineBO()
-    }
-
-    override suspend fun jsonLines(downloadProgressListener: DownloadProgressListener): String {
-        return linesDataSourceFactory
-                .create(true)
-                .jsonLines(downloadProgressListener)
     }
 
     override suspend fun updateLine(line: Line) {

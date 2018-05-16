@@ -7,11 +7,9 @@ interface LinesDataSource : DataSource {
 
     suspend fun saveLine(linha : Linha)
 
-    suspend fun saveAllFromJson(json : String)
+    suspend fun saveAllLinesFromJson(filePath:String, downloadProgressListener: DownloadProgressListener)
 
     suspend fun lines() : List<Linha>
-
-    suspend fun jsonLines(downloadProgressListener: DownloadProgressListener) :String
 
     suspend fun line(linha: Linha) : Linha
 

@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.itineraries.GetAllItinerariesJson
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
@@ -16,7 +15,6 @@ import org.koin.android.ext.android.inject
 
 class UpdateItinerariesService : BaseService(){
 
-    private val getAllItinerariesJsonUseCase : GetAllItinerariesJson by inject()
     private val saveAllItinerariesJsonUseCase : SaveAllItinerariesJson by inject()
     private var city  = City.CWB
 
@@ -47,7 +45,7 @@ class UpdateItinerariesService : BaseService(){
                 })
             }
 
-            updateItineraries(city)
+            saveItineraries(city)
 
         }else{
             Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
@@ -58,26 +56,13 @@ class UpdateItinerariesService : BaseService(){
 
     override fun onDestroy() {
         super.onDestroy()
-        getAllItinerariesJsonUseCase.dispose()
         saveAllItinerariesJsonUseCase.dispose()
     }
 
-    private fun updateItineraries(city: City){
-        getAllItinerariesJsonUseCase.execute(GetAllItinerariesJson.Params(city, updateProgressListener),
-            onError ={
-                isComplete.value = false
-            },
-            onSuccess = {
-                saveItineraries(it, city)
-            }
-        )
-    }
 
-    private fun saveItineraries(json:String, city: City){
+    private fun saveItineraries( city: City){
 
-        showNotification(text = getString(R.string.saving_data), infinityProgress = true)
-
-        saveAllItinerariesJsonUseCase.execute(SaveAllItinerariesJson.Params(json, city),
+        saveAllItinerariesJsonUseCase.execute(SaveAllItinerariesJson.Params(cacheDir.absolutePath+"/initenaries.json", city,updateProgressListener),
                 onError = {
                     isComplete.value = false
                 },

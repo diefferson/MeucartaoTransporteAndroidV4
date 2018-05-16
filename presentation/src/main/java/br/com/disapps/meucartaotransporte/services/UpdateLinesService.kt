@@ -4,13 +4,8 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.events.PostEvent
-import br.com.disapps.domain.interactor.lines.GetAllLinesJson
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import br.com.disapps.domain.model.Event
-import br.com.disapps.domain.model.UpdateLinesEventComplete
-import br.com.disapps.domain.model.UpdateLinesEventError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
@@ -19,9 +14,7 @@ import org.koin.android.ext.android.inject
 
 class UpdateLinesService : BaseService(){
 
-    private val getAllLinesJsonUseCase: GetAllLinesJson by inject()
     private val saveAllLinesJsonUseCase: SaveAllLinesJson by inject()
-    private val postEventUseCase : PostEvent by inject()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -34,10 +27,8 @@ class UpdateLinesService : BaseService(){
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            postEvent(UpdateLinesEventComplete())
                             showNotification(text = getString(R.string.update_lines_success))
                         }else{
-                            postEvent(UpdateLinesEventError())
                             showNotification(text = getString(R.string.update_lines_error))
                         }
                         stopSelf()
@@ -45,7 +36,7 @@ class UpdateLinesService : BaseService(){
                 })
             }
 
-            updateLines()
+            saveLines()
 
         }else{
             Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
@@ -56,31 +47,12 @@ class UpdateLinesService : BaseService(){
 
     override fun onDestroy() {
         super.onDestroy()
-        getAllLinesJsonUseCase.dispose()
         saveAllLinesJsonUseCase.dispose()
-        postEventUseCase.dispose()
     }
 
-    private fun postEvent(event: Event ){
-        postEventUseCase.execute(PostEvent.Params(event))
-    }
+    private fun saveLines(){
 
-    private fun updateLines(){
-        getAllLinesJsonUseCase.execute(GetAllLinesJson.Params(updateProgressListener),
-            onSuccess = {
-                saveLines(it)
-            },
-            onError =  {
-                isComplete.value = false
-            }
-        )
-    }
-
-    private fun saveLines(json:String){
-
-        showNotification(text = getString(R.string.saving_data), infinityProgress = true)
-
-        saveAllLinesJsonUseCase.execute(SaveAllLinesJson.Params(json),
+        saveAllLinesJsonUseCase.execute(SaveAllLinesJson.Params(cacheDir.absolutePath+"/lines.json", updateProgressListener),
                 onError= {
                     isComplete.value = false
                 },
