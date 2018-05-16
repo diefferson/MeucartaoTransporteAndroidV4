@@ -110,7 +110,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
                     }
                 }
             }else{
-                error_view?.addView(activity?.getEmptyView(getString(R.string.no_shae_data)))
+                error_view?.addView(activity?.getEmptyView(getString(R.string.no_shape_data)))
                 error_view.visibility = View.VISIBLE
                 iAppActivityListener.hideTabs()
             }

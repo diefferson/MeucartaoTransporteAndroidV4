@@ -26,14 +26,14 @@ class AllLinesFragment : BaseFragment() {
     private val mainViewModel by viewModel<MainViewModel>()
 
     private val adapter:LinesListAdapter by lazy{
-        LinesListAdapter(objectToItem(viewModel.lines), activity!!).apply {
+        LinesListAdapter(viewModel.lines, activity!!).apply {
             setOnItemChildClickListener { _, view, position ->
                 when(view.id){
                     R.id.fav_line -> { viewModel.favoriteLine(getLine(position)) }
                 }
             }
             setOnItemClickListener { _, view, position ->
-                LineActivity.launch(context!!, getLine(position), view.findViewById(R.id.roundedImage))
+                LineActivity.launch(context!!, parentFragment, getLine(position).line, view.findViewById(R.id.roundedImage))
             }
         }
     }
@@ -56,7 +56,7 @@ class AllLinesFragment : BaseFragment() {
         viewModel.isUpdatedLines.observe(this, Observer {
             adapter.apply {
                 emptyView = activity.getEmptyView(getString(R.string.no_results))
-                setNewData(objectToItem(viewModel.lines))
+                notifyDataSetChanged()
             }
         })
 
@@ -65,9 +65,9 @@ class AllLinesFragment : BaseFragment() {
             if(it!= null && it){
                 viewModel.linesFiltered.clear()
                 viewModel.linesFiltered.addAll(viewModel.lines)
-                adapter.setNewData(objectToItem(viewModel.linesFiltered))
+                adapter.setNewData(viewModel.linesFiltered)
             }else{
-                adapter.setNewData(objectToItem(viewModel.lines))
+                adapter.setNewData(viewModel.lines)
             }
         })
 
@@ -76,7 +76,7 @@ class AllLinesFragment : BaseFragment() {
                 viewModel.filterLines(it)
                 adapter.apply {
                     emptyView = activity.getEmptyView(getString(R.string.no_results))
-                    setNewData(LinesListAdapter.objectToItem(viewModel.linesFiltered))
+                    notifyDataSetChanged()
                 }
             }
         })

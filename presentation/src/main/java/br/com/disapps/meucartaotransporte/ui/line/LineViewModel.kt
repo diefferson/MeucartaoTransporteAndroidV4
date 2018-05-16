@@ -7,10 +7,11 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
 class LineViewModel( private val updateLineUseCase: UpdateLine) : BaseViewModel(){
     var isTabsVisible = true
-    lateinit var line: LineVO
+    var line: LineVO = LineVO("", "", "", "", false,"")
 
 
     fun favoriteLine(){
+
         line.favorite = !line.favorite
         updateLineUseCase.execute(UpdateLine.Params(line.toLineBO()))
     }

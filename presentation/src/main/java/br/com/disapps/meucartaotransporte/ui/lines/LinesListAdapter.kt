@@ -80,8 +80,8 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
         }
     }
 
-    fun getLine(position: Int):LineVO{
-        return  data[position].line
+    fun getLine(position: Int):ListItem{
+        return  data[position]
     }
 
     class ListItem(lineItem: LineVO, typeItem : Int) : MultiItemEntity{

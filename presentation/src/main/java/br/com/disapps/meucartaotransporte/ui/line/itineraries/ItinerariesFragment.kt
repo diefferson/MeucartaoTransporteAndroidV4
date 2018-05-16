@@ -42,6 +42,8 @@ class ItinerariesFragment : BaseFragment() {
         viewModel.isDownloaded.observe(this, Observer {
             it?.let {
                 if(it){
+                    error_view.visibility = View.GONE
+                    error_view.removeAllViews()
                     viewModel.getItineraryDirections(lineViewModel.line.code)
                 }else{
                     error_view?.addView(activity?.getDownloadDataView())

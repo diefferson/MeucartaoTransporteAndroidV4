@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
@@ -94,11 +95,18 @@ class LineActivity : BaseFragmentActivity(){
                 viewModel.favoriteLine()
                 if(viewModel.line.favorite){
                     item.setIcon(R.drawable.star)
+                    setResult(RESULT_LINE_FAVOR, Intent().apply {
+                        putExtra(LINE_CODE, viewModel.line.code)
+                    })
                 }else{
                     item.setIcon(R.drawable.star_outline)
+                    setResult(RESULT_LINE_DISFAVOR,Intent().apply {
+                        putExtra(LINE_CODE, viewModel.line.code)
+                    })
                 }
             }
         }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -150,7 +158,6 @@ class LineActivity : BaseFragmentActivity(){
     }
 
     private fun setupAnimations(savedInstanceState: Bundle?){
-
         var isReloaded = false
         savedInstanceState?.let {
             isReloaded = it.getBoolean(IS_RELOADED, false)
@@ -166,19 +173,33 @@ class LineActivity : BaseFragmentActivity(){
         private const val LINE = "line"
         private const val FRAGMENT_SELECTED = "fragmentSelected"
         private const val IS_RELOADED = "isReloaded"
+        const val REQUEST_ID = 93
+        const val RESULT_LINE_FAVOR = 1
+        const val RESULT_LINE_DISFAVOR = 0
+        const val LINE_CODE = "lineCode"
 
-        fun launch(context: Context,line : LineVO, viewAnimation : View){
+        fun launch(context:Context, startFragment: Fragment?, line : LineVO, viewAnimation : View){
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Intent(context, LineActivity::class.java).apply {
                     putExtras(Bundle().apply{ putSerializable(LINE, line)})
                     val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context as BaseFragmentActivity, viewAnimation, context.getString(R.string.roundedColorView_transitionName))
-                    context.startActivity(this, transitionActivityOptions.toBundle())
+                    if(startFragment!= null){
+                        startFragment.startActivityForResult(this, REQUEST_ID, transitionActivityOptions.toBundle())
+                    }else{
+                        context.startActivity(this, transitionActivityOptions.toBundle())
+                    }
                 }
             } else{
-                context.startActivity(Intent(context, LineActivity::class.java).apply {
-                    putExtras(Bundle().apply{ putSerializable(LINE, line)})
-                })
+                if(startFragment != null){
+                    startFragment.startActivityForResult(Intent(context, LineActivity::class.java).apply {
+                        putExtras(Bundle().apply{ putSerializable(LINE, line)})
+                    }, REQUEST_ID)
+                }else{
+                    context.startActivity(Intent(context, LineActivity::class.java).apply {
+                        putExtras(Bundle().apply{ putSerializable(LINE, line)})
+                    })
+                }
             }
         }
     }
