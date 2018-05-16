@@ -230,7 +230,7 @@
     <string name="channel_news">Notícias e novidades</string>
     <string name="channel_default">Notificações Diversas</string>
     <string name="no_itinerary_data">Sem dados de itinerário para esta linha</string>
-    <string name="no_shape_data">Sem dados de trajetos para esta linhas</string>
-    <string name="no_shae_data">Sem dados de trajeto para esta linha</string>
+    <string name="no_shape_data">Sem dados de trajetos para esta linha</string>
+    <string name="no_schedule_data">Sem dados de horários para esta linha</string>
 
 </resources>

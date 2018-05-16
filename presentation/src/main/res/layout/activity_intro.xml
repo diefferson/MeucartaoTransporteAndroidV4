@@ -59,7 +59,21 @@
             app:piv_unselectedColor="@color/dot_inactive"
             app:piv_viewPager="@id/view_pager"
             app:piv_padding="4dp"
-            app:piv_radius="5dp"/>
+            app:piv_radius="5dp"
+            android:visibility="invisible"/>
+
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:max="100"
+            app:layout_constraintEnd_toStartOf="@+id/btn_next"
+            app:layout_constraintStart_toEndOf="@+id/btn_skip"
+            app:layout_constraintTop_toTopOf="@+id/btn_skip"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
     </android.support.constraint.ConstraintLayout>
