@@ -23,7 +23,7 @@ class ItineraryDirectionFragment : BaseFragment(){
     private val lineViewModel  by viewModel<LineViewModel>()
 
     private val adapter : ItineraryDirectionListAdapter by lazy {
-        ItineraryDirectionListAdapter(ArrayList(), lineViewModel.line.color)
+        ItineraryDirectionListAdapter(ArrayList(),activity!!, lineViewModel.line.color)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class ItineraryDirectionFragment : BaseFragment(){
     private fun observeViewModel(){
         viewModel.itinerary.observe(this, Observer {
             adapter.apply {
-                setNewData(it)
+                setNewData(ItineraryDirectionListAdapter.objectToItem(it))
                 emptyView = activity?.getEmptyView(getString(R.string.no_results))
             }
         })

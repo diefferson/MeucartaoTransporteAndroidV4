@@ -12,6 +12,7 @@ import br.com.disapps.meucartaotransporte.util.iab.IabHelper
 import br.com.disapps.meucartaotransporte.util.iab.IabResult
 import br.com.disapps.meucartaotransporte.util.iab.Inventory
 import br.com.disapps.meucartaotransporte.util.iab.Purchase
+import com.appodeal.ads.Appodeal
 
 /**
  * Created by dnso on 09/03/2018.
@@ -80,6 +81,7 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen,
             if (purchase!!.sku == SKU_PRO) {
                 resultInAppBilling.value = InAppBillingStatus.SUCCESS
                 iabHelper?.flagEndAsync()
+                Appodeal.setCustomRule(MainViewModel.SKU_PRO, true)
                 setIsProUseCase.execute(SetIsPro.Params(true))
                 isPro.value = true
             }

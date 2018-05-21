@@ -232,5 +232,9 @@
     <string name="no_itinerary_data">Sem dados de itinerário para esta linha</string>
     <string name="no_shape_data">Sem dados de trajetos para esta linha</string>
     <string name="no_schedule_data">Sem dados de horários para esta linha</string>
+    <string name="init_data_description">Para sua comodidade o aplicativo já está baixando os dados mais atuais dos horários das linhas.</string>
+    <string name="continue_label">Continuar</string>
+    <string name="download_other_data">Para consultar informações de itinerários ou trajetos será necessário realizar o download dos dados separadamente em \n Configurações->Uso de dados e atulizações.</string>
+    <string name="got_it">Entendi!</string>
 
 </resources>
