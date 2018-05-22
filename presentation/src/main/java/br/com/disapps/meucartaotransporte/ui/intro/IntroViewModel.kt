@@ -72,7 +72,7 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
             schedulesComplete = true
             if (linesComplete) {
                 isComplete.value = true
-               // saveIsFirstAccess()
+                saveIsFirstAccess()
             }
         }
     }

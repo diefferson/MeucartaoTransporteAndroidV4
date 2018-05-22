@@ -43,6 +43,7 @@ class IntroActivity : BaseActivity(){
 
     private fun setupUpdate(){
         progress.startDeterminate()
+        progress.setPercent(0)
         viewModel.initData(cacheDir.absolutePath)
         viewModel.progress.observe(this, Observer {
             it?.let {
