@@ -9,15 +9,14 @@ import android.widget.TextView
 /**
  * @author jlmd
  */
-class PercentIndicatorView(context: Context, private val parentWidth: Int, textColor: Int= Color.WHITE) : TextView(context) {
-    private val textColor :Int = textColor
+class PercentIndicatorView(context: Context, private val parentWidth: Int, private val textColor: Int = Color.WHITE) : TextView(context) {
 
     init {
         init()
     }
 
     private fun init() {
-        val textSize = 35 * parentWidth / 700
+        val textSize = 18
         setTextSize(textSize.toFloat())
         setTextColor(this.textColor)
         gravity = Gravity.CENTER

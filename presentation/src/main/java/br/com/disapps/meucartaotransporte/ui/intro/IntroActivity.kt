@@ -33,10 +33,11 @@ class IntroActivity : BaseActivity(){
             finish()
         }
 
-
         viewModel.isComplete.observe(this, Observer {
             if(it!= null && it){
+                intro_text.visibility = View.GONE
                 btn_continue.visibility = View.VISIBLE
+                progress.setPercent(100)
             }
         })
     }
@@ -47,7 +48,7 @@ class IntroActivity : BaseActivity(){
         viewModel.initData(cacheDir.absolutePath)
         viewModel.progress.observe(this, Observer {
             it?.let {
-                progress.setPercent(it/2)
+                progress.setPercent((it/2)-1)
             }
         })
     }

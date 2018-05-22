@@ -7,6 +7,7 @@ import br.com.disapps.data.BuildConfig
 import br.com.disapps.data.api.DownloadTask
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.data.utils.deleteFromCache
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.listeners.DownloadProgressListener
@@ -45,6 +46,7 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
             realm.commitTransaction()
             preferences.setLinesDate()
             realm.close()
+        //    deleteFromCache(filePath)
         }else{
             throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
         }
@@ -84,5 +86,6 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
         realm.commitTransaction()
         preferences.setLinesDate()
         realm.close()
+
     }
 }
