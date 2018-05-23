@@ -46,7 +46,7 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
             realm.commitTransaction()
             preferences.setLinesDate()
             realm.close()
-        //    deleteFromCache(filePath)
+            deleteFromCache(filePath)
         }else{
             throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
         }
@@ -76,16 +76,5 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
         realm.copyToRealmOrUpdate(linha)
         realm.commitTransaction()
         realm.close()
-    }
-
-    override suspend fun initLines() {
-        val realm = database.getDatabase() as Realm
-        val inputStream : InputStream = assetManager.open("linhas.json")
-        realm.beginTransaction()
-        realm.createOrUpdateAllFromJson(CLAZZ, inputStream)
-        realm.commitTransaction()
-        preferences.setLinesDate()
-        realm.close()
-
     }
 }

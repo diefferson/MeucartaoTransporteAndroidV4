@@ -6,6 +6,7 @@ import br.com.disapps.data.dataSource.ShapesDataSource
 import br.com.disapps.data.entity.Shape
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.data.utils.deleteFromCache
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.listeners.DownloadProgressListener
@@ -35,6 +36,7 @@ class LocalShapesDataSource(private val database: Database, private val preferen
                 preferences.setMetShapesDate()
             }
             realm.close()
+            deleteFromCache(filePath)
         }else{
             throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
         }

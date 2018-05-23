@@ -43,6 +43,7 @@ ext {
     playServicesVersion = '15.0.0'
     coroutinesVersion = '0.22.5'
     fabricVersion = '2.9.2@aar'
+    jobDispatcherVersion = '0.8.5'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -84,6 +85,7 @@ ext {
             playServicesAds:        "com.google.android.gms:play-services-ads:${playServicesVersion}",
             coroutinesAndroid:          "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
             fabric:          "com.crashlytics.sdk.android:crashlytics:${fabricVersion}",
+            jobDispatcher:  "com.firebase:firebase-jobdispatcher:${jobDispatcherVersion}",
     ]
 
     presentationTestDependencies = [

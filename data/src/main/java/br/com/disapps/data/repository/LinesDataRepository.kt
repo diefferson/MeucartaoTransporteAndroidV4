@@ -45,8 +45,4 @@ class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFac
                 .create()
                 .updateLine(line.toLineDTO())
     }
-
-    override suspend fun initLines() {
-        return linesDataSourceFactory.create().initLines()
-    }
 }

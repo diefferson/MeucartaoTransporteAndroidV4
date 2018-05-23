@@ -58,6 +58,7 @@ class UpdateSchedulesService : BaseService(){
 
             onComplete = {
                 isComplete.value = true
+                ScheduleJob.schedule(this, ScheduleJob.SCHEDULE_TYPE)
             }
         )
 
@@ -82,9 +83,13 @@ class UpdateSchedulesService : BaseService(){
     companion object {
         private const val IS_MANUAL = "manual"
         fun startService(context: Context, manual :Boolean = true){
-            context.startService(Intent(context, UpdateSchedulesService::class.java).apply {
-                putExtra(IS_MANUAL, manual)
-            })
+            try {
+                context.startService(Intent(context, UpdateSchedulesService::class.java).apply {
+                    putExtra(IS_MANUAL, manual)
+                })
+            }catch (e :Exception){
+                e.stackTrace
+            }
         }
     }
 }

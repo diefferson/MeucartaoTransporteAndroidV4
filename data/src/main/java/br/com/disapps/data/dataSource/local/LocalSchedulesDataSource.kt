@@ -37,7 +37,7 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
             realm.commitTransaction()
             preferences.setSchedulesDate()
             realm.close()
-           // deleteFromCache(filePath)
+            deleteFromCache(filePath)
         }else{
             throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
         }
@@ -75,16 +75,5 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
                                                 .flatMap { it.horarios }
         realm.close()
         return schedules
-    }
-
-    override suspend fun initSchedules() {
-        val realm = database.getDatabase() as Realm
-        val inputStream : InputStream = assetManager.open("horarios.json")
-        realm.beginTransaction()
-        realm.delete(CLAZZ)
-        realm.createAllFromJson(CLAZZ, inputStream)
-        realm.commitTransaction()
-        preferences.setSchedulesDate()
-        realm.close()
     }
 }

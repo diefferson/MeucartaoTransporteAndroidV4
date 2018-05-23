@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BuildConfig
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.InAppBillingStatus
+import br.com.disapps.meucartaotransporte.services.ScheduleJob
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar

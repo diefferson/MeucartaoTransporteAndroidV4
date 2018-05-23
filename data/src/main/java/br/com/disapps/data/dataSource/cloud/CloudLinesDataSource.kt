@@ -29,8 +29,4 @@ class CloudLinesDataSource(private val restApi: RestApi) : LinesDataSource {
     override suspend fun updateLine(linha: Linha) {
         throw Throwable("not implemented, only local")
     }
-
-    override suspend fun initLines() {
-        throw Throwable("not implemented, only local")
-    }
 }

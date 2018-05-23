@@ -89,6 +89,8 @@ dependencies {
     implementation presentationDependencies.playServicesLocation
     implementation presentationDependencies.playServicesMap
     implementation presentationDependencies.playServicesAds
+    implementation presentationDependencies.jobDispatcher
+
     kapt presentationDependencies.archCompiler
     implementation presentationDependencies.customtabs
     implementation(presentationDependencies.fabric) {

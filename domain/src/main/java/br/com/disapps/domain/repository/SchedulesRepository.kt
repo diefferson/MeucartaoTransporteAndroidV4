@@ -14,5 +14,4 @@ interface SchedulesRepository{
 
     suspend fun getAllPointSchedules(codeLine: String, day: Int, codePoint : String) : List<Schedule>
 
-    suspend fun initSchedules()
 }

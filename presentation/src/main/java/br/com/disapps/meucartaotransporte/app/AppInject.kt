@@ -90,7 +90,7 @@ object AppInject {
         viewModel { NextSchedulesViewModel( getLineScheduleDaysUseCase = get()) }
         viewModel { NextSchedulesDayViewModel( getLineSchedulesUseCase = get()) }
         viewModel { SchedulesViewModel( getAllPointSchedulesUseCase = get()) }
-        viewModel { DataUsageViewModel( getDataUsageUseCase = get(), savePeriodUpdateLinesUseCase =  get(), savePeriodUpdateSchedulesUseCase =  get()) }
+        viewModel { DataUsageViewModel( getDataUsageUseCase = get()) }
         viewModel { ItineraryDirectionViewModel(getItineraryUseCase = get()) }
     }
 
@@ -131,8 +131,6 @@ object AppInject {
         factory { SavePeriodUpdateLines( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { SavePeriodUpdateSchedules( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
         factory { GetAllBuses( busesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { InitLines(linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { InitSchedules(schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {

@@ -101,10 +101,14 @@ class UpdateShapesService : BaseService(){
         private const val IS_MANUAL = "manual"
         private const val CITY = "city"
         fun startService(context: Context, city: City, manual :Boolean = true){
-            context.startService(Intent(context, UpdateShapesService::class.java).apply {
-                putExtra(IS_MANUAL, manual)
-                putExtra(CITY, city)
-            })
+            try {
+                context.startService(Intent(context, UpdateShapesService::class.java).apply {
+                    putExtra(IS_MANUAL, manual)
+                    putExtra(CITY, city)
+                })
+            }catch (e :Exception){
+                e.stackTrace
+            }
         }
     }
 }

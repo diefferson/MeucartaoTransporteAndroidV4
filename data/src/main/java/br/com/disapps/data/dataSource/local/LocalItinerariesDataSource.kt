@@ -6,6 +6,7 @@ import br.com.disapps.data.dataSource.ItinerariesDataSource
 import br.com.disapps.data.entity.Ponto
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.data.utils.deleteFromCache
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.listeners.DownloadProgressListener
@@ -39,6 +40,7 @@ class LocalItinerariesDataSource(private val database: Database, private val pre
                 preferences.setMetItinerariesDate()
             }
             realm.close()
+            deleteFromCache(filePath)
         }else{
             throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
         }
