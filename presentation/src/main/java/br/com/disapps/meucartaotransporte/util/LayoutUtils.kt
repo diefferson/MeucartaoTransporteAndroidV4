@@ -100,6 +100,11 @@ fun Activity.getErrorView(uiException: UiException) :View{
 
 }
 
+fun Activity.getProgressView() :View{
+    val rootView = this.findViewById<ViewGroup>(android.R.id.content)
+    return inflateView(R.layout.progress_view, rootView)
+}
+
 fun Activity.getLoadingView() :View{
     val rootView = this.findViewById<ViewGroup>(android.R.id.content)
     return inflateView(R.layout.loading_view, rootView)

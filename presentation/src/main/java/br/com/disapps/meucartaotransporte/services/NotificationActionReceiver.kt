@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import br.com.disapps.domain.model.City
+import br.com.disapps.meucartaotransporte.model.UpdateData
+import br.com.disapps.meucartaotransporte.util.cancelNotification
+import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
 
 class NotificationActionReceiver : BroadcastReceiver(){
 
@@ -12,8 +15,10 @@ class NotificationActionReceiver : BroadcastReceiver(){
         val action = p1.getStringExtra(ACTION)
 
         if (action == CANCEL_ACTION) {
+            Toast.makeText(p0, "Cancel", Toast.LENGTH_SHORT).show()
             performCancel(p0, p1)
         } else if (action == RETRY_ACTION) {
+            Toast.makeText(p0, "Cancel", Toast.LENGTH_SHORT).show()
             performRetry(p0, p1)
 
         }
@@ -23,12 +28,33 @@ class NotificationActionReceiver : BroadcastReceiver(){
     }
 
     private fun performCancel(context: Context, intent: Intent) {
+
         val service = intent.getStringExtra(SERVICE)
         when(service){
-            LINE_SERVICE -> context.stopService(Intent(context, UpdateLinesService::class.java))
-            SCHEDULE_SERVICE -> context.stopService(Intent(context, UpdateSchedulesService::class.java))
-            SHAPE_SERVICE -> context.stopService(Intent(context, UpdateShapesService::class.java))
-            ITINERARY_SERVICE -> context.stopService(Intent(context, UpdateItinerariesService::class.java))
+            LINE_SERVICE -> {
+                context.stopService(Intent(context, UpdateLinesService::class.java))
+                cancelNotification(context, getUpdateDataNotification(UpdateData.LINES).id)
+            }
+            SCHEDULE_SERVICE ->{
+                context.stopService(Intent(context, UpdateSchedulesService::class.java))
+                cancelNotification(context, getUpdateDataNotification(UpdateData.SCHEDULES).id)
+            }
+            SHAPE_SERVICE -> {
+                context.stopService(Intent(context, UpdateShapesService::class.java))
+                if((intent.getSerializableExtra(CITY) as City) == City.CWB){
+                    cancelNotification(context, getUpdateDataNotification(UpdateData.CWB_SHAPES).id)
+                }else{
+                    cancelNotification(context, getUpdateDataNotification(UpdateData.MET_SHAPES).id)
+                }
+            }
+            ITINERARY_SERVICE ->  {
+                context.stopService(Intent(context, UpdateItinerariesService::class.java))
+                if((intent.getSerializableExtra(CITY) as City) == City.CWB){
+                    cancelNotification(context, getUpdateDataNotification(UpdateData.CWB_ITINERARIES).id)
+                }else{
+                    cancelNotification(context, getUpdateDataNotification(UpdateData.MET_ITINERARIES).id)
+                }
+            }
         }
     }
 
