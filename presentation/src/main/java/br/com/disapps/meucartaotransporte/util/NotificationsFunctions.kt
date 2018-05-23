@@ -10,7 +10,7 @@ import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.model.UpdateDataNotification
 
 /* Simple notification*/
-fun showCustomNotification(context: Context, channel : String, notificationId : Int, text : String,sortKey :String = "",  progress: Int = 0, infinityProgress: Boolean = false) {
+fun showCustomNotification(context: Context, channel : String, notificationId : Int, text : String,sortKey :String = "", action : NotificationCompat.Action, progress: Int = 0, infinityProgress: Boolean = false) {
 
     setupChannel(context,channel)
 
@@ -18,6 +18,9 @@ fun showCustomNotification(context: Context, channel : String, notificationId : 
             .setContentTitle(context.resources.getString(R.string.app_name))
             .setContentText(text)
             .setSmallIcon(R.drawable.bus)
+            .setOnlyAlertOnce(true)
+            .addAction(action)
+
 
     if(sortKey != ""){
         mBuilder.setSortKey(sortKey)
@@ -36,6 +39,11 @@ fun showCustomNotification(context: Context, channel : String, notificationId : 
     val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
 
     mNotificationManager?.notify(notificationId, mBuilder.build())
+}
+
+fun cancelNotification(context: Context,notificationId : Int){
+    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    notificationManager.cancel(notificationId)
 }
 
 fun getUpdateDataNotification( updateData: UpdateData) : UpdateDataNotification {
@@ -59,8 +67,12 @@ private fun setupChannel(context: Context, channelId: String){
 
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
         val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val importance = NotificationManager.IMPORTANCE_LOW
         val notificationChannel = NotificationChannel(notificationChannels.toString(), getChannelName(context, notificationChannels), importance)
+        notificationChannel.apply {
+            enableVibration(false)
+            enableLights(false)
+        }
         mNotificationManager?.createNotificationChannel(notificationChannel)
     }
 }

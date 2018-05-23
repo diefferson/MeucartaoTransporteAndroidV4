@@ -1,13 +1,17 @@
 package br.com.disapps.meucartaotransporte.services
 
+import android.app.PendingIntent
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.support.v4.app.NotificationCompat
 import android.widget.Toast
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
+import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
+import br.com.disapps.meucartaotransporte.util.cancelNotification
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
 import br.com.disapps.meucartaotransporte.util.showCustomNotification
 import org.koin.android.ext.android.inject
@@ -23,13 +27,16 @@ class UpdateLinesService : BaseService(){
             isManual = intent?.extras?.getBoolean(IS_MANUAL)?:false
 
             if(isManual){
-                showNotification(text =getString(R.string.updating_lines), infinityProgress = true)
+                showNotification(text =getString(R.string.updating_lines), infinityProgress = true,
+                        action = getAction(NotificationActionReceiver.CANCEL_ACTION))
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            showNotification(text = getString(R.string.update_lines_success))
+                            showNotification(text = getString(R.string.update_lines_success),
+                                    action = getAction(NotificationActionReceiver.CANCEL_ACTION))
                         }else{
-                            showNotification(text = getString(R.string.update_lines_error))
+                            showNotification(text = getString(R.string.update_lines_error),
+                                    action = getAction(NotificationActionReceiver.RETRY_ACTION))
                         }
                         stopSelf()
                     }
@@ -47,6 +54,7 @@ class UpdateLinesService : BaseService(){
 
     override fun onDestroy() {
         super.onDestroy()
+        cancelNotification(this,getUpdateDataNotification(UpdateData.LINES).id )
         saveAllLinesJsonUseCase.dispose()
     }
 
@@ -66,18 +74,31 @@ class UpdateLinesService : BaseService(){
 
     private val updateProgressListener  = object : DownloadProgressListener {
         override fun onAttachmentDownloadUpdate(percent: Int) {
-            showNotification(text = getString(R.string.updating_lines), progress =  percent)
+            showNotification(text = getString(R.string.updating_lines), progress =  percent, action = getAction(NotificationActionReceiver.CANCEL_ACTION))
         }
     }
 
-    private fun showNotification(text:String, progress :Int = 0, infinityProgress: Boolean = false){
+    private fun showNotification(text:String,action: NotificationCompat.Action, progress :Int = 0, infinityProgress: Boolean = false){
         showCustomNotification(context = this@UpdateLinesService,
                 channel = getUpdateDataNotification(UpdateData.LINES).channel,
                 notificationId = getUpdateDataNotification(UpdateData.LINES).id,
                 text = text,
                 sortKey = "1",
                 progress = progress,
-                infinityProgress = infinityProgress)
+                infinityProgress = infinityProgress,
+                action = action)
+    }
+
+    fun getAction(typeAction : String) : NotificationCompat.Action {
+        val intentAction = Intent(this, NotificationActionReceiver::class.java).apply {
+            putExtra(NotificationActionReceiver.ACTION, typeAction)
+            putExtra(NotificationActionReceiver.SERVICE, NotificationActionReceiver.LINE_SERVICE)
+            putExtra(NotificationActionReceiver.CITY, City.CWB)
+        }
+
+        val pIntent = PendingIntent.getBroadcast(this, 1, intentAction, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        return NotificationCompat.Action(0, getString(R.string.cancel), pIntent)
     }
 
     companion object {
