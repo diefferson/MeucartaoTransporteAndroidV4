@@ -20,7 +20,6 @@ class UpdateItinerariesService : BaseService(){
 
     private val saveAllItinerariesJsonUseCase : SaveAllItinerariesJson by inject()
     private var city  = City.CWB
-    private var listener : DownloadProgressListener? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -29,7 +28,6 @@ class UpdateItinerariesService : BaseService(){
 
             intent?.extras?.let{
 
-                listener = it.getSerializable(LISTENER) as DownloadProgressListener
                 it.getSerializable(CITY)?.let {
                     city = it as City
                 }?: run {
@@ -89,7 +87,6 @@ class UpdateItinerariesService : BaseService(){
 
     private val updateProgressListener  = object :DownloadProgressListener{
         override fun onAttachmentDownloadUpdate(percent: Int) {
-            listener?.onAttachmentDownloadUpdate(percent)
             showNotification(text = getString(R.string.updating_itineraries),
                     progress =  percent)
         }
@@ -118,14 +115,12 @@ class UpdateItinerariesService : BaseService(){
     companion object {
         private const val IS_MANUAL = "manual"
         private const val CITY = "city"
-        private const val LISTENER = "listener"
 
-        fun startService(context: Context, city: City,  manual :Boolean = true, listener: DownloadProgressListener? = null){
+        fun startService(context: Context, city: City,  manual :Boolean = true){
             try {
                 context.startService(Intent(context, UpdateItinerariesService::class.java).apply {
                     putExtra(IS_MANUAL, manual)
                     putExtra(CITY, city)
-                    putExtra(LISTENER, listener)
                 })
             }catch (e :Exception){
                 e.stackTrace

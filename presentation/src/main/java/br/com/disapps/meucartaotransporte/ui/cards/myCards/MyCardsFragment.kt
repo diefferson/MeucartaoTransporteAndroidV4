@@ -56,9 +56,11 @@ class MyCardsFragment : BaseFragment(){
 
     private fun observeViewModel(){
         viewModel.cards.observe(this, Observer {
-            adapter.apply {
-                setNewData(CardsListAdapter.objectToItem(it))
-                emptyView = activity.getEmptyView(getString(R.string.no_cards))
+            if(it!= null && it.isNotEmpty()){
+                adapter.setNewData(CardsListAdapter.objectToItem(it))
+                hideErrorView()
+            }else{
+                showErrorView(activity?.getEmptyView(getString(R.string.no_cards)))
             }
         })
     }
@@ -66,9 +68,20 @@ class MyCardsFragment : BaseFragment(){
     override fun setupLoading() {
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it!= null && it ){
-                adapter.emptyView = activity?.getLoadingView()
+                showErrorView(activity?.getLoadingView())
             }
         })
+    }
+
+    private fun showErrorView(view :View?){
+        error_view.removeAllViews()
+        error_view?.addView(view)
+        error_view.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView(){
+        error_view.removeAllViews()
+        error_view.visibility = View.GONE
     }
 
     private fun confirmDeleteCard(cardVO: CardVO){

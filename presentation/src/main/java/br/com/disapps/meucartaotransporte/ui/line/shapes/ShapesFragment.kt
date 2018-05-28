@@ -20,6 +20,10 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.android.synthetic.main.fragment_shapes.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.withContext
 import org.koin.android.architecture.ext.viewModel
 
 
@@ -40,12 +44,22 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+        show_stops.setOnClickListener{ showStops() }
+        show_help.setOnClickListener{
+            help_text.visibility = View.VISIBLE
+            async {
+                delay(10000)
+                withContext(UI){
+                    help_text.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        viewModel.getIsDonwloaded(getCity(lineViewModel.line.category))
+        viewModel.getIsDownloaded(getCity(lineViewModel.line.category))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -181,6 +195,20 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         listDisabled.forEach{
             if(busesMarkers.containsKey(it)){
                 busesMarkers.remove(it)
+            }
+        }
+    }
+
+    private fun showStops(){
+        if(!viewModel.showStops){
+            viewModel.showStops = true
+            stopsMarkers.forEach {
+                it.isVisible =true
+            }
+        }else{
+            viewModel.showStops = false
+            stopsMarkers.forEach {
+                it.isVisible = false
             }
         }
     }

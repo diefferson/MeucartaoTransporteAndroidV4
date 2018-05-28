@@ -8,12 +8,23 @@
             type="br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayViewModel"/>
     </data>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/next_schedules_recycler"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_next_schedules"
-        android:scrollbars="vertical"
-        tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/next_schedules_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_next_schedules"
+            android:scrollbars="vertical"
+            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/error_view"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 </layout>

@@ -19,7 +19,6 @@ class UpdateShapesService : BaseService(){
 
     private val saveAllShapesJsonUseCase : SaveAllShapesJson by inject()
     private var city  = City.CWB
-    private var listener : DownloadProgressListener? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -28,7 +27,6 @@ class UpdateShapesService : BaseService(){
 
             intent?.extras?.let{
 
-                listener = it.getSerializable(LISTENER) as DownloadProgressListener
                 it.getSerializable(CITY)?.let {
                     city = it as City
                 }?: run {
@@ -90,7 +88,6 @@ class UpdateShapesService : BaseService(){
     private val updateProgressListener  = object : DownloadProgressListener {
         override fun onAttachmentDownloadUpdate(percent: Int) {
             showNotification(text = getString(R.string.updating_shapes), progress =  percent)
-            listener?.onAttachmentDownloadUpdate(percent)
         }
     }
 
@@ -117,14 +114,12 @@ class UpdateShapesService : BaseService(){
     companion object {
         private const val IS_MANUAL = "manual"
         private const val CITY = "city"
-        private const val LISTENER = "listener"
 
-        fun startService(context: Context, city: City, manual :Boolean = true,listener: DownloadProgressListener? = null){
+        fun startService(context: Context, city: City, manual :Boolean = true){
             try {
                 context.startService(Intent(context, UpdateShapesService::class.java).apply {
                     putExtra(IS_MANUAL, manual)
                     putExtra(CITY, city)
-                    putExtra(LISTENER, listener)
                 })
             }catch (e :Exception){
                 e.stackTrace

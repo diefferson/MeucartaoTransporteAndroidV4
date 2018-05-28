@@ -25,8 +25,9 @@ class ShapesViewModel(private val getShapesUseCase: GetShapes,
     val stops = MutableLiveData<List<BusStop>>()
     val buses = MutableLiveData<List<Bus>>()
     val isDownloaded = MutableLiveData<Boolean>()
+    var showStops = false
 
-    fun getIsDonwloaded(city: City){
+    fun getIsDownloaded(city: City){
         when(city){
             City.CWB -> getIsDownloadedCwbShapesUseCase.execute(Unit){
                 isDownloaded.value = it

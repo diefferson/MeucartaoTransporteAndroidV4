@@ -26,7 +26,7 @@ class NextSchedulesDayFragment : BaseFragment(){
 
     private val adapter:NextScheduleDayListAdapter by lazy {
         NextScheduleDayListAdapter(ArrayList(), activity!!).apply {
-            setOnItemClickListener { adapter, _, position ->
+            setOnItemClickListener { _, _, position ->
                     SchedulesActivity.launch(context!!, SchedulesDetail(
                             lineCode = getLineSchedule(position).lineCode,
                             day =  getLineSchedule(position).day,
@@ -61,17 +61,30 @@ class NextSchedulesDayFragment : BaseFragment(){
 
     private fun observeViewModel(){
         viewModel.nextSchedules.observe(this, Observer {
-            adapter.apply {
-                setNewData(objectToItem(it))
-                emptyView = activity?.getEmptyView(getString(R.string.no_results))
+            if(it!= null && it.isNotEmpty()){
+                adapter.setNewData(NextScheduleDayListAdapter.objectToItem(it))
+                hideErrorView()
+            }else{
+                showErrorView(activity?.getEmptyView(getString(R.string.no_schedule_data)))
             }
         })
+    }
+
+    private fun showErrorView(view :View?){
+        error_view.removeAllViews()
+        error_view?.addView(view)
+        error_view.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView(){
+        error_view.removeAllViews()
+        error_view.visibility = View.GONE
     }
 
     override fun setupLoading() {
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it!= null && it){
-                adapter.emptyView = activity?.getLoadingView()
+                showErrorView(activity?.getLoadingView())
             }
         })
     }

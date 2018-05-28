@@ -7,7 +7,6 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
-import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_itinerary_direction.*
@@ -48,9 +47,11 @@ class ItineraryDirectionFragment : BaseFragment(){
 
     private fun observeViewModel(){
         viewModel.itinerary.observe(this, Observer {
-            adapter.apply {
-                setNewData(ItineraryDirectionListAdapter.objectToItem(it))
-                emptyView = activity?.getEmptyView(getString(R.string.no_results))
+            if(it!= null && it.isNotEmpty()){
+                adapter.setNewData(ItineraryDirectionListAdapter.objectToItem(it))
+                hideErrorView()
+            }else{
+                showErrorView(activity?.getEmptyView(getString(R.string.no_itinerary_data)))
             }
         })
     }
@@ -58,9 +59,20 @@ class ItineraryDirectionFragment : BaseFragment(){
     override fun setupLoading() {
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it!= null && it){
-                adapter.emptyView = activity?.getLoadingView()
+                showErrorView(activity?.getLoadingView())
             }
         })
+    }
+
+    private fun showErrorView(view :View?){
+        error_view.removeAllViews()
+        error_view?.addView(view)
+        error_view.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView(){
+        error_view.removeAllViews()
+        error_view.visibility = View.GONE
     }
 
     companion object {

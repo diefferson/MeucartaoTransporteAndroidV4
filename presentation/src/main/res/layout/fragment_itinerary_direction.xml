@@ -8,12 +8,24 @@
             type="br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirection.ItineraryDirectionViewModel"/>
     </data>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/itinerary_recycler"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_itinerary"
-        android:scrollbars="vertical"
-        tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/itinerary_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_itinerary"
+            android:scrollbars="vertical"
+            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/error_view"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 
 </layout>
