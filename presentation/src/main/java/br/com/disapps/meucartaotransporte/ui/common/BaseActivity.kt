@@ -4,12 +4,14 @@ import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.custom.CustomProgressDialog
-import br.com.disapps.meucartaotransporte.util.toast
+import br.com.disapps.meucartaotransporte.util.getLoadingView
+import br.com.disapps.meucartaotransporte.util.inflateView
 import com.appodeal.ads.Appodeal
 
 /**
@@ -20,7 +22,6 @@ abstract class BaseActivity: AppCompatActivity(){
     abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
     private var binding: ViewDataBinding? = null
-    private val loading by lazy { CustomProgressDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,25 +53,24 @@ abstract class BaseActivity: AppCompatActivity(){
         binding?.setLifecycleOwner(this)
     }
 
-    private fun setupLoading(){
+    open fun setupLoading(){
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it != null){
+                val rootView = this.findViewById<ViewGroup>(android.R.id.content)
+                val loadingView= getLoadingView()
                 if(it){
-                    loading.show()
+                    rootView.addView(loadingView)
                 }else{
-                    loading.dismiss()
+                    rootView.removeView(rootView.findViewById(R.id.loading_view))
                 }
             }
         })
     }
 
-    private fun setupError(){
+    open fun setupError(){
         viewModel.getErrorObservable().observe(this, Observer {
-            if(it != null){
-                toast(it.message)
-            }else{
-                toast(getString(R.string.unknow_error))
-            }
+            val rootView = this.findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
+            Snackbar.make(rootView, getString(R.string.unknow_error), Snackbar.LENGTH_SHORT).show()
         })
     }
 }

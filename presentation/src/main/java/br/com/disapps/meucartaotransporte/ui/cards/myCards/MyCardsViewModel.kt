@@ -17,7 +17,9 @@ class MyCardsViewModel(private val getCardsUseCase: GetCards,
     val cards = MutableLiveData<List<CardVO>>()
 
     fun getCards(){
+        loadingEvent.value = true
         getCardsUseCase.execute(Unit){
+            loadingEvent.value = false
             cards.value = it.toCardVO()
         }
     }

@@ -8,22 +8,15 @@ import android.support.v7.widget.LinearLayoutManager
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.inflateView
-import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import br.com.disapps.meucartaotransporte.util.*
 import kotlinx.android.synthetic.main.activity_balance.*
 import org.koin.android.architecture.ext.viewModel
 
 class BalanceActivity : BaseActivity() {
 
     override val viewModel by viewModel<BalanceViewModel>()
-
     override val activityLayout = R.layout.activity_balance
-
-    private val adapter: BalanceListAdapter by lazy {
-        BalanceListAdapter(ArrayList()).apply {
-            emptyView = inflateView(R.layout.loading_view, balance_recycler )
-        }
-    }
+    private val adapter: BalanceListAdapter by lazy { BalanceListAdapter(ArrayList(), this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +24,21 @@ class BalanceActivity : BaseActivity() {
         observeViewModel()
     }
 
+    override fun recreate() {
+        isRecreated = true
+        super.recreate()
+    }
+
     override fun onResume() {
         super.onResume()
         val card = intent.getSerializableExtra(CARD) as CardVO
-        viewModel.getCard(card.code, card.cpf)
+
+        if(validateConnection()){
+            viewModel.getCard(card.code, card.cpf, isRecreated)
+            isRecreated = false
+        }else{
+            adapter.emptyView = getOfflineView()
+        }
     }
 
     private fun initRecyclerView(){
@@ -47,20 +51,32 @@ class BalanceActivity : BaseActivity() {
     private fun observeViewModel(){
         viewModel.card.observe(this, Observer {
             adapter.apply {
-                emptyView = inflateView(R.layout.empty_view, balance_recycler )
-                setFooterView(getAdViewContentStream(balance_recycler))
-                setNewData(arrayListOf(it))
+                if(it!= null){
+                    setNewData(BalanceListAdapter.objectToItem(arrayListOf(it)))
+                }
+                emptyView = getEmptyView(getString(R.string.no_results))
             }
         })
+    }
 
-        viewModel.onError.observe(this, Observer {
-            if(it!= null && it){
-                adapter.emptyView = inflateView(R.layout.empty_view, balance_recycler )
+    override fun setupError() {
+        viewModel.getErrorObservable().observe(this, Observer {error ->
+            error?.let {
+                adapter.emptyView = getErrorView(it)
+            }
+        })
+    }
+
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null && it ){
+                adapter.emptyView = getLoadingView()
             }
         })
     }
 
     companion object {
+        var isRecreated = false
         private const val CARD = "card"
         fun launch(context: Context,card : CardVO){
             context.startActivity(Intent(context, BalanceActivity::class.java).apply {

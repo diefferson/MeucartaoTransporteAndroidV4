@@ -5,6 +5,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.net.ssl.*
+
 
 /**
  * Created by diefferson.santos on 23/08/17.
@@ -23,10 +25,12 @@ class RestClient {
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
             httpClient = OkHttpClient.Builder()
+                    .hostnameVerifier(getHostnameVerifier())
                     .addInterceptor(loggingInterceptor)
                     .build()
         } else {
-            httpClient = OkHttpClient.Builder()
+            httpClient =  OkHttpClient.Builder()
+                    .hostnameVerifier(getHostnameVerifier())
                     .build()
         }
 
@@ -38,5 +42,11 @@ class RestClient {
                 .build()
 
         api = retrofitClient.create(RestApi::class.java)
+    }
+
+    private fun getHostnameVerifier(): HostnameVerifier {
+        return HostnameVerifier { _, _ ->
+            true
+        }
     }
 }

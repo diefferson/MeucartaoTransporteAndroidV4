@@ -22,4 +22,6 @@ interface IBaseFragmentActivityListener {
     fun setupTabs(viewPager: ViewPager)
 
     fun animateSearchAction()
+
+    fun hideTabs(force:Boolean = false)
 }

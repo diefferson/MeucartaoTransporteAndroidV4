@@ -8,10 +8,10 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
-import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
-import br.com.disapps.meucartaotransporte.util.inflateView
-import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
+import br.com.disapps.meucartaotransporte.util.getEmptyView
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_my_cards.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -25,15 +25,12 @@ class MyCardsFragment : BaseFragment(){
     override val fragmentLayout = R.layout.fragment_my_cards
 
     private val adapter: CardsListAdapter by lazy {
-        CardsListAdapter(ArrayList()).apply {
-
-            emptyView = activity?.inflateView(R.layout.loading_view, cards_recycler )
-
-            setOnItemChildClickListener { adapter, view, position ->
+        CardsListAdapter(ArrayList(), activity!!).apply {
+            setOnItemChildClickListener { _, view, position ->
                 when(view.id){
-                    R.id.btn_card_balance -> BalanceActivity.launch(context!!, adapter.data[position] as CardVO)
-                    R.id.btn_card_extract-> ExtractActivity.launch(context!!, adapter.data[position] as CardVO)
-                    R.id.ic_delete_card-> confirmDeleteCard( adapter.data[position] as CardVO)
+                    R.id.btn_card_balance -> BalanceActivity.launch(context!!, getCard(position))
+                    R.id.btn_card_extract-> ExtractActivity.launch(context!!, getCard(position))
+                    R.id.ic_delete_card-> confirmDeleteCard(getCard(position))
                 }
             }
         }
@@ -41,12 +38,7 @@ class MyCardsFragment : BaseFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        cards_recycler.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = this@MyCardsFragment.adapter
-        }
-
+        initRecyclerView()
         observeViewModel()
     }
 
@@ -55,14 +47,41 @@ class MyCardsFragment : BaseFragment(){
         viewModel.getCards()
     }
 
+    private fun initRecyclerView() {
+        cards_recycler.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@MyCardsFragment.adapter
+        }
+    }
+
     private fun observeViewModel(){
         viewModel.cards.observe(this, Observer {
-            adapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, cards_recycler )
-                setFooterView(activity!!.getAdViewContentStream(cards_recycler))
-                setNewData(it)
+            if(it!= null && it.isNotEmpty()){
+                adapter.setNewData(CardsListAdapter.objectToItem(it))
+                hideErrorView()
+            }else{
+                showErrorView(activity?.getEmptyView(getString(R.string.no_cards)))
             }
         })
+    }
+
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null && it ){
+                showErrorView(activity?.getLoadingView())
+            }
+        })
+    }
+
+    private fun showErrorView(view :View?){
+        error_view.removeAllViews()
+        error_view?.addView(view)
+        error_view.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView(){
+        error_view.removeAllViews()
+        error_view.visibility = View.GONE
     }
 
     private fun confirmDeleteCard(cardVO: CardVO){

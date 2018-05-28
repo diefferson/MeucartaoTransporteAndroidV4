@@ -7,8 +7,8 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
-import br.com.disapps.meucartaotransporte.util.inflateView
-import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
+import br.com.disapps.meucartaotransporte.util.getEmptyView
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_itinerary_direction.*
 import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel
@@ -21,8 +21,8 @@ class ItineraryDirectionFragment : BaseFragment(){
     override val fragmentLayout = R.layout.fragment_itinerary_direction
     private val lineViewModel  by viewModel<LineViewModel>()
 
-    private val listAdapter : ItineraryDirectionListAdapter by lazy {
-        ItineraryDirectionListAdapter(ArrayList(), lineViewModel.line.color)
+    private val adapter : ItineraryDirectionListAdapter by lazy {
+        ItineraryDirectionListAdapter(ArrayList(),activity!!, lineViewModel.line.color)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,18 +41,38 @@ class ItineraryDirectionFragment : BaseFragment(){
     private fun initRecyclerView() {
         itinerary_recycler.apply {
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
-            adapter = this@ItineraryDirectionFragment.listAdapter
+            adapter = this@ItineraryDirectionFragment.adapter
         }
     }
 
     private fun observeViewModel(){
         viewModel.itinerary.observe(this, Observer {
-            listAdapter.apply {
-                emptyView = activity?.inflateView(R.layout.loading_view, itinerary_recycler)
-                setFooterView(activity!!.getAdViewContentStream(itinerary_recycler))
-                setNewData(it)
+            if(it!= null && it.isNotEmpty()){
+                adapter.setNewData(ItineraryDirectionListAdapter.objectToItem(it))
+                hideErrorView()
+            }else{
+                showErrorView(activity?.getEmptyView(getString(R.string.no_itinerary_data)))
             }
         })
+    }
+
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null && it){
+                showErrorView(activity?.getLoadingView())
+            }
+        })
+    }
+
+    private fun showErrorView(view :View?){
+        error_view.removeAllViews()
+        error_view?.addView(view)
+        error_view.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView(){
+        error_view.removeAllViews()
+        error_view.visibility = View.GONE
     }
 
     companion object {

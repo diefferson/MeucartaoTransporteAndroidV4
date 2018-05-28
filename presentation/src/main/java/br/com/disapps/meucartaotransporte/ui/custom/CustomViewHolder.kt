@@ -26,14 +26,20 @@ class CustomViewHolder(view: View) : BaseViewHolder(view){
         return this
     }
 
-    fun setNativeListAd(@IdRes viewId: Int, nativeAd: NativeAd): CustomViewHolder{
-        val view  = getView<CardView>(viewId) as NativeAdViewNewsFeed
+    fun setNativeAdFedd(@IdRes viewId: Int, nativeAd: NativeAd): CustomViewHolder{
+        val view  = getView<NativeAdViewNewsFeed>(viewId)
         view.setNativeAd(nativeAd)
         return this
     }
 
-    fun setNativeListAdLarge(@IdRes viewId: Int, nativeAd: NativeAd): CustomViewHolder{
-        val view  = getView<CardView>(viewId) as NativeAdViewContentStream
+    fun setNativeAdContentStream(@IdRes viewId: Int, nativeAd: NativeAd): CustomViewHolder{
+        val view  = getView<NativeAdViewContentStream>(viewId)
+        view.setNativeAd(nativeAd)
+        return this
+    }
+
+    fun setNativeAdAppWall(@IdRes viewId: Int, nativeAd: NativeAd): CustomViewHolder{
+        val view  = getView<NativeAdViewAppWall>(viewId)
         view.setNativeAd(nativeAd)
         return this
     }

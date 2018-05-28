@@ -14,9 +14,11 @@ class NextSchedulesDayViewModel(private val getLineSchedulesUseCase: GetLineSche
     fun getNextSchedules(codeLine:String, day:Int){
         if(!isRequested){
             isRequested = true
+            loadingEvent.value = true
 
             getLineSchedulesUseCase.execute(GetLineSchedules.Params(codeLine, day)){
                 nextSchedules.value = setupNextSchedules(it)
+                loadingEvent.value = false
             }
         }
     }

@@ -10,6 +10,7 @@ import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayFragment
 import br.com.disapps.meucartaotransporte.util.getDayName
 import br.com.disapps.meucartaotransporte.util.getDayWeek
+import br.com.disapps.meucartaotransporte.util.getEmptyView
 import kotlinx.android.synthetic.main.fragment_next_schedules.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -36,7 +37,7 @@ class NextSchedulesFragment : BaseFragment(){
     private fun observeViewModel() {
 
         viewModel.days.observe(this, Observer { daysList->
-            daysList?.let {
+            if(daysList!= null && daysList.isNotEmpty()){
 
                 val adapter = BasePageAdapter(childFragmentManager)
 
@@ -55,7 +56,12 @@ class NextSchedulesFragment : BaseFragment(){
                 view_pager.currentItem = getDayWeek()
                 iAppActivityListener.setupTabs(view_pager)
 
+            }else{
+                error_view?.addView(activity?.getEmptyView(getString(R.string.no_schedule_data)))
+                error_view.visibility = View.VISIBLE
+                iAppActivityListener.hideTabs()
             }
+
         })
     }
 

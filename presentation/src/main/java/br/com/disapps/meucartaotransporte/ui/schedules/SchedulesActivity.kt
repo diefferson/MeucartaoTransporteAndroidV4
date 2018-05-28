@@ -8,10 +8,7 @@ import android.support.v7.widget.GridLayoutManager
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.inflateView
-import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
-import br.com.disapps.meucartaotransporte.util.getCustomTheme
-import br.com.disapps.meucartaotransporte.util.getDayName
+import br.com.disapps.meucartaotransporte.util.*
 import kotlinx.android.synthetic.main.activity_schedules.*
 import kotlinx.android.synthetic.main.include_toolbar_schedules.*
 import org.koin.android.architecture.ext.viewModel
@@ -19,15 +16,11 @@ import org.koin.android.architecture.ext.viewModel
 class SchedulesActivity : BaseActivity (){
 
     override val viewModel by viewModel<SchedulesViewModel>()
-
     override val activityLayout = R.layout.activity_schedules
-
     private lateinit var schedulesDetail : SchedulesDetail
 
-    private val listAdapter : SchedulesListAdapter by lazy {
-        SchedulesListAdapter(ArrayList(), 0).apply {
-            emptyView = inflateView(R.layout.loading_view, schedules_recycler )
-        }
+    private val adapter : SchedulesListAdapter by lazy {
+        SchedulesListAdapter(ArrayList(), 0)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +46,7 @@ class SchedulesActivity : BaseActivity (){
     private fun initRecyclerView() {
         schedules_recycler.apply {
             layoutManager = GridLayoutManager(context, 4)
-            adapter = this@SchedulesActivity.listAdapter.apply {
+            adapter = this@SchedulesActivity.adapter.apply {
                 day = schedulesDetail.day
             }
         }
@@ -61,10 +54,10 @@ class SchedulesActivity : BaseActivity (){
 
     private fun observeViewModel(){
         viewModel.schedules.observe(this, Observer {
-            listAdapter.apply {
-                emptyView = inflateView(R.layout.empty_view, schedules_recycler )
-                setFooterView(getAdViewContentStream(schedules_recycler))
+            adapter.apply {
                 setNewData(it)
+                emptyView = getEmptyView(getString(R.string.no_results))
+                setFooterView(getAdViewContentStream())
             }
         })
     }

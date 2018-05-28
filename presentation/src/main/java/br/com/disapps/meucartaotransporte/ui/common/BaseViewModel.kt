@@ -2,14 +2,14 @@ package br.com.disapps.meucartaotransporte.ui.common
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.LiveData
-import br.com.disapps.meucartaotransporte.model.KnownError
-import br.com.disapps.meucartaotransporte.util.SingleLiveEvent
+import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.meucartaotransporte.exception.UiException
 
 open class BaseViewModel : ViewModel(){
 
     var isRequested  = false
-    protected val errorEvent: SingleLiveEvent<KnownError> = SingleLiveEvent()
-    protected val loadingEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    protected val exceptionEvent: MutableLiveData<UiException> = MutableLiveData()
+    protected val loadingEvent: MutableLiveData<Boolean> = MutableLiveData()
 
     /**
      * Expose the LiveData so the UI can observe it.
@@ -18,7 +18,7 @@ open class BaseViewModel : ViewModel(){
         return loadingEvent
     }
 
-    fun getErrorObservable(): LiveData<KnownError> {
-        return errorEvent
+    fun getErrorObservable(): LiveData<UiException> {
+        return exceptionEvent
     }
 }

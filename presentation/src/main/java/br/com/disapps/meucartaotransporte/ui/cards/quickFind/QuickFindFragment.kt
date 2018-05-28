@@ -22,9 +22,7 @@ class QuickFindFragment: BaseFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModelObservers()
-
         btn_quick_find.setOnClickListener { viewModel.consult() }
     }
 
@@ -32,12 +30,8 @@ class QuickFindFragment: BaseFragment(){
         viewModel.code.observe(this, Observer { viewModel.isValidCode.value = true })
         viewModel.cpf.observe(this, Observer { viewModel.isValidCpf.value = true })
         viewModel.isSuccess.observe(this, Observer {
-            if(it != null){
-                if(it){
-                    BalanceActivity.launch(context!!, CardVO(cpf = viewModel.cpf.value.toString(), code = viewModel.code.value.toString()))
-                }else{
-                    activity?.toast("Erro")
-                }
+            if(it != null && it){
+                BalanceActivity.launch(context!!, CardVO(cpf = viewModel.cpf.value.toString(), code = viewModel.code.value.toString()))
             }
         })
     }

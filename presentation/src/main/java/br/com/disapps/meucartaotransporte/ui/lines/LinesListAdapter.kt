@@ -10,97 +10,118 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 
-class LinesListAdapter(data: List<ItemListLines>?, var activity: Activity) : BaseMultiItemQuickAdapter<LinesListAdapter.ItemListLines, CustomViewHolder>(data), FastScrollRecyclerView.SectionedAdapter {
+class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
+        BaseMultiItemQuickAdapter<LinesListAdapter.ListItem, CustomViewHolder>(data), FastScrollRecyclerView.SectionedAdapter {
 
     init {
-        addItemType(ItemListLines.LINE_ITEM, R.layout.item_line)
-        addItemType(ItemListLines.ADS_ITEM, R.layout.item_ads)
-        Appodeal.cache(activity, Appodeal.NATIVE)
+        addItemType(ListItem.LINE_ITEM, R.layout.item_line)
+        addItemType(ListItem.ADS_FEED_ITEM, R.layout.item_ads_feed)
+        addItemType(ListItem.ADS_CONTENT_STREAM_ITEM, R.layout.item_ads_content_stream)
+        addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
     }
 
-    override fun convert(helper: CustomViewHolder, item: ItemListLines) {
+    override fun convert(helper: CustomViewHolder, item: ListItem) {
 
         when(item.type){
 
-            ItemListLines.ADS_ITEM ->{
+            ListItem.ADS_FEED_ITEM ->{
                 val ads = Appodeal.getNativeAds(1)
                 if(ads.size>0){
-                    helper.setNativeListAd(R.id.ads_item, ads[0])
+                    helper.setNativeAdFedd(R.id.ads_item, ads[0])
                     Appodeal.cache(activity, Appodeal.NATIVE)
                 }
             }
 
-            ItemListLines.LINE_ITEM ->{
-                item.line?.let {line->
-                    helper.setText(R.id.line_code, line.code)
-                    helper.setText(R.id.line_name, line.name)
-                    helper.setText(R.id.line_type, line.category)
-                    helper.addOnClickListener(R.id.fav_line)
-                    helper.setBackgroundColor(R.id.ic_line, getBusColor(mContext, line.color))
+            ListItem.ADS_CONTENT_STREAM_ITEM ->{
+                val ads = Appodeal.getNativeAds(1)
+                if(ads.size>0){
+                    helper.setNativeAdContentStream(R.id.ads_item, ads[0])
+                    Appodeal.cache(activity, Appodeal.NATIVE)
+                }
+            }
 
-                    if (line.favorite) {
-                        helper.setImageResource(R.id.fav_line, R.drawable.star_grey)
-                    } else {
-                        helper.setImageResource(R.id.fav_line, R.drawable.star_outline_grey)
-                    }
+            ListItem.ADS_APP_WALL_ITEM ->{
+                val ads = Appodeal.getNativeAds(1)
+                if(ads.size>0){
+                    helper.setNativeAdAppWall(R.id.ads_item, ads[0])
+                    Appodeal.cache(activity, Appodeal.NATIVE)
+                }
+            }
+
+            ListItem.LINE_ITEM ->{
+                helper.setText(R.id.line_code, item.line.code)
+                helper.setText(R.id.line_name, item.line.name)
+                helper.setText(R.id.line_type, item.line.category)
+                helper.addOnClickListener(R.id.fav_line)
+                helper.setBackgroundColor(R.id.ic_line, getBusColor(mContext, item.line.color))
+
+                if (item.line.favorite) {
+                    helper.setImageResource(R.id.fav_line, R.drawable.star_grey)
+                } else {
+                    helper.setImageResource(R.id.fav_line, R.drawable.star_outline_grey)
                 }
             }
         }
     }
 
     override fun getSectionName(position: Int): String {
-        return if(data[position].type == ItemListLines.LINE_ITEM){
-            data[position].line!!.name[0].toString()
+        return if(data[position].type == ListItem.LINE_ITEM){
+            data[position].line.name[0].toString()
         }else{
             if(position == 0){
                 "A"
             }else{
-                data[position-1].line!!.name[0].toString()
+                try {
+                    data[position-1].line.name[0].toString()
+                }catch (e:Exception){
+                    ""
+                }
             }
         }
     }
 
-    class ItemListLines(lineItem: LineVO?, typeItem : Int) : MultiItemEntity{
+    fun getLine(position: Int):ListItem{
+        return  data[position]
+    }
+
+    class ListItem(lineItem: LineVO, typeItem : Int) : MultiItemEntity{
+
+        var line : LineVO = lineItem
+        var type : Int = typeItem
+
+        override fun getItemType() = type
 
         companion object {
             const val LINE_ITEM = 0
-            const val ADS_ITEM = 1
-        }
-
-        var line :LineVO? = lineItem
-        var type : Int
-        init {
-            type = if(typeItem == ADS_ITEM){
-                ADS_ITEM
-            }else{
-                LINE_ITEM
-            }
-        }
-
-        override fun getItemType(): Int {
-            return type
+            const val ADS_FEED_ITEM = 1
+            const val ADS_CONTENT_STREAM_ITEM = 2
+            const val ADS_APP_WALL_ITEM = 3
         }
     }
 
     companion object {
 
-        fun objectToItem(lineItem: LineVO?, typeItem: Int): ItemListLines {
-            return ItemListLines(lineItem, typeItem)
+        fun objectToItem(lineItem: LineVO, typeItem: Int): ListItem {
+            return ListItem(lineItem, typeItem)
         }
 
-        fun objectToItem(lines :List<LineVO>) : List<ItemListLines>{
+        fun objectToItem(lines :List<LineVO>?) : List<ListItem>{
 
-            val list = ArrayList<ItemListLines>()
+            val list = ArrayList<ListItem>()
             var i = 0
 
-            lines.forEach {
-                list.add(objectToItem(it,ItemListLines.LINE_ITEM))
+            lines?.forEach {
+                list.add(objectToItem(it,ListItem.LINE_ITEM))
                 if(i%15 == 0){
-                    list.add(objectToItem(null,ItemListLines.ADS_ITEM))
+                    list.add(objectToItem(getEmptyLine(),ListItem.ADS_FEED_ITEM))
                 }
                 i++
             }
             return list
+        }
+
+        private fun getEmptyLine() : LineVO{
+            return LineVO("", "", "", "", false, "")
         }
     }
 }

@@ -60,6 +60,22 @@ class Preferences(var context:Context) : PreferencesRepository {
         return  mPreferences.getString(SCHEDULERS_PERIOD, "semanal")
     }
 
+    override suspend fun getIsDownloadedCwbItineraries(): Boolean {
+        return mPreferences.getLong(DATE_CURITIBA_ITINERARIES,0) != 0L
+    }
+
+    override suspend fun getIsDownloadedMetropolitanItineraries(): Boolean {
+        return mPreferences.getLong(DATE_METROPOLITAN_ITINERARIES,0) != 0L
+    }
+
+    override suspend fun getIsDownloadedCwbShapes(): Boolean {
+        return mPreferences.getLong(DATE_CURITIBA_SHAPES,0) != 0L
+    }
+
+    override suspend fun getIsDownloadedMetropolitanShapes(): Boolean {
+        return mPreferences.getLong(DATE_METROPOLITAN_SHAPES,0) != 0L
+    }
+
     override suspend fun getDataUsage(): DataUsage {
         return DataUsage(
                 periodLines = getPeriodLines(),

@@ -1,12 +1,19 @@
 package br.com.disapps.data.dataSource.local
 
+import br.com.disapps.data.BuildConfig
+import br.com.disapps.data.api.DownloadTask
 import br.com.disapps.data.dataSource.ItinerariesDataSource
 import br.com.disapps.data.entity.Ponto
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.data.utils.deleteFromCache
+import br.com.disapps.domain.exception.KnownError
+import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
 import io.realm.Realm
+import java.io.File
+import java.io.FileInputStream
 
 class LocalItinerariesDataSource(private val database: Database, private val preferences:Preferences) : ItinerariesDataSource {
 
@@ -18,18 +25,25 @@ class LocalItinerariesDataSource(private val database: Database, private val pre
         private val CLAZZ = Ponto::class.java
     }
 
-    override suspend fun saveAllFromJson(json: String, city: City) {
-        val realm = database.getDatabase() as Realm
-        realm.beginTransaction()
-        realm.createOrUpdateAllFromJson(CLAZZ, json)
-        realm.commitTransaction()
+    override suspend fun saveAllFromJson(filePath: String, city: City, downloadProgressListener: DownloadProgressListener) {
+        val result = DownloadTask(downloadProgressListener).execute(BuildConfig.DOWNLOAD_ITINERARIES, city.toString(), filePath).get()
+        if(result == "OK"){
+            val realm = database.getDatabase() as Realm
+            val fis = FileInputStream(File(filePath))
+            realm.beginTransaction()
+            realm.createOrUpdateAllFromJson(CLAZZ, fis)
+            realm.commitTransaction()
 
-        if(city == City.CWB){
-            preferences.setCwbItinerariesDate()
+            if(city == City.CWB){
+                preferences.setCwbItinerariesDate()
+            }else{
+                preferences.setMetItinerariesDate()
+            }
+            realm.close()
+            deleteFromCache(filePath)
         }else{
-            preferences.setMetItinerariesDate()
+            throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
         }
-        realm.close()
     }
 
     override suspend fun getItineraryDirections(codeLine: String): List<String> {
@@ -64,9 +78,5 @@ class LocalItinerariesDataSource(private val database: Database, private val pre
 
         realm.close()
         return itinerary
-    }
-
-    override suspend fun jsonItineraries(city: City, downloadProgressListener: DownloadProgressListener): String {
-        throw Throwable("not implemented,  cloud only")
     }
 }

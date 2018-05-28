@@ -1,11 +1,13 @@
 package br.com.disapps.meucartaotransporte.ui.cards.registerCard
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.exception.KnownError
+import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.interactor.cards.HasCard
 import br.com.disapps.domain.interactor.cards.SaveCard
 import br.com.disapps.domain.model.Card
-import br.com.disapps.meucartaotransporte.model.KnownError
+import br.com.disapps.meucartaotransporte.exception.UiException
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.clean
 import br.com.disapps.meucartaotransporte.util.isCPF
@@ -55,15 +57,18 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
     private fun validateHasLocalCard(){
         loadingEvent.value = true
         hasCardUseCase.execute(HasCard.Params(getFormCard()),
-            onError ={
+            onError = {
                 loadingEvent.value = false
-                errorEvent.value = KnownError("Erro ao verificar cartao")
+                exceptionEvent.value = if(it is KnownException){
+                    UiException(it.knownError, it.message?:"")
+                }else{
+                    UiException(KnownError.UNKNOWN_EXCEPTION,"")
+                }
             },
-
             onSuccess = {
                 if(it){
                     loadingEvent.value = false
-                    errorEvent.value = KnownError("Cartao já cadastrado")
+                    exceptionEvent.value = UiException(KnownError.CARD_EXISTS_EXCEPTION, "")
                 }else{
                     validateHasCloudCard()
                 }
@@ -75,7 +80,11 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
         getCardUseCase.execute(GetCard.Params(getFormCard()),
             onError = {
                 loadingEvent.value = false
-                errorEvent.value = KnownError("Erro ao consultar cartao")
+                exceptionEvent.value = if(it is KnownException){
+                    UiException(it.knownError, it.message?:"")
+                }else{
+                    UiException(KnownError.UNKNOWN_EXCEPTION,"")
+                }
             },
             onSuccess= {
                 if(it!= null){
@@ -93,6 +102,11 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
         saveCardUseCase.execute(SaveCard.Params(card),
                 onError = {
                     loadingEvent.value = false
+                    exceptionEvent.value = if(it is KnownException){
+                        UiException(it.knownError, it.message?:"")
+                    }else{
+                        UiException(KnownError.UNKNOWN_EXCEPTION,"")
+                    }
                 }, onComplete = {
                     isFinished.value = true
                     loadingEvent.value = false
@@ -106,6 +120,12 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
             cpf = cpf.value.toString(),
             name = name.value.toString()
         )
+    }
+
+    fun recreate(){
+        isFinished.value = false
+        exceptionEvent.value = null
+        loadingEvent.value = false
     }
 
     override fun onCleared() {

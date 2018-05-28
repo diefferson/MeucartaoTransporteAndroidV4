@@ -1,5 +1,7 @@
 package br.com.disapps.domain.interactor.base
 
+import br.com.disapps.domain.exception.KnownError
+import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.executor.ContextExecutor
 import br.com.disapps.domain.executor.PostExecutionContext
 import kotlinx.coroutines.experimental.*
@@ -36,6 +38,8 @@ abstract class UseCase<T, in Params> internal constructor(
                     withContext(postExecutionContext.scheduler) {
                         onError(e)
                     }
+                }catch (e: OutOfMemoryError){
+                    onError(KnownException(KnownError.OUT_OF_MEMORY_ERROR, e.message?:""))
                 }
 
                 if(repeat){
