@@ -3,15 +3,18 @@ package br.com.disapps.meucartaotransporte.ui.lines
 import android.app.Activity
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.LineVO
-import br.com.disapps.meucartaotransporte.ui.custom.CustomViewHolder
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdAppWall
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdContentStream
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdFedd
 import br.com.disapps.meucartaotransporte.util.getBusColor
 import com.appodeal.ads.Appodeal
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 
 class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
-        BaseMultiItemQuickAdapter<LinesListAdapter.ListItem, CustomViewHolder>(data), FastScrollRecyclerView.SectionedAdapter {
+        BaseMultiItemQuickAdapter<LinesListAdapter.ListItem,BaseViewHolder>(data), FastScrollRecyclerView.SectionedAdapter {
 
     init {
         addItemType(ListItem.LINE_ITEM, R.layout.item_line)
@@ -20,7 +23,7 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
         addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
     }
 
-    override fun convert(helper: CustomViewHolder, item: ListItem) {
+    override fun convert(helper: BaseViewHolder, item: ListItem) {
 
         when(item.type){
 

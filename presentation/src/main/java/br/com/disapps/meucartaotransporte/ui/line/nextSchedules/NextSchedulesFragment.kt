@@ -23,6 +23,7 @@ class NextSchedulesFragment : BaseFragment(){
     override val viewModel by viewModel<NextSchedulesViewModel>()
     override val fragmentLayout = R.layout.fragment_next_schedules
     private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentTag = "NextSchedulesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

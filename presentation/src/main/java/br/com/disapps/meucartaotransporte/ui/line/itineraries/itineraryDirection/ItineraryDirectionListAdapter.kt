@@ -3,13 +3,16 @@ package br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirectio
 import android.app.Activity
 import br.com.disapps.domain.model.BusStop
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.custom.CustomViewHolder
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdAppWall
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdContentStream
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdFedd
 import br.com.disapps.meucartaotransporte.util.getBusColor
 import com.appodeal.ads.Appodeal
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 
-class ItineraryDirectionListAdapter(data : List<ListItem>?,val activity: Activity,private val lineColor:String) : BaseMultiItemQuickAdapter<ItineraryDirectionListAdapter.ListItem, CustomViewHolder>( data){
+class ItineraryDirectionListAdapter(data : List<ListItem>?,val activity: Activity,private val lineColor:String) : BaseMultiItemQuickAdapter<ItineraryDirectionListAdapter.ListItem, BaseViewHolder>( data){
 
     init {
         addItemType(ListItem.BUS_STOP_ITEM, R.layout.item_itinerary)
@@ -18,7 +21,7 @@ class ItineraryDirectionListAdapter(data : List<ListItem>?,val activity: Activit
         addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
     }
 
-    override fun convert(helper: CustomViewHolder, item: ListItem) {
+    override fun convert(helper: BaseViewHolder, item: ListItem) {
         when(item.type) {
             ListItem.ADS_FEED_ITEM -> {
                 val ads = Appodeal.getNativeAds(1)

@@ -20,6 +20,7 @@ class ItineraryDirectionFragment : BaseFragment(){
 
     override val fragmentLayout = R.layout.fragment_itinerary_direction
     private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentTag = "ItineraryDirectionFragment"
 
     private val adapter : ItineraryDirectionListAdapter by lazy {
         ItineraryDirectionListAdapter(ArrayList(),activity!!, lineViewModel.line.color)

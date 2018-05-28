@@ -26,6 +26,7 @@ class ItinerariesFragment : BaseFragment() {
     override val viewModel by viewModel<ItinerariesViewModel>()
     override val fragmentLayout = R.layout.fragment_itineraries
     private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentTag = "ItinerariesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -21,6 +21,7 @@ abstract class BaseFragment : Fragment() {
 
     abstract val viewModel: BaseViewModel
     abstract val fragmentLayout: Int
+    abstract val fragmentTag:String
     private var binding: ViewDataBinding? = null
 
     var hasTabs: Boolean = false

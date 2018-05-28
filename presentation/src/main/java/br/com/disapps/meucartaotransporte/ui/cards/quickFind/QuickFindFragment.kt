@@ -17,7 +17,7 @@ import org.koin.android.architecture.ext.viewModel
 class QuickFindFragment: BaseFragment(){
 
     override val viewModel by viewModel<QuickFindViewModel>()
-
+    override val fragmentTag = "QuickFindFragment"
     override val fragmentLayout = R.layout.fragment_quick_find
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
