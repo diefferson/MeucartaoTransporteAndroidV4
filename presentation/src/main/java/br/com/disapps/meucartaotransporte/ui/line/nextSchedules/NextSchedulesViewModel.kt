@@ -11,7 +11,9 @@ class NextSchedulesViewModel(private val getLineScheduleDaysUseCase: GetLineSche
     fun getSchedulesDays(codeLine : String){
         if(!isRequested){
             isRequested = true
-            getLineScheduleDaysUseCase.execute(GetLineScheduleDays.Params(codeLine)) {
+            getLineScheduleDaysUseCase.execute(GetLineScheduleDays.Params(codeLine), onError = {
+                days.value = ArrayList()
+            }) {
                 days.value = it
             }
         }

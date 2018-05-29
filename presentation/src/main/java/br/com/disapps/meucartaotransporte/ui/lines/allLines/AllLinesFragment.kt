@@ -24,6 +24,7 @@ class AllLinesFragment : BaseFragment() {
     override val viewModel by viewModel<LinesViewModel>()
     override val fragmentLayout = R.layout.fragment_list_lines
     private val mainViewModel by viewModel<MainViewModel>()
+    override val fragmentTag = "AllLinesFragment"
 
     private val adapter:LinesListAdapter by lazy{
         LinesListAdapter(viewModel.lines, activity!!).apply {

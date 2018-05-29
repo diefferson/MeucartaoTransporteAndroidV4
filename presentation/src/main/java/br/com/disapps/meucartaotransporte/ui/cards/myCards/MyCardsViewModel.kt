@@ -1,6 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.cards.myCards
 
 import android.arch.lifecycle.MutableLiveData
+import android.util.Log
 import br.com.disapps.domain.interactor.cards.DeleteCard
 import br.com.disapps.domain.interactor.cards.GetCards
 import br.com.disapps.meucartaotransporte.model.CardVO
@@ -18,7 +19,10 @@ class MyCardsViewModel(private val getCardsUseCase: GetCards,
 
     fun getCards(){
         loadingEvent.value = true
-        getCardsUseCase.execute(Unit){
+        getCardsUseCase.execute(Unit, onError = {
+            loadingEvent.value = false
+            cards.value = ArrayList()
+        }){
             loadingEvent.value = false
             cards.value = it.toCardVO()
         }

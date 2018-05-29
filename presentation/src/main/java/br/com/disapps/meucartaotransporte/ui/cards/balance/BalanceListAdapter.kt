@@ -4,12 +4,15 @@ import android.app.Activity
 import android.graphics.Color
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
-import br.com.disapps.meucartaotransporte.ui.custom.CustomViewHolder
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdAppWall
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdContentStream
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdFedd
 import com.appodeal.ads.Appodeal
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 
-class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMultiItemQuickAdapter<BalanceListAdapter.ListItem, CustomViewHolder>(data){
+class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMultiItemQuickAdapter<BalanceListAdapter.ListItem, BaseViewHolder>(data){
 
     init {
         addItemType(ListItem.BALANCE_ITEM, R.layout.item_balance)
@@ -18,7 +21,7 @@ class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMul
         addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
     }
 
-    override fun convert(helper: CustomViewHolder, item: ListItem) {
+    override fun convert(helper: BaseViewHolder, item: ListItem) {
 
         when(item.type){
 

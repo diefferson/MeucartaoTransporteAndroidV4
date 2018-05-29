@@ -16,4 +16,6 @@ interface CardsRepository{
     suspend fun hasCard(card : Card) : Boolean
 
     suspend fun extract(card: Card) : List<Extract>?
+
+    suspend fun updateCard(card: Card)
 }

@@ -1,16 +1,18 @@
 package br.com.disapps.meucartaotransporte.ui.cards.balance
 
 import android.arch.lifecycle.MutableLiveData
+import android.util.Log
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.interactor.cards.GetCard
+import br.com.disapps.domain.interactor.cards.UpdateCard
 import br.com.disapps.domain.model.Card
 import br.com.disapps.meucartaotransporte.exception.UiException
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.model.mappers.toCardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 
-class BalanceViewModel(private val getCardUseCase: GetCard) : BaseViewModel(){
+class BalanceViewModel(private val getCardUseCase: GetCard, private val updateCard: UpdateCard) : BaseViewModel(){
 
     val card = MutableLiveData<CardVO>()
 
@@ -29,6 +31,10 @@ class BalanceViewModel(private val getCardUseCase: GetCard) : BaseViewModel(){
                 },
                 onSuccess = {
                     loadingEvent.value = false
+                    if(it!= null){
+                        updateCard.execute(UpdateCard.Params(it))
+                    }
+
                     if(it!= null) card.value = it.toCardVO()
                 }
             )
@@ -38,5 +44,6 @@ class BalanceViewModel(private val getCardUseCase: GetCard) : BaseViewModel(){
     override fun onCleared() {
         super.onCleared()
         getCardUseCase.dispose()
+        updateCard.dispose()
     }
 }

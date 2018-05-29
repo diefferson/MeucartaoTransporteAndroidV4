@@ -64,7 +64,7 @@ class CardEntityMapperTest{
         whenever(mockCartao.tipo).thenReturn(FAKE_TYPE)
         whenever(mockCartao.estado).thenReturn(FAKE_STATUS)
         whenever(mockCartao.saldo).thenReturn(FAKE_BALANCE)
-        whenever(mockCartao.dataSaldo).thenReturn(FAKE_BALANCE_DATE)
+        whenever(mockCartao.data_saldo).thenReturn(FAKE_BALANCE_DATE)
     }
 
     private fun mockListBO(){

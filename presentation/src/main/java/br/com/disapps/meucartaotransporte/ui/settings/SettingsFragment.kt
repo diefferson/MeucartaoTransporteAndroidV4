@@ -27,6 +27,7 @@ class SettingsFragment : BaseFragment(){
     override val viewModel by viewModel<SettingsViewModel>()
     override val fragmentLayout = R.layout.fragment_settings
     private val mainViewModel: MainViewModel by viewModel()
+    override val fragmentTag  = "SettingsFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

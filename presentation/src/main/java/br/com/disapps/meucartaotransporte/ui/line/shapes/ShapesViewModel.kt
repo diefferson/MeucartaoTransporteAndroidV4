@@ -48,7 +48,9 @@ class ShapesViewModel(private val getShapesUseCase: GetShapes,
     }
 
     private fun getShapes(codeLine : String){
-        getShapesUseCase.execute(GetShapes.Params(codeLine)){
+        getShapesUseCase.execute(GetShapes.Params(codeLine), onError = {
+            shapes.value = ArrayList()
+        }){
             shapes.value = it
         }
     }

@@ -21,6 +21,7 @@ class FavoritesLinesFragment : BaseFragment() {
 
     override val viewModel by viewModel<LinesViewModel>()
     override val fragmentLayout = R.layout.fragment_list_lines
+    override val fragmentTag = "FavoritesLinesFragment"
 
     private val adapter: LinesListAdapter by lazy{
         LinesListAdapter(viewModel.favoriteLines,activity!!).apply {

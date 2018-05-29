@@ -11,37 +11,34 @@ import com.appodeal.ads.native_ad.views.NativeAdViewContentStream
 import com.appodeal.ads.native_ad.views.NativeAdViewNewsFeed
 import com.chad.library.adapter.base.BaseViewHolder
 
-class CustomViewHolder(view: View) : BaseViewHolder(view){
-
-    fun setSchedule(@IdRes viewId: Int, value: Schedule): CustomViewHolder {
-        val view = getView<CustomSchedule>(viewId)
-        view.setIsAdapt(value.adapt)
-        view.setSchedule(value.time)
-        return this
-    }
-
-    fun setCardBackgroundColor(@IdRes viewId: Int, @ColorInt color : Int): CustomViewHolder{
-        val view  = getView<CardView>(viewId)
-        view.setCardBackgroundColor(color)
-        return this
-    }
-
-    fun setNativeAdFedd(@IdRes viewId: Int, nativeAd: NativeAd): CustomViewHolder{
-        val view  = getView<NativeAdViewNewsFeed>(viewId)
-        view.setNativeAd(nativeAd)
-        return this
-    }
-
-    fun setNativeAdContentStream(@IdRes viewId: Int, nativeAd: NativeAd): CustomViewHolder{
-        val view  = getView<NativeAdViewContentStream>(viewId)
-        view.setNativeAd(nativeAd)
-        return this
-    }
-
-    fun setNativeAdAppWall(@IdRes viewId: Int, nativeAd: NativeAd): CustomViewHolder{
-        val view  = getView<NativeAdViewAppWall>(viewId)
-        view.setNativeAd(nativeAd)
-        return this
-    }
-
+fun BaseViewHolder.setSchedule(@IdRes viewId: Int, value: Schedule): BaseViewHolder{
+    val view = getView<CustomSchedule>(viewId)
+    view.setIsAdapt(value.adapt)
+    view.setSchedule(value.time)
+    return this
 }
+
+fun BaseViewHolder.setCardBackgroundColor(@IdRes viewId: Int, @ColorInt color : Int): BaseViewHolder{
+    val view  = getView<CardView>(viewId)
+    view.setCardBackgroundColor(color)
+    return this
+}
+
+fun BaseViewHolder.setNativeAdFedd(@IdRes viewId: Int, nativeAd: NativeAd): BaseViewHolder{
+    val view  = getView<NativeAdViewNewsFeed>(viewId)
+    view.setNativeAd(nativeAd)
+    return this
+}
+
+fun BaseViewHolder.setNativeAdContentStream(@IdRes viewId: Int, nativeAd: NativeAd): BaseViewHolder{
+    val view  = getView<NativeAdViewContentStream>(viewId)
+    view.setNativeAd(nativeAd)
+    return this
+}
+
+fun BaseViewHolder.setNativeAdAppWall(@IdRes viewId: Int, nativeAd: NativeAd): BaseViewHolder{
+    val view  = getView<NativeAdViewAppWall>(viewId)
+    view.setNativeAd(nativeAd)
+    return this
+}
+

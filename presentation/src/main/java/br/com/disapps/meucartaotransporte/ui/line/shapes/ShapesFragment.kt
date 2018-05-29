@@ -35,6 +35,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     override val viewModel by viewModel<ShapesViewModel>()
     override val fragmentLayout = R.layout.fragment_shapes
     private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentTag= "ShapesFragment"
 
     private lateinit var googleMap: GoogleMap
     private val stopsMarkers = ArrayList<Marker>()
@@ -101,6 +102,8 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
             it?.let {
                 if(it){
                     viewModel.init(lineViewModel.line.code)
+                    show_help.visibility = View.VISIBLE
+                    show_stops.visibility = View.VISIBLE
                 }else{
                     error_view?.addView(activity?.getDownloadDataView())
                     error_view.visibility = View.VISIBLE
@@ -124,6 +127,8 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
                     }
                 }
             }else{
+                show_help.visibility = View.INVISIBLE
+                show_stops.visibility = View.INVISIBLE
                 error_view?.addView(activity?.getEmptyView(getString(R.string.no_shape_data)))
                 error_view.visibility = View.VISIBLE
                 iAppActivityListener.hideTabs()

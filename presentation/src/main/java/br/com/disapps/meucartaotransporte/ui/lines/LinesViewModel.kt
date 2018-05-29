@@ -36,7 +36,11 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
         if(!isRequested){
             isRequested = true
             loadingEvent.value = true
-            getLinesUseCase.execute(Unit) {
+            getLinesUseCase.execute(Unit, onError = {
+                loadingEvent.value = false
+                isUpdatedFavorites.value = true
+                isUpdatedLines.value = true
+            }) {
                 loadingEvent.value = false
                 updateLines(LinesListAdapter.objectToItem(it.toLineVO()))
                 updateFavorites(LinesListAdapter.objectToItem( it.toLineVO().filter { it.favorite }) )

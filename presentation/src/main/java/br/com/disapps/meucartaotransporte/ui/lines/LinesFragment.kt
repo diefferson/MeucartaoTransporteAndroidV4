@@ -24,6 +24,7 @@ class LinesFragment : BaseFragment() {
     override val viewModel by viewModel<LinesViewModel>()
     override val fragmentLayout = R.layout.fragment_lines
     private val mainViewModel by viewModel<MainViewModel>()
+    override val fragmentTag = "LinesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

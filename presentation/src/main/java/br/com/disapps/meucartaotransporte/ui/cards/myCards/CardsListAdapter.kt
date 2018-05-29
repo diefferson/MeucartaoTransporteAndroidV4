@@ -3,12 +3,15 @@ package br.com.disapps.meucartaotransporte.ui.cards.myCards
 import android.app.Activity
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
-import br.com.disapps.meucartaotransporte.ui.custom.CustomViewHolder
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdAppWall
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdContentStream
+import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdFedd
 import com.appodeal.ads.Appodeal
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 
-class CardsListAdapter(data: List<ListItem>?, var activity: Activity) : BaseMultiItemQuickAdapter<CardsListAdapter.ListItem, CustomViewHolder>(data){
+class CardsListAdapter(data: List<ListItem>?, var activity: Activity) : BaseMultiItemQuickAdapter<CardsListAdapter.ListItem, BaseViewHolder>(data){
 
     init {
         addItemType(ListItem.CARD_ITEM, R.layout.item_card)
@@ -17,7 +20,7 @@ class CardsListAdapter(data: List<ListItem>?, var activity: Activity) : BaseMult
         addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
     }
 
-    override fun convert(helper: CustomViewHolder, item: ListItem) {
+    override fun convert(helper: BaseViewHolder, item: ListItem) {
 
         when(item.type){
 

@@ -23,6 +23,7 @@ class NextSchedulesDayFragment : BaseFragment(){
 
     override val fragmentLayout = R.layout.fragment_next_schedules_day
     private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentTag = "NextScheduleDayListAdapter"
 
     private val adapter:NextScheduleDayListAdapter by lazy {
         NextScheduleDayListAdapter(ArrayList(), activity!!).apply {

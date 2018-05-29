@@ -63,9 +63,9 @@ abstract class BaseFragmentActivity: BaseActivity(),
 
     override fun replaceFragment(fragment: BaseFragment) {
 
-        if(supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null){
+        if(supportFragmentManager.findFragmentByTag(fragment.fragmentTag) == null){
             val ft = fragmentTransaction
-            ft.replace(container.id, fragment, fragment.javaClass.simpleName)
+            ft.replace(container.id, fragment, fragment.fragmentTag)
             ft.commit()
         }
 
@@ -78,10 +78,10 @@ abstract class BaseFragmentActivity: BaseActivity(),
 
     override fun replaceAndBackStackFragment(fragment: BaseFragment) {
 
-        if(supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null){
+        if(supportFragmentManager.findFragmentByTag(fragment.fragmentTag) == null){
             val ft = fragmentTransaction
-            ft.replace(container.id, fragment, fragment.javaClass.simpleName)
-            ft.addToBackStack(fragment.javaClass.simpleName)
+            ft.replace(container.id, fragment, fragment.fragmentTag)
+            ft.addToBackStack(fragment.fragmentTag)
             ft.commit()
         }
 

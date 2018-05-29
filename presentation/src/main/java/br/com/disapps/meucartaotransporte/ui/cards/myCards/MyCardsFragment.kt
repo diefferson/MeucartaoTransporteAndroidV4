@@ -21,7 +21,7 @@ import org.koin.android.architecture.ext.viewModel
 class MyCardsFragment : BaseFragment(){
 
     override val viewModel by viewModel<MyCardsViewModel>()
-
+    override val fragmentTag = "MyCardsFragment"
     override val fragmentLayout = R.layout.fragment_my_cards
 
     private val adapter: CardsListAdapter by lazy {

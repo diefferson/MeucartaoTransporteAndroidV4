@@ -38,7 +38,9 @@ class ItinerariesViewModel(private val getItineraryDirectionsUseCase: GetItinera
     }
 
     fun getItineraryDirections(codeLine : String){
-        getItineraryDirectionsUseCase.execute(GetItineraryDirections.Params(codeLine)) {
+        getItineraryDirectionsUseCase.execute(GetItineraryDirections.Params(codeLine),onError = {
+            itineraryDirections.value = ArrayList()
+        }) {
             itineraryDirections.value = it
         }
     }
