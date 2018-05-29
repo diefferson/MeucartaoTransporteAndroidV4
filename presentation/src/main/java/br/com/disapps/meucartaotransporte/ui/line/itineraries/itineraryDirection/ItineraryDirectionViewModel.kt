@@ -11,7 +11,10 @@ class ItineraryDirectionViewModel(private val getItineraryUseCase: GetItinerary)
 
     fun getItinerary(codeLine : String, direction : String){
         loadingEvent.value = true
-        getItineraryUseCase.execute(GetItinerary.Params(codeLine, direction)) {
+        getItineraryUseCase.execute(GetItinerary.Params(codeLine, direction), onError = {
+            loadingEvent.value = false
+            itinerary.value = ArrayList()
+        }) {
             loadingEvent.value = false
             itinerary.value = it
         }

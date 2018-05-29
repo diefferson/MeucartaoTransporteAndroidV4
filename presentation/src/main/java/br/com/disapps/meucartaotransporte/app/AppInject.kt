@@ -82,9 +82,9 @@ object AppInject {
         viewModel { SettingsViewModel( getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
         viewModel { ShapesViewModel( getShapesUseCase = get(), getAllItinerariesUseCase = get(), getAllBusesUseCase = get(), getIsDownloadedCwbShapesUseCase = get(), getIsDownloadedMetropolitanShapesUseCase = get()) }
         viewModel { MyCardsViewModel( getCardsUseCase = get(), deleteCardUseCase =  get()) }
-        viewModel { BalanceViewModel( getCardUseCase = get()) }
+        viewModel { BalanceViewModel( getCardUseCase = get(), updateCard = get()) }
         viewModel { RegisterCardViewModel( hasCardUseCase = get(), saveCardUseCase =  get(), getCardUseCase =  get()) }
-        viewModel { ExtractViewModel( getExtractUseCase = get() ) }
+        viewModel { ExtractViewModel( getExtractUseCase = get(), updateCard = get() ) }
         viewModel { IntroViewModel( saveAllLinesJsonUseCase = get(),saveAllSchedulesJsonUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
         viewModel { LineViewModel( updateLineUseCase = get()) }
         viewModel { NextSchedulesViewModel( getLineScheduleDaysUseCase = get()) }
@@ -98,6 +98,7 @@ object AppInject {
         factory { GetCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetCards( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { SaveCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
+        factory { UpdateCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { DeleteCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { HasCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
         factory { GetExtract( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }

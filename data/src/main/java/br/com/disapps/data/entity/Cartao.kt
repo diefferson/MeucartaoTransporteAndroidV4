@@ -10,7 +10,6 @@ import io.realm.annotations.PrimaryKey
  */
 open class Cartao : RealmObject() {
 
-
     @SerializedName("codigo")
     @PrimaryKey
     var codigo: String = ""
@@ -26,7 +25,7 @@ open class Cartao : RealmObject() {
     var saldo: Double = 0.toDouble()
 
     @SerializedName("data_saldo")
-    var dataSaldo: String = ""
+    var data_saldo: String = ""
 
     @Ignore
     @SerializedName("mensagem")

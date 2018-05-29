@@ -14,7 +14,10 @@ class SchedulesViewModel(private val getAllPointSchedulesUseCase: GetAllPointSch
             loadingEvent.value = true
             isRequested = true
 
-            getAllPointSchedulesUseCase.execute(GetAllPointSchedules.Params(codeLine, day, codePoint)) {
+            getAllPointSchedulesUseCase.execute(GetAllPointSchedules.Params(codeLine, day, codePoint), onError = {
+                loadingEvent.value = false
+                schedules.value = ArrayList()
+            }) {
                 loadingEvent.value = false
                 schedules.value = it
             }

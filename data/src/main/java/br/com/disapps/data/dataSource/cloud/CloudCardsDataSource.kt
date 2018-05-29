@@ -36,4 +36,8 @@ class CloudCardsDataSource(private val restApi: RestApi) : CardsDataSource {
     override suspend fun cards(): List<Cartao> {
         throw Throwable("not implemented, only local")
     }
+
+    override suspend fun updateCard(cartao: Cartao){
+        throw Throwable("not implemented, only local")
+    }
 }

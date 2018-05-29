@@ -23,6 +23,23 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
         realm.close()
     }
 
+    override suspend fun updateCard(cartao: Cartao) {
+        if(hasCard(cartao)){
+
+            val completeCard = card(RequestCartao().apply { codigo = cartao.codigo })!!
+            completeCard.apply {
+                data_saldo = cartao.data_saldo
+                saldo = cartao.saldo
+            }
+
+            val realm = database.getDatabase() as Realm
+            realm.beginTransaction()
+            realm.copyToRealmOrUpdate(completeCard)
+            realm.commitTransaction()
+            realm.close()
+        }
+    }
+
     override suspend fun deleteCard( cartao: Cartao){
         val realm = database.getDatabase() as Realm
         realm.beginTransaction()
@@ -44,9 +61,9 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
 
     override suspend fun card(requestCartao: RequestCartao): Cartao? {
         val realm = database.getDatabase() as Realm
-        val card = realm.where(CLAZZ)
+        val card = realm.copyFromRealm(realm.where(CLAZZ)
                         .equalTo(CODE, requestCartao.codigo)
-                        .findFirstAsync()
+                        .findAll())[0]
         realm.close()
         return card
     }

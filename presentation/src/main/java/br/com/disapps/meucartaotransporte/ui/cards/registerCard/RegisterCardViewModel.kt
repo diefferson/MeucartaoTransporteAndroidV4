@@ -116,7 +116,7 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
 
     private fun getFormCard() : Card{
         return Card(
-            code = code.value.toString(),
+            code = code.value.toString().toInt().toString(),
             cpf = cpf.value.toString(),
             name = name.value.toString()
         )

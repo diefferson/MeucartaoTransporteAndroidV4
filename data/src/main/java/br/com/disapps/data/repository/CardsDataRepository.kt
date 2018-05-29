@@ -17,6 +17,12 @@ class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFa
                 .saveCard( card.toCardDTO())
     }
 
+    override suspend fun updateCard( card: Card){
+        return cardsDataSourceFactory
+                .create()
+                .updateCard( card.toCardDTO())
+    }
+
     override suspend fun deleteCard( card: Card){
         return cardsDataSourceFactory
                 .create()
