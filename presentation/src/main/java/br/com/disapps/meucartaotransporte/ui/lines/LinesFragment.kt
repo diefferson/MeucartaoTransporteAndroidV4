@@ -29,6 +29,7 @@ class LinesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        iAppActivityListener.setTitle(getString(R.string.app_name))
         observeViewModel()
     }
 
@@ -68,10 +69,12 @@ class LinesFragment : BaseFragment() {
 
         mainViewModel.onSearchAction.observe(this, Observer {
             if(it!= null && it){
-                if((view_pager.adapter as LinesPageAdapter).hasFavorite){
-                    view_pager.currentItem = 1
-                }else{
-                    view_pager.currentItem = 0
+                if(view_pager.adapter != null){
+                    if((view_pager.adapter as LinesPageAdapter).hasFavorite){
+                        view_pager.currentItem = 1
+                    }else{
+                        view_pager.currentItem = 0
+                    }
                 }
             }
         })

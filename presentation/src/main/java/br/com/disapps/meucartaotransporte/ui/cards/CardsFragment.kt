@@ -30,6 +30,7 @@ class CardsFragment : BaseFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        iAppActivityListener.setTitle(getString(R.string.app_name))
         view_pager.adapter = CardsPageAdapter(childFragmentManager, context!!)
         iAppActivityListener.setupTabs(view_pager)
     }
