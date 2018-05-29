@@ -1,5 +1,7 @@
 package br.com.disapps.domain.listeners
 
-interface DownloadProgressListener {
+import java.io.Serializable
+
+interface DownloadProgressListener : Serializable {
     fun onAttachmentDownloadUpdate(percent: Int)
 }

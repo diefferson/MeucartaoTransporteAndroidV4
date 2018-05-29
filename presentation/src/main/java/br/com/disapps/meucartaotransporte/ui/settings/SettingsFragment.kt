@@ -3,14 +3,21 @@ package br.com.disapps.meucartaotransporte.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.View
 import br.com.disapps.domain.model.InitialScreen
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
+import br.com.disapps.meucartaotransporte.ui.main.MainActivity
+import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
+import br.com.disapps.meucartaotransporte.util.iab.IabHelper
+import br.com.disapps.meucartaotransporte.util.iab.IabResult
+import br.com.disapps.meucartaotransporte.util.iab.Purchase
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.architecture.ext.viewModel
+import org.koin.android.ext.android.inject
 
 /**
  * Created by dnso on 12/03/2018.
@@ -19,6 +26,8 @@ class SettingsFragment : BaseFragment(){
 
     override val viewModel by viewModel<SettingsViewModel>()
     override val fragmentLayout = R.layout.fragment_settings
+    private val mainViewModel: MainViewModel by viewModel()
+    override val fragmentTag  = "SettingsFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,6 +37,8 @@ class SettingsFragment : BaseFragment(){
         initial_screen.setOnClickListener { initialScreen() }
         share.setOnClickListener { shareIt() }
         data_usage.setOnClickListener { DataUsageActivity.launch(context!!) }
+        remove_ads.setOnClickListener { removeAds() }
+
     }
 
     override fun onResume() {
@@ -67,6 +78,10 @@ class SettingsFragment : BaseFragment(){
                 },
                 getString(R.string.action_share)
         ))
+    }
+
+    private fun removeAds() {
+        mainViewModel.launchPurchaseFlow(activity!!)
     }
 
     companion object {

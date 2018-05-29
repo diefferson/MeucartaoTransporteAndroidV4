@@ -3,15 +3,15 @@ package br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDa
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
+import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextScheduleDayListAdapter.Companion.objectToItem
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
-import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.getEmptyView
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
 import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel
@@ -23,25 +23,22 @@ class NextSchedulesDayFragment : BaseFragment(){
 
     override val fragmentLayout = R.layout.fragment_next_schedules_day
     private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentTag = "NextScheduleDayListAdapter"
 
-    private val listAdapter : NextScheduleDayListAdapter by lazy {
-
-        NextScheduleDayListAdapter(ArrayList()).apply {
-
-            emptyView = activity?.inflateView(R.layout.loading_view, next_schedules_recycler)
-
-            setOnItemClickListener { adapter, _, position ->
-
+    private val adapter:NextScheduleDayListAdapter by lazy {
+        NextScheduleDayListAdapter(ArrayList(), activity!!).apply {
+            setOnItemClickListener { _, _, position ->
                     SchedulesActivity.launch(context!!, SchedulesDetail(
-                            lineCode = (adapter.data[position] as LineSchedule).lineCode,
-                            day =  (adapter.data[position] as LineSchedule).day,
-                            busStopName = (adapter.data[position] as LineSchedule).busStopName,
-                            busStopCode = (adapter.data[position] as LineSchedule).busStopCode,
+                            lineCode = getLineSchedule(position).lineCode,
+                            day =  getLineSchedule(position).day,
+                            busStopName = getLineSchedule(position).busStopName,
+                            busStopCode = getLineSchedule(position).busStopCode,
                             lineColor = lineViewModel.line.color
                     ))
             }
         }
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,15 +56,36 @@ class NextSchedulesDayFragment : BaseFragment(){
     private fun initRecyclerView() {
         next_schedules_recycler.apply {
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
-            adapter = this@NextSchedulesDayFragment.listAdapter
+            adapter = this@NextSchedulesDayFragment.adapter
         }
     }
 
     private fun observeViewModel(){
         viewModel.nextSchedules.observe(this, Observer {
-            listAdapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, next_schedules_recycler)
-                setNewData(it)
+            if(it!= null && it.isNotEmpty()){
+                adapter.setNewData(NextScheduleDayListAdapter.objectToItem(it))
+                hideErrorView()
+            }else{
+                showErrorView(activity?.getEmptyView(getString(R.string.no_schedule_data)))
+            }
+        })
+    }
+
+    private fun showErrorView(view :View?){
+        error_view.removeAllViews()
+        error_view?.addView(view)
+        error_view.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView(){
+        error_view.removeAllViews()
+        error_view.visibility = View.GONE
+    }
+
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null && it){
+                showErrorView(activity?.getLoadingView())
             }
         })
     }

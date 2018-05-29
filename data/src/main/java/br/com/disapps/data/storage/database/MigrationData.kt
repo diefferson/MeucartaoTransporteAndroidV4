@@ -13,35 +13,80 @@ class MigrationData : RealmMigration {
 
         if (oldVersion < 1) {
             val shapeSchema = realm.schema.get("Shape")
-            shapeSchema!!.addField("numShape", String::class.java)
+            shapeSchema?.addField("numShape", String::class.java)
         }
 
         if (oldVersion < 2) {
-            val pontoSchema = realm.schema.get("BusStop")
-            pontoSchema!!.removeField("numPonto")
-            pontoSchema.addField("numPonto", String::class.java)
+            val pontoSchema = realm.schema.get("Ponto")
+            pontoSchema?.removeField("numPonto")
+            pontoSchema?.addField("numPonto", String::class.java)
 
-            val horarioSchema = realm.schema.get("LineSchedule")
-            horarioSchema!!.removeField("numPonto")
-            horarioSchema.addField("numPonto", String::class.java)
+            val horarioSchema = realm.schema.get("HorarioLinha")
+            horarioSchema?.removeField("numPonto")
+            horarioSchema?.addField("numPonto", String::class.java)
         }
 
-        if (oldVersion < VERSION) {
+        if (oldVersion < 3) {
 
-            realm.delete("BusStop")
+            realm.delete("Ponto")
             realm.delete("Shape")
 
-            val pontoSchema = realm.schema.get("BusStop")
-            pontoSchema!!.addPrimaryKey("numPonto")
+            val pontoSchema = realm.schema.get("Ponto")
+            pontoSchema?.addPrimaryKey("numPonto")
 
             val shapeSachema = realm.schema.get("Shape")
-            shapeSachema!!.addPrimaryKey("numShape")
+            shapeSachema?.addPrimaryKey("numShape")
+
+        }
+
+        if(oldVersion < VERSION){
+            val cartaoSchema = realm.schema.get("Cartao")
+            cartaoSchema?.setRequired("codigo",true)
+            cartaoSchema?.setRequired("cpf",true)
+            cartaoSchema?.setRequired("nome",true)
+            cartaoSchema?.setRequired("tipo",true)
+            cartaoSchema?.setRequired("estado",true)
+            cartaoSchema?.setRequired("data_saldo",true)
+
+            val coordenadaSchema = realm.schema.get("Coordenada")
+            coordenadaSchema?.setRequired("latitude", true)
+            coordenadaSchema?.setRequired("longitude", true)
+
+            val horarioSchema = realm.schema.get("Horario")
+            horarioSchema?.setRequired("hora", true)
+            horarioSchema?.setRequired("tabelaHoraria", true)
+            horarioSchema?.setRequired("adapt", true)
+
+            val horarioLinhaSchema = realm.schema.get("HorarioLinha")
+            horarioLinhaSchema?.setRequired("numPonto", true)
+            horarioLinhaSchema?.setRequired("codigoLinha", true)
+            horarioLinhaSchema?.setRequired("ponto", true)
+
+            val linhaSchema = realm.schema.get("Linha")
+            linhaSchema?.setRequired("cor", true)
+            linhaSchema?.setRequired("codigo", true)
+            linhaSchema?.setRequired("nome", true)
+            linhaSchema?.setRequired("categoria", true)
+
+            val pontoSchema = realm.schema.get("Ponto")
+            pontoSchema?.setRequired("tipo", true)
+            pontoSchema?.setRequired("numPonto", true)
+            pontoSchema?.setRequired("nomePonto", true)
+            pontoSchema?.setRequired("codigoLinha", true)
+            pontoSchema?.setRequired("latitude", true)
+            pontoSchema?.setRequired("longitude", true)
+            pontoSchema?.setRequired("sentido", true)
+
+
+            val shapeSchema = realm.schema.get("Shape")
+            shapeSchema?.setRequired("codigoLinha", true)
+            shapeSchema?.setRequired("numShape", true)
 
         }
     }
 
     companion object {
 
-        const val VERSION = 4L
+        const val VERSION = 5L
     }
 }

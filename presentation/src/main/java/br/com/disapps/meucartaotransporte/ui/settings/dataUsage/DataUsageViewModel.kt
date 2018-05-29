@@ -2,19 +2,12 @@ package br.com.disapps.meucartaotransporte.ui.settings.dataUsage
 
 import android.arch.lifecycle.MutableLiveData
 import br.com.disapps.domain.interactor.preferences.GetDataUsage
-import br.com.disapps.domain.interactor.preferences.SavePeriodUpdateLines
-import br.com.disapps.domain.interactor.preferences.SavePeriodUpdateSchedules
-import br.com.disapps.domain.model.PeriodUpdate
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.util.formatDate
 import java.util.*
 
-class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage,
-                         private val savePeriodUpdateLinesUseCase: SavePeriodUpdateLines,
-                         private val savePeriodUpdateSchedulesUseCase: SavePeriodUpdateSchedules):BaseViewModel(){
+class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage):BaseViewModel(){
 
-    val periodLines = MutableLiveData<String>()
-    val periodSchedules = MutableLiveData<String>()
     val dateLines = MutableLiveData<String>()
     val dateSchedules  = MutableLiveData<String>()
     val dateCwbItineraries  = MutableLiveData<String>()
@@ -24,8 +17,7 @@ class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage,
 
     fun init(){
         getDataUsageUseCase.execute(Unit) {
-            periodLines.value = it.periodLines
-            periodSchedules.value = it.periodSchedules
+
             dateLines.value = formatDate(Date(it.dateUpdateLines))
             dateSchedules.value = formatDate(Date(it.dateUpdateSchedules))
 
@@ -47,22 +39,8 @@ class DataUsageViewModel(private val getDataUsageUseCase: GetDataUsage,
         }
     }
 
-    fun savePeriodUpdateLines(periodUpdate: PeriodUpdate){
-        savePeriodUpdateLinesUseCase.execute(SavePeriodUpdateLines.Params(periodUpdate)){
-            init()
-        }
-    }
-
-    fun savePeriodUpdateSchedules(periodUpdate: PeriodUpdate){
-        savePeriodUpdateSchedulesUseCase.execute(SavePeriodUpdateSchedules.Params(periodUpdate)){
-            init()
-        }
-    }
-
     override fun onCleared() {
         super.onCleared()
         getDataUsageUseCase.dispose()
-        savePeriodUpdateLinesUseCase.dispose()
-        savePeriodUpdateSchedulesUseCase.dispose()
     }
 }

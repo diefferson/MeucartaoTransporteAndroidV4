@@ -10,6 +10,10 @@ android {
         targetSdkVersion 27
         multiDexEnabled = true
         buildConfigField 'String', 'PREFERENCES_FILE_KEY', "\"br.com.disapps.meucartaotransporte.configs\""
+        buildConfigField 'String', 'DOWNLOAD_LINES', "\"https://meucartaotransporte.com.br/api/listaLinhas\""
+        buildConfigField 'String', 'DOWNLOAD_SCHEDULES', "\"https://meucartaotransporte.com.br/api/listaHorarios\""
+        buildConfigField 'String', 'DOWNLOAD_ITINERARIES', "\"https://meucartaotransporte.com.br/api/listaPontos\""
+        buildConfigField 'String', 'DOWNLOAD_SHAPES', "\"https://meucartaotransporte.com.br/api/listaShapes\""
     }
     buildTypes {
         release {

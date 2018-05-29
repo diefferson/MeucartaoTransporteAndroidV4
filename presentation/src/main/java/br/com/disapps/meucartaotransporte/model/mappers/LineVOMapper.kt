@@ -2,7 +2,7 @@ package br.com.disapps.meucartaotransporte.model.mappers
 
 import br.com.disapps.domain.model.Line
 import br.com.disapps.meucartaotransporte.model.LineVO
-import br.com.disapps.meucartaotransporte.util.extensions.clean
+import br.com.disapps.meucartaotransporte.util.clean
 
 fun Line.toLineVO() = LineVO(
         code = this.code,

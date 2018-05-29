@@ -9,6 +9,10 @@ interface PreferencesRepository{
     suspend fun getInitialScreen() : String
     suspend fun getIsFirstAccess() : Boolean
     suspend fun getDataUsage(): DataUsage
+    suspend fun getIsDownloadedCwbItineraries() : Boolean
+    suspend fun getIsDownloadedMetropolitanItineraries() : Boolean
+    suspend fun getIsDownloadedCwbShapes() : Boolean
+    suspend fun getIsDownloadedMetropolitanShapes() : Boolean
 
     suspend fun setIsPro(isPro: Boolean)
     suspend fun setInitialScreen(initialScreen: InitialScreen)

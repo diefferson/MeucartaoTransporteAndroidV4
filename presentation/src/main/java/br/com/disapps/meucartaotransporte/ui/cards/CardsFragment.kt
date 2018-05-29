@@ -24,7 +24,7 @@ class CardsFragment : BaseFragment(){
 
     override val viewModel : BaseViewModel
             get() = getViewModel()
-
+    override val fragmentTag = "CardsFragment"
     override val fragmentLayout = R.layout.fragment_cards
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

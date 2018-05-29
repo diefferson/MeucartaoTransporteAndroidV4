@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatDelegate
 import br.com.disapps.data.storage.database.Database
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
+import org.koin.log.EmptyLogger
 
 /**
  * Created by dnso on 08/03/2018.
@@ -21,7 +22,7 @@ class App : MultiDexApplication() {
 
         instance = this
 
-        startKoin(this, AppInject.modules())
+        startKoin(this, AppInject.modules(), logger = EmptyLogger())
 
         database.initDatabase()
     }

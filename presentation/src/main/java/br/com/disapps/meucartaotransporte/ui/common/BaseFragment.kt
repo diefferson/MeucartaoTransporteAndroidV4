@@ -1,17 +1,18 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.util.extensions.toast
+import br.com.disapps.meucartaotransporte.util.toast
+import com.appodeal.ads.Appodeal
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -20,6 +21,7 @@ abstract class BaseFragment : Fragment() {
 
     abstract val viewModel: BaseViewModel
     abstract val fragmentLayout: Int
+    abstract val fragmentTag:String
     private var binding: ViewDataBinding? = null
 
     var hasTabs: Boolean = false
@@ -35,6 +37,11 @@ abstract class BaseFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        Appodeal.cache(activity!!, Appodeal.NATIVE)
+    }
+
     private fun initDataBinding(inflater: LayoutInflater, container: ViewGroup?) : View?{
         binding = DataBindingUtil.inflate(inflater, fragmentLayout, container, false)
         binding?.setVariable(BR.viewModel, viewModel)
@@ -42,7 +49,7 @@ abstract class BaseFragment : Fragment() {
         return binding?.root
     }
 
-    private fun setupLoading(){
+    open fun setupLoading(){
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it != null){
                 if(it){
@@ -54,13 +61,10 @@ abstract class BaseFragment : Fragment() {
         })
     }
 
-    private fun setupError(){
+    open fun setupError(){
         viewModel.getErrorObservable().observe(this, Observer {
-            if(it != null){
-                activity?.toast(it.message)
-            }else{
-                activity?.toast(getString(R.string.unknow_error))
-            }
+            val rootView = activity!!.findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
+            Snackbar.make(rootView, getString(R.string.unknow_error), Snackbar.LENGTH_SHORT).show()
         })
     }
 }

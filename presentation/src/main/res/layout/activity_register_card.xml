@@ -7,81 +7,92 @@
             type="br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel"/>
     </data>
 
-
-    <ScrollView
-        android:id="@+id/content"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="10dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/card_name_container"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/AppTheme.InputLayout"
-                app:error="@{!viewModel.isValidName ? @string/invalid_name : null}">
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/card_name"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/card_name_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="50"
-                    android:text="@={viewModel.name}"
-                    android:hint="@string/card_name"
-                    android:inputType="text" />
+                    style="@style/AppTheme.InputLayout"
+                    app:error="@{!viewModel.isValidName ? @string/invalid_name : null}">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/card_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="50"
+                        android:text="@={viewModel.name}"
+                        android:hint="@string/card_name"
+                        android:inputType="text" />
+
+                </android.support.design.widget.TextInputLayout>
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/card_code_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/AppTheme.InputLayout"
-                app:error="@{!viewModel.isValidCode ? @string/invalid_code : null}">
-
-                <EditText
-                    android:id="@+id/card_code"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/card_code_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.code}"
-                    android:hint="@string/card_code"
-                    android:inputType="number"
-                    android:maxLength="10"/>
+                    style="@style/AppTheme.InputLayout"
+                    app:error="@{!viewModel.isValidCode ? @string/invalid_code : null}">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/card_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewModel.code}"
+                        android:hint="@string/card_code"
+                        android:inputType="number"
+                        android:maxLength="10"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/card_cpf_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/AppTheme.InputLayout"
-                app:error="@{!viewModel.isValidCpf ? @string/invalid_cpf : null}">
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/card_cpf"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/card_cpf_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:text="@={viewModel.cpf}"
-                    android:hint="@string/cpf"
-                    android:inputType="number"
-                    android:maxLength="11"/>
+                    style="@style/AppTheme.InputLayout"
+                    app:error="@{!viewModel.isValidCpf ? @string/invalid_cpf : null}">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/card_cpf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@={viewModel.cpf}"
+                        android:hint="@string/cpf"
+                        android:inputType="number"
+                        android:maxLength="11"/>
 
-            <Button
-                android:id="@+id/btn_register"
-                style="@style/AppTheme.Button"
-                android:text="@string/btn_register" />
+                </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/btn_register"
+                    style="@style/AppTheme.Button"
+                    android:text="@string/btn_register" />
 
-    </ScrollView>
+            </LinearLayout>
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/result_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
 </layout>

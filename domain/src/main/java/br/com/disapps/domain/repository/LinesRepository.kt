@@ -8,9 +8,7 @@ interface LinesRepository{
 
     suspend fun saveLine(line : Line)
 
-    suspend fun saveAllLinesFromJson(json : String)
-
-    suspend fun jsonLines(downloadProgressListener: DownloadProgressListener) : String
+    suspend fun saveAllLinesFromJson(filePath:String, downloadProgressListener: DownloadProgressListener)
 
     suspend fun lines() : List<Line>
 

@@ -10,7 +10,12 @@ class ItineraryDirectionViewModel(private val getItineraryUseCase: GetItinerary)
     val itinerary = MutableLiveData<List<BusStop>>()
 
     fun getItinerary(codeLine : String, direction : String){
-        getItineraryUseCase.execute(GetItinerary.Params(codeLine, direction)) {
+        loadingEvent.value = true
+        getItineraryUseCase.execute(GetItinerary.Params(codeLine, direction), onError = {
+            loadingEvent.value = false
+            itinerary.value = ArrayList()
+        }) {
+            loadingEvent.value = false
             itinerary.value = it
         }
     }

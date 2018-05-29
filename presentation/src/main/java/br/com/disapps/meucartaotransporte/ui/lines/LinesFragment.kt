@@ -1,6 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.lines
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -8,7 +9,9 @@ import android.view.MenuItem
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
+import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_lines.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -19,10 +22,9 @@ class LinesFragment : BaseFragment() {
     }
 
     override val viewModel by viewModel<LinesViewModel>()
-
     override val fragmentLayout = R.layout.fragment_lines
-
     private val mainViewModel by viewModel<MainViewModel>()
+    override val fragmentTag = "LinesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,11 +51,18 @@ class LinesFragment : BaseFragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun observeViewModel(){
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == LineActivity.REQUEST_ID){
+            if(data != null && data.hasExtra(LineActivity.LINE_CODE) ){
+                val lineCode  = data.getStringExtra(LineActivity.LINE_CODE)
+                viewModel.updateFavoriteLine(lineCode, resultCode == LineActivity.RESULT_LINE_FAVOR)
+            }
+        }
+    }
 
+    private fun observeViewModel(){
         viewModel.hasFavorite.observe(this, Observer {
-            val adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
-            view_pager.adapter = adapter
+            view_pager.adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
             iAppActivityListener.setupTabs(view_pager)
         })
 
@@ -68,8 +77,19 @@ class LinesFragment : BaseFragment() {
         })
     }
 
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null &&  it && !viewModel.isRequested){
+                error_view.visibility = View.VISIBLE
+                error_view.addView(activity?.getLoadingView())
+            }else{
+                error_view.visibility = View.GONE
+                error_view.removeAllViews()
+            }
+        })
+    }
+
     companion object {
         fun newInstance() = LinesFragment()
     }
-
 }

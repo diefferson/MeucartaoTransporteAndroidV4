@@ -7,9 +7,8 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
-import br.com.disapps.meucartaotransporte.util.extensions.toast
+import br.com.disapps.meucartaotransporte.util.toast
 import kotlinx.android.synthetic.main.fragment_quick_find.*
-import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.viewModel
 
 /**
@@ -18,14 +17,12 @@ import org.koin.android.architecture.ext.viewModel
 class QuickFindFragment: BaseFragment(){
 
     override val viewModel by viewModel<QuickFindViewModel>()
-
+    override val fragmentTag = "QuickFindFragment"
     override val fragmentLayout = R.layout.fragment_quick_find
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModelObservers()
-
         btn_quick_find.setOnClickListener { viewModel.consult() }
     }
 
@@ -33,12 +30,8 @@ class QuickFindFragment: BaseFragment(){
         viewModel.code.observe(this, Observer { viewModel.isValidCode.value = true })
         viewModel.cpf.observe(this, Observer { viewModel.isValidCpf.value = true })
         viewModel.isSuccess.observe(this, Observer {
-            if(it != null){
-                if(it){
-                    BalanceActivity.launch(context!!, CardVO(cpf = viewModel.cpf.value.toString(), code = viewModel.code.value.toString()))
-                }else{
-                    activity?.toast("Erro")
-                }
+            if(it != null && it){
+                BalanceActivity.launch(context!!, CardVO(cpf = viewModel.cpf.value.toString(), code = viewModel.code.value.toString()))
             }
         })
     }

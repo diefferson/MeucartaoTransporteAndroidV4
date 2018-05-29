@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter
+import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter.Companion.objectToItem
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
-import br.com.disapps.meucartaotransporte.util.extensions.inflateView
-import com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_BOTTOM
+import br.com.disapps.meucartaotransporte.util.getEmptyView
+import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -24,18 +24,17 @@ class AllLinesFragment : BaseFragment() {
     override val viewModel by viewModel<LinesViewModel>()
     override val fragmentLayout = R.layout.fragment_list_lines
     private val mainViewModel by viewModel<MainViewModel>()
+    override val fragmentTag = "AllLinesFragment"
 
-    private val listAdapter:LinesListAdapter by lazy{
-        LinesListAdapter(viewModel.lines).apply {
-            emptyView = activity?.inflateView(R.layout.loading_view, lines_recycler )
-            setOnItemChildClickListener { adapter, view, position ->
+    private val adapter:LinesListAdapter by lazy{
+        LinesListAdapter(viewModel.lines, activity!!).apply {
+            setOnItemChildClickListener { _, view, position ->
                 when(view.id){
-                    R.id.fav_line -> { viewModel.favoriteLine(adapter.data[position] as LineVO) }
+                    R.id.fav_line -> { viewModel.favoriteLine(getLine(position)) }
                 }
             }
-
-            setOnItemClickListener { adapter, view, position ->
-                LineActivity.launch(context!!, adapter.data[position] as LineVO, view.findViewById(R.id.roundedImage))
+            setOnItemClickListener { _, view, position ->
+                LineActivity.launch(context!!, parentFragment, getLine(position).line, view.findViewById(R.id.roundedImage))
             }
         }
     }
@@ -49,37 +48,45 @@ class AllLinesFragment : BaseFragment() {
     private fun initRecycler() {
         lines_recycler.apply {
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
-            adapter = this@AllLinesFragment.listAdapter
+            adapter = this@AllLinesFragment.adapter
         }
     }
 
     private fun observeViewModel(){
 
         viewModel.isUpdatedLines.observe(this, Observer {
-            listAdapter.apply {
-                emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+            adapter.apply {
+                emptyView = activity.getEmptyView(getString(R.string.no_results))
                 notifyDataSetChanged()
             }
         })
 
         mainViewModel.onSearchAction.observe(this, Observer {
-            listAdapter.emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+            adapter.emptyView = activity?.getEmptyView(getString(R.string.no_results))
             if(it!= null && it){
                 viewModel.linesFiltered.clear()
                 viewModel.linesFiltered.addAll(viewModel.lines)
-                listAdapter.setNewData(viewModel.linesFiltered)
+                adapter.setNewData(viewModel.linesFiltered)
             }else{
-                listAdapter.setNewData(viewModel.lines)
+                adapter.setNewData(viewModel.lines)
             }
         })
 
         mainViewModel.searchText.observe(this, Observer {
             if(it!= null){
                 viewModel.filterLines(it)
-                listAdapter.apply {
-                    emptyView = activity?.inflateView(R.layout.empty_view, lines_recycler )
+                adapter.apply {
+                    emptyView = activity.getEmptyView(getString(R.string.no_results))
                     notifyDataSetChanged()
                 }
+            }
+        })
+    }
+
+    override fun setupLoading() {
+        viewModel.getIsLoadingObservable().observe(this, Observer {
+            if(it!= null && it){
+                adapter.emptyView = activity?.getLoadingView()
             }
         })
     }

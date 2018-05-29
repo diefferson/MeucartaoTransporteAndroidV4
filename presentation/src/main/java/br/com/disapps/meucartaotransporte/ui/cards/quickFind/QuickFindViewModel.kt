@@ -2,7 +2,7 @@ package br.com.disapps.meucartaotransporte.ui.cards.quickFind
 
 import android.arch.lifecycle.MutableLiveData
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
-import br.com.disapps.meucartaotransporte.util.extensions.isCPF
+import br.com.disapps.meucartaotransporte.util.isCPF
 
 
 /**

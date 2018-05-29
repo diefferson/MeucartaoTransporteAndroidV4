@@ -15,4 +15,6 @@ interface CardsDataSource : DataSource {
     suspend fun hasCard(cartao: Cartao) : Boolean
 
     suspend fun getExtract(requestCartao: RequestCartao) : List<Extrato>?
+
+    suspend fun updateCard(cartao: Cartao)
 }

@@ -8,6 +8,9 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BasePageAdapter
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirection.ItineraryDirectionFragment
+import br.com.disapps.meucartaotransporte.util.getCity
+import br.com.disapps.meucartaotransporte.util.getDownloadDataView
+import br.com.disapps.meucartaotransporte.util.getEmptyView
 import kotlinx.android.synthetic.main.fragment_itineraries.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -23,6 +26,7 @@ class ItinerariesFragment : BaseFragment() {
     override val viewModel by viewModel<ItinerariesViewModel>()
     override val fragmentLayout = R.layout.fragment_itineraries
     private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentTag = "ItinerariesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,13 +35,27 @@ class ItinerariesFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getItineraryDirections(lineViewModel.line.code)
+        viewModel.getIsDownloaded(getCity(lineViewModel.line.category))
     }
 
     private fun observeViewModel() {
 
+        viewModel.isDownloaded.observe(this, Observer {
+            it?.let {
+                if(it){
+                    error_view.visibility = View.GONE
+                    error_view.removeAllViews()
+                    viewModel.getItineraryDirections(lineViewModel.line.code)
+                }else{
+                    error_view?.addView(activity?.getDownloadDataView())
+                    error_view.visibility = View.VISIBLE
+                    iAppActivityListener.hideTabs()
+                }
+            }
+        })
+
         viewModel.itineraryDirections.observe(this, Observer { directions->
-            directions?.let {
+            if(directions != null && directions.isNotEmpty()){
                 val adapter = BasePageAdapter(childFragmentManager)
                 directions.forEach { direction ->
                     val dayFragment = ItineraryDirectionFragment.newInstance(direction)
@@ -46,6 +64,10 @@ class ItinerariesFragment : BaseFragment() {
 
                 view_pager.adapter = adapter
                 iAppActivityListener.setupTabs(view_pager)
+            }else{
+                error_view?.addView(activity?.getEmptyView(getString(R.string.no_itinerary_data)))
+                error_view.visibility = View.VISIBLE
+                iAppActivityListener.hideTabs()
             }
         })
     }

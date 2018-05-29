@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">Clean Architecture</string>
+    <string name="app_name">Meu Cartão Transporte</string>
     <string name="url_app">https://play.google.com/store/apps/details?id=br.com.disapps.meucartaotransporte</string>
     <string name="google_play_public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqW3dO9Bvfme9nBzVl9tUAKTBFbr6cC20GGmxWFrpcUp5dtdbzdKv7GinkKbMLwe7Ymxz0LupkqMTQmXL3Pc0R0jtYrYpOnrSSYP6i2u3Ln/uMxaOe4D68+nsJHRBylNesGsX61FQrY0PNXyGBoZ5yU6/8F9mPmDpQ00CM+ERVtSc2ZpXyMeBEVobsqpRkbpk3hO/7cxmeHDzhS17C7KNxAcaZrgjfazl0AjXAOjPtXdCYwm+lQnd/5DmqhJwYeoO59gd9gYbjt4orVrDFRMQReJNiKUlHQOr18fIzL+Y/GLE2os0vZhHZ+30kVpkTca5uv6nesTGw8+CpvwuBtCDSwIDAQAB</string>
     <string name="url_faq">https://meucartaotransporte.com.br/faq</string>
     <string name="url_privacy">https://meucartaotransporte.com.br/privacidade</string>
+    <string name="url_balance_card">http://www.urbs.curitiba.pr.gov.br/guia_servico/9</string>
     <string name="email_contact">contato@meucartaotransporte.com</string>
     <string name="navigation_drawer_open">Abrir Menu</string>
     <string name="navigation_drawer_close">Fechar Menu</string>
@@ -26,7 +27,7 @@
     <string name="map">Mapa</string>
     <string name="data_usage">Uso de Dados e Atualizações</string>
     <string name="contact_subject">Contato pelo aplicativo Meu Cartão Transporte</string>
-    <string name="copyright">© 2015–2017 Meu Cartão Transporte. \n Todos os direitos reservados.</string>
+    <string name="copyright">© 2015–2018 Meu Cartão Transporte. \n Todos os direitos reservados.</string>
     <string name="develop">Desenvolvido por Diefferson Santos</string>
     <string name="init_data">Inicializando Base de Dados</string>
     <string name="contact_us">Fale Conosco</string>
@@ -97,7 +98,7 @@
     <string name="success_save_card">Cartão salvo com sucesso</string>
     <string name="download_complete">Base dados atualizada com sucesso!</string>
     <string name="base_updated">Base atualizada com sucesso!</string>
-    <string name="all_right_text">Base Atuslizada com sucesso!\nVamos começar.</string>
+    <string name="all_right_text">Base Atualizada com sucesso!\nVamos começar.</string>
     <string name="card_deleted">Cartão excluido com sucesso</string>
     <string name="all_right">Tudo Certo!</string>
 
@@ -107,7 +108,7 @@
     <string name="action_share_subject">Aplicativo Meu Cartão Transporte</string>
     <string name="action_add_card">Novo Cartão</string>
     <string name="download_data">É necessário realizar o download da base inicial de onibus.\n Certifique-se de estar conectado à internet e clique em Baixar Dados.</string>
-    <string name="no_cards">Clique no botão + para cadastrar um cartão.</string>
+    <string name="no_cards">Sem cartões cadastrados \nClique no botão + para cadastrar um cartão.</string>
     <string name="no_favorites">Sem favoritos</string>
     <string name="update_message">*Os valores podem conter um atraso de até 48 horas para a atualização.</string>
     <string name="data_origin">As informações são consultadas diretamente ao sistema da URBS, disponível no endereço http://www.urbs.curitiba.pr.gov.br, podendo ter um atraso de até 48 horas para atualizações de dados como  saldo e extrato do cartão.</string>
@@ -198,6 +199,45 @@
     <string name="monthly">mensal</string>
     <string name="yearly">anual</string>
     <string name="manual">manual</string>
-    <string name="saving_data">Salvando dados...</string>
+    <string name="saving_data">Salvando dados…</string>
     <string name="wait_for_actual_proccess">Aguarde o fim do processo atual</string>
+    <string name="press_to_exit">Presssione mais uma vez para sair</string>
+    <string name="nativeAdMessage">Ad</string>
+
+
+    <!--in app billing -->
+    <string name="inapp_error_init">Erro ao iniciar o fluxo de compras. Outra operação assíncrona em andamento</string>
+    <string name="inapp_error_query">Erro ao consultar o inventário. Outra operação assíncrona em andamento.</string>
+    <string name="inapp_error_inventory">Falha ao consultar inventário</string>
+    <string name="inapp_success">Obrigado por assinar a versão PRO</string>
+    <string name="known_more">Saiba Mais</string>
+    <string name="card_link_message">Sem resultado para o dados informados, confira seus dados ou clique para saber mais.</string>
+    <string name="alert">Eita!!</string>
+    <string name="vish">Vish!!</string>
+    <string name="invalid_card">Cartão inválido ou inexistente.</string>
+    <string name="inactive_card">Este cartão se encontra inativo ou bloqueado.</string>
+    <string name="invalid_line">Linha inválida ou inexistente.</string>
+    <string name="gave_bad">Deu ruim…</string>
+    <string name="network_generic_error">Não foi possível realizar a consulta, nossos servidores deram um migué, tente novamente mais tarde.</string>
+    <string name="tray_again">Tentar Novamente</string>
+    <string name="not_fault">Não foi culpa minha…</string>
+    <string name="offline">Você está Offline</string>
+    <string name="funy">Engraçadinho</string>
+    <string name="no_local_data">Sem dados locais</string>
+    <string name="no_local_data_description">Parece que você ainda não baixou esses dados.\n Vamos fazer o isso agora?</string>
+    <string name="puts">Putz!</string>
+    <string name="channel_updating_data">Atualização de Dados</string>
+    <string name="channel_news">Notícias e novidades</string>
+    <string name="channel_default">Notificações Diversas</string>
+    <string name="no_itinerary_data">Sem dados de itinerário para esta linha</string>
+    <string name="no_shape_data">Sem dados de trajetos para esta linha</string>
+    <string name="no_schedule_data">Sem dados de horários para esta linha</string>
+    <string name="init_data_description">Para sua comodidade estamos baixando os dados mais atuais dos horários das linhas.</string>
+    <string name="download_other_data">Para consultar informações como itinerários ou trajetos será necessário realizar o download dos dados separadamente em \n Configurações->Uso de dados e atualizações.</string>
+    <string name="continue_label">Continuar</string>
+    <string name="got_it">Entendi!</string>
+    <string name="cancel">Cancelar</string>
+    <string name="updating_bus">O posicionamento dos onibus é sincronizado a cada 30 segundos, porém o sistema da URBS pode ter um atraso de até 2 min. Sorry.</string>
+
+
 </resources>

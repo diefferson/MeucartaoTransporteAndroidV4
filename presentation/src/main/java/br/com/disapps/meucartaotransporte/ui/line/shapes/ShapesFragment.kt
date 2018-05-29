@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.line.shapes
 
 import android.arch.lifecycle.Observer
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
@@ -11,16 +10,20 @@ import br.com.disapps.meucartaotransporte.model.getAllCoordinates
 import br.com.disapps.meucartaotransporte.model.getLatLng
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
-import br.com.disapps.meucartaotransporte.util.LatLngInterpolator
-import br.com.disapps.meucartaotransporte.util.animateMarkerToGB
-import br.com.disapps.meucartaotransporte.util.markerFactory
+import br.com.disapps.meucartaotransporte.util.*
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.android.synthetic.main.fragment_shapes.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.withContext
 import org.koin.android.architecture.ext.viewModel
 
 
@@ -32,6 +35,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     override val viewModel by viewModel<ShapesViewModel>()
     override val fragmentLayout = R.layout.fragment_shapes
     private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentTag= "ShapesFragment"
 
     private lateinit var googleMap: GoogleMap
     private val stopsMarkers = ArrayList<Marker>()
@@ -41,12 +45,22 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+        show_stops.setOnClickListener{ showStops() }
+        show_help.setOnClickListener{
+            help_text.visibility = View.VISIBLE
+            async {
+                delay(10000)
+                withContext(UI){
+                    help_text.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        viewModel.init(lineViewModel.line.code)
+        viewModel.getIsDownloaded(getCity(lineViewModel.line.category))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -84,18 +98,40 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
 
     private fun observeViewModel(){
 
+        viewModel.isDownloaded.observe(this, Observer {
+            it?.let {
+                if(it){
+                    viewModel.init(lineViewModel.line.code)
+                    show_help.visibility = View.VISIBLE
+                    show_stops.visibility = View.VISIBLE
+                }else{
+                    error_view?.addView(activity?.getDownloadDataView())
+                    error_view.visibility = View.VISIBLE
+                    iAppActivityListener.hideTabs()
+                }
+            }
+        })
+
         viewModel.shapes.observe(this, Observer {shapes ->
-            shapes?.forEach {shape ->
-                val coordinates = shape.getAllCoordinates()
-                if(coordinates.size >0){
-                    googleMap.apply {
-                        moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates[coordinates.size / 2], 13f))
-                        addPolyline(PolylineOptions()
+            if(shapes != null && shapes.isNotEmpty()){
+                shapes.forEach {shape ->
+                    val coordinates = shape.getAllCoordinates()
+                    if(coordinates.size >0){
+                        googleMap.apply {
+                            moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates[coordinates.size / 2], 13f))
+                            addPolyline(PolylineOptions()
                                     .addAll(coordinates)
                                     .color(ContextCompat.getColor(context!!,R.color.polyline))
                                     .width(20f))
+                        }
                     }
                 }
+            }else{
+                show_help.visibility = View.INVISIBLE
+                show_stops.visibility = View.INVISIBLE
+                error_view?.addView(activity?.getEmptyView(getString(R.string.no_shape_data)))
+                error_view.visibility = View.VISIBLE
+                iAppActivityListener.hideTabs()
             }
         })
 
@@ -145,23 +181,39 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     private fun clearBuses(buses : List<Bus>?){
 
         val listDisabled = ArrayList<String>()
-        busesMarkers.forEach { t, _ ->
-            var exists = false
-            buses?.forEach {bus ->
-                if(bus.prefix == t){
-                    exists = true
+        if(busesMarkers.size >0){
+            busesMarkers.forEach { t, _ ->
+                var exists = false
+                buses?.forEach {bus ->
+                    if(bus.prefix == t){
+                        exists = true
+                    }
                 }
-            }
 
-            if(!exists){
-                busesMarkers[t]?.isVisible = false
-                listDisabled.add(t)
+                if(!exists){
+                    busesMarkers[t]?.isVisible = false
+                    listDisabled.add(t)
+                }
             }
         }
 
         listDisabled.forEach{
             if(busesMarkers.containsKey(it)){
                 busesMarkers.remove(it)
+            }
+        }
+    }
+
+    private fun showStops(){
+        if(!viewModel.showStops){
+            viewModel.showStops = true
+            stopsMarkers.forEach {
+                it.isVisible =true
+            }
+        }else{
+            viewModel.showStops = false
+            stopsMarkers.forEach {
+                it.isVisible = false
             }
         }
     }

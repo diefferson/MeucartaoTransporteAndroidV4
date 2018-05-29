@@ -4,7 +4,7 @@ import android.support.v4.view.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.extensions.inflateView
+import br.com.disapps.meucartaotransporte.util.inflateView
 
 class IntroPageAdapter(var context: BaseActivity,var  layouts:IntArray): PagerAdapter() {
 

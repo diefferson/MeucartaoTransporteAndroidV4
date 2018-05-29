@@ -23,7 +23,7 @@ abstract class BaseService : Service(), LifecycleOwner {
         mLifecycleRegistry.markState(Lifecycle.State.CREATED)
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val onStart = super.onStartCommand(intent, flags, startId)
         mLifecycleRegistry.markState(Lifecycle.State.STARTED)
         return onStart
