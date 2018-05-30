@@ -15,7 +15,6 @@ import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.realm.Realm
 import java.io.File
 import java.io.FileInputStream
-import java.io.InputStream
 
 class LocalSchedulesDataSource(private val database: Database, private val preferences: Preferences, private val assetManager: AssetManager) : SchedulesDataSource{
 

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.*
 import kotlinx.android.synthetic.main.activity_register_card.*

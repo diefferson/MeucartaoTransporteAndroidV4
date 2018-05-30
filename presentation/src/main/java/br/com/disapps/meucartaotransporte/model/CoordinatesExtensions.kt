@@ -5,7 +5,7 @@ import br.com.disapps.domain.model.BusStop
 import br.com.disapps.domain.model.Coordinate
 import br.com.disapps.domain.model.Shape
 import com.google.android.gms.maps.model.LatLng
-import java.util.ArrayList
+import java.util.*
 
 fun BusStop.getLatLng(): LatLng {
     val lat = this.latitude.replace(',', '.')

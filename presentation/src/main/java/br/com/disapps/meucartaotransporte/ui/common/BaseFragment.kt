@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.util.toast
 import com.appodeal.ads.Appodeal
 
 /**

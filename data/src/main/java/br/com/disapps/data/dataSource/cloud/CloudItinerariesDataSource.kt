@@ -1,6 +1,5 @@
 package br.com.disapps.data.dataSource.cloud
 
-import br.com.disapps.data.api.DownloadClient.getRetrofitDownloadClient
 import br.com.disapps.data.api.RestApi
 import br.com.disapps.data.dataSource.ItinerariesDataSource
 import br.com.disapps.data.entity.Ponto

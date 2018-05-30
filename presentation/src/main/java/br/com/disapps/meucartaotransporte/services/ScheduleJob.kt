@@ -1,15 +1,8 @@
 package br.com.disapps.meucartaotransporte.services
 
 import android.content.Context
-import com.firebase.jobdispatcher.JobParameters
-import com.firebase.jobdispatcher.JobService
-import com.firebase.jobdispatcher.Constraint
-import com.firebase.jobdispatcher.RetryStrategy
-import com.firebase.jobdispatcher.Trigger
-import com.firebase.jobdispatcher.Lifetime
 import android.os.Bundle
-import com.firebase.jobdispatcher.GooglePlayDriver
-import com.firebase.jobdispatcher.FirebaseJobDispatcher
+import com.firebase.jobdispatcher.*
 
 class ScheduleJob : JobService(){
 

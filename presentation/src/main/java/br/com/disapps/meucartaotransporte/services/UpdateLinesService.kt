@@ -8,7 +8,6 @@ import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
-import br.com.disapps.meucartaotransporte.util.cancelNotification
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
 import br.com.disapps.meucartaotransporte.util.showCustomNotification
 import kotlinx.coroutines.experimental.android.UI

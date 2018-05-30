@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import br.com.disapps.domain.interactor.preferences.GetIsFirstAccess
 import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
-import org.koin.android.ext.android.inject
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.android.inject
 
 /**
  * Created by diefferson on 15/03/2018.

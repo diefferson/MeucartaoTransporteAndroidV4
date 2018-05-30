@@ -1,15 +1,10 @@
 package br.com.disapps.data.api
 
 import br.com.disapps.domain.listeners.DownloadProgressListener
-import java.io.IOException
-
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import okio.Buffer
-import okio.BufferedSource
-import okio.ForwardingSource
-import okio.Okio
-import okio.Source
+import okio.*
+import java.io.IOException
 
 class DownloadProgressResponseBody(private val responseBody: ResponseBody?,
                                    private val progressListener: DownloadProgressListener?) : ResponseBody() {

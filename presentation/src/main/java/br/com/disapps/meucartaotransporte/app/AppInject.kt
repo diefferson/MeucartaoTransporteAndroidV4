@@ -16,13 +16,22 @@ import br.com.disapps.domain.interactor.cards.*
 import br.com.disapps.domain.interactor.events.GetUpdateLinesEvent
 import br.com.disapps.domain.interactor.events.GetUpdateSchedulesEvent
 import br.com.disapps.domain.interactor.events.PostEvent
-import br.com.disapps.domain.interactor.itineraries.*
-import br.com.disapps.domain.interactor.lines.*
+import br.com.disapps.domain.interactor.itineraries.GetAllItineraries
+import br.com.disapps.domain.interactor.itineraries.GetItinerary
+import br.com.disapps.domain.interactor.itineraries.GetItineraryDirections
+import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
+import br.com.disapps.domain.interactor.lines.GetLines
+import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
+import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.domain.interactor.preferences.*
-import br.com.disapps.domain.interactor.schedules.*
+import br.com.disapps.domain.interactor.schedules.GetAllPointSchedules
+import br.com.disapps.domain.interactor.schedules.GetLineScheduleDays
+import br.com.disapps.domain.interactor.schedules.GetLineSchedules
+import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
 import br.com.disapps.domain.interactor.shapes.GetShapes
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
+import br.com.disapps.meucartaotransporte.exception.LogException
 import br.com.disapps.meucartaotransporte.executor.UIContext
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel
@@ -71,6 +80,7 @@ object AppInject {
         bean { UIContext() as PostExecutionContext }
         bean { JobContextExecutor() as  ContextExecutor }
         bean { get<Context>(CONTEXT).assets  }
+        bean { LogException() as br.com.disapps.domain.exception.LogException}
     }
 
     private val viewModelModule = applicationContext {
@@ -95,43 +105,43 @@ object AppInject {
     }
 
     private val useCaseModule: Module = applicationContext {
-        factory { GetCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetCards( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { SaveCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { UpdateCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { DeleteCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { HasCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetExtract( cardRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { SaveAllLinesJson( linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetLines( linesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { UpdateLine( linesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { SaveAllItinerariesJson( itinerariesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetItineraryDirections( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetItinerary( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetAllItineraries( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { SaveAllShapesJson( shapesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetShapes( shapesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { SaveAllSchedulesJson( schedulesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetLineScheduleDays( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetLineSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetAllPointSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetUpdateLinesEvent( eventsRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetUpdateSchedulesEvent( eventsRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { PostEvent( eventsRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetIsFirstAccess( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetIsDownloadedCwbItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetIsDownloadedMetropolitanItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetIsDownloadedCwbShapes( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetIsDownloadedMetropolitanShapes( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetDataUsage( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { SaveInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { SetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get()) }
-        factory { SaveIsFirstAccess( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { SavePeriodUpdateLines( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { SavePeriodUpdateSchedules( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
-        factory { GetAllBuses( busesRepository = get(),  contextExecutor = get(), postExecutionContext = get()) }
+        factory { GetCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetCards( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { UpdateCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { DeleteCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { HasCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetExtract( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveAllLinesJson( linesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetLines( linesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { UpdateLine( linesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveAllItinerariesJson( itinerariesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetItineraryDirections( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetItinerary( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetAllItineraries( itinerariesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveAllShapesJson( shapesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetShapes( shapesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveAllSchedulesJson( schedulesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetLineScheduleDays( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetLineSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetAllPointSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetUpdateLinesEvent( eventsRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetUpdateSchedulesEvent( eventsRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { PostEvent( eventsRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetIsFirstAccess( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetIsDownloadedCwbItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetIsDownloadedMetropolitanItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetIsDownloadedCwbShapes( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetIsDownloadedMetropolitanShapes( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetDataUsage( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveIsFirstAccess( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SavePeriodUpdateLines( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SavePeriodUpdateSchedules( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetAllBuses( busesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {

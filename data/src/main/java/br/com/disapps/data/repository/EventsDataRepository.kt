@@ -1,7 +1,9 @@
 package br.com.disapps.data.repository
 
 import br.com.disapps.data.events.EventBus
-import br.com.disapps.domain.model.*
+import br.com.disapps.domain.model.Event
+import br.com.disapps.domain.model.UpdateLinesEventComplete
+import br.com.disapps.domain.model.UpdateSchedulesEventComplete
 import br.com.disapps.domain.repository.EventsRepository
 import kotlinx.coroutines.experimental.channels.ReceiveChannel
 

@@ -5,12 +5,12 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
 import android.support.v7.app.AlertDialog
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import android.text.Html
 import android.text.Spanned
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 
 fun Activity.toast(message : String){
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()

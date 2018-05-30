@@ -1,7 +1,9 @@
 package br.com.disapps.data.dataSource.local
 
 import br.com.disapps.data.dataSource.CardsDataSource
-import br.com.disapps.data.entity.*
+import br.com.disapps.data.entity.Cartao
+import br.com.disapps.data.entity.Extrato
+import br.com.disapps.data.entity.RequestCartao
 import br.com.disapps.data.storage.database.Database
 import io.realm.Realm
 

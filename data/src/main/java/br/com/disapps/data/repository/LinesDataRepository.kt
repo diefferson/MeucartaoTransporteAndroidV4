@@ -1,13 +1,11 @@
 package br.com.disapps.data.repository
 
+import br.com.disapps.data.dataSource.factory.LinesDataSourceFactory
 import br.com.disapps.data.entity.mappers.toLineBO
 import br.com.disapps.data.entity.mappers.toLineDTO
-import br.com.disapps.data.dataSource.factory.LinesDataSourceFactory
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.Line
 import br.com.disapps.domain.repository.LinesRepository
-import io.reactivex.Completable
-import io.reactivex.Single
 
 /**
  * Created by dnso on 15/03/2018.

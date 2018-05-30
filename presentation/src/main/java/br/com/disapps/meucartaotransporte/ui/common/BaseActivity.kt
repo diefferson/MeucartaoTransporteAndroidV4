@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import br.com.disapps.meucartaotransporte.util.inflateView
 import com.appodeal.ads.Appodeal
 
 /**
