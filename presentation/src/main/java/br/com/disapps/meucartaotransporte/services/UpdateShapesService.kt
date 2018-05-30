@@ -1,9 +1,13 @@
 package br.com.disapps.meucartaotransporte.services
 
+import android.app.DownloadManager
 import android.arch.lifecycle.Observer
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.widget.Toast
+import br.com.disapps.data.api.CustomDownloadManager
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
@@ -15,9 +19,11 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
 
+
 class UpdateShapesService : BaseService(){
 
     private val saveAllShapesJsonUseCase : SaveAllShapesJson by inject()
+    private val customDownloadManager :CustomDownloadManager by inject()
     private var city  = City.CWB
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -40,8 +46,8 @@ class UpdateShapesService : BaseService(){
                 isManual = false
             }
 
-            if(isManual){
-                showNotification(text =  getString(R.string.updating_shapes), infinityProgress = true)
+//            if(isManual){
+//                showNotification(text =  getString(R.string.updating_shapes), infinityProgress = true)
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
@@ -52,9 +58,9 @@ class UpdateShapesService : BaseService(){
                         stopSelf()
                     }
                 })
-            }
+//            }
 
-            saveShapes(city)
+            downloadShapes(city)
         }else{
             Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
         }
@@ -67,19 +73,32 @@ class UpdateShapesService : BaseService(){
         saveAllShapesJsonUseCase.dispose()
     }
 
-    private fun saveShapes(city: City){
+    var onComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(ctxt: Context, intent: Intent) {
+            val referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            saveShapes(city, referenceId)
+        }
+    }
 
-        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(cacheDir.absolutePath +"/shapes.json", city,updateProgressListener ),
+    private fun downloadShapes(city: City){
+        registerReceiver(onComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        customDownloadManager.download("shapes.json", br.com.disapps.data.BuildConfig.DOWNLOAD_SHAPES, "Baixando Shapes", city.toString())
+    }
+
+    private fun saveShapes(city: City, referenceId: Long){
+        showNotification(text =  getString(R.string.updating_shapes), infinityProgress = true)
+        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(city,referenceId ),
             onError = {
                 launch(UI) {
                     isComplete.value = false
+                    unregisterReceiver(onComplete)
                 }
-
             },
 
             onComplete = {
                 launch(UI) {
                     isComplete.value = true
+                    unregisterReceiver(onComplete)
                 }
             }
         )

@@ -9,11 +9,10 @@ import br.com.disapps.domain.repository.ShapesRepository
 
 class ShapesDataRepository( private val shapesDataSourceFactory: ShapesDataSourceFactory) : ShapesRepository {
 
-
-    override suspend fun saveAllFromJson(filePath:String, city : City,downloadProgressListener: DownloadProgressListener) {
+    override suspend fun saveAllFromJson(city : City,downloadId: Long) {
         return shapesDataSourceFactory
                 .create()
-                .saveAllFromJson(filePath, city, downloadProgressListener)
+                .saveAllFromJson( city, downloadId)
     }
 
     override suspend fun getShapes(codeLine: String): List<Shape> {

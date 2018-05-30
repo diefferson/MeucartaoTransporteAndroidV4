@@ -1,6 +1,7 @@
 package br.com.disapps.meucartaotransporte.app
 
 import android.content.Context
+import br.com.disapps.data.api.CustomDownloadManager
 import br.com.disapps.data.api.RestClient
 import br.com.disapps.data.dataSource.factory.*
 import br.com.disapps.data.events.EventBus
@@ -81,6 +82,7 @@ object AppInject {
         bean { JobContextExecutor() as  ContextExecutor }
         bean { get<Context>(CONTEXT).assets  }
         bean { LogException() as br.com.disapps.domain.exception.LogException}
+        bean { CustomDownloadManager(get(CONTEXT)) }
     }
 
     private val viewModelModule = applicationContext {
@@ -158,7 +160,7 @@ object AppInject {
         bean { CardsDataSourceFactory(database = get(), restApi = get()) }
         bean { LinesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
         bean { ItinerariesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
-        bean { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
+        bean { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get(), customDownloadManager = get()) }
         bean { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
         bean { BusesDataSourceFactory(database = get(), restApi = get()) }
     }
