@@ -15,8 +15,7 @@
 
 package br.com.disapps.meucartaotransporte.util.iab
 
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 /**
  * Represents a block of information about in-app items.

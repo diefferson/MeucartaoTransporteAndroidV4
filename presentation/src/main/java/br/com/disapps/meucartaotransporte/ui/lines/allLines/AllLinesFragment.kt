@@ -8,7 +8,6 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter
-import br.com.disapps.meucartaotransporte.ui.lines.LinesListAdapter.Companion.objectToItem
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.getEmptyView

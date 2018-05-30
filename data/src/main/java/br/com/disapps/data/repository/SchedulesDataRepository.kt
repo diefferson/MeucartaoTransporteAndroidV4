@@ -7,8 +7,6 @@ import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.domain.model.Schedule
 import br.com.disapps.domain.repository.SchedulesRepository
-import io.reactivex.Completable
-import io.reactivex.Single
 
 class SchedulesDataRepository( private val schedulesDataSourceFactory: SchedulesDataSourceFactory) : SchedulesRepository {
 

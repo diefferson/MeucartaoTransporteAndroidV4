@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.cards.extract
 
 import android.arch.lifecycle.MutableLiveData
-import android.util.Log
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.domain.exception.KnownException
 import br.com.disapps.domain.interactor.cards.GetExtract

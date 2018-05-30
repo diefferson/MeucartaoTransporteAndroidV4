@@ -8,6 +8,7 @@ import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.cancelNotification
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
+import kotlinx.coroutines.experimental.async
 
 class NotificationActionReceiver : BroadcastReceiver(){
 
@@ -60,10 +61,10 @@ class NotificationActionReceiver : BroadcastReceiver(){
 
     private fun performRetry(context: Context, intent: Intent) {val service = intent.getStringExtra(SERVICE)
         when(service){
-            LINE_SERVICE -> UpdateLinesService.startService(context, true)
-            SCHEDULE_SERVICE -> UpdateSchedulesService.startService(context, true)
-            SHAPE_SERVICE -> UpdateShapesService.startService(context, intent.getSerializableExtra(CITY) as City, true)
-            ITINERARY_SERVICE -> UpdateItinerariesService.startService(context, intent.getSerializableExtra(CITY) as City, true)
+            LINE_SERVICE -> async { UpdateLinesService.startService(context, true)}
+            SCHEDULE_SERVICE -> async { UpdateSchedulesService.startService(context, true)}
+            SHAPE_SERVICE -> async { UpdateShapesService.startService(context, intent.getSerializableExtra(CITY) as City, true)}
+            ITINERARY_SERVICE -> async { UpdateItinerariesService.startService(context, intent.getSerializableExtra(CITY) as City, true)}
         }
     }
 

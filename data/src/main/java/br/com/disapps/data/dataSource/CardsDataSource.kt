@@ -1,6 +1,8 @@
 package br.com.disapps.data.dataSource
 
-import br.com.disapps.data.entity.*
+import br.com.disapps.data.entity.Cartao
+import br.com.disapps.data.entity.Extrato
+import br.com.disapps.data.entity.RequestCartao
 
 interface CardsDataSource : DataSource {
 

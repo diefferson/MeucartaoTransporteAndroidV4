@@ -8,7 +8,6 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
-import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay.NextScheduleDayListAdapter.Companion.objectToItem
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView

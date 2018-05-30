@@ -3,7 +3,7 @@ package br.com.disapps.meucartaotransporte.ui.common
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import java.util.ArrayList
+import java.util.*
 
 class BasePageAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 

@@ -1,8 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import br.com.disapps.meucartaotransporte.exception.UiException
 
 open class BaseViewModel : ViewModel(){
