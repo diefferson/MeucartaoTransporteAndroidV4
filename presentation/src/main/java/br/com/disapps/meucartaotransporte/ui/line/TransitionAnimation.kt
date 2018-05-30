@@ -14,8 +14,8 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.RoundedColorView
 import br.com.disapps.meucartaotransporte.util.getCenter
-import br.com.disapps.meucartaotransporte.util.setListener
 import br.com.disapps.meucartaotransporte.util.getThemePrimaryColor
+import br.com.disapps.meucartaotransporte.util.setListener
 
 class TransitionAnimation(private val context: Context,
                           private val window: Window,

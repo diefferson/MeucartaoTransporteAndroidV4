@@ -3,11 +3,7 @@ package br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.co
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.LightingColorFilter
-import android.graphics.Paint
+import android.graphics.*
 import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.animator.AnimationState
 import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.ComponentViewAnimation
 

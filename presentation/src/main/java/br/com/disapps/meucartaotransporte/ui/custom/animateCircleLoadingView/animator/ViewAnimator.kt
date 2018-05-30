@@ -1,13 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.animator
 
 import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.AnimatedCircleLoadingView
-import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.ComponentViewAnimation
-import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.InitialCenterCircleView
-import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.MainCircleView
-import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.PercentIndicatorView
-import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.RightCircleView
-import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.SideArcsView
-import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.TopCircleBorderView
+import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.*
 import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.finish.FinishedFailureView
 import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.finish.FinishedOkView
 

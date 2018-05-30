@@ -1,10 +1,10 @@
 package br.com.disapps.data.dataSource.local
 
-import br.com.disapps.data.dataSource.LinesDataSource
-import br.com.disapps.data.entity.Linha
 import android.content.res.AssetManager
 import br.com.disapps.data.BuildConfig
 import br.com.disapps.data.api.DownloadTask
+import br.com.disapps.data.dataSource.LinesDataSource
+import br.com.disapps.data.entity.Linha
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
 import br.com.disapps.data.utils.deleteFromCache
@@ -14,7 +14,6 @@ import br.com.disapps.domain.listeners.DownloadProgressListener
 import io.realm.Realm
 import java.io.File
 import java.io.FileInputStream
-import java.io.InputStream
 
 
 /**

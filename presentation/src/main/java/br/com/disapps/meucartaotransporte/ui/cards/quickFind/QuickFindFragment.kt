@@ -7,7 +7,6 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
-import br.com.disapps.meucartaotransporte.util.toast
 import kotlinx.android.synthetic.main.fragment_quick_find.*
 import org.koin.android.architecture.ext.viewModel
 

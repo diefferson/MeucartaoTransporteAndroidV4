@@ -6,12 +6,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardActivity
+import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_cards.*
 import org.koin.android.architecture.ext.getViewModel
-import org.koin.android.architecture.ext.viewModel
 
 /**
  * Created by dnso on 12/03/2018.
@@ -30,6 +29,7 @@ class CardsFragment : BaseFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        iAppActivityListener.setTitle(getString(R.string.app_name))
         view_pager.adapter = CardsPageAdapter(childFragmentManager, context!!)
         iAppActivityListener.setupTabs(view_pager)
     }

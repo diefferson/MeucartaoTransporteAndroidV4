@@ -3,7 +3,6 @@ package br.com.disapps.meucartaotransporte.ui.custom
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
 import android.support.v7.widget.CardView
-import android.view.View
 import br.com.disapps.domain.model.Schedule
 import com.appodeal.ads.NativeAd
 import com.appodeal.ads.native_ad.views.NativeAdViewAppWall

@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.cards.myCards
 
 import android.arch.lifecycle.MutableLiveData
-import android.util.Log
 import br.com.disapps.domain.interactor.cards.DeleteCard
 import br.com.disapps.domain.interactor.cards.GetCards
 import br.com.disapps.meucartaotransporte.model.CardVO

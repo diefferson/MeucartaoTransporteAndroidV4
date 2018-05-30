@@ -1,15 +1,14 @@
 package br.com.disapps.meucartaotransporte.util
 
 import android.content.Context
-import br.com.disapps.domain.model.Schedule
-import br.com.disapps.meucartaotransporte.R
-import java.util.*
 import android.content.res.ColorStateList
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import br.com.disapps.domain.model.City
-import br.com.disapps.domain.model.PeriodUpdate
+import br.com.disapps.domain.model.Schedule
+import br.com.disapps.meucartaotransporte.R
 import java.text.SimpleDateFormat
+import java.util.*
 
 fun formatDate(date : Date):String{
      val df = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault() )

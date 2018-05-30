@@ -6,8 +6,6 @@ import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
 import br.com.disapps.domain.model.Shape
 import br.com.disapps.domain.repository.ShapesRepository
-import io.reactivex.Completable
-import io.reactivex.Single
 
 class ShapesDataRepository( private val shapesDataSourceFactory: ShapesDataSourceFactory) : ShapesRepository {
 

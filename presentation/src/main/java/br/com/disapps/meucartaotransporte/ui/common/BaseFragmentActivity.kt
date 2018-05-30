@@ -12,7 +12,6 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.util.clean
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import br.com.disapps.meucartaotransporte.util.inflateView
 
 /**
  * Created by diefferson on 29/11/2017.

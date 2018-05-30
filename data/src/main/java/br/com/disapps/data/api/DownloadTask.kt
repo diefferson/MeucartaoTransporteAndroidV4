@@ -47,7 +47,7 @@ class DownloadTask(var downloadProgressListener: DownloadProgressListener) : Asy
             input = connection.inputStream
             output = FileOutputStream(params[2])
 
-            val data = ByteArray(4096)
+            val data = ByteArray(1024)
             var total: Long = 0
             var count = input!!.read(data)
             while (count != -1) {

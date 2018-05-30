@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.intro
 
 import android.arch.lifecycle.MutableLiveData
-import android.util.Log
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
 import br.com.disapps.domain.interactor.preferences.SaveIsFirstAccess
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
@@ -54,9 +53,7 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
     }
 
     private fun initLines(cacheDir :String){
-        saveAllLinesJsonUseCase.execute(SaveAllLinesJson.Params("$cacheDir/lines.json",updateProgressLinesListener ), onError = {
-            Log.i("ERROR", it.message)
-        }) {
+        saveAllLinesJsonUseCase.execute(SaveAllLinesJson.Params("$cacheDir/lines.json",updateProgressLinesListener )) {
             linesComplete = true
             if (schedulesComplete) {
                 isComplete.value = true
@@ -66,9 +63,7 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
     }
 
     private fun initSchedules(cacheDir :String){
-        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJson.Params("$cacheDir/schedules.json", updateProgressSchedulesListener), onError = {
-            Log.i("ERROR", it.message)
-        }) {
+        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJson.Params("$cacheDir/schedules.json", updateProgressSchedulesListener)) {
             schedulesComplete = true
             if (linesComplete) {
                 isComplete.value = true

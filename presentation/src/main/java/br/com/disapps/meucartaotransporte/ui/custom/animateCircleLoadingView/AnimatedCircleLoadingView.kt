@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.*
 import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.animator.ViewAnimator
+import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.*
 import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.finish.FinishedFailureView
 import br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.component.finish.FinishedOkView
 

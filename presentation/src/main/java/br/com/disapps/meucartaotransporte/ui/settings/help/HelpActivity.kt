@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import br.com.disapps.meucartaotransporte.R
-import kotlinx.android.synthetic.main.activity_help.*
 import br.com.disapps.meucartaotransporte.util.getCustomChromeTabs
+import kotlinx.android.synthetic.main.activity_help.*
 
 
 class HelpActivity : AppCompatActivity(){
