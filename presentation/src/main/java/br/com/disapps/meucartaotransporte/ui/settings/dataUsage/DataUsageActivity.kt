@@ -27,10 +27,10 @@ class DataUsageActivity : BaseActivity(){
 
         update_line.setOnClickListener { async {  UpdateLinesService.startService(App.instance as Context, true) }}
         update_schedule.setOnClickListener { async {UpdateSchedulesService.startService(App.instance as Context, true)}}
-        update_cwb_shapes.setOnClickListener { async {UpdateShapesService.startService(App.instance as Context, City.CWB, true)}}
-        update_met_shapes.setOnClickListener { async {UpdateShapesService.startService(App.instance as Context, City.MET, true)}}
-        update_cwb_itineraries.setOnClickListener { async {UpdateItinerariesService.startService(App.instance as Context, City.CWB, true)}}
-        update_met_itineraries.setOnClickListener { async {UpdateItinerariesService.startService(App.instance as Context, City.MET, true)}}
+        update_cwb_shapes.setOnClickListener { async {UpdateShapesService.startService(App.instance as Context, City.CWB)}}
+        update_met_shapes.setOnClickListener { async {UpdateShapesService.startService(App.instance as Context, City.MET)}}
+        update_cwb_itineraries.setOnClickListener { async {UpdateItinerariesService.startService(App.instance as Context, City.CWB)}}
+        update_met_itineraries.setOnClickListener { async {UpdateItinerariesService.startService(App.instance as Context, City.MET)}}
     }
 
     companion object {

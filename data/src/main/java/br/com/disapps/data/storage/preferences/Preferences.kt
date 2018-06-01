@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import br.com.disapps.data.BuildConfig
 import br.com.disapps.domain.model.DataUsage
 import br.com.disapps.domain.model.InitialScreen
-import br.com.disapps.domain.model.PeriodUpdate
 import br.com.disapps.domain.repository.PreferencesRepository
 import java.util.*
 
@@ -52,14 +51,6 @@ class Preferences(var context:Context) : PreferencesRepository {
         return mPreferences.getLong(DATE_METROPOLITAN_SHAPES, 0)
     }
 
-    private fun getPeriodLines() :String{
-        return  mPreferences.getString(LINES_PERIOD, "mensal")
-    }
-
-    private fun getPeriodSchedules() :String{
-        return  mPreferences.getString(SCHEDULERS_PERIOD, "semanal")
-    }
-
     override suspend fun getIsDownloadedCwbItineraries(): Boolean {
         return mPreferences.getLong(DATE_CURITIBA_ITINERARIES,0) != 0L
     }
@@ -76,10 +67,32 @@ class Preferences(var context:Context) : PreferencesRepository {
         return mPreferences.getLong(DATE_METROPOLITAN_SHAPES,0) != 0L
     }
 
+    override fun getIdDownloadLines(): Long {
+        return mPreferences.getLong(ID_DOWNLOAD_LINES, 0)
+    }
+
+    override fun getIdDownloadSchedules(): Long {
+        return mPreferences.getLong(ID_DOWNLOAD_SCHEDULES,0)
+    }
+
+    override fun getIdDownloadItinerariesCwb(): Long {
+        return mPreferences.getLong(ID_DOWNLOAD_ITINERARIES_CWB,0)
+    }
+
+    override fun getIdDownloadShapesCwb(): Long {
+        return mPreferences.getLong(ID_DOWNLOAD_SHAPES_CWB,0)
+    }
+
+    override fun getIdDownloadItinerariesMetropolitan(): Long {
+        return mPreferences.getLong(ID_DOWNLOAD_ITINERARIES_METROPOLITAN,0)
+    }
+
+    override fun getIdDownloadShapesMetropolitan(): Long {
+        return mPreferences.getLong(ID_DOWNLOAD_SHAPES_METROPOLITAN,0)
+    }
+
     override suspend fun getDataUsage(): DataUsage {
         return DataUsage(
-                periodLines = getPeriodLines(),
-                periodSchedules = getPeriodSchedules(),
                 dateUpdateLines  = getDateLines(),
                 dateUpdateSchedules  = getDateSchedules(),
                 dateUpdateCwbItineraries = getDateCwbItineraries(),
@@ -132,25 +145,45 @@ class Preferences(var context:Context) : PreferencesRepository {
         mPreferences.edit().putLong(DATE_METROPOLITAN_ITINERARIES,Calendar.getInstance().timeInMillis ).apply()
     }
 
-    override suspend fun setPeriodUpdateLines(period: PeriodUpdate) {
-        mPreferences.edit().putString(LINES_PERIOD, period.toString()).apply()
+    override fun setIdDownloadLines(id: Long){
+        mPreferences.edit().putLong(ID_DOWNLOAD_LINES, id).apply()
     }
 
-    override suspend fun setPeriodUpdateSchedules(period: PeriodUpdate) {
-        mPreferences.edit().putString(SCHEDULERS_PERIOD, period.toString()).apply()
+    override fun setIdDownloadSchedules(id: Long){
+        mPreferences.edit().putLong(ID_DOWNLOAD_SCHEDULES, id).apply()
+    }
+
+    override fun setIdDownloadItinerariesCwb(id: Long){
+        mPreferences.edit().putLong(ID_DOWNLOAD_ITINERARIES_CWB, id).apply()
+    }
+
+    override fun setIdDownloadShapesCwb(id: Long){
+        mPreferences.edit().putLong(ID_DOWNLOAD_SHAPES_CWB, id).apply()
+    }
+
+    override fun setIdDownloadItinerariesMetropolitan(id: Long){
+        mPreferences.edit().putLong(ID_DOWNLOAD_ITINERARIES_METROPOLITAN, id).apply()
+    }
+
+    override fun setIdDownloadShapesMetropolitan(id: Long){
+        mPreferences.edit().putLong(ID_DOWNLOAD_SHAPES_METROPOLITAN, id).apply()
     }
 
     companion object {
         const val PRO_ACCESS = "acessoPro"
         const val INITIAL_SCREEN = "telaInicial"
         const val FIRST_ACCESS = "first"
-        const val LINES_PERIOD = "periodoLinhas"
         const val LINES_DATE = "dataLinhas"
-        const val SCHEDULERS_PERIOD = "periodoHorarios"
         const val SCHEDULERS_DATE = "dataHorarios"
         const val DATE_CURITIBA_ITINERARIES= "dataPontosCuritiba"
         const val DATE_CURITIBA_SHAPES= "dataShapesCuritiba"
         const val DATE_METROPOLITAN_ITINERARIES= "dataPontosMetropolitana"
         const val DATE_METROPOLITAN_SHAPES= "dataShapesMetropolitana"
+        const val ID_DOWNLOAD_LINES= "idDownloadLines"
+        const val ID_DOWNLOAD_SCHEDULES= "idDownloadSchedules"
+        const val ID_DOWNLOAD_ITINERARIES_CWB= "idDownloadItinerariesCwb"
+        const val ID_DOWNLOAD_SHAPES_CWB= "idDownloadShapesCwb"
+        const val ID_DOWNLOAD_ITINERARIES_METROPOLITAN= "idDownloadItinerariesMetropolitan"
+        const val ID_DOWNLOAD_SHAPES_METROPOLITAN= "idDownloadShapesMetropolitan"
     }
 }

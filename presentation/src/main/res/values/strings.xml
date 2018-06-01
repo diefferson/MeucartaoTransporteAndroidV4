@@ -238,6 +238,8 @@
     <string name="got_it">Entendi!</string>
     <string name="cancel">Cancelar</string>
     <string name="updating_bus">O posicionamento dos onibus é sincronizado a cada 30 segundos, porém o sistema da URBS pode ter um atraso de até 2 min. Sorry.</string>
+    <string name="downloading_shapes">Baixando Trajetos</string>
+    <string name="downloading_itineraries">Baixando itinerários</string>
 
 
 </resources>

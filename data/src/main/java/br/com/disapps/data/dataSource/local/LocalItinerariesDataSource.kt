@@ -25,25 +25,20 @@ class LocalItinerariesDataSource(private val database: Database, private val pre
         private val CLAZZ = Ponto::class.java
     }
 
-    override suspend fun saveAllFromJson(filePath: String, city: City, downloadProgressListener: DownloadProgressListener) {
-        val result = DownloadTask(downloadProgressListener).execute(BuildConfig.DOWNLOAD_ITINERARIES, city.toString(), filePath).get()
-        if(result == "OK"){
-            val realm = database.getDatabase() as Realm
-            val fis = FileInputStream(File(filePath))
-            realm.beginTransaction()
-            realm.createOrUpdateAllFromJson(CLAZZ, fis)
-            realm.commitTransaction()
+    override suspend fun saveAllFromJson( city: City, filePath: String) {
+        val realm = database.getDatabase() as Realm
+        val fis = FileInputStream(File(filePath))
+        realm.beginTransaction()
+        realm.createOrUpdateAllFromJson(CLAZZ, fis)
+        realm.commitTransaction()
 
-            if(city == City.CWB){
-                preferences.setCwbItinerariesDate()
-            }else{
-                preferences.setMetItinerariesDate()
-            }
-            realm.close()
-            deleteFromCache(filePath)
+        if(city == City.CWB){
+            preferences.setCwbItinerariesDate()
         }else{
-            throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
+            preferences.setMetItinerariesDate()
         }
+        realm.close()
+        deleteFromCache(filePath)
     }
 
     override suspend fun getItineraryDirections(codeLine: String): List<String> {

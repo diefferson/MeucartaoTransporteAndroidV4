@@ -7,7 +7,8 @@ import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.City
 
 class CloudShapesDataSource(private val restApi: RestApi) : ShapesDataSource {
-    override suspend fun saveAllFromJson(city: City, downloadId: Long) {
+
+    override suspend fun saveAllFromJson(city: City, filePath:String) {
         throw Throwable("not implemented, only local")
     }
 

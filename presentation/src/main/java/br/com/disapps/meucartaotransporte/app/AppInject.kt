@@ -4,7 +4,6 @@ import android.content.Context
 import br.com.disapps.data.api.CustomDownloadManager
 import br.com.disapps.data.api.RestClient
 import br.com.disapps.data.dataSource.factory.*
-import br.com.disapps.data.events.EventBus
 import br.com.disapps.data.executor.JobContextExecutor
 import br.com.disapps.data.repository.*
 import br.com.disapps.data.storage.database.Database
@@ -14,9 +13,6 @@ import br.com.disapps.domain.executor.ContextExecutor
 import br.com.disapps.domain.executor.PostExecutionContext
 import br.com.disapps.domain.interactor.buses.GetAllBuses
 import br.com.disapps.domain.interactor.cards.*
-import br.com.disapps.domain.interactor.events.GetUpdateLinesEvent
-import br.com.disapps.domain.interactor.events.GetUpdateSchedulesEvent
-import br.com.disapps.domain.interactor.events.PostEvent
 import br.com.disapps.domain.interactor.itineraries.GetAllItineraries
 import br.com.disapps.domain.interactor.itineraries.GetItinerary
 import br.com.disapps.domain.interactor.itineraries.GetItineraryDirections
@@ -77,7 +73,6 @@ object AppInject {
         bean { Preferences(get(CONTEXT)) as PreferencesRepository}
         bean { Preferences(get(CONTEXT))}
         bean { RestClient().api }
-        bean { EventBus() }
         bean { UIContext() as PostExecutionContext }
         bean { JobContextExecutor() as  ContextExecutor }
         bean { get<Context>(CONTEXT).assets  }
@@ -127,9 +122,6 @@ object AppInject {
         factory { GetLineScheduleDays( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetLineSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetAllPointSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
-        factory { GetUpdateLinesEvent( eventsRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
-        factory { GetUpdateSchedulesEvent( eventsRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
-        factory { PostEvent( eventsRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetIsFirstAccess( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetIsDownloadedCwbItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
@@ -141,8 +133,6 @@ object AppInject {
         factory { GetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { SetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { SaveIsFirstAccess( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
-        factory { SavePeriodUpdateLines( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
-        factory { SavePeriodUpdateSchedules( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetAllBuses( busesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
     }
 
@@ -152,7 +142,6 @@ object AppInject {
         bean { ItinerariesDataRepository( itinerariesDataSourceFactory = get()) as ItinerariesRepository }
         bean { ShapesDataRepository( shapesDataSourceFactory = get()) as ShapesRepository }
         bean { SchedulesDataRepository( schedulesDataSourceFactory = get()) as SchedulesRepository }
-        bean { EventsDataRepository( eventBus = get()) as EventsRepository }
         bean { BusesDataRepository( busesDataSourceFactory = get()) as BusesRepository }
     }
 
@@ -160,7 +149,7 @@ object AppInject {
         bean { CardsDataSourceFactory(database = get(), restApi = get()) }
         bean { LinesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
         bean { ItinerariesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
-        bean { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get(), customDownloadManager = get()) }
+        bean { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
         bean { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
         bean { BusesDataSourceFactory(database = get(), restApi = get()) }
     }

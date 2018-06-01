@@ -6,7 +6,7 @@ import br.com.disapps.domain.model.Shape
 
 interface ShapesRepository {
 
-    suspend fun saveAllFromJson( city : City,downloadId: Long)
+    suspend fun saveAllFromJson( city : City,filePath: String)
 
     suspend fun getShapes(codeLine : String) :List<Shape>
 }

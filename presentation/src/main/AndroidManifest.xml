@@ -29,15 +29,14 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <!--<receiver-->
-            <!--android:name="br.com.disapps.data.api.DownloadBroadcastReceiver"-->
-            <!--android:exported="true" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.DOWNLOAD_COMPLETE" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <receiver
+            android:name="br.com.disapps.meucartaotransporte.services.DownloadBroadcastReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
 
-        <receiver android:name=".services.NotificationActionReceiver"/>
         <service
             android:exported="false"
             android:name=".services.ScheduleJob">
@@ -77,12 +76,32 @@
         </service>
 
         <service
+            android:name=".services.SaveShapesService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="SAVE_SHAPES_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
             android:name=".services.UpdateItinerariesService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="UPDATE_ITINERARIES_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.SaveItinerariesService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="SAVE_ITINERARIES_SERVICE" />
             </intent-filter>
         </service>
 

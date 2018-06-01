@@ -9,7 +9,7 @@ import br.com.disapps.data.R
 
 class CustomDownloadManager(val context: Context) {
 
-    val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    private val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
     fun download(fileName :String, url: String,downloadDescription :String, met: String) : Long{
         val uri = Uri.parse("$url?met=$met")

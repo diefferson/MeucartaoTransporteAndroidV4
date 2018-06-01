@@ -17,6 +17,7 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
             buildConfigField 'boolean', 'HTTP_LOG_ENABLED', "false"
             buildConfigField 'String', 'HOST', "\"${rootProject.ext.apiHostDev}\""
         }
