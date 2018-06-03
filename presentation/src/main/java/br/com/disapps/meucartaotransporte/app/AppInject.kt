@@ -123,7 +123,6 @@ object AppInject {
         factory { GetLineSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetAllPointSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetInitialScreen( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
-        factory { GetIsFirstAccess( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetIsDownloadedCwbItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetIsDownloadedMetropolitanItineraries( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetIsDownloadedCwbShapes( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }

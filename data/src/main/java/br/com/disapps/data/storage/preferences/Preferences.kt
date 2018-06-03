@@ -23,7 +23,7 @@ class Preferences(var context:Context) : PreferencesRepository {
         return mPreferences.getString(INITIAL_SCREEN, InitialScreen.CARDS.toString())
     }
 
-    override suspend fun getIsFirstAccess(): Boolean {
+    override fun getIsFirstAccess(): Boolean {
         return mPreferences.getInt(FIRST_ACCESS, 0)==0
     }
 

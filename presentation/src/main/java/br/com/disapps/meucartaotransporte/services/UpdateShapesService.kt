@@ -3,6 +3,7 @@ package br.com.disapps.meucartaotransporte.services
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import br.com.disapps.data.BuildConfig
 import br.com.disapps.data.api.CustomDownloadManager
 import br.com.disapps.domain.model.City
 import br.com.disapps.domain.repository.PreferencesRepository
@@ -37,10 +38,10 @@ class UpdateShapesService : BaseService(){
 
     private fun downloadShapes(city: City){
         if(city == City.CWB){
-            val idDownload = customDownloadManager.download(SHAPES_CWB, br.com.disapps.data.BuildConfig.DOWNLOAD_SHAPES, getString(R.string.downloading_shapes), city.toString())
+            val idDownload = customDownloadManager.download(SHAPES_CWB, BuildConfig.DOWNLOAD_SHAPES, BuildConfig.DOWNLOAD_SHAPES_KEY, getString(R.string.downloading_shapes), city.toString())
             preferences.setIdDownloadShapesCwb(idDownload)
         }else {
-            val idDownload = customDownloadManager.download(SHAPES_MET, br.com.disapps.data.BuildConfig.DOWNLOAD_SHAPES, getString(R.string.downloading_shapes), city.toString())
+            val idDownload = customDownloadManager.download(SHAPES_MET, BuildConfig.DOWNLOAD_SHAPES, BuildConfig.DOWNLOAD_SHAPES_KEY, getString(R.string.downloading_shapes), city.toString())
             preferences.setIdDownloadShapesMetropolitan(idDownload)
         }
     }

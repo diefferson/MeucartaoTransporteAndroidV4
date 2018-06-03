@@ -6,7 +6,7 @@ import br.com.disapps.domain.model.InitialScreen
 interface PreferencesRepository{
     suspend fun getIsPro() : Boolean
     suspend fun getInitialScreen() : String
-    suspend fun getIsFirstAccess() : Boolean
+    fun getIsFirstAccess() : Boolean
     suspend fun getDataUsage(): DataUsage
     suspend fun getIsDownloadedCwbItineraries() : Boolean
     suspend fun getIsDownloadedMetropolitanItineraries() : Boolean

@@ -240,6 +240,21 @@
     <string name="updating_bus">O posicionamento dos onibus é sincronizado a cada 30 segundos, porém o sistema da URBS pode ter um atraso de até 2 min. Sorry.</string>
     <string name="downloading_shapes">Baixando Trajetos</string>
     <string name="downloading_itineraries">Baixando itinerários</string>
+    <string name="necessary_permission">Permissão necesssária</string>
+    <string name="save_files_permission">Para poder salvar os dados das linhas essa permissão é necessária</string>
+    <string name="error_save_data">Não foi possível baixar os dados</string>
+    <string name="can_download">Agora você pode baixar os dados</string>
+    <string name="ok">OK</string>
+    <string name="view_location_permission">Para ver sua localização essa permisão é necessária.</string>
+    <string name="error_show_location">Erro ao pegar localização</string>
+    <string name="see_location">Minha Localização</string>
+    <string name="see_location_descritpion">Deseja ver sua localização atual no mapa? \nSe não, selecione não perguntar novamente.</string>
+    <string name="yes">Sim</string>
+    <string name="not">Não</string>
+    <string name="select_no_ask">Selecione não perguntar novamente.</string>
+    <string name="day">Dia</string>
+    <string name="place">Local</string>
+    <string name="error_init_data">Erro ao baixar dados.\nVerifique sua conexão com a internet e certifique-se de ter <b>10Mb</b> de espaço disponível em seu dispositivo.</string>
 
 
 </resources>

@@ -3,7 +3,9 @@ package br.com.disapps.meucartaotransporte.services
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Environment
+import android.support.v4.app.NotificationCompat
 import android.widget.Toast
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.model.City
@@ -24,6 +26,17 @@ class SaveShapesService : BaseService(){
 
         if(!isRunning){
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForeground(12234, NotificationCompat.Builder(this, CHANNEL)
+                        .setContentTitle(getString(R.string.app_name))
+                        .setContentText( getString(R.string.saving_data))
+                        .setOnlyAlertOnce(true)
+                        .setSmallIcon(R.drawable.bus)
+                        .build())
+            }else{
+                showNotification(this@SaveShapesService, city,text =getString(R.string.saving_data), infinityProgress = true)
+            }
+
             isRunning = true
 
             city = intent?.extras?.let{
@@ -35,9 +48,9 @@ class SaveShapesService : BaseService(){
             isComplete.observe(this, Observer {
                 if(it != null){
                     if(it){
-                        showNotification(text =  getString(R.string.update_shapes_success))
+                        showNotification(this@SaveShapesService, city,text =  getString(R.string.update_shapes_success))
                     }else{
-                        showNotification(text =  getString(R.string.update_shapes_error))
+                        showNotification(this@SaveShapesService, city,text =  getString(R.string.update_shapes_error))
                     }
 
                     stopService(Intent(this, UpdateShapesService::class.java))
@@ -60,7 +73,6 @@ class SaveShapesService : BaseService(){
     }
 
     private fun saveShapes(city: City){
-        showNotification(text =  getString(R.string.saving_data), infinityProgress = true)
         saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(city, if(city == City.CWB)  FILE_PATH_CWB  else FILE_PATH_MET),
             onError = {
                 launch(UI) {
@@ -76,39 +88,46 @@ class SaveShapesService : BaseService(){
         )
     }
 
-    private fun showNotification(text:String,progress :Int = 0, infinityProgress: Boolean = false){
-        if(city == City.CWB){
-           showCustomNotification(context = this@SaveShapesService,
-                    channel = getUpdateDataNotification(UpdateData.CWB_SHAPES).channel,
-                    notificationId = getUpdateDataNotification(UpdateData.CWB_SHAPES).id,
-                    text = text,
-                    sortKey = "4",
-                    progress = progress,
-                    infinityProgress = infinityProgress)
-        }else{
-            showCustomNotification(context = this@SaveShapesService,
-                    channel = getUpdateDataNotification(UpdateData.MET_SHAPES).channel,
-                    notificationId = getUpdateDataNotification(UpdateData.MET_SHAPES).id,
-                    text = text,
-                    sortKey = "4",
-                    progress = progress,
-                    infinityProgress = infinityProgress)
-        }
-    }
-
     companion object {
+        private const val CHANNEL = "UPDATING_DATA"
         private const val CITY = "city"
         private val BASE_DIRECTORY = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
-        private val FILE_PATH_CWB = "$BASE_DIRECTORY/shapesCWB.json"
-        private val FILE_PATH_MET = "$BASE_DIRECTORY/shapesMET.json"
+        val FILE_PATH_CWB = "$BASE_DIRECTORY/shapesCWB.json"
+        val FILE_PATH_MET = "$BASE_DIRECTORY/shapesMET.json"
 
         fun startService(context: Context, city: City){
             try {
-                context.startService(Intent(context, SaveShapesService::class.java).apply {
-                    putExtra(CITY, city)
-                })
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(Intent(context,  SaveShapesService::class.java).apply {
+                        putExtra(CITY, city)
+                    })
+                } else {
+                    context.startService(Intent(context, SaveShapesService::class.java).apply {
+                        putExtra(CITY, city)
+                    })
+                }
             }catch (e :Exception){
                 e.stackTrace
+            }
+        }
+
+        fun showNotification(context: Context,city:City, text:String, progress :Int = 0, infinityProgress: Boolean = false){
+            if(city == City.CWB){
+                showCustomNotification(context = context,
+                        channel = getUpdateDataNotification(UpdateData.CWB_SHAPES).channel,
+                        notificationId = getUpdateDataNotification(UpdateData.CWB_SHAPES).id,
+                        text = text,
+                        sortKey = "4",
+                        progress = progress,
+                        infinityProgress = infinityProgress)
+            }else{
+                showCustomNotification(context = context,
+                        channel = getUpdateDataNotification(UpdateData.MET_SHAPES).channel,
+                        notificationId = getUpdateDataNotification(UpdateData.MET_SHAPES).id,
+                        text = text,
+                        sortKey = "4",
+                        progress = progress,
+                        infinityProgress = infinityProgress)
             }
         }
     }

@@ -14,11 +14,11 @@ import br.com.disapps.data.exception.extractOrError
 class CloudCardsDataSource(private val restApi: RestApi) : CardsDataSource {
 
     override suspend fun card(requestCartao: RequestCartao): Cartao? {
-        return cardOrError( restApi.saldoCartao(requestCartao.codigo, requestCartao.cpf, requestCartao.tipoConsulta).await())
+        return cardOrError( restApi.saldoCartao(c=requestCartao.codigo, d=requestCartao.cpf, t=requestCartao.tipoConsulta).await())
     }
 
     override suspend fun getExtract(requestCartao: RequestCartao): List<Extrato>? {
-        return extractOrError(restApi.extratoCartao(requestCartao.codigo, requestCartao.cpf, requestCartao.tipoConsulta).await())
+        return extractOrError(restApi.extratoCartao(c=requestCartao.codigo, d=requestCartao.cpf, t=requestCartao.tipoConsulta).await())
     }
 
     override suspend fun hasCard(cartao: Cartao): Boolean {

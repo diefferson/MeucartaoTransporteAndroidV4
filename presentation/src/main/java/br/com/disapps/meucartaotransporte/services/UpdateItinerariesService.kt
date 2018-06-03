@@ -2,12 +2,14 @@ package br.com.disapps.meucartaotransporte.services
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.widget.Toast
 import br.com.disapps.data.api.CustomDownloadManager
 import br.com.disapps.domain.model.City
 import br.com.disapps.domain.repository.PreferencesRepository
 import br.com.disapps.meucartaotransporte.R
 import org.koin.android.ext.android.inject
+import br.com.disapps.data.BuildConfig
 
 
 class UpdateItinerariesService : BaseService(){
@@ -38,10 +40,10 @@ class UpdateItinerariesService : BaseService(){
 
     private fun downloadItineraries(city: City){
         if(city == City.CWB){
-            val idDownload = customDownloadManager.download(ITINERARIES_CWB, br.com.disapps.data.BuildConfig.DOWNLOAD_ITINERARIES, getString(R.string.downloading_itineraries), city.toString())
+            val idDownload = customDownloadManager.download(ITINERARIES_CWB, BuildConfig.DOWNLOAD_ITINERARIES,BuildConfig.DOWNLOAD_ITINERARIES_KEY, getString(R.string.downloading_itineraries), city.toString())
             preferences.setIdDownloadItinerariesCwb(idDownload)
         }else {
-            val idDownload = customDownloadManager.download(ITINERARIES_MET, br.com.disapps.data.BuildConfig.DOWNLOAD_ITINERARIES, getString(R.string.downloading_itineraries), city.toString())
+            val idDownload = customDownloadManager.download(ITINERARIES_MET, BuildConfig.DOWNLOAD_ITINERARIES,BuildConfig.DOWNLOAD_ITINERARIES_KEY, getString(R.string.downloading_itineraries), city.toString())
             preferences.setIdDownloadItinerariesMetropolitan(idDownload)
         }
     }

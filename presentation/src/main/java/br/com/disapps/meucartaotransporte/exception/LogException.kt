@@ -5,6 +5,11 @@ import com.crashlytics.android.Crashlytics
 
 class LogException : LogException {
     override fun logException(throwable: Throwable) {
-        Crashlytics.logException(throwable)
+        try {
+            Crashlytics.logException(throwable)
+        }catch (e :Exception){
+            e.printStackTrace()
+        }
+
     }
 }

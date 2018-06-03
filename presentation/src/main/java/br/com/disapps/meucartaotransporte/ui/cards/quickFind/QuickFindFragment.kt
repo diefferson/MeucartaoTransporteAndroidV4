@@ -3,6 +3,8 @@ package br.com.disapps.meucartaotransporte.ui.cards.quickFind
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
@@ -22,7 +24,19 @@ class QuickFindFragment: BaseFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModelObservers()
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
         btn_quick_find.setOnClickListener { viewModel.consult() }
+
+        card_cpf.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                btn_quick_find.performClick()
+                return@OnEditorActionListener true
+            }
+            return@OnEditorActionListener false
+        })
     }
 
     private fun viewModelObservers() {

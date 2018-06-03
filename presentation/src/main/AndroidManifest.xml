@@ -124,16 +124,19 @@
 
         <activity
             android:name=".ui.cards.balance.BalanceActivity"
-            android:label="@string/card_balance"/>
+            android:label="@string/card_balance"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".ui.cards.registerCard.RegisterCardActivity"
             android:label="@string/register_card"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".ui.cards.extract.ExtractActivity"
-            android:label="@string/card_extract"/>
+            android:label="@string/card_extract"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".ui.line.LineActivity"
@@ -142,7 +145,8 @@
 
         <activity
             android:name=".ui.settings.help.HelpActivity"
-            android:label="@string/help"/>
+            android:label="@string/help"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".ui.schedules.SchedulesActivity"
@@ -161,9 +165,8 @@
 
         <activity
             android:name=".ui.settings.dataUsage.DataUsageActivity"
-            android:label="@string/data_usage" />
-
-
+            android:label="@string/data_usage"
+            android:theme="@style/AppTheme"/>
 
 
         <!--ADS-->

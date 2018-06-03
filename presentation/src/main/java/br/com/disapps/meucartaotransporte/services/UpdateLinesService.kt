@@ -25,13 +25,13 @@ class UpdateLinesService : BaseService(){
             isManual = intent?.extras?.getBoolean(IS_MANUAL)?:false
 
             if(isManual){
-                showNotification(text =getString(R.string.updating_lines), infinityProgress = true)
+                showNotification(this@UpdateLinesService, text =getString(R.string.updating_lines), infinityProgress = true)
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            showNotification(text = getString(R.string.update_lines_success))
+                            showNotification(this@UpdateLinesService, text = getString(R.string.update_lines_success))
                         }else{
-                            showNotification(text = getString(R.string.update_lines_error))
+                            showNotification(this@UpdateLinesService, text = getString(R.string.update_lines_error))
                         }
                         stopSelf()
                     }
@@ -72,18 +72,8 @@ class UpdateLinesService : BaseService(){
 
     private val updateProgressListener  = object : DownloadProgressListener {
         override fun onAttachmentDownloadUpdate(percent: Int) {
-            showNotification(text = getString(R.string.updating_lines), progress =  percent)
+            showNotification(this@UpdateLinesService, text = getString(R.string.updating_lines), progress =  percent)
         }
-    }
-
-    private fun showNotification(text:String, progress :Int = 0, infinityProgress: Boolean = false){
-        showCustomNotification(context = this@UpdateLinesService,
-                channel = getUpdateDataNotification(UpdateData.LINES).channel,
-                notificationId = getUpdateDataNotification(UpdateData.LINES).id,
-                text = text,
-                sortKey = "1",
-                progress = progress,
-                infinityProgress = infinityProgress)
     }
 
     companion object {
@@ -96,6 +86,17 @@ class UpdateLinesService : BaseService(){
             }catch (e :Exception){
                 e.stackTrace
             }
+        }
+
+        fun showNotification(context: Context, text:String, progress :Int = 0, infinityProgress: Boolean = false){
+            showCustomNotification(context = context,
+                    channel = getUpdateDataNotification(UpdateData.LINES).channel,
+                    notificationId = getUpdateDataNotification(UpdateData.LINES).id,
+                    text = text,
+                    sortKey = "1",
+                    progress = progress,
+                    infinityProgress = infinityProgress)
+
         }
     }
 }

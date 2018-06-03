@@ -11,6 +11,7 @@
         android:id="@+id/vToolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        android:minHeight="?android:attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
@@ -24,11 +25,13 @@
         android:paddingRight="20dp"
         android:orientation="horizontal">
 
-        <View
+        <ImageView
             android:layout_gravity="bottom"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@drawable/calendar_blank"/>
+            app:srcCompat="@drawable/calendar_blank"
+            android:contentDescription="@string/day" />
+
         <TextView
             android:id="@+id/day"
             android:layout_gravity="bottom"
@@ -36,13 +39,15 @@
             android:layout_height="20dp"
             android:textColor="@color/textColorPrimary"
             tools:text="Sábado"/>
-        <View
+
+        <ImageView
             android:layout_gravity="bottom"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:background="@drawable/map_marker"/>
+            app:srcCompat="@drawable/map_marker"
+            android:contentDescription="@string/place" />
 
         <TextView
             android:id="@+id/pointer"

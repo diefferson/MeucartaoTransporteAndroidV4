@@ -1,9 +1,19 @@
 package br.com.disapps.meucartaotransporte.ui.line.shapes
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.view.View
+import android.widget.Toast
 import br.com.disapps.domain.model.Bus
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.getAllCoordinates
@@ -83,6 +93,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         mapView.onLowMemory()
     }
 
+    @SuppressLint("MissingPermission")
     override fun onMapReady(p0: GoogleMap) {
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         try {
@@ -104,6 +115,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
                     viewModel.init(lineViewModel.line.code)
                     show_help.visibility = View.VISIBLE
                     show_stops.visibility = View.VISIBLE
+                    askViewLocation()
                 }else{
                     error_view?.addView(activity?.getDownloadDataView())
                     error_view.visibility = View.VISIBLE
@@ -214,6 +226,79 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
             viewModel.showStops = false
             stopsMarkers.forEach {
                 it.isVisible = false
+            }
+        }
+    }
+
+    private fun askViewLocation(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                AlertDialog.Builder(context!!).apply {
+                    setTitle(getString(R.string.see_location))
+                    setMessage(getString(R.string.see_location_descritpion))
+                    setCancelable(false)
+                    setPositiveButton(getString(R.string.yes)) { _, _ ->
+                        PermissionsUtils.requestPermission(activity!!, PermissionsUtils.ACCESS_LOCATION_PERMISSION, PermissionsUtils.ACCESS_LOCATION_CODE)
+                    }
+                    setNegativeButton(getString(R.string.not)) { _, _ ->
+                        PermissionsUtils.requestPermission(activity!!, PermissionsUtils.ACCESS_LOCATION_PERMISSION, PermissionsUtils.ACCESS_LOCATION_CODE)
+                    }
+                }.create().show()
+            }else{
+                googleMap.isMyLocationEnabled = true
+            }
+        }else{
+            googleMap.isMyLocationEnabled = true
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PermissionsUtils.ACCESS_LOCATION_CODE
+            -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                googleMap.isMyLocationEnabled = true
+            } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
+                /*Usuario marcou opção não perguntar novamente*/
+                AlertDialog.Builder(context!!).apply {
+
+                    setTitle(getString(R.string.necessary_permission))
+                    setMessage(getString(R.string.view_location_permission))
+                    setCancelable(false)
+
+                    setNegativeButton(getString(R.string.cancel)) { _, _ ->
+                        Toast.makeText(activity!!, getString(R.string.error_show_location), Toast.LENGTH_SHORT).show()
+                    }
+
+                    setPositiveButton(getString(R.string.settings)) { _, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts("package", activity?.packageName, null)
+                        intent.data = uri
+                        startActivityForResult(intent, 1000)     // Comment 3.
+                    }
+
+                }.create().show()
+
+            } else {
+                /*Usuario negou a permissão*/
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity?.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+                    AlertDialog.Builder(context!!).apply {
+                        setTitle(getString(R.string.necessary_permission))
+                        setMessage(getString(R.string.view_location_permission))
+                        setCancelable(false)
+
+                        setPositiveButton("OK") { _, _ ->
+                            PermissionsUtils.requestPermission(activity!!, PermissionsUtils.ACCESS_LOCATION_PERMISSION, PermissionsUtils.ACCESS_LOCATION_CODE)
+                        }
+
+                        setNegativeButton(getString(R.string.cancel)) { _, _ ->
+                            Toast.makeText(context, getString(R.string.error_save_data), Toast.LENGTH_SHORT).show()
+                        }
+                    }.create().show()
+
+                }
             }
         }
     }
