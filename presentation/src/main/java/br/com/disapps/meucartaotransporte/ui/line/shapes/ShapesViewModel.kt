@@ -62,7 +62,7 @@ class ShapesViewModel(private val getShapesUseCase: GetShapes,
     }
 
     private fun getBuses(codeLine: String){
-        getAllBusesUseCase.execute(GetAllBuses.Params(codeLine)) {
+        getAllBusesUseCase.execute(GetAllBuses.Params(codeLine), repeat = true, repeatTime = 30000) {
             buses.value = it
         }
     }

@@ -23,6 +23,36 @@ class IntroActivity : BaseActivity(){
 
         setupUpdate()
 
+        setupClickListeners()
+
+        observeViewModel()
+    }
+
+    override fun recreate() {
+        super.recreate()
+        viewModel.isRecreated = true
+        viewModel.isError.value = false
+        viewModel.isComplete.value = false
+    }
+
+    private fun observeViewModel() {
+        viewModel.isComplete.observe(this, Observer {
+            if (it != null && it) {
+                intro_text.visibility = View.GONE
+                btn_continue.visibility = View.VISIBLE
+                progress.setPercent(100)
+            }
+        })
+
+        viewModel.isError.observe(this, Observer {
+            if(it!= null && it){
+                downloading.visibility = View.GONE
+                error.visibility = View.VISIBLE
+            }
+        })
+    }
+
+    private fun setupClickListeners() {
         btn_continue.setOnClickListener {
             downloading.visibility = View.GONE
             alert.visibility = View.VISIBLE
@@ -33,13 +63,9 @@ class IntroActivity : BaseActivity(){
             finish()
         }
 
-        viewModel.isComplete.observe(this, Observer {
-            if(it!= null && it){
-                intro_text.visibility = View.GONE
-                btn_continue.visibility = View.VISIBLE
-                progress.setPercent(100)
-            }
-        })
+        btn_try_again.setOnClickListener {
+            recreate()
+        }
     }
 
     private fun setupUpdate(){

@@ -1,24 +1,21 @@
 package br.com.disapps.meucartaotransporte.services
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.widget.Toast
-import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
-import br.com.disapps.domain.listeners.DownloadProgressListener
+import br.com.disapps.data.api.CustomDownloadManager
 import br.com.disapps.domain.model.City
+import br.com.disapps.domain.repository.PreferencesRepository
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.model.UpdateData
-import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
-import br.com.disapps.meucartaotransporte.util.showCustomNotification
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
+import br.com.disapps.data.BuildConfig
 
 
 class UpdateItinerariesService : BaseService(){
 
-    private val saveAllItinerariesJsonUseCase : SaveAllItinerariesJson by inject()
+    private val customDownloadManager : CustomDownloadManager by inject()
+    private val preferences : PreferencesRepository by inject()
     private var city  = City.CWB
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -26,36 +23,13 @@ class UpdateItinerariesService : BaseService(){
         if(!isRunning){
             isRunning  = true
 
-            intent?.extras?.let{
-
-                it.getSerializable(CITY)?.let {
-                    city = it as City
-                }?: run {
-                    city = City.CWB
-                }
-
-                isManual = it.getBoolean(IS_MANUAL)
-
+            city = intent?.extras?.let{
+                it.getSerializable(CITY)?.let {it as City}?: run {City.CWB}
             }?: run {
-                city = City.CWB
-                isManual = false
+                City.CWB
             }
 
-            if(isManual){
-                showNotification(text = getString(R.string.updating_itineraries), infinityProgress = true)
-                isComplete.observe(this, Observer {
-                    if(it != null){
-                        if(it){
-                            showNotification(text = getString(R.string.update_itineraries_success))
-                        }else{
-                            showNotification(text = getString(R.string.update_itineraries_error))
-                        }
-                        stopSelf()
-                    }
-                })
-            }
-
-            saveItineraries(city)
+            downloadItineraries(city)
 
         }else{
             Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
@@ -64,62 +38,24 @@ class UpdateItinerariesService : BaseService(){
         return super.onStartCommand(intent, flags, startId)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        saveAllItinerariesJsonUseCase.dispose()
-    }
-
-    private fun saveItineraries( city: City){
-
-        saveAllItinerariesJsonUseCase.execute(SaveAllItinerariesJson.Params(cacheDir.absolutePath+"/initenaries.json", city,updateProgressListener),
-                onError = {
-                    launch(UI) {
-                        isComplete.value = false
-                    }
-                },
-                onComplete= {
-                    launch(UI) {
-                        isComplete.value = true
-                    }
-                }
-        )
-    }
-
-    private val updateProgressListener  = object :DownloadProgressListener{
-        override fun onAttachmentDownloadUpdate(percent: Int) {
-            showNotification(text = getString(R.string.updating_itineraries),
-                    progress =  percent)
-        }
-    }
-
-    private fun showNotification(text:String, progress :Int = 0, infinityProgress: Boolean = false){
+    private fun downloadItineraries(city: City){
         if(city == City.CWB){
-            showCustomNotification(context = this@UpdateItinerariesService,
-                    channel = getUpdateDataNotification(UpdateData.CWB_ITINERARIES).channel,
-                    notificationId = getUpdateDataNotification(UpdateData.CWB_ITINERARIES).id,
-                    text = text,
-                    sortKey = "3",
-                    progress = progress,
-                    infinityProgress = infinityProgress)
-        }else{
-            showCustomNotification(context = this@UpdateItinerariesService,
-                    channel = getUpdateDataNotification(UpdateData.MET_ITINERARIES).channel,
-                    notificationId = getUpdateDataNotification(UpdateData.MET_ITINERARIES).id,
-                    text = text,
-                    sortKey = "3",
-                    progress = progress,
-                    infinityProgress = infinityProgress)
+            val idDownload = customDownloadManager.download(ITINERARIES_CWB, BuildConfig.DOWNLOAD_ITINERARIES,BuildConfig.DOWNLOAD_ITINERARIES_KEY, getString(R.string.downloading_itineraries), city.toString())
+            preferences.setIdDownloadItinerariesCwb(idDownload)
+        }else {
+            val idDownload = customDownloadManager.download(ITINERARIES_MET, BuildConfig.DOWNLOAD_ITINERARIES,BuildConfig.DOWNLOAD_ITINERARIES_KEY, getString(R.string.downloading_itineraries), city.toString())
+            preferences.setIdDownloadItinerariesMetropolitan(idDownload)
         }
     }
 
     companion object {
-        private const val IS_MANUAL = "manual"
         private const val CITY = "city"
+        private const val ITINERARIES_CWB = "itinerariesCWB.json"
+        private const val ITINERARIES_MET = "itinerariesMET.json"
 
-        fun startService(context: Context, city: City,  manual :Boolean = true){
+        fun startService(context: Context, city: City){
             try {
                 context.startService(Intent(context, UpdateItinerariesService::class.java).apply {
-                    putExtra(IS_MANUAL, manual)
                     putExtra(CITY, city)
                 })
             }catch (e :Exception){

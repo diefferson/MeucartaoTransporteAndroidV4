@@ -1,23 +1,19 @@
 package br.com.disapps.meucartaotransporte.services
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
-import br.com.disapps.domain.listeners.DownloadProgressListener
+import br.com.disapps.data.BuildConfig
+import br.com.disapps.data.api.CustomDownloadManager
 import br.com.disapps.domain.model.City
+import br.com.disapps.domain.repository.PreferencesRepository
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.model.UpdateData
-import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
-import br.com.disapps.meucartaotransporte.util.showCustomNotification
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
 
 class UpdateShapesService : BaseService(){
 
-    private val saveAllShapesJsonUseCase : SaveAllShapesJson by inject()
+    private val customDownloadManager :CustomDownloadManager by inject()
+    private val preferences : PreferencesRepository by inject()
     private var city  = City.CWB
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -25,100 +21,40 @@ class UpdateShapesService : BaseService(){
         if(!isRunning){
             isRunning = true
 
-            intent?.extras?.let{
-
-                it.getSerializable(CITY)?.let {
-                    city = it as City
-                }?: run {
-                    city = City.CWB
-                }
-
-                isManual = it.getBoolean(IS_MANUAL)
-
+            city = intent?.extras?.let{
+                it.getSerializable(CITY)?.let {it as City}?: run {City.CWB}
             }?: run {
-                city = City.CWB
-                isManual = false
+                City.CWB
             }
 
-            if(isManual){
-                showNotification(text =  getString(R.string.updating_shapes), infinityProgress = true)
-                isComplete.observe(this, Observer {
-                    if(it != null){
-                        if(it){
-                            showNotification(text =  getString(R.string.update_shapes_success))
-                        }else{
-                            showNotification(text =  getString(R.string.update_shapes_error))
-                        }
-                        stopSelf()
-                    }
-                })
-            }
-
-            saveShapes(city)
+            downloadShapes(city)
         }else{
+
             Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
         }
 
         return super.onStartCommand(intent, flags, startId)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        saveAllShapesJsonUseCase.dispose()
-    }
-
-    private fun saveShapes(city: City){
-
-        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(cacheDir.absolutePath +"/shapes.json", city,updateProgressListener ),
-            onError = {
-                launch(UI) {
-                    isComplete.value = false
-                }
-
-            },
-
-            onComplete = {
-                launch(UI) {
-                    isComplete.value = true
-                }
-            }
-        )
-    }
-
-    private val updateProgressListener  = object : DownloadProgressListener {
-        override fun onAttachmentDownloadUpdate(percent: Int) {
-            showNotification(text = getString(R.string.updating_shapes), progress =  percent)
-        }
-    }
-
-    private fun showNotification(text:String,progress :Int = 0, infinityProgress: Boolean = false){
+    private fun downloadShapes(city: City){
         if(city == City.CWB){
-           showCustomNotification(context = this@UpdateShapesService,
-                    channel = getUpdateDataNotification(UpdateData.CWB_SHAPES).channel,
-                    notificationId = getUpdateDataNotification(UpdateData.CWB_SHAPES).id,
-                    text = text,
-                    sortKey = "4",
-                    progress = progress,
-                    infinityProgress = infinityProgress)
-        }else{
-            showCustomNotification(context = this@UpdateShapesService,
-                    channel = getUpdateDataNotification(UpdateData.MET_SHAPES).channel,
-                    notificationId = getUpdateDataNotification(UpdateData.MET_SHAPES).id,
-                    text = text,
-                    sortKey = "4",
-                    progress = progress,
-                    infinityProgress = infinityProgress)
+            val idDownload = customDownloadManager.download(SHAPES_CWB, BuildConfig.DOWNLOAD_SHAPES, BuildConfig.DOWNLOAD_SHAPES_KEY, getString(R.string.downloading_shapes), city.toString())
+            preferences.setIdDownloadShapesCwb(idDownload)
+        }else {
+            val idDownload = customDownloadManager.download(SHAPES_MET, BuildConfig.DOWNLOAD_SHAPES, BuildConfig.DOWNLOAD_SHAPES_KEY, getString(R.string.downloading_shapes), city.toString())
+            preferences.setIdDownloadShapesMetropolitan(idDownload)
         }
     }
 
     companion object {
-        private const val IS_MANUAL = "manual"
-        private const val CITY = "city"
 
-        fun startService(context: Context, city: City, manual :Boolean = true){
+        private const val CITY = "city"
+        private const val SHAPES_CWB = "shapesCWB.json"
+        private const val SHAPES_MET = "shapesMET.json"
+
+        fun startService(context: Context, city: City){
             try {
                 context.startService(Intent(context, UpdateShapesService::class.java).apply {
-                    putExtra(IS_MANUAL, manual)
                     putExtra(CITY, city)
                 })
             }catch (e :Exception){

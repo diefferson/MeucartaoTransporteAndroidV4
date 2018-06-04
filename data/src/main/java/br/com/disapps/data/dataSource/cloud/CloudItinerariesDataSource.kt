@@ -8,7 +8,7 @@ import br.com.disapps.domain.model.City
 
 class CloudItinerariesDataSource(private val restApi: RestApi) : ItinerariesDataSource {
 
-    override suspend fun saveAllFromJson(filePath:String, city : City, downloadProgressListener: DownloadProgressListener) {
+    override suspend fun saveAllFromJson( city : City, filePath:String) {
         throw Throwable("not implemented, only local")
     }
 

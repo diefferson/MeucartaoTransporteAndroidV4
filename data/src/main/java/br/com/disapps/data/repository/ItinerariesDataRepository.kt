@@ -9,10 +9,10 @@ import br.com.disapps.domain.repository.ItinerariesRepository
 
 class ItinerariesDataRepository( private val itinerariesDataSourceFactory: ItinerariesDataSourceFactory) : ItinerariesRepository {
 
-    override suspend fun saveAllFromJson(filePath:String, city : City, downloadProgressListener: DownloadProgressListener){
+    override suspend fun saveAllFromJson( city : City, filePath:String){
         return itinerariesDataSourceFactory
                 .create()
-                .saveAllFromJson(filePath, city, downloadProgressListener)
+                .saveAllFromJson(city, filePath)
     }
 
     override suspend fun getItineraryDirections(codeLine: String): List<String> {

@@ -1,0 +1,47 @@
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PermissionsUtils.WRITE_STORAGE_CODE: // Allowed was selected so Permission granted
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(getManager().isSharePdf()){
+                        FileUtils.sharePDF(BankBillActivity.this, getManager().getBase64Pdf(), getString(R.string.bill_file_name)+DateUtils.longToDateFile(DateUtils.getCurrentDate()));
+                    }else{
+                        FileUtils.savePDF(BankBillActivity.this, getManager().getBase64Pdf(), getString(R.string.bill_file_name)+DateUtils.longToDateFile(DateUtils.getCurrentDate()));
+                    }
+                } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
+                    /*Usuario marcou opção não perguntar novamente*/
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                    alertDialogBuilder.setTitle(getString(R.string.necessary_permission));
+                    alertDialogBuilder
+                            .setMessage(getString(R.string.save_pdf_permission))
+                            .setCancelable(false)
+                            .setNegativeButton(getString(R.string.cancel), (dialog, id) -> Toast.makeText(BankBillActivity.this, getString(R.string.error_save_pdf), Toast.LENGTH_SHORT).show())
+                            .setPositiveButton(getString(R.string.settings), (dialog, id) -> {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                intent.setData(uri);
+                                startActivityForResult(intent, 1000);     // Comment 3.
+                            });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+                } else {
+                    /*Usuario negou a permissão*/
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                        alertDialogBuilder.setTitle(getString(R.string.necessary_permission));
+                        alertDialogBuilder
+                                .setMessage(getString(R.string.save_pdf_permission))
+                                .setCancelable(false)
+                                .setPositiveButton("OK", (dialog, id) -> PermissionsUtils.requestPermission(BankBillActivity.this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE))
+                                .setNegativeButton(getString(R.string.cancel), (dialog, id) -> Toast.makeText(BankBillActivity.this, getString(R.string.error_save_pdf), Toast.LENGTH_SHORT).show());
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+                }
+                break;
+        }
+    }

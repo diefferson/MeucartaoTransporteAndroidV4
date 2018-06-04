@@ -13,9 +13,9 @@ class SaveAllShapesJson(val shapesRepository: ShapesRepository, val contextExecu
                         val logException: LogException) : UseCaseCompletable<SaveAllShapesJson.Params>(contextExecutor, postExecutionContext,logException){
 
     override suspend fun buildUseCaseObservable(params: Params){
-        return shapesRepository.saveAllFromJson(params.filePath, params.city, params.downloadProgressListener)
+        return shapesRepository.saveAllFromJson(params.city, params.filePath)
     }
 
-    class Params(val filePath:String,val city : City,  val downloadProgressListener: DownloadProgressListener)
+    class Params(val city : City,  val filePath:String)
 
 }

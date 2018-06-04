@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
@@ -20,6 +22,13 @@ class RegisterCardActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setupClickListeners()
+
+        viewModelObservers()
+    }
+
+    private fun setupClickListeners() {
         btn_register.setOnClickListener {
             hideKeyboard()
             if(validateConnection()){
@@ -32,7 +41,13 @@ class RegisterCardActivity : BaseActivity(){
             }
         }
 
-        viewModelObservers()
+        card_cpf.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                btn_register.performClick()
+                return@OnEditorActionListener true
+            }
+            return@OnEditorActionListener false
+        })
     }
 
     override fun recreate() {

@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.HostnameVerifier
 
 
@@ -25,11 +26,15 @@ class RestClient {
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
             httpClient = OkHttpClient.Builder()
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .connectTimeout(30, TimeUnit.SECONDS)
                     .hostnameVerifier(getHostnameVerifier())
                     .addInterceptor(loggingInterceptor)
                     .build()
         } else {
             httpClient =  OkHttpClient.Builder()
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .connectTimeout(30, TimeUnit.SECONDS)
                     .hostnameVerifier(getHostnameVerifier())
                     .build()
         }
