@@ -193,19 +193,17 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     private fun clearBuses(buses : List<Bus>?){
 
         val listDisabled = ArrayList<String>()
-        if(busesMarkers.size >0){
-            busesMarkers.forEach { t, _ ->
-                var exists = false
-                buses?.forEach {bus ->
-                    if(bus.prefix == t){
-                        exists = true
-                    }
+        busesMarkers.forEach { (t, _) ->
+            var exists = false
+            buses?.forEach {bus ->
+                if(bus.prefix == t){
+                    exists = true
                 }
+            }
 
-                if(!exists){
-                    busesMarkers[t]?.isVisible = false
-                    listDisabled.add(t)
-                }
+            if(!exists){
+                busesMarkers[t]?.isVisible = false
+                listDisabled.add(t)
             }
         }
 
@@ -217,17 +215,22 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     }
 
     private fun showStops(){
-        if(!viewModel.showStops){
-            viewModel.showStops = true
-            stopsMarkers.forEach {
-                it.isVisible =true
+        if(stopsMarkers.size>0){
+            if(!viewModel.showStops){
+                viewModel.showStops = true
+                stopsMarkers.forEach {
+                    it.isVisible =true
+                }
+            }else{
+                viewModel.showStops = false
+                stopsMarkers.forEach {
+                    it.isVisible = false
+                }
             }
         }else{
-            viewModel.showStops = false
-            stopsMarkers.forEach {
-                it.isVisible = false
-            }
+            Toast.makeText(context, getString(R.string.no_itinerary_data), Toast.LENGTH_LONG).show()
         }
+
     }
 
     private fun askViewLocation(){

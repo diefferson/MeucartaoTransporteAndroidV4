@@ -72,8 +72,7 @@ fun Activity.getErrorView(uiException: UiException) :View{
             inflateView(R.layout.error_expected,rootView ).apply {
                 findViewById<TextView>(R.id.title).text = getString(R.string.not_fault)
                 findViewById<TextView>(R.id.description).text = uiException.message
-                findViewById<Button>(R.id.known_more).setOnClickListener { finish() }
-                findViewById<Button>(R.id.known_more).text = getString(R.string.back)
+                findViewById<Button>(R.id.known_more).setOnClickListener { getCustomChromeTabs().launchUrl(this@getErrorView, Uri.parse(resources.getString(R.string.url_balance_card))) }
                 findViewById<LottieAnimationView>(R.id.animation).setAnimation(R.raw.not_fault)
             }
         }

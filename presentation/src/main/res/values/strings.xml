@@ -246,7 +246,7 @@
     <string name="can_download">Agora você pode baixar os dados</string>
     <string name="ok">OK</string>
     <string name="view_location_permission">Para ver sua localização essa permisão é necessária.</string>
-    <string name="error_show_location">Erro ao pegar localização</string>
+    <string name="error_show_location">Você não verá sua localização</string>
     <string name="see_location">Minha Localização</string>
     <string name="see_location_descritpion">Deseja ver sua localização atual no mapa? \nSe não, selecione não perguntar novamente.</string>
     <string name="yes">Sim</string>
