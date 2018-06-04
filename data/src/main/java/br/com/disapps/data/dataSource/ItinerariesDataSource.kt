@@ -6,7 +6,7 @@ import br.com.disapps.domain.model.City
 
 interface ItinerariesDataSource : DataSource{
 
-    suspend fun saveAllFromJson(filePath:String, city : City, downloadProgressListener: DownloadProgressListener)
+    suspend fun saveAllFromJson(city : City,filePath:String)
 
     suspend fun getItineraryDirections(codeLine:String) :List<String>
 

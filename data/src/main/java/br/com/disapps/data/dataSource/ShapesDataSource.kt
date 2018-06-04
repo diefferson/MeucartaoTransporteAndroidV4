@@ -6,7 +6,7 @@ import br.com.disapps.domain.model.City
 
 interface ShapesDataSource : DataSource{
 
-    suspend fun saveAllFromJson(filePath:String, city : City,  downloadProgressListener: DownloadProgressListener)
+    suspend fun saveAllFromJson(city : City,  filePath: String)
 
     suspend fun getShapes(codeLine : String) : List<Shape>
 }

@@ -2,19 +2,17 @@ package br.com.disapps.meucartaotransporte.ui.splash
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import br.com.disapps.domain.interactor.preferences.GetIsFirstAccess
+import br.com.disapps.data.storage.preferences.Preferences
+import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.ui.intro.IntroActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
-import org.koin.android.ext.android.inject
 
 /**
  * Created by diefferson on 15/03/2018.
  */
 class SplashActivity : AppCompatActivity(){
-
-    private val getIsFirstAccessUseCase by inject<GetIsFirstAccess>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,18 +21,11 @@ class SplashActivity : AppCompatActivity(){
     }
 
     private fun getIsFirstAccess(){
-        getIsFirstAccessUseCase.execute(Unit) {
-            if(it){
-                IntroActivity.launch(this@SplashActivity)
-            }else{
-                MainActivity.launch(this@SplashActivity)
-            }
-            finish()
+        if(Preferences(App.instance!!).getIsFirstAccess()){
+            IntroActivity.launch(this)
+        }else{
+            MainActivity.launch(this)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        getIsFirstAccessUseCase.dispose()
+        finish()
     }
 }

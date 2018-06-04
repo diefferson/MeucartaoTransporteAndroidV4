@@ -12,15 +12,18 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
                      private val saveIsFirstAccessUseCase: SaveIsFirstAccess) : BaseViewModel(){
 
     val isComplete = MutableLiveData<Boolean>().apply { value = false }
+    val isError = MutableLiveData<Boolean>().apply { value = false }
     val progress = MutableLiveData<Int>().apply { value = 0 }
     private var linesComplete = false
     private var schedulesComplete = false
     private var progressLine = 0
     private var  progressSchedule = 0
+    var isRecreated = false
 
     fun initData(cacheDir :String){
-        if(!isRequested){
+        if(!isRequested || isRecreated){
             isRequested = true
+            isRecreated = false
             initLines(cacheDir)
             initSchedules(cacheDir)
         }
@@ -53,7 +56,10 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
     }
 
     private fun initLines(cacheDir :String){
-        saveAllLinesJsonUseCase.execute(SaveAllLinesJson.Params("$cacheDir/lines.json",updateProgressLinesListener )) {
+        saveAllLinesJsonUseCase.execute(SaveAllLinesJson.Params("$cacheDir/lines.json",updateProgressLinesListener )
+        , onError = {
+            isError.value = true
+        }){
             linesComplete = true
             if (schedulesComplete) {
                 isComplete.value = true
@@ -63,7 +69,10 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
     }
 
     private fun initSchedules(cacheDir :String){
-        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJson.Params("$cacheDir/schedules.json", updateProgressSchedulesListener)) {
+        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJson.Params("$cacheDir/schedules.json", updateProgressSchedulesListener)
+        , onError = {
+            isError.value = true
+        }) {
             schedulesComplete = true
             if (linesComplete) {
                 isComplete.value = true

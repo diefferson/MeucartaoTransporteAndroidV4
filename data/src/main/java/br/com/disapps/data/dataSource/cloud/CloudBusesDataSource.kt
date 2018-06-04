@@ -7,6 +7,6 @@ import br.com.disapps.data.entity.Veiculo
 class CloudBusesDataSource(private val restApi: RestApi) : BusesDataSource{
 
     override suspend fun getAllBuses(codeLine: String): List<Veiculo> {
-        return restApi.listaVeiculos(codeLine).await()
+        return restApi.listaVeiculos(l=codeLine).await()
     }
 }

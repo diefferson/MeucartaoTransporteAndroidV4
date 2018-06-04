@@ -13,8 +13,8 @@ class SaveAllItinerariesJson(val itinerariesRepository: ItinerariesRepository, v
                              val logException: LogException) : UseCaseCompletable<SaveAllItinerariesJson.Params>(contextExecutor, postExecutionContext, logException){
 
     override suspend fun buildUseCaseObservable(params: Params) {
-        return itinerariesRepository.saveAllFromJson(params.filePath, params.city, params.downloadProgressListener)
+        return itinerariesRepository.saveAllFromJson(params.city, params.filePath)
     }
 
-    class Params (val filePath:String,val city : City,  val downloadProgressListener: DownloadProgressListener)
+    class Params (val city : City,val filePath:String)
 }

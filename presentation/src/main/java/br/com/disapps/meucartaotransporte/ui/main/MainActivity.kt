@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Environment
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
+import android.util.Log
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BuildConfig
 import br.com.disapps.meucartaotransporte.R
@@ -45,6 +47,7 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Log.i("DIRECTORY", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath)
         initAppodeal()
         initInAppBilling()
         observeViewModel(savedInstanceState)

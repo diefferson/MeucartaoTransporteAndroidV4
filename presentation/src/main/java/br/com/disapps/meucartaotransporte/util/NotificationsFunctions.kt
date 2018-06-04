@@ -3,6 +3,7 @@ package br.com.disapps.meucartaotransporte.util
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.support.v4.app.NotificationCompat
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.NotificationChannels
@@ -17,8 +18,14 @@ fun showCustomNotification(context: Context, channel : String, notificationId : 
     val mBuilder = NotificationCompat.Builder(context, channel)
             .setContentTitle(context.resources.getString(R.string.app_name))
             .setContentText(text)
-            .setSmallIcon(R.drawable.bus)
+
             .setOnlyAlertOnce(true)
+
+    if(Build.VERSION.SDK_INT >= 21){
+        mBuilder.setSmallIcon(R.drawable.bus)
+    }else{
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher)
+    }
 
     if(sortKey != ""){
         mBuilder.setSortKey(sortKey)

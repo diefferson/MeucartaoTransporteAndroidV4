@@ -28,6 +28,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import android.text.TextUtils
 import android.util.Log
+import android.widget.Toast
 import br.com.disapps.meucartaotransporte.BuildConfig
 import com.android.vending.billing.IInAppBillingService
 import org.json.JSONException
@@ -274,7 +275,12 @@ class IabHelper(val mContext: Context) {
         mSetupDone = false
         if (mServiceConn != null) {
             logDebug("Unbinding from service.")
-            mContext.unbindService(mServiceConn)
+            try {
+                mContext.unbindService(mServiceConn)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
         }
         mDisposed = true
         mServiceConn = null
@@ -416,7 +422,7 @@ class IabHelper(val mContext: Context) {
                     requestCode, Intent(),
                     Integer.valueOf(0), Integer.valueOf(0),
                     Integer.valueOf(0))
-        } catch (e: SendIntentException) {
+        } catch (e: Exception) {
             logError("SendIntentException while launching purchase flow for sku $sku")
             e.printStackTrace()
             flagEndAsync()
@@ -742,7 +748,7 @@ class IabHelper(val mContext: Context) {
     private fun checkSetupDone(operation: String) {
         if (!mSetupDone) {
             logError("Illegal state for operation ($operation): IAB helper is not set up.")
-            throw IllegalStateException("IAB helper is not set up. Can't perform operation: $operation")
+//            throw IllegalStateException("IAB helper is not set up. Can't perform operation: $operation")
         }
     }
 

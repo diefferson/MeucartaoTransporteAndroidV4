@@ -1,12 +1,11 @@
 package br.com.disapps.domain.repository
 
-import br.com.disapps.domain.listeners.DownloadProgressListener
 import br.com.disapps.domain.model.BusStop
 import br.com.disapps.domain.model.City
 
 interface ItinerariesRepository{
 
-    suspend fun saveAllFromJson(filePath:String, city : City, downloadProgressListener: DownloadProgressListener)
+    suspend fun saveAllFromJson( city : City, filePath:String)
 
     suspend fun getItineraryDirections(codeLine:String) :List<String>
 

@@ -25,13 +25,13 @@ class UpdateSchedulesService : BaseService(){
             isManual = intent?.extras?.getBoolean(IS_MANUAL)?:false
 
             if(isManual){
-                showNotification(text = getString(R.string.updating_schedules), infinityProgress = true)
+                showNotification(this@UpdateSchedulesService, text = getString(R.string.updating_schedules), infinityProgress = true)
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            showNotification(text =  getString(R.string.update_schedules_success))
+                            showNotification(this@UpdateSchedulesService, text =  getString(R.string.update_schedules_success))
                         }else{
-                            showNotification(text =  getString(R.string.update_schedules_error))
+                            showNotification(this@UpdateSchedulesService, text =  getString(R.string.update_schedules_error))
                         }
                         stopSelf()
                     }
@@ -72,18 +72,8 @@ class UpdateSchedulesService : BaseService(){
 
     private val updateProgressListener  = object : DownloadProgressListener {
         override fun onAttachmentDownloadUpdate(percent: Int) {
-            showNotification(text = getString(R.string.updating_schedules), progress =  percent)
+            showNotification(this@UpdateSchedulesService, text = getString(R.string.updating_schedules), progress =  percent)
         }
-    }
-
-    private fun showNotification(text:String, progress :Int = 0, infinityProgress: Boolean = false){
-        showCustomNotification(context = this@UpdateSchedulesService,
-                channel = getUpdateDataNotification(UpdateData.SCHEDULES).channel,
-                notificationId = getUpdateDataNotification(UpdateData.SCHEDULES).id,
-                text = text,
-                sortKey = "2",
-                progress = progress,
-                infinityProgress = infinityProgress)
     }
 
     companion object {
@@ -96,6 +86,17 @@ class UpdateSchedulesService : BaseService(){
             }catch (e :Exception){
                 e.stackTrace
             }
+        }
+
+        fun showNotification(context: Context, text:String, progress :Int = 0, infinityProgress: Boolean = false){
+            showCustomNotification(context = context,
+                    channel = getUpdateDataNotification(UpdateData.SCHEDULES).channel,
+                    notificationId = getUpdateDataNotification(UpdateData.SCHEDULES).id,
+                    text = text,
+                    sortKey = "2",
+                    progress = progress,
+                    infinityProgress = infinityProgress)
+
         }
     }
 }

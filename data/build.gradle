@@ -14,9 +14,16 @@ android {
         buildConfigField 'String', 'DOWNLOAD_SCHEDULES', "\"https://meucartaotransporte.com.br/api/listaHorarios\""
         buildConfigField 'String', 'DOWNLOAD_ITINERARIES', "\"https://meucartaotransporte.com.br/api/listaPontos\""
         buildConfigField 'String', 'DOWNLOAD_SHAPES', "\"https://meucartaotransporte.com.br/api/listaShapes\""
+        buildConfigField 'String', 'DOWNLOAD_LINES_KEY', "\"aHR0cHM6Ly9tZXVjYXJ0YW90cmFuc3BvcnRlLmNvbS5ici9hcGkvbGlzdGFMaW5oYXM=\""
+        buildConfigField 'String', 'DOWNLOAD_SCHEDULES_KEY', "\"aHR0cHM6Ly9tZXVjYXJ0YW90cmFuc3BvcnRlLmNvbS5ici9hcGkvbGlzdGFIb3Jhcmlvcw==\""
+        buildConfigField 'String', 'DOWNLOAD_ITINERARIES_KEY', "\"aHR0cHM6Ly9tZXVjYXJ0YW90cmFuc3BvcnRlLmNvbS5ici9hcGkvbGlzdGFQb250b3MNCg==\""
+        buildConfigField 'String', 'DOWNLOAD_SHAPES_KEY', "\"aHR0cHM6Ly9tZXVjYXJ0YW90cmFuc3BvcnRlLmNvbS5ici9hcGkvbGlzdGFTaGFwZXMNCg==\""
+        buildConfigField 'String', 'REQUEST_CARDS_KEY', "\"aHR0cHM6Ly9tZXVjYXJ0YW90cmFuc3BvcnRlLmNvbS5ici9hcGkvY2FydGFv\""
+        buildConfigField 'String', 'REQUEST_VEHICLES_KEY', "\"aHR0cHM6Ly9tZXVjYXJ0YW90cmFuc3BvcnRlLmNvbS5ici9hcGkvbGlzdGFWZWljdWxvcw==\""
     }
     buildTypes {
         release {
+            minifyEnabled true
             buildConfigField 'boolean', 'HTTP_LOG_ENABLED', "false"
             buildConfigField 'String', 'HOST', "\"${rootProject.ext.apiHostDev}\""
         }
