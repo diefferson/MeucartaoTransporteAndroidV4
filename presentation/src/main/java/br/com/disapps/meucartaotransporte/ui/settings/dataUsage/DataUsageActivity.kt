@@ -1,7 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.settings.dataUsage
 
 import android.Manifest
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,15 +9,14 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
-import android.view.View
 import android.widget.Toast
 import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.app.App
-import br.com.disapps.meucartaotransporte.services.UpdateItinerariesService
-import br.com.disapps.meucartaotransporte.services.UpdateLinesService
-import br.com.disapps.meucartaotransporte.services.UpdateSchedulesService
-import br.com.disapps.meucartaotransporte.services.UpdateShapesService
+import br.com.disapps.meucartaotransporte.services.DownloadItinerariesService
+import br.com.disapps.meucartaotransporte.services.SaveLinesService
+import br.com.disapps.meucartaotransporte.services.SaveSchedulesService
+import br.com.disapps.meucartaotransporte.services.DownloadShapesService
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.PermissionsUtils
 import kotlinx.android.synthetic.main.activity_data_usage.*
@@ -32,45 +30,48 @@ class DataUsageActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel.init()
-
         setupClickListeners()
-
     }
 
     private fun setupClickListeners() {
 
         update_line.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
+                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
                 async {
-                    UpdateLinesService.startService(App.instance as Context, true)
+                    SaveLinesService.startService(App.instance as Context, true)
                 }
             }
         }
         update_schedule.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                async { UpdateSchedulesService.startService(App.instance as Context, true) }
+                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
+                async { SaveSchedulesService.startService(App.instance as Context, true) }
             }
         }
         update_cwb_shapes.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                async { UpdateShapesService.startService(App.instance as Context, City.CWB) }
+                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
+                async { DownloadShapesService.startService(App.instance as Context, City.CWB) }
             }
         }
         update_met_shapes.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                async { UpdateShapesService.startService(App.instance as Context, City.MET) }
+                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
+                async { DownloadShapesService.startService(App.instance as Context, City.MET) }
             }
         }
         update_cwb_itineraries.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                async { UpdateItinerariesService.startService(App.instance as Context, City.CWB) }
+                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
+                async { DownloadItinerariesService.startService(App.instance as Context, City.CWB) }
             }
         }
         update_met_itineraries.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                async { UpdateItinerariesService.startService(App.instance as Context, City.MET) }
+                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
+                async { DownloadItinerariesService.startService(App.instance as Context, City.MET) }
             }
         }
     }

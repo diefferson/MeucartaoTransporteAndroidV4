@@ -38,8 +38,20 @@ class LocalSchedulesDataSource(private val database: Database, private val prefe
             realm.close()
             deleteFromCache(filePath)
         }else{
-            throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
+            throw KnownException(KnownError.UNKNOWN_EXCEPTION, result)
         }
+    }
+
+    override suspend fun saveAllFromJson(filePath: String) {
+        val realm = database.getDatabase() as Realm
+        val fis = FileInputStream(File(filePath))
+        realm.beginTransaction()
+        realm.delete(CLAZZ)
+        realm.createAllFromJson(CLAZZ, fis)
+        realm.commitTransaction()
+        preferences.setSchedulesDate()
+        realm.close()
+        deleteFromCache(filePath)
     }
 
     override suspend fun getLineSchedulesDays(codeLine: String): List<Int> {

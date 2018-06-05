@@ -26,8 +26,22 @@ class SaveShapesService : BaseService(){
 
         if(!isRunning){
 
+            isRunning = true
+
+            city = intent?.extras?.let{
+                it.getSerializable(CITY)?.let {it as City}?: run {City.CWB}
+            }?: run {
+                City.CWB
+            }
+
+            val id = if(city == City.CWB){
+                getUpdateDataNotification(UpdateData.CWB_SHAPES).id
+            }else{
+                getUpdateDataNotification(UpdateData.MET_SHAPES).id
+            }
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForeground(12234, NotificationCompat.Builder(this, CHANNEL)
+                startForeground(id, NotificationCompat.Builder(this, CHANNEL)
                         .setContentTitle(getString(R.string.app_name))
                         .setContentText( getString(R.string.saving_data))
                         .setOnlyAlertOnce(true)
@@ -35,14 +49,6 @@ class SaveShapesService : BaseService(){
                         .build())
             }else{
                 showNotification(this@SaveShapesService, city,text =getString(R.string.saving_data), infinityProgress = true)
-            }
-
-            isRunning = true
-
-            city = intent?.extras?.let{
-                it.getSerializable(CITY)?.let {it as City}?: run {City.CWB}
-            }?: run {
-                City.CWB
             }
 
             isComplete.observe(this, Observer {
@@ -53,7 +59,7 @@ class SaveShapesService : BaseService(){
                         showNotification(this@SaveShapesService, city,text =  getString(R.string.update_shapes_error))
                     }
 
-                    stopService(Intent(this, UpdateShapesService::class.java))
+                    stopService(Intent(this, DownloadShapesService::class.java))
                     stopSelf()
                 }
             })

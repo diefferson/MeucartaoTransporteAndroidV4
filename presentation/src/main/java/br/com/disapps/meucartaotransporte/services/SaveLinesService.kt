@@ -3,6 +3,9 @@ package br.com.disapps.meucartaotransporte.services
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Environment
+import android.support.v4.app.NotificationCompat
 import android.widget.Toast
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
@@ -14,7 +17,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
 
-class UpdateLinesService : BaseService(){
+class SaveLinesService : BaseService(){
 
     private val saveAllLinesJsonUseCase: SaveAllLinesJson by inject()
 
@@ -24,14 +27,25 @@ class UpdateLinesService : BaseService(){
             isRunning = true
             isManual = intent?.extras?.getBoolean(IS_MANUAL)?:false
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForeground(getUpdateDataNotification(UpdateData.LINES).id, NotificationCompat.Builder(this, getUpdateDataNotification(UpdateData.LINES).channel)
+                        .setContentTitle(getString(R.string.app_name))
+                        .setContentText( getString(R.string.updating_lines))
+                        .setOnlyAlertOnce(true)
+                        .setSmallIcon(R.drawable.bus)
+                        .build())
+            }else{
+                showNotification(this@SaveLinesService, text =getString(R.string.updating_lines), infinityProgress = true)
+            }
+
             if(isManual){
-                showNotification(this@UpdateLinesService, text =getString(R.string.updating_lines), infinityProgress = true)
+
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            showNotification(this@UpdateLinesService, text = getString(R.string.update_lines_success))
+                            showNotification(this@SaveLinesService, text = getString(R.string.update_lines_success))
                         }else{
-                            showNotification(this@UpdateLinesService, text = getString(R.string.update_lines_error))
+                            showNotification(this@SaveLinesService, text = getString(R.string.update_lines_error))
                         }
                         stopSelf()
                     }
@@ -72,17 +86,26 @@ class UpdateLinesService : BaseService(){
 
     private val updateProgressListener  = object : DownloadProgressListener {
         override fun onAttachmentDownloadUpdate(percent: Int) {
-            showNotification(this@UpdateLinesService, text = getString(R.string.updating_lines), progress =  percent)
+            showNotification(this@SaveLinesService, text = getString(R.string.updating_lines), progress =  percent)
         }
     }
 
     companion object {
+        private val BASE_DIRECTORY = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
+        val FILE_PATH= "$BASE_DIRECTORY/lines.json"
         private const val IS_MANUAL = "manual"
         fun startService(context: Context, manual : Boolean = true){
             try {
-                context.startService(Intent(context, UpdateLinesService::class.java).apply {
-                    putExtra(IS_MANUAL, manual)
-                })
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(Intent(context, SaveLinesService::class.java).apply {
+                        putExtra(IS_MANUAL, manual)
+                    })
+                } else {
+                    context.startService(Intent(context, SaveLinesService::class.java).apply {
+                        putExtra(IS_MANUAL, manual)
+                    })
+                }
+
             }catch (e :Exception){
                 e.stackTrace
             }

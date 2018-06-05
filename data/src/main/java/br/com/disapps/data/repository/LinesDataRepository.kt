@@ -18,6 +18,12 @@ class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFac
                 .saveLine(line.toLineDTO())
     }
 
+    override suspend fun saveAllLinesFromJson(filePath:String) {
+        return linesDataSourceFactory
+                .create()
+                .saveAllLinesFromJson(filePath)
+    }
+
     override suspend fun saveAllLinesFromJson(filePath:String, downloadProgressListener: DownloadProgressListener) {
         return linesDataSourceFactory
                 .create()

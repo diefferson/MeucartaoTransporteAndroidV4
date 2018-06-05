@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
@@ -109,6 +110,13 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
 
     private fun observeViewModel(){
 
+        viewModel.errorViewBuses.observe(this, Observer {
+            if(it!= null && it){
+                clearBuses(null)
+                Snackbar.make(mapView,getString(R.string.error_view_buses), Snackbar.LENGTH_LONG ).show()
+            }
+        })
+
         viewModel.isDownloaded.observe(this, Observer {
             it?.let {
                 if(it){
@@ -162,6 +170,10 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
 
         viewModel.buses.observe(this, Observer {buses ->
             clearBuses(buses)
+            if(buses == null || buses.isEmpty()){
+                Snackbar.make(mapView,getString(R.string.empty_buses), Snackbar.LENGTH_LONG ).show()
+            }
+
             buses?.forEach {
                 if(busesMarkers.size >0){
                     if(busesMarkers.containsKey(it.prefix)){
@@ -234,25 +246,9 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     }
 
     private fun askViewLocation(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                AlertDialog.Builder(context!!).apply {
-                    setTitle(getString(R.string.see_location))
-                    setMessage(getString(R.string.see_location_descritpion))
-                    setCancelable(false)
-                    setPositiveButton(getString(R.string.yes)) { _, _ ->
-                        PermissionsUtils.requestPermission(activity!!, PermissionsUtils.ACCESS_LOCATION_PERMISSION, PermissionsUtils.ACCESS_LOCATION_CODE)
-                    }
-                    setNegativeButton(getString(R.string.not)) { _, _ ->
-                        PermissionsUtils.requestPermission(activity!!, PermissionsUtils.ACCESS_LOCATION_PERMISSION, PermissionsUtils.ACCESS_LOCATION_CODE)
-                    }
-                }.create().show()
-            }else{
-                googleMap.isMyLocationEnabled = true
-            }
-        }else{
-            googleMap.isMyLocationEnabled = true
+        if(!viewModel.isPermission){
+            viewModel.isPermission = true
+            requestPermissions(arrayOf(PermissionsUtils.ACCESS_LOCATION_PERMISSION), PermissionsUtils.ACCESS_LOCATION_CODE);
         }
     }
 
@@ -264,40 +260,17 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
             -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 googleMap.isMyLocationEnabled = true
             } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
-                /*Usuario marcou opção não perguntar novamente*/
-                AlertDialog.Builder(context!!).apply {
-
-                    setTitle(getString(R.string.necessary_permission))
-                    setMessage(getString(R.string.view_location_permission))
-                    setCancelable(false)
-
-                    setNegativeButton(getString(R.string.cancel)) { _, _ ->
-                        Toast.makeText(activity!!, getString(R.string.error_show_location), Toast.LENGTH_SHORT).show()
-                    }
-
-                    setPositiveButton(getString(R.string.settings)) { _, _ ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        val uri = Uri.fromParts("package", activity?.packageName, null)
-                        intent.data = uri
-                        startActivityForResult(intent, 1000)     // Comment 3.
-                    }
-
-                }.create().show()
-
+                Toast.makeText(activity!!, getString(R.string.error_show_location), Toast.LENGTH_LONG).show()
             } else {
                 /*Usuario negou a permissão*/
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity?.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity?.checkSelfPermission(PermissionsUtils.ACCESS_LOCATION_PERMISSION) == PackageManager.PERMISSION_DENIED) {
                     AlertDialog.Builder(context!!).apply {
                         setTitle(getString(R.string.necessary_permission))
                         setMessage(getString(R.string.view_location_permission))
                         setCancelable(false)
 
                         setPositiveButton("OK") { _, _ ->
-                            PermissionsUtils.requestPermission(activity!!, PermissionsUtils.ACCESS_LOCATION_PERMISSION, PermissionsUtils.ACCESS_LOCATION_CODE)
-                        }
-
-                        setNegativeButton(getString(R.string.cancel)) { _, _ ->
-                            Toast.makeText(context, getString(R.string.error_save_data), Toast.LENGTH_SHORT).show()
+                            requestPermissions(arrayOf(PermissionsUtils.ACCESS_LOCATION_PERMISSION), PermissionsUtils.ACCESS_LOCATION_CODE)
                         }
                     }.create().show()
 

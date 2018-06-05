@@ -25,7 +25,9 @@ class ShapesViewModel(private val getShapesUseCase: GetShapes,
     val stops = MutableLiveData<List<BusStop>>()
     val buses = MutableLiveData<List<Bus>>()
     val isDownloaded = MutableLiveData<Boolean>()
+    val errorViewBuses = MutableLiveData<Boolean>()
     var showStops = false
+    var isPermission  = false
 
     fun getIsDownloaded(city: City){
         when(city){
@@ -62,7 +64,9 @@ class ShapesViewModel(private val getShapesUseCase: GetShapes,
     }
 
     private fun getBuses(codeLine: String){
-        getAllBusesUseCase.execute(GetAllBuses.Params(codeLine), repeat = true, repeatTime = 30000) {
+        getAllBusesUseCase.execute(GetAllBuses.Params(codeLine), repeat = true, repeatTime = 30000, onError = {
+            errorViewBuses.value= true
+        }) {
             buses.value = it
         }
     }

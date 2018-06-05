@@ -11,6 +11,13 @@ import br.com.disapps.domain.repository.SchedulesRepository
 class SchedulesDataRepository( private val schedulesDataSourceFactory: SchedulesDataSourceFactory) : SchedulesRepository {
 
 
+
+    override suspend fun saveAllFromJson(filePath:String) {
+        return schedulesDataSourceFactory
+                .create()
+                .saveAllFromJson(filePath)
+    }
+
     override suspend fun saveAllFromJson(filePath:String, downloadProgressListener: DownloadProgressListener) {
         return schedulesDataSourceFactory
                 .create()

@@ -46,31 +46,31 @@ class DownloadBroadcastReceiver : BroadcastReceiver(), KoinComponent{
                 DownloadManager.STATUS_FAILED -> {
                     when(referenceId){
                         preferences.getIdDownloadLines() -> {
-                            context.stopService(Intent(context, UpdateLinesService::class.java))
+                            context.stopService(Intent(context, SaveLinesService::class.java))
                         }
-                        preferences.getIdDownloadSchedules() -> context.stopService(Intent(context, UpdateSchedulesService::class.java))
+                        preferences.getIdDownloadSchedules() -> context.stopService(Intent(context, SaveSchedulesService::class.java))
                         preferences.getIdDownloadItinerariesCwb() -> {
-                            context.stopService(Intent(context, UpdateItinerariesService::class.java))
+                            context.stopService(Intent(context, DownloadItinerariesService::class.java))
                             deleteFromCache(SaveItinerariesService.FILE_PATH_CWB)
                         }
                         preferences.getIdDownloadShapesCwb() -> {
-                            context.stopService(Intent(context, UpdateShapesService::class.java))
+                            context.stopService(Intent(context, DownloadShapesService::class.java))
                             deleteFromCache(SaveShapesService.FILE_PATH_CWB)
                         }
                         preferences.getIdDownloadItinerariesMetropolitan() -> {
-                            context.stopService(Intent(context, UpdateItinerariesService::class.java))
+                            context.stopService(Intent(context, DownloadItinerariesService::class.java))
                             deleteFromCache(SaveItinerariesService.FILE_PATH_MET)
                         }
                         preferences.getIdDownloadShapesMetropolitan() ->  {
-                            context.stopService(Intent(context, UpdateShapesService::class.java))
+                            context.stopService(Intent(context, DownloadShapesService::class.java))
                             deleteFromCache(SaveItinerariesService.FILE_PATH_MET)
                         }
                     }
                 }
                 DownloadManager.STATUS_SUCCESSFUL -> {
                     when(referenceId){
-                        preferences.getIdDownloadLines() -> UpdateLinesService.startService(context, true)
-                        preferences.getIdDownloadSchedules() -> UpdateSchedulesService.startService(context, true)
+                        preferences.getIdDownloadLines() -> SaveLinesService.startService(context, true)
+                        preferences.getIdDownloadSchedules() -> SaveSchedulesService.startService(context, true)
                         preferences.getIdDownloadItinerariesCwb() -> SaveItinerariesService.startService(context, City.CWB)
                         preferences.getIdDownloadShapesCwb() -> SaveShapesService.startService(context, City.CWB)
                         preferences.getIdDownloadItinerariesMetropolitan() -> SaveItinerariesService.startService(context, City.MET)

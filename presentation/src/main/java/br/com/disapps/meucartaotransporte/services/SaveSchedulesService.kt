@@ -3,6 +3,9 @@ package br.com.disapps.meucartaotransporte.services
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Environment
+import android.support.v4.app.NotificationCompat
 import android.widget.Toast
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
 import br.com.disapps.domain.listeners.DownloadProgressListener
@@ -14,7 +17,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
 
-class UpdateSchedulesService : BaseService(){
+class SaveSchedulesService : BaseService(){
 
     private val saveAllSchedulesJsonUseCase : SaveAllSchedulesJson by inject()
 
@@ -24,14 +27,27 @@ class UpdateSchedulesService : BaseService(){
             isRunning = true
             isManual = intent?.extras?.getBoolean(IS_MANUAL)?:false
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForeground(
+                        getUpdateDataNotification(UpdateData.SCHEDULES).id,
+                        NotificationCompat.Builder(this, getUpdateDataNotification(UpdateData.SCHEDULES).channel)
+                        .setContentTitle(getString(R.string.app_name))
+                        .setContentText( getString(R.string.updating_schedules))
+                        .setOnlyAlertOnce(true)
+                        .setSmallIcon(R.drawable.bus)
+                        .build())
+            }else{
+                showNotification(this@SaveSchedulesService, text = getString(R.string.updating_schedules), infinityProgress = true)
+            }
+
             if(isManual){
-                showNotification(this@UpdateSchedulesService, text = getString(R.string.updating_schedules), infinityProgress = true)
+
                 isComplete.observe(this, Observer {
                     if(it != null){
                         if(it){
-                            showNotification(this@UpdateSchedulesService, text =  getString(R.string.update_schedules_success))
+                            showNotification(this@SaveSchedulesService, text =  getString(R.string.update_schedules_success))
                         }else{
-                            showNotification(this@UpdateSchedulesService, text =  getString(R.string.update_schedules_error))
+                            showNotification(this@SaveSchedulesService, text =  getString(R.string.update_schedules_error))
                         }
                         stopSelf()
                     }
@@ -72,17 +88,27 @@ class UpdateSchedulesService : BaseService(){
 
     private val updateProgressListener  = object : DownloadProgressListener {
         override fun onAttachmentDownloadUpdate(percent: Int) {
-            showNotification(this@UpdateSchedulesService, text = getString(R.string.updating_schedules), progress =  percent)
+            showNotification(this@SaveSchedulesService, text = getString(R.string.updating_schedules), progress =  percent)
         }
     }
 
     companion object {
+        private val BASE_DIRECTORY = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
+        val FILE_PATH= "$BASE_DIRECTORY/schedules.json"
         private const val IS_MANUAL = "manual"
         fun startService(context: Context, manual :Boolean = true){
             try {
-                context.startService(Intent(context, UpdateSchedulesService::class.java).apply {
-                    putExtra(IS_MANUAL, manual)
-                })
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(Intent(context, SaveSchedulesService::class.java).apply {
+                        putExtra(IS_MANUAL, manual)
+                    })
+                } else {
+                    context.startService(Intent(context, SaveSchedulesService::class.java).apply {
+                        putExtra(IS_MANUAL, manual)
+                    })
+                }
+
             }catch (e :Exception){
                 e.stackTrace
             }

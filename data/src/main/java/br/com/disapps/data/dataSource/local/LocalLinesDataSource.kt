@@ -47,8 +47,19 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
             realm.close()
             deleteFromCache(filePath)
         }else{
-            throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")
+            throw KnownException(KnownError.UNKNOWN_EXCEPTION, result)
         }
+    }
+
+    override suspend fun saveAllLinesFromJson(filePath: String) {
+            val realm = database.getDatabase() as Realm
+            val fis = FileInputStream(File(filePath))
+            realm.beginTransaction()
+            realm.createOrUpdateAllFromJson(CLAZZ, fis)
+            realm.commitTransaction()
+            preferences.setLinesDate()
+            realm.close()
+            deleteFromCache(filePath)
     }
 
     override suspend fun lines(): List<Linha> {

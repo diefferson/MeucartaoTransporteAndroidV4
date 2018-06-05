@@ -13,8 +13,8 @@ class ScheduleJob : JobService(){
     override fun onStartJob(job: JobParameters?): Boolean {
         val jobType = job?.extras?.getString(JOB_TYPE)
         when(jobType){
-            SCHEDULE_TYPE ->  UpdateSchedulesService.startService(this, false)
-            LINE_TYPE-> UpdateLinesService.startService(this, false)
+            SCHEDULE_TYPE ->  DownloadLinesService.startService(this)
+            LINE_TYPE-> DownloadSchedulesService.startService(this)
         }
         return false
     }
