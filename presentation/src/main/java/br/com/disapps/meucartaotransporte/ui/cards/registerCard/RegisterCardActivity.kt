@@ -40,6 +40,14 @@ class RegisterCardActivity : BaseActivity(){
                 result_container.visibility = View.VISIBLE
             }
         }
+
+        card_cpf.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                btn_register.performClick()
+                return@OnEditorActionListener true
+            }
+            return@OnEditorActionListener false
+        })
     }
 
     override fun recreate() {

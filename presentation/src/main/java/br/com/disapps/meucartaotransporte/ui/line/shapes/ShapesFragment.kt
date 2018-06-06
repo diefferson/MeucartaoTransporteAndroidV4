@@ -1,16 +1,11 @@
 package br.com.disapps.meucartaotransporte.ui.line.shapes
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.View
@@ -123,6 +118,8 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
                     viewModel.init(lineViewModel.line.code)
                     show_help.visibility = View.VISIBLE
                     show_stops.visibility = View.VISIBLE
+                    error_view.visibility = View.GONE
+                    error_view.removeAllViews()
                     askViewLocation()
                 }else{
                     error_view?.addView(activity?.getDownloadDataView())
