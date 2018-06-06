@@ -6,7 +6,7 @@ apply plugin: 'io.fabric'
 
 def versionMajor = 4
 def versionMinor = 0
-def versionPatch = 5
+def versionPatch = 6
 
 android {
     compileSdkVersion 27
@@ -27,12 +27,13 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
             versionNameSuffix "-dev"
             testCoverageEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     dataBinding {
@@ -46,8 +47,6 @@ android {
     packagingOptions {
         exclude 'publicsuffixes.gz'
         exclude 'META-INF/rxjava.properties'
-    }
-    productFlavors {
     }
 }
 

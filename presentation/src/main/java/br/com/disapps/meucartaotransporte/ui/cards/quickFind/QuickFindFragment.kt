@@ -29,14 +29,6 @@ class QuickFindFragment: BaseFragment(){
 
     private fun setupClickListeners() {
         btn_quick_find.setOnClickListener { viewModel.consult() }
-
-        card_cpf.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                btn_quick_find.performClick()
-                return@OnEditorActionListener true
-            }
-            return@OnEditorActionListener false
-        })
     }
 
     private fun viewModelObservers() {
