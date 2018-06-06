@@ -18,7 +18,7 @@ class DownloadShapesService : BaseService(){
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        if(!SaveShapesService.isRunning && isRunning){
+        if(!SaveShapesService.isRunning && !isRunning){
             isRunning = true
             city = intent?.extras?.let{
                 it.getSerializable(CITY)?.let {it as City}?: run {City.CWB}
