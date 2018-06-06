@@ -175,6 +175,9 @@
     <string name="download_schedules_error">Erro ao baixar horários, tente novamente mais tarde.</string>
     <string name="download_itineraries_error">Erro ao baixar itinerários, tente novamente mais tarde.</string>
     <string name="download_shapes_error">Erro ao baixar trajetos, tente novamente mais tarde.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>
