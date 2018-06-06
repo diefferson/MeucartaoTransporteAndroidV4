@@ -170,6 +170,11 @@
     <string name="error_view_buses">Erro ao buscar veículos. Tentando novamente em 30 segundos.</string>
     <string name="empty_buses">Nenhum veículo encontrado. Tentando novamente em 30 segundos.</string>
     <string name="downloading_lines">Baixando linhas</string>
+    <string name="downloading_schedules">Baixando horarios</string>
+    <string name="download_lines_error">Erro ao baixar linhas, tente novamente mais tarde.</string>
+    <string name="download_schedules_error">Erro ao baixar horários, tente novamente mais tarde.</string>
+    <string name="download_itineraries_error">Erro ao baixar itinerários, tente novamente mais tarde.</string>
+    <string name="download_shapes_error">Erro ao baixar trajetos, tente novamente mais tarde.</string>
 
 
 </resources>

@@ -7,6 +7,8 @@ import android.content.Intent
 import br.com.disapps.data.utils.deleteFromCache
 import br.com.disapps.domain.model.City
 import br.com.disapps.domain.repository.PreferencesRepository
+import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.util.showCustomNotification
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -17,17 +19,10 @@ class DownloadBroadcastReceiver : BroadcastReceiver(), KoinComponent{
     override fun onReceive(context: Context?, intent: Intent?) {
 
         if(intent!= null){
-
             val referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            val action = intent.action
 
             if(context != null){
                 checkDownloadStatus(referenceId, context)
-            }
-
-            when(action){
-                    DownloadManager.ACTION_DOWNLOAD_COMPLETE ->{
-                }
             }
         }
     }
@@ -46,35 +41,67 @@ class DownloadBroadcastReceiver : BroadcastReceiver(), KoinComponent{
                 DownloadManager.STATUS_FAILED -> {
                     when(referenceId){
                         preferences.getIdDownloadLines() -> {
-                            context.stopService(Intent(context, SaveLinesService::class.java))
+                            context.stopService(Intent(context, DownloadLinesService::class.java))
+                            deleteFromCache(SaveLinesService.FILE_PATH)
+                            showCustomNotification(context,
+                                    SaveLinesService.NOTIFICATION_CHANNEL,
+                                    SaveLinesService.NOTIFICATION_ID,
+                                    context.getString(R.string.download_lines_error))
                         }
-                        preferences.getIdDownloadSchedules() -> context.stopService(Intent(context, SaveSchedulesService::class.java))
-                        preferences.getIdDownloadItinerariesCwb() -> {
-                            context.stopService(Intent(context, DownloadItinerariesService::class.java))
-                            deleteFromCache(SaveItinerariesService.FILE_PATH_CWB)
+                        preferences.getIdDownloadSchedules() -> {
+                            context.stopService(Intent(context, DownloadSchedulesService::class.java))
+                            deleteFromCache(SaveSchedulesService.FILE_PATH)
+                            showCustomNotification(context,
+                                    SaveSchedulesService.NOTIFICATION_CHANNEL,
+                                    SaveSchedulesService.NOTIFICATION_ID,
+                                    context.getString(R.string.download_schedules_error))
                         }
-                        preferences.getIdDownloadShapesCwb() -> {
-                            context.stopService(Intent(context, DownloadShapesService::class.java))
-                            deleteFromCache(SaveShapesService.FILE_PATH_CWB)
-                        }
+                        preferences.getIdDownloadItinerariesCwb(),
                         preferences.getIdDownloadItinerariesMetropolitan() -> {
                             context.stopService(Intent(context, DownloadItinerariesService::class.java))
-                            deleteFromCache(SaveItinerariesService.FILE_PATH_MET)
+                            deleteFromCache(SaveItinerariesService.FILE_PATH)
+                            showCustomNotification(context,
+                                    SaveItinerariesService.NOTIFICATION_CHANNEL,
+                                    SaveItinerariesService.NOTIFICATION_ID,
+                                    context.getString(R.string.download_itineraries_error))
                         }
-                        preferences.getIdDownloadShapesMetropolitan() ->  {
+                        preferences.getIdDownloadShapesCwb(),
+                        preferences.getIdDownloadShapesMetropolitan() -> {
                             context.stopService(Intent(context, DownloadShapesService::class.java))
-                            deleteFromCache(SaveItinerariesService.FILE_PATH_MET)
+                            deleteFromCache(SaveShapesService.FILE_PATH)
+                            showCustomNotification(context,
+                                    SaveShapesService.NOTIFICATION_CHANNEL,
+                                    SaveShapesService.NOTIFICATION_ID,
+                                    context.getString(R.string.download_shapes_error))
                         }
                     }
                 }
                 DownloadManager.STATUS_SUCCESSFUL -> {
                     when(referenceId){
-                        preferences.getIdDownloadLines() -> SaveLinesService.startService(context, true)
-                        preferences.getIdDownloadSchedules() -> SaveSchedulesService.startService(context, true)
-                        preferences.getIdDownloadItinerariesCwb() -> SaveItinerariesService.startService(context, City.CWB)
-                        preferences.getIdDownloadShapesCwb() -> SaveShapesService.startService(context, City.CWB)
-                        preferences.getIdDownloadItinerariesMetropolitan() -> SaveItinerariesService.startService(context, City.MET)
-                        preferences.getIdDownloadShapesMetropolitan() ->  SaveShapesService.startService(context, City.MET)
+                        preferences.getIdDownloadLines() -> {
+                            context.stopService(Intent(context, DownloadLinesService::class.java))
+                            SaveLinesService.startService(context)
+                        }
+                        preferences.getIdDownloadSchedules() -> {
+                            context.stopService(Intent(context, DownloadSchedulesService::class.java))
+                            SaveSchedulesService.startService(context)
+                        }
+                        preferences.getIdDownloadItinerariesCwb() -> {
+                            context.stopService(Intent(context, DownloadItinerariesService::class.java))
+                            SaveItinerariesService.startService(context, City.CWB)
+                        }
+                        preferences.getIdDownloadShapesCwb() -> {
+                            context.stopService(Intent(context, DownloadItinerariesService::class.java))
+                            SaveShapesService.startService(context, City.CWB)
+                        }
+                        preferences.getIdDownloadItinerariesMetropolitan() -> {
+                            context.stopService(Intent(context, DownloadShapesService::class.java))
+                            SaveItinerariesService.startService(context, City.MET)
+                        }
+                        preferences.getIdDownloadShapesMetropolitan() ->  {
+                            context.stopService(Intent(context, DownloadShapesService::class.java))
+                            SaveShapesService.startService(context, City.MET)
+                        }
                     }
                 }
             }

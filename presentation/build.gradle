@@ -6,7 +6,7 @@ apply plugin: 'io.fabric'
 
 def versionMajor = 4
 def versionMinor = 0
-def versionPatch = 3
+def versionPatch = 4
 
 android {
     compileSdkVersion 27

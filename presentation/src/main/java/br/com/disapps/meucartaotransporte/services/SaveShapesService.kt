@@ -1,5 +1,6 @@
 package br.com.disapps.meucartaotransporte.services
 
+import android.app.Notification
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
@@ -34,29 +35,18 @@ class SaveShapesService : BaseService(){
                 City.CWB
             }
 
-            val id = if(city == City.CWB){
-                getUpdateDataNotification(UpdateData.CWB_SHAPES).id
-            }else{
-                getUpdateDataNotification(UpdateData.MET_SHAPES).id
-            }
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForeground(id, NotificationCompat.Builder(this, CHANNEL)
-                        .setContentTitle(getString(R.string.app_name))
-                        .setContentText( getString(R.string.saving_data))
-                        .setOnlyAlertOnce(true)
-                        .setSmallIcon(R.drawable.bus)
-                        .build())
+                startForeground(SERVICE_NOTIFICATION_ID, getNotificationService())
             }else{
-                showNotification(this@SaveShapesService, city,text =getString(R.string.saving_data), infinityProgress = true)
+                showCustomNotification(this@SaveShapesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.saving_data), true)
             }
 
             isComplete.observe(this, Observer {
                 if(it != null){
                     if(it){
-                        showNotification(this@SaveShapesService, city,text =  getString(R.string.update_shapes_success))
+                        showCustomNotification(this@SaveShapesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.update_shapes_success))
                     }else{
-                        showNotification(this@SaveShapesService, city,text =  getString(R.string.update_shapes_error))
+                        showCustomNotification(this@SaveShapesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.update_shapes_error))
                     }
 
                     stopService(Intent(this, DownloadShapesService::class.java))
@@ -67,19 +57,30 @@ class SaveShapesService : BaseService(){
             saveShapes(city)
 
         }else{
-            Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_SHORT).show()
         }
 
         return super.onStartCommand(intent, flags, startId)
     }
 
+    private fun getNotificationService(): Notification? {
+        return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.saving_data))
+                .setOnlyAlertOnce(true)
+                .setProgress(0, 100,true)
+                .setSmallIcon(R.drawable.bus)
+                .build()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        isRunning = false
         saveAllShapesJsonUseCase.dispose()
     }
 
     private fun saveShapes(city: City){
-        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(city, if(city == City.CWB)  FILE_PATH_CWB  else FILE_PATH_MET),
+        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(city, FILE_PATH),
             onError = {
                 launch(UI) {
                     isComplete.value = false
@@ -95,11 +96,12 @@ class SaveShapesService : BaseService(){
     }
 
     companion object {
-        private const val CHANNEL = "UPDATING_DATA"
+        var isRunning = false
         private const val CITY = "city"
-        private val BASE_DIRECTORY = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
-        val FILE_PATH_CWB = "$BASE_DIRECTORY/shapesCWB.json"
-        val FILE_PATH_MET = "$BASE_DIRECTORY/shapesMET.json"
+        const val SERVICE_NOTIFICATION_ID = 532222
+        val NOTIFICATION_ID = getUpdateDataNotification(UpdateData.SHAPES).id
+        val NOTIFICATION_CHANNEL = getUpdateDataNotification(UpdateData.SHAPES).channel
+        val FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath+"/shapes.json"
 
         fun startService(context: Context, city: City){
             try {
@@ -114,26 +116,6 @@ class SaveShapesService : BaseService(){
                 }
             }catch (e :Exception){
                 e.stackTrace
-            }
-        }
-
-        fun showNotification(context: Context,city:City, text:String, progress :Int = 0, infinityProgress: Boolean = false){
-            if(city == City.CWB){
-                showCustomNotification(context = context,
-                        channel = getUpdateDataNotification(UpdateData.CWB_SHAPES).channel,
-                        notificationId = getUpdateDataNotification(UpdateData.CWB_SHAPES).id,
-                        text = text,
-                        sortKey = "4",
-                        progress = progress,
-                        infinityProgress = infinityProgress)
-            }else{
-                showCustomNotification(context = context,
-                        channel = getUpdateDataNotification(UpdateData.MET_SHAPES).channel,
-                        notificationId = getUpdateDataNotification(UpdateData.MET_SHAPES).id,
-                        text = text,
-                        sortKey = "4",
-                        progress = progress,
-                        infinityProgress = infinityProgress)
             }
         }
     }

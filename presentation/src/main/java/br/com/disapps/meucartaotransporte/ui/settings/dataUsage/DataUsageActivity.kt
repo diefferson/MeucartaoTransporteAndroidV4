@@ -13,10 +13,7 @@ import android.widget.Toast
 import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.app.App
-import br.com.disapps.meucartaotransporte.services.DownloadItinerariesService
-import br.com.disapps.meucartaotransporte.services.SaveLinesService
-import br.com.disapps.meucartaotransporte.services.SaveSchedulesService
-import br.com.disapps.meucartaotransporte.services.DownloadShapesService
+import br.com.disapps.meucartaotransporte.services.*
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.PermissionsUtils
 import kotlinx.android.synthetic.main.activity_data_usage.*
@@ -38,39 +35,31 @@ class DataUsageActivity : BaseActivity(){
 
         update_line.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
-                async {
-                    SaveLinesService.startService(App.instance as Context, true)
-                }
+                async { DownloadLinesService.startService(App.instance as Context) }
             }
         }
         update_schedule.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
-                async { SaveSchedulesService.startService(App.instance as Context, true) }
+                async { DownloadSchedulesService.startService(App.instance as Context) }
             }
         }
         update_cwb_shapes.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
                 async { DownloadShapesService.startService(App.instance as Context, City.CWB) }
             }
         }
         update_met_shapes.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
                 async { DownloadShapesService.startService(App.instance as Context, City.MET) }
             }
         }
         update_cwb_itineraries.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
                 async { DownloadItinerariesService.startService(App.instance as Context, City.CWB) }
             }
         }
         update_met_itineraries.setOnClickListener {
             if (PermissionsUtils.requestPermission(this, PermissionsUtils.WRITE_STORAGE_PERMISSION, PermissionsUtils.WRITE_STORAGE_CODE)) {
-                Toast.makeText(this, getString(R.string.downloading_data), Toast.LENGTH_LONG).show()
                 async { DownloadItinerariesService.startService(App.instance as Context, City.MET) }
             }
         }
