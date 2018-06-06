@@ -8,6 +8,8 @@ interface SchedulesDataSource : DataSource{
 
     suspend fun saveAllFromJson(filePath:String, downloadProgressListener: DownloadProgressListener)
 
+    suspend fun saveAllFromJson(filePath:String)
+
     suspend fun getLineSchedulesDays(codeLine : String) : List<Int>
 
     suspend fun getLineSchedules(codeLine:String, day: Int) :List<HorarioLinha>

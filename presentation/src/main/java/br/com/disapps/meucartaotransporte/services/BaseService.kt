@@ -11,8 +11,6 @@ import android.os.IBinder
 abstract class BaseService : Service(), LifecycleOwner {
 
     protected val isComplete = MutableLiveData<Boolean>()
-    protected var isManual = false
-    protected var isRunning = false
 
     private val mLifecycleRegistry: LifecycleRegistry by lazy {
         LifecycleRegistry(this)

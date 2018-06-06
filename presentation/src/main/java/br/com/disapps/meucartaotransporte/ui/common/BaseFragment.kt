@@ -63,7 +63,7 @@ abstract class BaseFragment : Fragment() {
     open fun setupError(){
         viewModel.getErrorObservable().observe(this, Observer {
             val rootView = activity!!.findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
-            Snackbar.make(rootView, getString(R.string.unknow_error), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(rootView, getString(R.string.unknown_error), Snackbar.LENGTH_SHORT).show()
         })
     }
 }

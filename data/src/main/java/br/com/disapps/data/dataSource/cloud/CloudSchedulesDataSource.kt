@@ -12,6 +12,10 @@ class CloudSchedulesDataSource(private val restApi: RestApi) : SchedulesDataSour
         throw Throwable("not implemented, only local")
     }
 
+    override suspend fun saveAllFromJson(filePath: String) {
+        throw Throwable("not implemented, only local")
+    }
+
     override suspend fun getLineSchedulesDays(codeLine: String): List<Int> {
         throw Throwable("not implemented, only local")
     }

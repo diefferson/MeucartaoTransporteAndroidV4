@@ -29,7 +29,6 @@ class QuickFindFragment: BaseFragment(){
 
     private fun setupClickListeners() {
         btn_quick_find.setOnClickListener { viewModel.consult() }
-
         card_cpf.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 btn_quick_find.performClick()
@@ -45,6 +44,7 @@ class QuickFindFragment: BaseFragment(){
         viewModel.isSuccess.observe(this, Observer {
             if(it != null && it){
                 BalanceActivity.launch(context!!, CardVO(cpf = viewModel.cpf.value.toString(), code = viewModel.code.value.toString()))
+                viewModel.isSuccess.value = false
             }
         })
     }

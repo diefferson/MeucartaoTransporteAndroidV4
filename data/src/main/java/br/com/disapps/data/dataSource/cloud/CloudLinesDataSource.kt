@@ -14,6 +14,10 @@ class CloudLinesDataSource(private val restApi: RestApi) : LinesDataSource {
         throw Throwable("not implemented, only local")
     }
 
+    override suspend fun saveAllLinesFromJson(filePath: String) {
+        throw Throwable("not implemented, only local")
+    }
+
     override suspend fun saveLine(linha: Linha) {
         throw Throwable("not implemented, only local")
     }

@@ -8,8 +8,7 @@ import android.os.Build
 import android.os.Environment
 import android.support.v4.app.NotificationCompat
 import android.widget.Toast
-import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
-import br.com.disapps.domain.model.City
+import br.com.disapps.domain.interactor.lines.SaveAllLinesJsonOnly
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
@@ -19,43 +18,35 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
 
-class SaveItinerariesService : BaseService(){
+class SaveLinesService : BaseService(){
 
-    private val saveAllItinerariesJsonUseCase : SaveAllItinerariesJson by inject()
-    private var city  = City.CWB
+    private val saveAllLinesJsonUseCase: SaveAllLinesJsonOnly by inject()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         if(!isRunning){
-
-            isRunning  = true
-
-            city = intent?.extras?.let{
-                it.getSerializable(CITY)?.let {it as City}?: run {City.CWB}
-            }?: run {
-                City.CWB
-            }
+            isRunning = true
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForeground(SERVICE_NOTIFICATION_ID, getNotificationService())
             }else{
-                showCustomNotification(this@SaveItinerariesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.saving_data), true)
+                showCustomNotification(this@SaveLinesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.updating_lines), true)
             }
 
             isComplete.observe(this, Observer {
                 if(it != null){
                     if(it){
-                        showCustomNotification(this@SaveItinerariesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.update_itineraries_success))
+                        showCustomNotification(this@SaveLinesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, text = getString(R.string.update_lines_success))
                     }else{
-                        showCustomNotification(this@SaveItinerariesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.update_itineraries_error))
+                        showCustomNotification(this@SaveLinesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, text = getString(R.string.update_lines_error))
                     }
 
-                    stopService(Intent(this, DownloadItinerariesService::class.java))
+                    stopService(Intent(this, DownloadLinesService::class.java))
                     stopSelf()
                 }
             })
 
-            saveItineraries(city)
+            saveLines()
 
         }else{
             Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_SHORT).show()
@@ -68,7 +59,7 @@ class SaveItinerariesService : BaseService(){
         setupChannel(this, NOTIFICATION_CHANNEL)
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.saving_data))
+                .setContentText(getString(R.string.updating_lines))
                 .setOnlyAlertOnce(true)
                 .setProgress(0, 100,true)
                 .setSmallIcon(R.drawable.bus)
@@ -78,17 +69,19 @@ class SaveItinerariesService : BaseService(){
     override fun onDestroy() {
         super.onDestroy()
         isRunning = false
-        saveAllItinerariesJsonUseCase.dispose()
+        saveAllLinesJsonUseCase.dispose()
     }
 
-    private fun saveItineraries( city: City){
-        saveAllItinerariesJsonUseCase.execute(SaveAllItinerariesJson.Params(city, FILE_PATH),
-            onError = {
+    private fun saveLines(){
+        saveAllLinesJsonUseCase.execute(SaveAllLinesJsonOnly.Params(FILE_PATH),
+            onError= {
                 launch(UI) {
                     isComplete.value = false
                 }
             },
+
             onComplete= {
+                ScheduleJob.schedule(this, ScheduleJob.LINE_TYPE)
                 launch(UI) {
                     isComplete.value = true
                 }
@@ -97,23 +90,18 @@ class SaveItinerariesService : BaseService(){
     }
 
     companion object {
+        const val SERVICE_NOTIFICATION_ID = 532880
         var isRunning = false
-        private const val CITY = "city"
-        const val SERVICE_NOTIFICATION_ID = 532770
-        val NOTIFICATION_ID = getUpdateDataNotification(UpdateData.ITINERARIES).id
-        val NOTIFICATION_CHANNEL = getUpdateDataNotification(UpdateData.ITINERARIES).channel
-        val FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath+"/itineraries.json"
+        val NOTIFICATION_ID = getUpdateDataNotification(UpdateData.LINES).id
+        val NOTIFICATION_CHANNEL = getUpdateDataNotification(UpdateData.LINES).channel
+        val FILE_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath+"/lines.json"
 
-        fun startService(context: Context, city: City){
+        fun startService(context: Context){
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context.startForegroundService(Intent(context,  SaveItinerariesService::class.java).apply {
-                        putExtra(CITY, city)
-                    })
+                    context.startForegroundService(Intent(context, SaveLinesService::class.java))
                 } else {
-                    context.startService(Intent(context, SaveItinerariesService::class.java).apply {
-                        putExtra(CITY, city)
-                    })
+                    context.startService(Intent(context, SaveLinesService::class.java))
                 }
             }catch (e :Exception){
                 e.stackTrace

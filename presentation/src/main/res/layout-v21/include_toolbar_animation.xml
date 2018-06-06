@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.AppBarLayout android:id="@+id/vAppBar"
+<android.support.design.widget.AppBarLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vAppBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:theme="@style/AppTheme.ToolbarStyle"
@@ -18,7 +19,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <br.com.disapps.meucartaotransporte.ui.custom.RoundedColorView
             android:id="@+id/roundedImage"
