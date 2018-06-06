@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.services.ScheduleJob
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_intro.*
@@ -41,6 +42,8 @@ class IntroActivity : BaseActivity(){
                 intro_text.visibility = View.GONE
                 btn_continue.visibility = View.VISIBLE
                 progress.setPercent(100)
+                ScheduleJob.schedule(this, ScheduleJob.LINE_TYPE)
+                ScheduleJob.schedule(this, ScheduleJob.SCHEDULE_TYPE)
             }
         })
 

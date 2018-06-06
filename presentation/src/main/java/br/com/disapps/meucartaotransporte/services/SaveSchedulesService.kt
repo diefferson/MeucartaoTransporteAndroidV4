@@ -8,65 +8,58 @@ import android.os.Build
 import android.os.Environment
 import android.support.v4.app.NotificationCompat
 import android.widget.Toast
-import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
-import br.com.disapps.domain.model.City
+import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJsonOnly
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
+import br.com.disapps.meucartaotransporte.util.setupChannel
 import br.com.disapps.meucartaotransporte.util.showCustomNotification
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
 
-class SaveShapesService : BaseService(){
+class SaveSchedulesService : BaseService(){
 
-    private val saveAllShapesJsonUseCase : SaveAllShapesJson by inject()
-    private var city  = City.CWB
+    private val saveAllSchedulesJsonUseCase : SaveAllSchedulesJsonOnly by inject()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         if(!isRunning){
-
             isRunning = true
 
-            city = intent?.extras?.let{
-                it.getSerializable(CITY)?.let {it as City}?: run {City.CWB}
-            }?: run {
-                City.CWB
-            }
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForeground(SERVICE_NOTIFICATION_ID, getNotificationService())
+                startForeground(SERVICE_NOTIFICATION_ID,getNotificationService())
             }else{
-                showCustomNotification(this@SaveShapesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.saving_data), true)
+                showCustomNotification(this@SaveSchedulesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID,getString(R.string.updating_schedules), true)
             }
 
             isComplete.observe(this, Observer {
                 if(it != null){
                     if(it){
-                        showCustomNotification(this@SaveShapesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.update_shapes_success))
+                        showCustomNotification(this@SaveSchedulesService,  NOTIFICATION_CHANNEL, NOTIFICATION_ID,getString(R.string.update_schedules_success))
                     }else{
-                        showCustomNotification(this@SaveShapesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID, getString(R.string.update_shapes_error))
+                        showCustomNotification(this@SaveSchedulesService, NOTIFICATION_CHANNEL, NOTIFICATION_ID,getString(R.string.update_schedules_error))
                     }
 
-                    stopService(Intent(this, DownloadShapesService::class.java))
+                    stopService(Intent(this, DownloadSchedulesService::class.java))
                     stopSelf()
                 }
             })
 
-            saveShapes(city)
+            saveSchedules()
 
         }else{
-            Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.wait_for_actual_proccess), Toast.LENGTH_LONG).show()
         }
 
         return super.onStartCommand(intent, flags, startId)
     }
 
     private fun getNotificationService(): Notification? {
+        setupChannel(this, NOTIFICATION_CHANNEL)
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.saving_data))
+                .setContentText(getString(R.string.updating_schedules))
                 .setOnlyAlertOnce(true)
                 .setProgress(0, 100,true)
                 .setSmallIcon(R.drawable.bus)
@@ -76,11 +69,11 @@ class SaveShapesService : BaseService(){
     override fun onDestroy() {
         super.onDestroy()
         isRunning = false
-        saveAllShapesJsonUseCase.dispose()
+        saveAllSchedulesJsonUseCase.dispose()
     }
 
-    private fun saveShapes(city: City){
-        saveAllShapesJsonUseCase.execute(SaveAllShapesJson.Params(city, FILE_PATH),
+    private fun saveSchedules(){
+        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJsonOnly.Params(FILE_PATH),
             onError = {
                 launch(UI) {
                     isComplete.value = false
@@ -88,6 +81,7 @@ class SaveShapesService : BaseService(){
             },
 
             onComplete = {
+                ScheduleJob.schedule(this, ScheduleJob.SCHEDULE_TYPE)
                 launch(UI) {
                     isComplete.value = true
                 }
@@ -95,24 +89,20 @@ class SaveShapesService : BaseService(){
         )
     }
 
+
     companion object {
         var isRunning = false
-        private const val CITY = "city"
-        const val SERVICE_NOTIFICATION_ID = 532222
-        val NOTIFICATION_ID = getUpdateDataNotification(UpdateData.SHAPES).id
-        val NOTIFICATION_CHANNEL = getUpdateDataNotification(UpdateData.SHAPES).channel
-        val FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath+"/shapes.json"
+        const val SERVICE_NOTIFICATION_ID = 532882
+        val NOTIFICATION_ID = getUpdateDataNotification(UpdateData.SCHEDULES).id
+        val NOTIFICATION_CHANNEL = getUpdateDataNotification(UpdateData.SCHEDULES).channel
+        val FILE_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath+"/schedules.json"
 
-        fun startService(context: Context, city: City){
+        fun startService(context: Context){
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context.startForegroundService(Intent(context,  SaveShapesService::class.java).apply {
-                        putExtra(CITY, city)
-                    })
+                    context.startForegroundService(Intent(context, SaveSchedulesService::class.java))
                 } else {
-                    context.startService(Intent(context, SaveShapesService::class.java).apply {
-                        putExtra(CITY, city)
-                    })
+                    context.startService(Intent(context, SaveSchedulesService::class.java))
                 }
             }catch (e :Exception){
                 e.stackTrace

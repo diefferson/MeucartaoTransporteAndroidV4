@@ -11,28 +11,19 @@ import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.model.UpdateDataNotification
 
 /* Simple notification*/
-fun showCustomNotification(context: Context, channel : String, notificationId : Int, text : String,sortKey :String = "", progress: Int = 0, infinityProgress: Boolean = false) {
+fun showCustomNotification(context: Context, channel : String, notificationId : Int, text : String, infinityProgress: Boolean = false) {
 
     setupChannel(context,channel)
 
     val mBuilder = NotificationCompat.Builder(context, channel)
             .setContentTitle(context.resources.getString(R.string.app_name))
             .setContentText(text)
-
             .setOnlyAlertOnce(true)
 
     if(Build.VERSION.SDK_INT >= 21){
         mBuilder.setSmallIcon(R.drawable.bus)
     }else{
         mBuilder.setSmallIcon(R.mipmap.ic_launcher)
-    }
-
-    if(sortKey != ""){
-        mBuilder.setSortKey(sortKey)
-    }
-
-    if(progress >0){
-        mBuilder.setProgress(100, progress,false)
     }
 
     if(infinityProgress){
@@ -53,14 +44,12 @@ fun getUpdateDataNotification( updateData: UpdateData) : UpdateDataNotification 
     return when(updateData){
         UpdateData.LINES -> UpdateDataNotification("UPDATING_DATA", 350)
         UpdateData.SCHEDULES -> UpdateDataNotification("UPDATING_DATA", 351)
-        UpdateData.CWB_ITINERARIES -> UpdateDataNotification("UPDATING_DATA", 352)
-        UpdateData.MET_ITINERARIES -> UpdateDataNotification("UPDATING_DATA", 353)
-        UpdateData.CWB_SHAPES -> UpdateDataNotification("UPDATING_DATA", 354)
-        UpdateData.MET_SHAPES -> UpdateDataNotification("UPDATING_DATA", 355)
+        UpdateData.ITINERARIES -> UpdateDataNotification("UPDATING_DATA", 352)
+        UpdateData.SHAPES -> UpdateDataNotification("UPDATING_DATA", 355)
     }
 }
 
-private fun setupChannel(context: Context, channelId: String){
+fun setupChannel(context: Context, channelId: String){
 
     val  notificationChannels = when(channelId){
         NotificationChannels.UPDATING_DATA.value -> NotificationChannels.UPDATING_DATA

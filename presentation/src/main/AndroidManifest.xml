@@ -46,7 +46,7 @@
         </service>
 
         <service
-            android:name=".services.UpdateLinesService"
+            android:name=".services.SaveLinesService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -56,7 +56,17 @@
         </service>
 
         <service
-            android:name=".services.UpdateSchedulesService"
+            android:name=".services.DownloadLinesService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="DOWNLOAD_LINES_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.SaveSchedulesService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -66,7 +76,17 @@
         </service>
 
         <service
-            android:name=".services.UpdateShapesService"
+            android:name=".services.DownloadSchedulesService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="DOWNLOAD_SCHEDULES_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.DownloadShapesService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -86,7 +106,7 @@
         </service>
 
         <service
-            android:name=".services.UpdateItinerariesService"
+            android:name=".services.DownloadItinerariesService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

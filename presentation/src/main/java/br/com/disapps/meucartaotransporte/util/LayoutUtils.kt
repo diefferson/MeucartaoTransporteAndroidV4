@@ -79,7 +79,7 @@ fun Activity.getErrorView(uiException: UiException) :View{
 
         KnownError.CARD_EXISTS_EXCEPTION ->{
             inflateView(R.layout.error_expected,rootView ).apply {
-                findViewById<TextView>(R.id.title).text = getString(R.string.funy)
+                findViewById<TextView>(R.id.title).text = getString(R.string.funny)
                 findViewById<TextView>(R.id.description).text = uiException.message
                 findViewById<LottieAnimationView>(R.id.animation).setAnimation(R.raw.funy)
                 findViewById<Button>(R.id.known_more).text = getString(R.string.back)

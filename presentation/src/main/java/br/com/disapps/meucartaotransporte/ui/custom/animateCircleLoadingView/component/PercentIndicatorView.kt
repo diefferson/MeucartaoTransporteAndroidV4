@@ -4,12 +4,12 @@ import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
 import android.view.animation.AlphaAnimation
-import android.widget.TextView
+import android.support.v7.widget.AppCompatTextView
 
 /**
  * @author jlmd
  */
-class PercentIndicatorView(context: Context, private val parentWidth: Int, private val textColor: Int = Color.WHITE) : TextView(context) {
+class PercentIndicatorView(context: Context, private val parentWidth: Int, private val textColor: Int = Color.WHITE) : AppCompatTextView(context) {
 
     init {
         init()

@@ -19,12 +19,10 @@ import br.com.disapps.domain.interactor.itineraries.GetItineraryDirections
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
 import br.com.disapps.domain.interactor.lines.GetLines
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
+import br.com.disapps.domain.interactor.lines.SaveAllLinesJsonOnly
 import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.domain.interactor.preferences.*
-import br.com.disapps.domain.interactor.schedules.GetAllPointSchedules
-import br.com.disapps.domain.interactor.schedules.GetLineScheduleDays
-import br.com.disapps.domain.interactor.schedules.GetLineSchedules
-import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
+import br.com.disapps.domain.interactor.schedules.*
 import br.com.disapps.domain.interactor.shapes.GetShapes
 import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
@@ -110,6 +108,7 @@ object AppInject {
         factory { HasCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetExtract( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { SaveAllLinesJson( linesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveAllLinesJsonOnly( linesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetLines( linesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { UpdateLine( linesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { SaveAllItinerariesJson( itinerariesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
@@ -119,6 +118,7 @@ object AppInject {
         factory { SaveAllShapesJson( shapesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetShapes( shapesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { SaveAllSchedulesJson( schedulesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { SaveAllSchedulesJsonOnly( schedulesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetLineScheduleDays( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetLineSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetAllPointSchedules( schedulesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
