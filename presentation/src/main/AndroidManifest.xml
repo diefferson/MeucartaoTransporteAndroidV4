@@ -540,17 +540,49 @@
             android:exported="false"
             android:grantUriPermissions="true" />
 
-        <receiver android:name=".widgets.CardBalanceWidget">
+        <receiver android:name=".widgets.cardBalanceWhite.CardBalanceWidgetWhite">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/card_balance_widget_info" />
+                android:resource="@xml/card_balance_widget_white_info" />
         </receiver>
 
-        <activity android:name=".widgets.CardBalanceWidgetConfigureActivity">
+        <receiver android:name=".widgets.cardBalanceBlack.CardBalanceWidgetBlack">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/card_balance_widget_black_info" />
+        </receiver>
+
+        <activity android:name=".widgets.cardBalanceWhite.CardBalanceWidgetWhiteConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".widgets.cardBalanceBlack.CardBalanceWidgetBlackConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".widgets.teste.NewAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/new_app_widget_info" />
+        </receiver>
+
+        <activity android:name=".widgets.teste.NewAppWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

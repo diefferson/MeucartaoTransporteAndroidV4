@@ -1,4 +1,4 @@
-package br.com.disapps.meucartaotransporte.widgets
+package br.com.disapps.meucartaotransporte.widgets.teste
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -9,9 +9,9 @@ import br.com.disapps.meucartaotransporte.R
 
 /**
  * Implementation of App Widget functionality.
- * App Widget Configuration implemented in [CardBalanceWidgetConfigureActivity]
+ * App Widget Configuration implemented in [NewAppWidgetConfigureActivity]
  */
-class CardBalanceWidget : AppWidgetProvider() {
+class NewAppWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
@@ -23,7 +23,7 @@ class CardBalanceWidget : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         // When the user deletes the widget, delete the preference associated with it.
         for (appWidgetId in appWidgetIds) {
-            CardBalanceWidgetConfigureActivity.deleteTitlePref(context, appWidgetId)
+            NewAppWidgetConfigureActivity.deleteTitlePref(context, appWidgetId)
         }
     }
 
@@ -40,9 +40,9 @@ class CardBalanceWidget : AppWidgetProvider() {
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager,
                                      appWidgetId: Int) {
 
-            val widgetText = CardBalanceWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
+            val widgetText = NewAppWidgetConfigureActivity.loadTitlePref(context, appWidgetId)
             // Construct the RemoteViews object
-            val views = RemoteViews(context.packageName, R.layout.card_balance_widget)
+            val views = RemoteViews(context.packageName, R.layout.new_app_widget)
             views.setTextViewText(R.id.appwidget_text, widgetText)
 
             // Instruct the widget manager to update the widget

@@ -1,4 +1,4 @@
-package br.com.disapps.meucartaotransporte.widgets
+package br.com.disapps.meucartaotransporte.widgets.teste
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
@@ -12,13 +12,13 @@ import android.widget.EditText
 import br.com.disapps.meucartaotransporte.R
 
 /**
- * The configuration screen for the [CardBalanceWidget] AppWidget.
+ * The configuration screen for the [NewAppWidget] AppWidget.
  */
-class CardBalanceWidgetConfigureActivity : Activity() {
+class NewAppWidgetConfigureActivity : Activity() {
     internal var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     internal lateinit var mAppWidgetText: EditText
     internal var mOnClickListener: View.OnClickListener = View.OnClickListener {
-        val context = this@CardBalanceWidgetConfigureActivity
+        val context = this@NewAppWidgetConfigureActivity
 
         // When the button is clicked, store the string locally
         val widgetText = mAppWidgetText.text.toString()
@@ -26,7 +26,7 @@ class CardBalanceWidgetConfigureActivity : Activity() {
 
         // It is the responsibility of the configuration activity to update the app widget
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        CardBalanceWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId)
+        NewAppWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId)
 
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()
@@ -42,7 +42,7 @@ class CardBalanceWidgetConfigureActivity : Activity() {
         // out of the widget placement if the user presses the back button.
         setResult(Activity.RESULT_CANCELED)
 
-        setContentView(R.layout.card_balance_widget_configure)
+        setContentView(R.layout.new_app_widget_configure)
         mAppWidgetText = findViewById<View>(R.id.appwidget_text) as EditText
         findViewById<View>(R.id.add_button).setOnClickListener(mOnClickListener)
 
@@ -60,13 +60,13 @@ class CardBalanceWidgetConfigureActivity : Activity() {
             return
         }
 
-        mAppWidgetText.setText(loadTitlePref(this@CardBalanceWidgetConfigureActivity, mAppWidgetId))
+        mAppWidgetText.setText(loadTitlePref(this@NewAppWidgetConfigureActivity, mAppWidgetId))
     }
 
     companion object {
 
-        private val PREFS_NAME = "br.com.disapps.meucartaotransporte.widgets.CardBalanceWidget"
-        private val PREF_PREFIX_KEY = "appwidget_"
+        private const val PREFS_NAME = "br.com.disapps.meucartaotransporte.widgets.teste.NewAppWidget"
+        private const val PREF_PREFIX_KEY = "appwidget_"
 
         // Write the prefix to the SharedPreferences object for this widget
         internal fun saveTitlePref(context: Context, appWidgetId: Int, text: String) {
