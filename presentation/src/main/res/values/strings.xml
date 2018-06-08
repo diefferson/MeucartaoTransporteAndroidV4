@@ -185,6 +185,8 @@
     <string name="select_a_card">Selecione um cartão</string>
     <string name="updating">Atualizando…</string>
     <string name="card_not_found">Erro ao atualizar cartão</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="select_a_line">Selecione uma linha</string>
 
 
 </resources>

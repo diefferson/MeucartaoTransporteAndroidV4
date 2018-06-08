@@ -27,7 +27,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <receiver android:name="br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite.CardBalanceWidgetWhite">
+        <receiver android:name=".widgets.cardBalance.cardBalanceWhite.CardBalanceWidgetWhite">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -36,8 +36,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/card_balance_widget_white_info" />
         </receiver>
-
-        <receiver android:name="br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceBlack.CardBalanceWidgetBlack">
+        <receiver android:name=".widgets.cardBalance.cardBalanceBlack.CardBalanceWidgetBlack">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -47,13 +46,12 @@
                 android:resource="@xml/card_balance_widget_black_info" />
         </receiver>
 
-        <activity android:name="br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite.CardBalanceWidgetWhiteConfigureActivity">
+        <activity android:name=".widgets.cardBalance.cardBalanceWhite.CardBalanceWidgetWhiteConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-
-        <activity android:name="br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceBlack.CardBalanceWidgetBlackConfigureActivity">
+        <activity android:name=".widgets.cardBalance.cardBalanceBlack.CardBalanceWidgetBlackConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -572,6 +570,37 @@
             android:exported="false"
             android:grantUriPermissions="true" />
 
+        <receiver android:name=".widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/bus_schedules_black_widget_info" />
+        </receiver>
+
+        <activity android:name=".widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/bus_schedules_white_widget_info" />
+        </receiver>
+
+        <activity android:name=".widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

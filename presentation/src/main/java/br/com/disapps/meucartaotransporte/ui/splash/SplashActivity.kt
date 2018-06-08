@@ -21,7 +21,7 @@ class SplashActivity : AppCompatActivity(){
     }
 
     private fun getIsFirstAccess(){
-        if(Preferences(App.instance!!).getIsFirstAccess()){
+        if(Preferences(this).getIsFirstAccess()){
             IntroActivity.launch(this)
         }else{
             MainActivity.launch(this)
