@@ -1,15 +1,16 @@
-package br.com.disapps.meucartaotransporte.widgets.cardBalanceWhite
+package br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.view.View
 import android.widget.RemoteViews
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.model.CardVO
+import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetUtils
+import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetViewModel
+import br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite.CardBalanceWidgetWhiteConfigureActivity.Companion.PREFS_NAME
+import br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite.CardBalanceWidgetWhiteConfigureActivity.Companion.PREF_PREFIX_KEY
 import kotlinx.coroutines.experimental.async
 
 
@@ -39,6 +40,7 @@ class CardBalanceWidgetWhite : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             val views = RemoteViews(context.packageName, R.layout.card_balance_widget_white)
             views.setViewVisibility(R.id.loading_view, View.VISIBLE)
+            views.setViewVisibility(R.id.error_view, View.GONE)
             appWidgetManager.updateAppWidget(appWidgetId, views)
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
@@ -46,23 +48,26 @@ class CardBalanceWidgetWhite : AppWidgetProvider() {
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
-            CardBalanceWidgetWhiteConfigureActivity.deleteCodeCard(context, appWidgetId)
+            CardBalanceWidgetViewModel.deleteCodeCard(context, appWidgetId, PREFS_NAME, PREF_PREFIX_KEY)
         }
     }
 
     companion object {
 
-        private const val UPDATE_CARD = "br.com.disapps.meucartaotransporte.widgets.cardBalanceWhite.UPDATE_CARD"
+        private const val UPDATE_CARD = "br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite.UPDATE_CARD"
 
         internal fun createAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val views = RemoteViews(context.packageName, R.layout.card_balance_widget_white)
-            val card = CardBalanceWidgetWhiteConfigureActivity.loadCardInitialData(context, appWidgetId)
-            card?.let {
-                setupView(views,context,appWidgetManager,appWidgetId, card)
-            }?: run{
+            val card = CardBalanceWidgetViewModel.loadCardInitialData(context, appWidgetId,PREFS_NAME, PREF_PREFIX_KEY)
+            if(card!= null){
+                CardBalanceWidgetUtils.setupViews(views, context, card)
+            }else{
                 views.setViewVisibility(R.id.error_view, View.VISIBLE)
-                appWidgetManager.updateAppWidget(appWidgetId, views)
             }
+
+            CardBalanceWidgetUtils.setupRefreshIntent(views, context,CardBalanceWidgetWhite::class.java, appWidgetId, UPDATE_CARD)
+            views.setViewVisibility(R.id.loading_view, View.GONE)
+            appWidgetManager.updateAppWidget(appWidgetId, views)
         }
 
         internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
@@ -70,35 +75,19 @@ class CardBalanceWidgetWhite : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.card_balance_widget_white)
 
             async {
-                val card = CardBalanceWidgetWhiteConfigureActivity.loadCardData(context, appWidgetId)
-                card?.let {
-                    setupView(views,context,appWidgetManager,appWidgetId, card)
-                }?: run{
+                val card = CardBalanceWidgetViewModel.loadCardData(context, appWidgetId,PREFS_NAME, PREF_PREFIX_KEY)
+                if(card!= null){
+                    CardBalanceWidgetUtils.setupViews(views, context, card)
+                }else{
                     views.setViewVisibility(R.id.error_view, View.VISIBLE)
-                    appWidgetManager.updateAppWidget(appWidgetId, views)
                 }
+
+                CardBalanceWidgetUtils.setupRefreshIntent(views, context,CardBalanceWidgetWhite::class.java, appWidgetId, UPDATE_CARD)
+                views.setViewVisibility(R.id.loading_view, View.GONE)
+                appWidgetManager.updateAppWidget(appWidgetId, views)
             }
         }
 
-        private fun setupView(views:RemoteViews, context:Context,appWidgetManager: AppWidgetManager, appWidgetId: Int, card:CardVO){
-            views.setTextViewText(R.id.card_name, card.name)
-            views.setTextViewText(R.id.card_balance, context.getString(R.string.card_balance_value, String.format("%.2f", card.balance)))
-            views.setTextViewText(R.id.card_balance_date, card.balanceDate)
-            if(card.balance >15){
-                views.setTextColor(R.id.card_balance, Color.GREEN)
-            }else{
-                views.setTextColor(R.id.card_balance, Color.RED)
-            }
-
-            val itUpdateCard = Intent(context, CardBalanceWidgetWhite::class.java)
-            itUpdateCard.action = UPDATE_CARD
-            itUpdateCard.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId)
-            val piUpdateCard = PendingIntent.getBroadcast(context, 0, itUpdateCard, 0)
-            views.setOnClickPendingIntent(R.id.refresh, piUpdateCard)
-            views.setViewVisibility(R.id.loading_view, View.GONE)
-
-            appWidgetManager.updateAppWidget(appWidgetId, views)
-        }
     }
 }
 

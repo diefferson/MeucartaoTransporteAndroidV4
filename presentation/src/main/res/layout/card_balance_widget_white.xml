@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,12 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/card_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="12sp"
@@ -22,25 +25,20 @@
             tools:text="Nome Cartao" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/balance"
-            android:textSize="11sp"
-            tools:ignore="SmallSp"
-            android:visibility="gone"
-            android:textColor="@color/textGrey"/>
-
-        <TextView
             android:id="@+id/card_balance"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="16sp"
             tools:text="R$54.00"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
             android:text="@string/updated"
             android:textSize="11sp"
             tools:ignore="SmallSp"
@@ -48,43 +46,16 @@
 
         <TextView
             android:id="@+id/card_balance_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="11sp"
             android:textColor="@color/textGrey"
             tools:text="15/07/2016 19:08:00"
             tools:ignore="SmallSp" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/refresh"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:src="@drawable/refresh"
-        android:layout_margin="6dp"
-        android:contentDescription="@string/update"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <RelativeLayout
-        android:id="@+id/loading_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/card_background_white"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:layout_centerInParent="true"
-            android:textColor="@color/textGrey"
-            android:text="@string/updating" />
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/error_view"
@@ -94,14 +65,46 @@
         android:visibility="gone">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="12sp"
             android:layout_centerInParent="true"
             android:textColor="@color/textGrey"
             android:text="@string/card_not_found" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/refresh"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:padding="4dp"
+        android:src="@drawable/refresh"
+        android:contentDescription="@string/update"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <RelativeLayout
+        android:id="@+id/loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:background="@drawable/card_background_white"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/textGrey"
+            android:text="@string/updating" />
 
     </RelativeLayout>
 

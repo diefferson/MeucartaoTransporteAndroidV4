@@ -46,7 +46,7 @@ import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageViewModel
-import br.com.disapps.meucartaotransporte.widgets.cardBalanceWhite.CardBalanceWidgetConfigureViewModel
+import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -98,7 +98,7 @@ object AppInject {
         viewModel { SchedulesViewModel( getAllPointSchedulesUseCase = get()) }
         viewModel { DataUsageViewModel( getDataUsageUseCase = get()) }
         viewModel { ItineraryDirectionViewModel(getItineraryUseCase = get()) }
-        viewModel { CardBalanceWidgetConfigureViewModel(getCardsUseCase = get()) }
+        viewModel { CardBalanceWidgetViewModel(getCardsUseCase = get()) }
     }
 
     private val useCaseModule: Module = applicationContext {

@@ -1,4 +1,4 @@
-package br.com.disapps.meucartaotransporte.widgets.cardBalanceWhite
+package br.com.disapps.meucartaotransporte.widgets.cardBalance
 
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
