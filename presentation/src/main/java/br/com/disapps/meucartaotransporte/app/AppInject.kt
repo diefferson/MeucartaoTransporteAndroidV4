@@ -100,7 +100,7 @@ object AppInject {
         viewModel { DataUsageViewModel( getDataUsageUseCase = get()) }
         viewModel { ItineraryDirectionViewModel(getItineraryUseCase = get()) }
         viewModel { CardBalanceWidgetViewModel(getCardsUseCase = get()) }
-        viewModel { BusSchedulesWidgetViewModel(getLinesUseCase = get())}
+        viewModel { BusSchedulesWidgetViewModel(getLinesUseCase = get(), getLineSchedulesUseCase = get())}
     }
 
     private val useCaseModule: Module = applicationContext {

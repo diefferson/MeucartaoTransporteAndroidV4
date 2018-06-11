@@ -7,5 +7,5 @@
     android:minWidth="80dp"
     android:previewImage="@drawable/card_balance_widget_white_preview"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="28800000"
+    android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"/>

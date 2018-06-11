@@ -12,8 +12,10 @@ import android.widget.Toast
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
+import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesPreferences
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.LinesListAdapter
+import br.com.disapps.meucartaotransporte.widgets.busSchedules.StopsListAdapter
 import kotlinx.android.synthetic.main.bus_schedules_widget_configure.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -23,8 +25,8 @@ import org.koin.android.architecture.ext.viewModel
 class BusSchedulesBlackWidgetConfigureActivity : AppCompatActivity() {
 
     companion object {
-        private val PREFS_NAME = "br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget"
-        private val PREF_PREFIX_KEY = "appwidgetBusSchedulesBlack_"
+        const val PREFS_NAME = "br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget"
+        const val PREF_PREFIX_KEY = "appwidgetBusSchedulesBlack_"
     }
 
     private var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
@@ -32,8 +34,45 @@ class BusSchedulesBlackWidgetConfigureActivity : AppCompatActivity() {
 
     private val linesAdapter: LinesListAdapter by lazy{
         LinesListAdapter(ArrayList()).apply {
-            setOnItemClickListener { _, view, position ->
+            setOnItemClickListener { _, _, position ->
+
+                BusSchedulesPreferences.setLineCode(this@BusSchedulesBlackWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        linesAdapter.getLine(position).code)
+
+                BusSchedulesPreferences.setLineName(this@BusSchedulesBlackWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        linesAdapter.getLine(position).name)
+
+                BusSchedulesPreferences.setLineColor(this@BusSchedulesBlackWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        linesAdapter.getLine(position).color
+                )
+
+                title = getString(R.string.select_a_stop)
+                viewModel.getLinesSchedules(linesAdapter.getLine(position).code)
+            }
+        }
+    }
+
+    private val stopsAdapter : StopsListAdapter by lazy{
+        StopsListAdapter(ArrayList()).apply {
+            setOnItemClickListener { _, _, position ->
                 val appWidgetManager = AppWidgetManager.getInstance(this@BusSchedulesBlackWidgetConfigureActivity)
+
+                BusSchedulesPreferences.setStopCode(this@BusSchedulesBlackWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        stopsAdapter.getStop(position).busStopCode)
+
+                BusSchedulesPreferences.setStopName(this@BusSchedulesBlackWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        stopsAdapter.getStop(position).busStopName)
+
                 BusSchedulesBlackWidget.updateAppWidget(this@BusSchedulesBlackWidgetConfigureActivity, appWidgetManager, mAppWidgetId)
 
                 // Certifique-se de que devolvemos o appWidgetId original
@@ -86,6 +125,16 @@ class BusSchedulesBlackWidgetConfigureActivity : AppCompatActivity() {
             if(it!= null && it.isNotEmpty()){
                 linesAdapter.setNewData(it)
                 hideErrorView()
+            }else{
+                showErrorView(getEmptyView(getString(R.string.no_results)))
+            }
+        })
+
+        viewModel.lineSchedules.observe(this, Observer {
+            if(it!= null && it.isNotEmpty()){
+                stopsAdapter.setNewData(it)
+                hideErrorView()
+                recycler.adapter = stopsAdapter
             }else{
                 showErrorView(getEmptyView(getString(R.string.no_results)))
             }

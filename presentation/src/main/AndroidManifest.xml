@@ -570,7 +570,8 @@
             android:exported="false"
             android:grantUriPermissions="true" />
 
-        <receiver android:name=".widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget">
+        <receiver android:name=".widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -586,7 +587,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidget">
+        <receiver android:name=".widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidget"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

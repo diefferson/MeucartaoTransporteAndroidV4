@@ -8,12 +8,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.Toast
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
+import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesPreferences
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.LinesListAdapter
+import br.com.disapps.meucartaotransporte.widgets.busSchedules.StopsListAdapter
+import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget
+import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidgetConfigureActivity
 import kotlinx.android.synthetic.main.bus_schedules_widget_configure.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -23,8 +26,8 @@ import org.koin.android.architecture.ext.viewModel
 class BusSchedulesWhiteWidgetConfigureActivity : AppCompatActivity() {
 
     companion object {
-        private val PREFS_NAME = "br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidget"
-        private val PREF_PREFIX_KEY = "appwidgetBusSchedulesWhite_"
+        const val PREFS_NAME = "br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidget"
+        const val PREF_PREFIX_KEY = "appwidgetBusSchedulesWhite_"
     }
 
     private var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
@@ -33,7 +36,44 @@ class BusSchedulesWhiteWidgetConfigureActivity : AppCompatActivity() {
     private val linesAdapter: LinesListAdapter by lazy{
         LinesListAdapter(ArrayList()).apply {
             setOnItemClickListener { _, view, position ->
+
+                BusSchedulesPreferences.setLineCode(this@BusSchedulesWhiteWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        linesAdapter.getLine(position).code)
+
+                BusSchedulesPreferences.setLineName(this@BusSchedulesWhiteWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        linesAdapter.getLine(position).name)
+
+                BusSchedulesPreferences.setLineColor(this@BusSchedulesWhiteWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY +mAppWidgetId,
+                        linesAdapter.getLine(position).color
+                )
+
+                title = getString(R.string.select_a_stop)
+                viewModel.getLinesSchedules(linesAdapter.getLine(position).code)
+            }
+        }
+    }
+
+    private val stopsAdapter : StopsListAdapter by lazy{
+        StopsListAdapter(ArrayList()).apply {
+            setOnItemClickListener { _, _, position ->
                 val appWidgetManager = AppWidgetManager.getInstance(this@BusSchedulesWhiteWidgetConfigureActivity)
+
+                BusSchedulesPreferences.setStopCode(this@BusSchedulesWhiteWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        stopsAdapter.getStop(position).busStopCode)
+
+                BusSchedulesPreferences.setStopName(this@BusSchedulesWhiteWidgetConfigureActivity,
+                        PREFS_NAME,
+                        PREF_PREFIX_KEY+mAppWidgetId,
+                        stopsAdapter.getStop(position).busStopName)
+
                 BusSchedulesWhiteWidget.updateAppWidget(this@BusSchedulesWhiteWidgetConfigureActivity, appWidgetManager, mAppWidgetId)
 
                 // Certifique-se de que devolvemos o appWidgetId original
@@ -49,6 +89,7 @@ class BusSchedulesWhiteWidgetConfigureActivity : AppCompatActivity() {
         super.onCreate(icicle)
         setResult(Activity.RESULT_CANCELED)
         setContentView(R.layout.bus_schedules_widget_configure)
+        title = getString(R.string.select_a_line)
 
         // Find the widget id from the intent.
         val intent = intent
@@ -85,6 +126,16 @@ class BusSchedulesWhiteWidgetConfigureActivity : AppCompatActivity() {
             if(it!= null && it.isNotEmpty()){
                 linesAdapter.setNewData(it)
                 hideErrorView()
+            }else{
+                showErrorView(getEmptyView(getString(R.string.no_results)))
+            }
+        })
+
+        viewModel.lineSchedules.observe(this, Observer {
+            if(it!= null && it.isNotEmpty()){
+                stopsAdapter.setNewData(it)
+                hideErrorView()
+                recycler.adapter = stopsAdapter
             }else{
                 showErrorView(getEmptyView(getString(R.string.no_results)))
             }

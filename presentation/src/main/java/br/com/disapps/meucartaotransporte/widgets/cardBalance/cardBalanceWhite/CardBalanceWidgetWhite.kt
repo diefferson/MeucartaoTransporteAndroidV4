@@ -1,9 +1,12 @@
 package br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.os.SystemClock
 import android.view.View
 import android.widget.RemoteViews
 import br.com.disapps.meucartaotransporte.R
@@ -43,7 +46,19 @@ class CardBalanceWidgetWhite : AppWidgetProvider() {
             views.setViewVisibility(R.id.error_view, View.GONE)
             appWidgetManager.updateAppWidget(appWidgetId, views)
             updateAppWidget(context, appWidgetManager, appWidgetId)
+            scheduleUpdate(context, appWidgetId)
         }
+    }
+
+    private fun scheduleUpdate(context: Context, appWidgetId: Int) {
+        val intent = Intent(context, CardBalanceWidgetWhite::class.java)
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        intent.action = UPDATE_CARD
+        val pending = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarm.cancel(pending)
+        val interval = (1000 * 14400).toLong()
+        alarm.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), interval, pending)
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {

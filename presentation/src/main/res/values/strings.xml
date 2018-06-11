@@ -8,7 +8,7 @@
     <string name="cards">Cartões</string>
     <string name="lines">Linhas</string>
     <string name="share">Compartilhar</string>
-    <string name="remove_ads">Remover Anúncios</string>
+    <string name="remove_ads">Seja Premium</string>
     <string name="settings">Configurações</string>
     <string name="about_app">Sobre o App</string>
     <string name="help">Ajuda</string>
@@ -187,6 +187,9 @@
     <string name="card_not_found">Erro ao atualizar cartão</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="select_a_line">Selecione uma linha</string>
+    <string name="select_a_stop">Selecione um ponto</string>
+    <string name="widgets">Widgets</string>
+    <string name="premium_only">Exclusivo usuário premium.</string>
 
 
 </resources>

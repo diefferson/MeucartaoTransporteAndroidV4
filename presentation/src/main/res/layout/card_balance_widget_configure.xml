@@ -8,7 +8,7 @@
         android:id="@+id/cards_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_card"
+        tools:listitem="@layout/card_balance_widget_configure_item"
         android:scrollbars="vertical"
         tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 

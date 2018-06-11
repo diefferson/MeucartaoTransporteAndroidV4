@@ -69,7 +69,7 @@ class CardBalanceWidgetViewModel(private val getCardsUseCase: GetCards) : BaseVi
             prefs.apply()
         }
 
-        suspend fun updateCard(code: String): CardVO? {
+        private suspend fun updateCard(code: String): CardVO? {
             val cards = CloudCardsDataSource(RestClient().api)
             val card = getCard(code)
             if(card!= null){
@@ -100,7 +100,7 @@ class CardBalanceWidgetViewModel(private val getCardsUseCase: GetCards) : BaseVi
             realm.close()
         }
 
-        fun getCard(code: String) :CardVO?{
+        private fun getCard(code: String) :CardVO?{
 
             val realm = Realm.getDefaultInstance()
             val card = realm.copyFromRealm(realm.where(LocalCardsDataSource.CLAZZ)
