@@ -42,14 +42,14 @@ class BusSchedulesWhiteWidget : AppWidgetProvider() {
     }
 
     private fun scheduleUpdate(context: Context, appWidgetId: Int) {
-        val intent = Intent(context, BusSchedulesWhiteWidget::class.java)
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-        intent.action = UPDATE_SCHEDULES
+        val intent = Intent(context, BusSchedulesWhiteWidget::class.java).apply {
+            action = UPDATE_SCHEDULES
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        }
         val pending = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarm.cancel(pending)
-        val interval = (1000 * 900).toLong()
-        alarm.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), interval, pending)
+        alarm.set(AlarmManager.RTC, System.currentTimeMillis()+(15*60*1000), pending)
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
