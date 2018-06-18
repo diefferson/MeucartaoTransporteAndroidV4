@@ -164,4 +164,8 @@ abstract class BaseFragmentActivity: BaseActivity(),
             }.start()
         }
     }
+
+    override fun hideToolbar() {
+        appBar.setExpanded(false)
+    }
 }

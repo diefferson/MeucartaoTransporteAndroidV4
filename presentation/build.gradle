@@ -87,6 +87,7 @@ dependencies {
     implementation presentationDependencies.firebaseCore
     implementation presentationDependencies.firebaseMessaging
     implementation presentationDependencies.playServicesLocation
+    implementation presentationDependencies.playServicesPlaces
     implementation presentationDependencies.playServicesMap
     implementation presentationDependencies.playServicesAds
     implementation presentationDependencies.jobDispatcher

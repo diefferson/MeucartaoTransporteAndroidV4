@@ -12,6 +12,12 @@
         android:title="@string/lines" />
 
     <item
+        android:id="@+id/nav_directions"
+        android:icon="@drawable/ic_directions"
+        android:title="@string/directions" />
+
+
+    <item
         android:id="@+id/nav_settings"
         android:icon="@drawable/settings"
         android:title="@string/settings" />

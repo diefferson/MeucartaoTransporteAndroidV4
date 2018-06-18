@@ -190,6 +190,9 @@
     <string name="select_a_stop">Selecione um ponto</string>
     <string name="widgets">Widgets</string>
     <string name="premium_only">Exclusivo usuário premium.</string>
+    <string name="directions">Rotas</string>
+    <string name="address_start">Escolher o ponto de partida</string>
+    <string name="address_finish">Escolher destino</string>
 
 
 </resources>

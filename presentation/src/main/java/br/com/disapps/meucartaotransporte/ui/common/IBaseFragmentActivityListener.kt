@@ -24,4 +24,5 @@ interface IBaseFragmentActivityListener {
     fun animateSearchAction()
 
     fun hideTabs(force:Boolean = false)
+    fun hideToolbar()
 }
