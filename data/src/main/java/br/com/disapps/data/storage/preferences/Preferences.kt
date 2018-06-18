@@ -19,6 +19,10 @@ class Preferences(var context:Context) : PreferencesRepository {
         return mPreferences.getBoolean(PRO_ACCESS, false)
     }
 
+    fun getIsProSync(): Boolean {
+        return mPreferences.getBoolean(PRO_ACCESS, false)
+    }
+
     override suspend fun getInitialScreen(): String {
         return mPreferences.getString(INITIAL_SCREEN, InitialScreen.CARDS.toString())
     }

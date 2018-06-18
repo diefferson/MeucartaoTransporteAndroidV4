@@ -12,6 +12,10 @@ import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivit
 import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.architecture.ext.viewModel
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
+
 
 /**
  * Created by dnso on 12/03/2018.
@@ -32,7 +36,6 @@ class SettingsFragment : BaseFragment(){
         share.setOnClickListener { shareIt() }
         data_usage.setOnClickListener { DataUsageActivity.launch(context!!) }
         remove_ads.setOnClickListener { removeAds() }
-
     }
 
     override fun onResume() {

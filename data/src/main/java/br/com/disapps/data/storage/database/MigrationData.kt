@@ -41,7 +41,9 @@ class MigrationData : RealmMigration {
 
         if(oldVersion < VERSION){
             val cartaoSchema = realm.schema.get("Cartao")
+            cartaoSchema?.removePrimaryKey()
             cartaoSchema?.setRequired("codigo",true)
+            cartaoSchema?.addPrimaryKey("codigo")
             cartaoSchema?.setRequired("cpf",true)
             cartaoSchema?.setRequired("nome",true)
             cartaoSchema?.setRequired("tipo",true)
@@ -63,14 +65,18 @@ class MigrationData : RealmMigration {
             horarioLinhaSchema?.setRequired("ponto", true)
 
             val linhaSchema = realm.schema.get("Linha")
+            linhaSchema?.removePrimaryKey()
+            linhaSchema?.setRequired("codigo",true)
+            linhaSchema?.addPrimaryKey("codigo")
             linhaSchema?.setRequired("cor", true)
-            linhaSchema?.setRequired("codigo", true)
             linhaSchema?.setRequired("nome", true)
             linhaSchema?.setRequired("categoria", true)
 
             val pontoSchema = realm.schema.get("Ponto")
+            pontoSchema?.removePrimaryKey()
+            pontoSchema?.setRequired("numPonto",true)
+            pontoSchema?.addPrimaryKey("numPonto")
             pontoSchema?.setRequired("tipo", true)
-            pontoSchema?.setRequired("numPonto", true)
             pontoSchema?.setRequired("nomePonto", true)
             pontoSchema?.setRequired("codigoLinha", true)
             pontoSchema?.setRequired("latitude", true)
@@ -79,8 +85,10 @@ class MigrationData : RealmMigration {
 
 
             val shapeSchema = realm.schema.get("Shape")
+            shapeSchema?.removePrimaryKey()
+            shapeSchema?.setRequired("numShape",true)
+            shapeSchema?.addPrimaryKey("numShape")
             shapeSchema?.setRequired("codigoLinha", true)
-            shapeSchema?.setRequired("numShape", true)
 
         }
     }

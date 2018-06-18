@@ -111,6 +111,22 @@ fun getBusColor(context: Context,colorName:String) : Int{
     }
 }
 
+fun getBusColorDrawable(colorName:String) : Int{
+    return when (colorName) {
+        "blue" ->  R.drawable.circle_blue
+        "lightBlue" -> R.drawable.circle_blue_light
+        "red" -> R.drawable.circle_red
+        "grey" -> R.drawable.circle_grey
+        "green" ->R.drawable.circle_green
+        "yellow" ->R.drawable.circle_yellow
+        "orange" ->  R.drawable.circle_orange
+        "white" -> R.drawable.circle_white
+        "ccd" -> R.drawable.circle_ccd
+        else -> R.drawable.circle_blue_light
+    }
+}
+
+
 fun getThemeAccentColor(context: Context): Int {
     val value = TypedValue()
     context.theme.resolveAttribute(R.attr.colorAccent, value, true)

@@ -13,8 +13,8 @@ import io.realm.Realm
 class LocalCardsDataSource(private val database: Database) : CardsDataSource {
 
     companion object {
-        private const val CODE = "codigo"
-        private val CLAZZ = Cartao::class.java
+        public const val CODE = "codigo"
+        public val CLAZZ = Cartao::class.java
     }
 
     override suspend fun saveCard(cartao: Cartao){

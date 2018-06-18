@@ -19,10 +19,10 @@ import java.io.FileInputStream
 class LocalSchedulesDataSource(private val database: Database, private val preferences: Preferences, private val assetManager: AssetManager) : SchedulesDataSource{
 
     companion object {
-        private const val CODE_LINE = "codigoLinha"
-        private const val DAY = "dia"
-        private const val CODE_STOP = "numPonto"
-        private val CLAZZ = HorarioLinha::class.java
+        const val CODE_LINE = "codigoLinha"
+        const val DAY = "dia"
+        const val CODE_STOP = "numPonto"
+        val CLAZZ = HorarioLinha::class.java
     }
 
     override suspend fun saveAllFromJson(filePath: String, downloadProgressListener: DownloadProgressListener) {

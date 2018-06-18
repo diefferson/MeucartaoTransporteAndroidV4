@@ -8,7 +8,7 @@
     <string name="cards">Cartões</string>
     <string name="lines">Linhas</string>
     <string name="share">Compartilhar</string>
-    <string name="remove_ads">Remover Anúncios</string>
+    <string name="remove_ads">Seja Premium</string>
     <string name="settings">Configurações</string>
     <string name="about_app">Sobre o App</string>
     <string name="help">Ajuda</string>
@@ -175,6 +175,21 @@
     <string name="download_schedules_error">Erro ao baixar horários, tente novamente mais tarde.</string>
     <string name="download_itineraries_error">Erro ao baixar itinerários, tente novamente mais tarde.</string>
     <string name="download_shapes_error">Erro ao baixar trajetos, tente novamente mais tarde.</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="update">Atualizar</string>
+    <string name="updated">Atualizado em:</string>
+    <string name="label_cpf"><b>CPF:</b> %1$s</string>
+    <string name="label_code"><b>Código:</b> %1$s</string>
+    <string name="no_cards_registred">Nenhum cartão cadastrado!</string>
+    <string name="select_a_card">Selecione um cartão</string>
+    <string name="updating">Atualizando…</string>
+    <string name="card_not_found">Erro ao atualizar cartão</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="select_a_line">Selecione uma linha</string>
+    <string name="select_a_stop">Selecione um ponto</string>
+    <string name="widgets">Widgets</string>
+    <string name="premium_only">Exclusivo usuário premium.</string>
 
 
 </resources>
