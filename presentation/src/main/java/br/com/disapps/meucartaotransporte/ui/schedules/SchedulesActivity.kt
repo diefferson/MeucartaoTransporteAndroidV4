@@ -12,6 +12,7 @@ import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
 import br.com.disapps.meucartaotransporte.util.getCustomTheme
 import br.com.disapps.meucartaotransporte.util.getDayName
 import br.com.disapps.meucartaotransporte.util.getEmptyView
+import com.appodeal.ads.Appodeal
 import kotlinx.android.synthetic.main.activity_schedules.*
 import kotlinx.android.synthetic.main.include_toolbar_schedules.*
 import org.koin.android.architecture.ext.viewModel
@@ -39,6 +40,7 @@ class SchedulesActivity : BaseActivity (){
 
         initRecyclerView()
         observeViewModel()
+        Appodeal.show(this, Appodeal.INTERSTITIAL)
     }
 
     override fun onResume() {

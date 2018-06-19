@@ -5,9 +5,11 @@ import android.content.Intent
 import android.widget.Toast
 import br.com.disapps.data.BuildConfig
 import br.com.disapps.data.api.CustomDownloadManager
+import br.com.disapps.data.utils.deleteFromCache
 import br.com.disapps.domain.model.City
 import br.com.disapps.domain.repository.PreferencesRepository
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.util.showCustomNotification
 import org.koin.android.ext.android.inject
 
 class DownloadShapesService : BaseService(){
@@ -37,10 +39,19 @@ class DownloadShapesService : BaseService(){
 
     private fun downloadShapes(city: City){
         val idDownload = customDownloadManager.download(FILE_NAME, BuildConfig.DOWNLOAD_SHAPES, BuildConfig.DOWNLOAD_SHAPES_KEY, getString(R.string.downloading_shapes), city.toString())
-        if(city == City.CWB){
-            preferences.setIdDownloadShapesCwb(idDownload)
-        }else {
-            preferences.setIdDownloadShapesMetropolitan(idDownload)
+        if(idDownload > -1){
+            if(city == City.CWB){
+                preferences.setIdDownloadShapesCwb(idDownload)
+            }else {
+                preferences.setIdDownloadShapesMetropolitan(idDownload)
+            }
+        }else{
+            deleteFromCache(SaveShapesService.FILE_PATH)
+            showCustomNotification(this,
+                    SaveShapesService.NOTIFICATION_CHANNEL,
+                    SaveShapesService.NOTIFICATION_ID,
+                    this.getString(R.string.download_shapes_error))
+            this.stopSelf()
         }
     }
 

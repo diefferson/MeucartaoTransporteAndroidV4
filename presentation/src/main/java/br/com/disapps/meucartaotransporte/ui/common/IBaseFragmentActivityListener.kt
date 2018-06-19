@@ -19,7 +19,7 @@ interface IBaseFragmentActivityListener {
 
     fun dismissLoading()
 
-    fun setupTabs(viewPager: ViewPager)
+    fun setupTabs(viewPager: ViewPager, scrollable:Boolean = false)
 
     fun animateSearchAction()
 

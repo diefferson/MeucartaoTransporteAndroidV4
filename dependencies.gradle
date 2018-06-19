@@ -20,7 +20,7 @@ ext {
     androidCompileSdkVersion = 27
 
     //Libraries
-    koinVersion = "0.9.0"
+    koinVersion = "0.9.3"
     supportLibraryVersion = '27.1.1'
     archLifecycleVersion = "1.0.0"
     kotlinVersion = '1.2.30'

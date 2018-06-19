@@ -9,6 +9,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.*
+import com.appodeal.ads.Appodeal
 import kotlinx.android.synthetic.main.activity_extract.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -22,6 +23,7 @@ class ExtractActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         initRecyclerView()
         observeViewModel()
+        Appodeal.show(this, Appodeal.INTERSTITIAL)
     }
 
     override fun recreate() {

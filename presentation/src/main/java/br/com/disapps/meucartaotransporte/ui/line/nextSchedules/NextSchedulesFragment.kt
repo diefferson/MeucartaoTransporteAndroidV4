@@ -12,6 +12,7 @@ import br.com.disapps.meucartaotransporte.util.getDayName
 import br.com.disapps.meucartaotransporte.util.getDayWeek
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import kotlinx.android.synthetic.main.fragment_next_schedules.*
+import org.koin.android.architecture.ext.sharedViewModel
 import org.koin.android.architecture.ext.viewModel
 
 class NextSchedulesFragment : BaseFragment(){
@@ -22,7 +23,7 @@ class NextSchedulesFragment : BaseFragment(){
 
     override val viewModel by viewModel<NextSchedulesViewModel>()
     override val fragmentLayout = R.layout.fragment_next_schedules
-    private val lineViewModel  by viewModel<LineViewModel>()
+    private val lineViewModel  by sharedViewModel<LineViewModel>()
     override val fragmentTag = "NextSchedulesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

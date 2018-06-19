@@ -8,9 +8,11 @@ import android.support.v4.app.NotificationCompat
 import android.widget.Toast
 import br.com.disapps.data.BuildConfig
 import br.com.disapps.data.api.CustomDownloadManager
+import br.com.disapps.data.utils.deleteFromCache
 import br.com.disapps.domain.repository.PreferencesRepository
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.setupChannel
+import br.com.disapps.meucartaotransporte.util.showCustomNotification
 import org.koin.android.ext.android.inject
 
 class DownloadLinesService: BaseService(){
@@ -40,7 +42,17 @@ class DownloadLinesService: BaseService(){
 
     private fun downloadLines(){
         val idDownload = customDownloadManager.download(FILE_NAME, BuildConfig.DOWNLOAD_LINES, BuildConfig.DOWNLOAD_LINES_KEY, getString(R.string.downloading_lines), "")
-        preferences.setIdDownloadLines(idDownload)
+        if(idDownload > -1){
+            preferences.setIdDownloadLines(idDownload)
+        }else{
+            deleteFromCache(SaveLinesService.FILE_PATH)
+            ScheduleJob.schedule(this, ScheduleJob.LINE_TYPE)
+            showCustomNotification(this,
+                    SaveLinesService.NOTIFICATION_CHANNEL,
+                    SaveLinesService.NOTIFICATION_ID,
+                    this.getString(R.string.download_lines_error))
+            this.stopSelf()
+        }
     }
 
     override fun onDestroy() {

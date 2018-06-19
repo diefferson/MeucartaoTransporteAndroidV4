@@ -68,22 +68,26 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
     }
 
     override fun getSectionName(position: Int): String {
-        return if(data[position].type == ListItem.LINE_ITEM){
-            try {
-                data[position].line.name[0].toString()
-            }catch (e:Exception){
-                ""
-            }
-        }else{
-            if(position == 0){
-                "A"
-            }else{
+        return try {
+            if(data[position].type == ListItem.LINE_ITEM){
                 try {
-                    data[position-1].line.name[0].toString()
+                    data[position].line.name[0].toString()
                 }catch (e:Exception){
                     ""
                 }
+            }else{
+                if(position == 0){
+                    "A"
+                }else{
+                    try {
+                        data[position-1].line.name[0].toString()
+                    }catch (e:Exception){
+                        ""
+                    }
+                }
             }
+        }catch (e:Exception){
+            ""
         }
     }
 

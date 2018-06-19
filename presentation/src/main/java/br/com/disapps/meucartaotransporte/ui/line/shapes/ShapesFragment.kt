@@ -17,6 +17,7 @@ import br.com.disapps.meucartaotransporte.model.getLatLng
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.util.*
+import com.appodeal.ads.Appodeal
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -30,6 +31,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.withContext
+import org.koin.android.architecture.ext.sharedViewModel
 import org.koin.android.architecture.ext.viewModel
 
 
@@ -40,7 +42,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
 
     override val viewModel by viewModel<ShapesViewModel>()
     override val fragmentLayout = R.layout.fragment_shapes
-    private val lineViewModel  by viewModel<LineViewModel>()
+    private val lineViewModel  by sharedViewModel<LineViewModel>()
     override val fragmentTag= "ShapesFragment"
 
     private lateinit var googleMap: GoogleMap
@@ -101,6 +103,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         googleMap = p0
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_json))
         observeViewModel()
+        Appodeal.show(activity!!, Appodeal.INTERSTITIAL)
     }
 
     private fun observeViewModel(){
@@ -245,7 +248,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     private fun askViewLocation(){
         if(!viewModel.isPermission){
             viewModel.isPermission = true
-            requestPermissions(arrayOf(PermissionsUtils.ACCESS_LOCATION_PERMISSION), PermissionsUtils.ACCESS_LOCATION_CODE);
+            requestPermissions(arrayOf(PermissionsUtils.ACCESS_LOCATION_PERMISSION), PermissionsUtils.ACCESS_LOCATION_CODE)
         }
     }
 

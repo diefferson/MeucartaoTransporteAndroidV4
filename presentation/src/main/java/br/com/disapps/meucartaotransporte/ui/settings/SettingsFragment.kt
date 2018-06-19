@@ -11,10 +11,8 @@ import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
+import org.koin.android.architecture.ext.sharedViewModel
 import org.koin.android.architecture.ext.viewModel
-import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 
 
 /**
@@ -24,7 +22,7 @@ class SettingsFragment : BaseFragment(){
 
     override val viewModel by viewModel<SettingsViewModel>()
     override val fragmentLayout = R.layout.fragment_settings
-    private val mainViewModel: MainViewModel by viewModel()
+    private val mainViewModel by sharedViewModel<MainViewModel>()
     override val fragmentTag  = "SettingsFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

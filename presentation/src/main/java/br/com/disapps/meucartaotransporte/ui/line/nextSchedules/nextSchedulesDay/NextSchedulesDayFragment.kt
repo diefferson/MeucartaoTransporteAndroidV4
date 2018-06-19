@@ -13,15 +13,14 @@ import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
 import org.koin.android.architecture.ext.getViewModel
+import org.koin.android.architecture.ext.sharedViewModel
 import org.koin.android.architecture.ext.viewModel
 
 class NextSchedulesDayFragment : BaseFragment(){
 
-    override val viewModel : NextSchedulesDayViewModel
-            get() = getViewModel()
-
+    override val viewModel by viewModel<NextSchedulesDayViewModel>()
     override val fragmentLayout = R.layout.fragment_next_schedules_day
-    private val lineViewModel  by viewModel<LineViewModel>()
+    private val lineViewModel  by sharedViewModel<LineViewModel>()
     override val fragmentTag = "NextScheduleDayListAdapter"
 
     private val adapter:NextScheduleDayListAdapter by lazy {

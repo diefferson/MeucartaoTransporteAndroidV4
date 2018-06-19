@@ -13,16 +13,16 @@ import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.architecture.ext.sharedViewModel
 
 /**
  * Created by dnso on 14/03/2018.
  */
 class AllLinesFragment : BaseFragment() {
 
-    override val viewModel by viewModel<LinesViewModel>()
+    override val viewModel by sharedViewModel<LinesViewModel>()
     override val fragmentLayout = R.layout.fragment_list_lines
-    private val mainViewModel by viewModel<MainViewModel>()
+    private val mainViewModel by sharedViewModel<MainViewModel>()
     override val fragmentTag = "AllLinesFragment"
 
     private val adapter:LinesListAdapter by lazy{

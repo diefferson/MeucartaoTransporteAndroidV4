@@ -11,6 +11,7 @@ import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.*
+import com.appodeal.ads.Appodeal
 import kotlinx.android.synthetic.main.activity_register_card.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -33,6 +34,7 @@ class RegisterCardActivity : BaseActivity(){
             hideKeyboard()
             if(validateConnection()){
                 viewModel.consult()
+                Appodeal.show(this, Appodeal.INTERSTITIAL)
             }else{
                 result_container.removeAllViews()
                 result_container.addView(getOfflineView())
@@ -91,6 +93,8 @@ class RegisterCardActivity : BaseActivity(){
                 }else{
                     content.visibility = View.VISIBLE
                     result_container.visibility = View.INVISIBLE
+                    Appodeal.hide(this, Appodeal.MREC)
+                    Appodeal.destroy(Appodeal.MREC)
                 }
             }
         })
