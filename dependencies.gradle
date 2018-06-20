@@ -40,6 +40,7 @@ ext {
     recyclerviewFastscroll = '1.0.17'
     lottieVersion = '2.5.4'
     firebaseVersion = '15.0.2'
+    firebaseDatabaseVersion = '16.0.1'
     playServicesVersion = '15.0.0'
     coroutinesVersion = '0.22.5'
     fabricVersion = '2.9.2@aar'
@@ -79,6 +80,7 @@ ext {
             lottie:              "com.airbnb.android:lottie:${lottieVersion}",
             customtabs:              "com.android.support:customtabs:${supportLibraryVersion}",
             firebaseCore:           "com.google.firebase:firebase-core:${firebaseVersion}",
+            firebaseDatabase:           "com.google.firebase:firebase-database:${firebaseDatabaseVersion}",
             firebaseMessaging:      "com.google.firebase:firebase-messaging:${firebaseVersion}",
             playServicesLocation:   "com.google.android.gms:play-services-location:${playServicesVersion}",
             playServicesMap:        "com.google.android.gms:play-services-maps:${playServicesVersion}",

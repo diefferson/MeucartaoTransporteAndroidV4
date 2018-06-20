@@ -86,6 +86,7 @@ dependencies {
     implementation presentationDependencies.lottie
     implementation presentationDependencies.firebaseCore
     implementation presentationDependencies.firebaseMessaging
+    implementation presentationDependencies.firebaseDatabase
     implementation presentationDependencies.playServicesLocation
     implementation presentationDependencies.playServicesMap
     implementation presentationDependencies.playServicesAds
