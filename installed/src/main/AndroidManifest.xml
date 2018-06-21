@@ -1,0 +1,23 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="br.com.disapps.meucartaotransporte.installed">
+
+    <application>
+
+        <provider
+            android:name="com.crashlytics.android.CrashlyticsInitProvider"
+            android:authorities="br.com.disapps.meucartaotransporte.crashlyticsinitprovider"
+            tools:replace="android:authorities" />
+
+        <provider
+            android:name="android.arch.lifecycle.ProcessLifecycleOwnerInitializer"
+            android:authorities="br.com.disapps.meucartaotransporte.base.lifecycle-trojan"
+            tools:replace="android:authorities" />
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="br.com.disapps.meucartaotransporte.base.firebaseinitprovider"
+            tools:replace="android:authorities" />
+
+    </application>
+</manifest>
