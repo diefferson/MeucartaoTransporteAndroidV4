@@ -1,2 +1,2 @@
 rootProject.name = 'MeuCartaoTransporte'
-include ':presentation', ':domain', ':data'
+include ':base', ':domain', ':data', ':installed'

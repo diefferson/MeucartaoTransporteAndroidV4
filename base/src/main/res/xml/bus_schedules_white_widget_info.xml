@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="br.com.disapps.meucartaotransporte.base.widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidgetConfigureActivity"
+    android:initialKeyguardLayout="@layout/bus_schedules_white_widget"
+    android:initialLayout="@layout/bus_schedules_white_widget"
+    android:minHeight="40dp"
+    android:minWidth="80dp"
+    android:previewImage="@drawable/bus_schedules_white_widget_preview"
+    android:resizeMode="horizontal"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen"/>

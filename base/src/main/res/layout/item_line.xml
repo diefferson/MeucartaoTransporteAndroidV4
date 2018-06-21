@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/roundedImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+            <br.com.disapps.meucartaotransporte.base.ui.custom.RoundedColorView
+                android:id="@+id/ic_line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:backgroundColor="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/line_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                tools:text="123"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@id/ic_line"
+                app:layout_constraintBottom_toBottomOf="@id/ic_line"
+                app:layout_constraintStart_toStartOf="@id/ic_line"
+                app:layout_constraintEnd_toEndOf="@id/ic_line" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/line_name"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                tools:text="Capao Raso "
+                android:textColor="#FF000000"
+                android:textSize="16sp"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:id="@+id/line_type"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                tools:text="Alimentador"
+                android:textColor="#c1c1c1"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/fav_line"
+            android:layout_width="50dp"
+            android:padding="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/star_outline_grey"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:focusable="true"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/fav_line" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/vw_divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="10dp"
+            android:background="#c5c5c5"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="10dp" />
+    </LinearLayout>
+
+</LinearLayout>
+
+
