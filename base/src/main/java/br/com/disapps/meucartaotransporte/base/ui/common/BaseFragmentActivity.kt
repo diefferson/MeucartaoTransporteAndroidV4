@@ -30,6 +30,7 @@ abstract class BaseFragmentActivity: BaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(activityLayout)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         setupToolbar()
     }

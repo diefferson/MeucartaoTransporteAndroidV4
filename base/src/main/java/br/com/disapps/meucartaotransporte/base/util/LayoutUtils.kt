@@ -10,11 +10,7 @@ import android.widget.TextView
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.base.exception.UiException
-import br.com.disapps.meucartaotransporte.base.ui.settings.dataUsage.DataUsageActivity
 import com.airbnb.lottie.LottieAnimationView
-import com.appodeal.ads.Appodeal
-import com.appodeal.ads.native_ad.views.NativeAdViewContentStream
-import com.appodeal.ads.native_ad.views.NativeAdViewNewsFeed
 
 fun Activity.getErrorView(uiException: UiException) :View{
     val rootView = this.findViewById<ViewGroup>(android.R.id.content)
@@ -111,7 +107,7 @@ fun Activity.getLoadingView() :View{
 fun Activity.getDownloadDataView() : View{
     val rootView = findViewById<ViewGroup>(android.R.id.content)
     val view= inflateView(R.layout.download_data, rootView )
-    view.findViewById<Button>(R.id.download).setOnClickListener { DataUsageActivity.launch(this)}
+    view.findViewById<Button>(R.id.download).setOnClickListener { }
     return view
 }
 
@@ -144,24 +140,24 @@ fun Activity.getOfflineView():View{
     return view
 }
 
-fun Activity.getAdViewContentStream(): View {
-    Appodeal.cache(this, Appodeal.NATIVE)
-    val nativeAdView = NativeAdViewContentStream(this)
-    val nativeAd = Appodeal.getNativeAds(1)
-    if(nativeAd.size >0){
-         nativeAdView.setNativeAd(nativeAd[0])
-    }
-    Appodeal.cache(this, Appodeal.NATIVE)
-    return nativeAdView
-}
-
-fun Activity.getAdViewNewsFeed(): View {
-    Appodeal.cache(this, Appodeal.NATIVE)
-    val adView = NativeAdViewNewsFeed(this)
-    val nativeAd = Appodeal.getNativeAds(1)
-    if(nativeAd.size >0){
-        adView.setNativeAd(nativeAd[0])
-    }
-    Appodeal.cache(this, Appodeal.NATIVE)
-    return adView
-}
+//fun Activity.getAdViewContentStream(): View {
+//    Appodeal.cache(this, Appodeal.NATIVE)
+//    val nativeAdView = NativeAdViewContentStream(this)
+//    val nativeAd = Appodeal.getNativeAds(1)
+//    if(nativeAd.size >0){
+//         nativeAdView.setNativeAd(nativeAd[0])
+//    }
+//    Appodeal.cache(this, Appodeal.NATIVE)
+//    return nativeAdView
+//}
+//
+//fun Activity.getAdViewNewsFeed(): View {
+//    Appodeal.cache(this, Appodeal.NATIVE)
+//    val adView = NativeAdViewNewsFeed(this)
+//    val nativeAd = Appodeal.getNativeAds(1)
+//    if(nativeAd.size >0){
+//        adView.setNativeAd(nativeAd[0])
+//    }
+//    Appodeal.cache(this, Appodeal.NATIVE)
+//    return adView
+//}

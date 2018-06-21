@@ -3,11 +3,8 @@ package br.com.disapps.meucartaotransporte.base.ui.line.nextSchedules.nextSchedu
 import android.app.Activity
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.base.ui.custom.setNativeAdAppWall
-import br.com.disapps.meucartaotransporte.base.ui.custom.setNativeAdContentStream
-import br.com.disapps.meucartaotransporte.base.ui.custom.setNativeAdFedd
 import br.com.disapps.meucartaotransporte.base.ui.custom.setSchedule
-import com.appodeal.ads.Appodeal
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
@@ -24,29 +21,29 @@ class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) :
     override fun convert(helper: BaseViewHolder, item: ListItem) {
         when(item.type){
 
-            ListItem.ADS_FEED_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdFedd(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
-
-            ListItem.ADS_CONTENT_STREAM_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdContentStream(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
-
-            ListItem.ADS_APP_WALL_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdAppWall(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
+//            ListItem.ADS_FEED_ITEM ->{
+//                val ads = Appodeal.getNativeAds(1)
+//                if(ads.size>0){
+//                    helper.setNativeAdFedd(R.id.ads_item, ads[0])
+//                    Appodeal.cache(activity, Appodeal.NATIVE)
+//                }
+//            }
+//
+//            ListItem.ADS_CONTENT_STREAM_ITEM ->{
+//                val ads = Appodeal.getNativeAds(1)
+//                if(ads.size>0){
+//                    helper.setNativeAdContentStream(R.id.ads_item, ads[0])
+//                    Appodeal.cache(activity, Appodeal.NATIVE)
+//                }
+//            }
+//
+//            ListItem.ADS_APP_WALL_ITEM ->{
+//                val ads = Appodeal.getNativeAds(1)
+//                if(ads.size>0){
+//                    helper.setNativeAdAppWall(R.id.ads_item, ads[0])
+//                    Appodeal.cache(activity, Appodeal.NATIVE)
+//                }
+//            }
 
             ListItem.LINE_SCHEDULE_ITEM ->{
                 var hasSchedules = false

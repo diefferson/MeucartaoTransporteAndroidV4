@@ -9,7 +9,6 @@ import br.com.disapps.meucartaotransporte.base.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.base.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.base.ui.lines.LinesListAdapter
 import br.com.disapps.meucartaotransporte.base.ui.lines.LinesViewModel
-import br.com.disapps.meucartaotransporte.base.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.base.util.getEmptyView
 import br.com.disapps.meucartaotransporte.base.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
@@ -22,7 +21,7 @@ class AllLinesFragment : BaseFragment() {
 
     override val viewModel by sharedViewModel<LinesViewModel>()
     override val fragmentLayout = R.layout.fragment_list_lines
-    private val mainViewModel by sharedViewModel<MainViewModel>()
+   // private val mainViewModel by sharedViewModel<MainViewModel>()
     override val fragmentTag = "AllLinesFragment"
 
     private val adapter:LinesListAdapter by lazy{
@@ -60,26 +59,26 @@ class AllLinesFragment : BaseFragment() {
             }
         })
 
-        mainViewModel.onSearchAction.observe(this, Observer {
-            adapter.emptyView = activity?.getEmptyView(getString(R.string.no_results))
-            if(it!= null && it){
-                viewModel.linesFiltered.clear()
-                viewModel.linesFiltered.addAll(viewModel.lines)
-                adapter.setNewData(viewModel.linesFiltered)
-            }else{
-                adapter.setNewData(viewModel.lines)
-            }
-        })
-
-        mainViewModel.searchText.observe(this, Observer {
-            if(it!= null){
-                viewModel.filterLines(it)
-                adapter.apply {
-                    emptyView = activity.getEmptyView(getString(R.string.no_results))
-                    notifyDataSetChanged()
-                }
-            }
-        })
+//        mainViewModel.onSearchAction.observe(this, Observer {
+//            adapter.emptyView = activity?.getEmptyView(getString(R.string.no_results))
+//            if(it!= null && it){
+//                viewModel.linesFiltered.clear()
+//                viewModel.linesFiltered.addAll(viewModel.lines)
+//                adapter.setNewData(viewModel.linesFiltered)
+//            }else{
+//                adapter.setNewData(viewModel.lines)
+//            }
+//        })
+//
+//        mainViewModel.searchText.observe(this, Observer {
+//            if(it!= null){
+//                viewModel.filterLines(it)
+//                adapter.apply {
+//                    emptyView = activity.getEmptyView(getString(R.string.no_results))
+//                    notifyDataSetChanged()
+//                }
+//            }
+//        })
     }
 
     override fun setupLoading() {

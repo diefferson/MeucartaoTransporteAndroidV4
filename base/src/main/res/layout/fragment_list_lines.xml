@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-        <variable
-            name="viewModel"
-            type="br.com.disapps.meucartaotransporte.base.ui.lines.LinesViewModel"/>
-    </data>
-
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
         android:id="@+id/lines_recycler"
         android:layout_width="match_parent"
@@ -19,5 +14,4 @@
         app:fastScrollAutoHide="false"
         tools:listitem="@layout/item_line"
         tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
-
-</layout>
+</RelativeLayout>

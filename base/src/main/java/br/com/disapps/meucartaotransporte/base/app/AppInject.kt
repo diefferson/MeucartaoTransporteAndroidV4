@@ -28,13 +28,7 @@ import br.com.disapps.domain.interactor.shapes.SaveAllShapesJson
 import br.com.disapps.domain.repository.*
 import br.com.disapps.meucartaotransporte.base.exception.LogException
 import br.com.disapps.meucartaotransporte.base.executor.UIContext
-import br.com.disapps.meucartaotransporte.base.ui.cards.balance.BalanceViewModel
-import br.com.disapps.meucartaotransporte.base.ui.cards.extract.ExtractViewModel
-import br.com.disapps.meucartaotransporte.base.ui.cards.myCards.MyCardsViewModel
-import br.com.disapps.meucartaotransporte.base.ui.cards.quickFind.QuickFindViewModel
-import br.com.disapps.meucartaotransporte.base.ui.cards.registerCard.RegisterCardViewModel
 import br.com.disapps.meucartaotransporte.base.ui.common.BaseViewModel
-import br.com.disapps.meucartaotransporte.base.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.base.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.base.ui.line.itineraries.ItinerariesViewModel
 import br.com.disapps.meucartaotransporte.base.ui.line.itineraries.itineraryDirection.ItineraryDirectionViewModel
@@ -42,12 +36,7 @@ import br.com.disapps.meucartaotransporte.base.ui.line.nextSchedules.NextSchedul
 import br.com.disapps.meucartaotransporte.base.ui.line.nextSchedules.nextSchedulesDay.NextSchedulesDayViewModel
 import br.com.disapps.meucartaotransporte.base.ui.line.shapes.ShapesViewModel
 import br.com.disapps.meucartaotransporte.base.ui.lines.LinesViewModel
-import br.com.disapps.meucartaotransporte.base.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.base.ui.schedules.SchedulesViewModel
-import br.com.disapps.meucartaotransporte.base.ui.settings.SettingsViewModel
-import br.com.disapps.meucartaotransporte.base.ui.settings.dataUsage.DataUsageViewModel
-import br.com.disapps.meucartaotransporte.base.widgets.busSchedules.BusSchedulesWidgetViewModel
-import br.com.disapps.meucartaotransporte.base.widgets.cardBalance.CardBalanceWidgetViewModel
 import org.koin.android.architecture.ext.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
@@ -84,23 +73,23 @@ object AppInject {
         viewModel { BaseViewModel() }
         viewModel { ItinerariesViewModel( getItineraryDirectionsUseCase = get(), getIsDownloadedCwbItinerariesUseCase = get(), getIsDownloadedMetropolitanItinerariesUseCase = get()) }
         viewModel { LinesViewModel( getLinesUseCase = get(), updateLineUseCase =  get()) }
-        viewModel { MainViewModel( getInitialScreenUseCase = get(), getIsProUseCase = get(), setIsProUseCase = get()) }
-        viewModel { QuickFindViewModel() }
-        viewModel { SettingsViewModel( getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
+//        viewModel { MainViewModel( getInitialScreenUseCase = get(), getIsProUseCase = get(), setIsProUseCase = get()) }
+//        viewModel { QuickFindViewModel() }
+//        viewModel { SettingsViewModel( getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
         viewModel { ShapesViewModel( getShapesUseCase = get(), getAllItinerariesUseCase = get(), getAllBusesUseCase = get(), getIsDownloadedCwbShapesUseCase = get(), getIsDownloadedMetropolitanShapesUseCase = get()) }
-        viewModel { MyCardsViewModel( getCardsUseCase = get(), deleteCardUseCase =  get()) }
-        viewModel { BalanceViewModel( getCardUseCase = get(), updateCard = get()) }
-        viewModel { RegisterCardViewModel( hasCardUseCase = get(), saveCardUseCase =  get(), getCardUseCase =  get()) }
-        viewModel { ExtractViewModel( getExtractUseCase = get(), updateCard = get() ) }
-        viewModel { IntroViewModel( saveAllLinesJsonUseCase = get(),saveAllSchedulesJsonUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
+//        viewModel { MyCardsViewModel( getCardsUseCase = get(), deleteCardUseCase =  get()) }
+//        viewModel { BalanceViewModel( getCardUseCase = get(), updateCard = get()) }
+//        viewModel { RegisterCardViewModel( hasCardUseCase = get(), saveCardUseCase =  get(), getCardUseCase =  get()) }
+//        viewModel { ExtractViewModel( getExtractUseCase = get(), updateCard = get() ) }
+//        viewModel { IntroViewModel( saveAllLinesJsonUseCase = get(),saveAllSchedulesJsonUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
         viewModel { LineViewModel( updateLineUseCase = get()) }
         viewModel { NextSchedulesViewModel( getLineScheduleDaysUseCase = get()) }
         viewModel { NextSchedulesDayViewModel( getLineSchedulesUseCase = get()) }
         viewModel { SchedulesViewModel( getAllPointSchedulesUseCase = get()) }
-        viewModel { DataUsageViewModel( getDataUsageUseCase = get()) }
+        //viewModel { DataUsageViewModel( getDataUsageUseCase = get()) }
         viewModel { ItineraryDirectionViewModel(getItineraryUseCase = get()) }
-        viewModel { CardBalanceWidgetViewModel(getCardsUseCase = get()) }
-        viewModel { BusSchedulesWidgetViewModel(getLinesUseCase = get(), getLineSchedulesUseCase = get()) }
+//        viewModel { CardBalanceWidgetViewModel(getCardsUseCase = get()) }
+//        viewModel { BusSchedulesWidgetViewModel(getLinesUseCase = get(), getLineSchedulesUseCase = get()) }
     }
 
 

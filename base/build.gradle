@@ -29,9 +29,7 @@ android {
         release {
         }
     }
-    dataBinding {
-        enabled = true
-    }
+
     dexOptions {
         preDexLibraries = false
         dexInProcess = false
@@ -49,17 +47,10 @@ kotlin {
     }
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-
-
 dependencies {
-    application project(':installed')
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
+    api 'com.android.support:appcompat-v7:27.1.1'
     api project(':domain')
     api project(':data')
     api 'com.android.support:multidex:1.0.3'
@@ -116,9 +107,9 @@ dependencies {
         exclude module: 'recyclerview-v7'
         exclude module: 'design'
     }
-    //ads
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation fileTree(include: ['*.aar'], dir: 'libs/aar')
+
+    application project(':installed')
+    feature project(":cards")
 }
 
 apply plugin: 'com.google.gms.google-services'

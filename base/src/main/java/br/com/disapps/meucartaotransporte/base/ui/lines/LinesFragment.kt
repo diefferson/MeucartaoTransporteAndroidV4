@@ -10,7 +10,6 @@ import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.base.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.base.ui.line.LineActivity
-import br.com.disapps.meucartaotransporte.base.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.base.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_lines.*
 import org.koin.android.architecture.ext.sharedViewModel
@@ -24,7 +23,7 @@ class LinesFragment : BaseFragment() {
 
     override val viewModel by sharedViewModel<LinesViewModel>()
     override val fragmentLayout = R.layout.fragment_lines
-    private val mainViewModel by sharedViewModel<MainViewModel>()
+    //private val mainViewModel by sharedViewModel<MainViewModel>()
     override val fragmentTag = "LinesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,17 +67,17 @@ class LinesFragment : BaseFragment() {
             iAppActivityListener.setupTabs(view_pager)
         })
 
-        mainViewModel.onSearchAction.observe(this, Observer {
-            if(it!= null && it){
-                if(view_pager.adapter != null){
-                    if((view_pager.adapter as LinesPageAdapter).hasFavorite){
-                        view_pager.currentItem = 1
-                    }else{
-                        view_pager.currentItem = 0
-                    }
-                }
-            }
-        })
+//        mainViewModel.onSearchAction.observe(this, Observer {
+//            if(it!= null && it){
+//                if(view_pager.adapter != null){
+//                    if((view_pager.adapter as LinesPageAdapter).hasFavorite){
+//                        view_pager.currentItem = 1
+//                    }else{
+//                        view_pager.currentItem = 0
+//                    }
+//                }
+//            }
+//        })
     }
 
     override fun setupLoading() {
