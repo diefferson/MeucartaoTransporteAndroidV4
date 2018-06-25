@@ -25,12 +25,12 @@ class SchedulesDataRepository( private val schedulesDataSourceFactory: Schedules
     }
 
     override suspend fun getLineSchedulesDays(codeLine: String): List<Int> {
-        return schedulesDataSourceFactory.create().getLineSchedulesDays(codeLine)
+        return schedulesDataSourceFactory.create(true).getLineSchedulesDays(codeLine)
     }
 
     override suspend fun getLineSchedules(codeLine: String, day: Int): List<LineSchedule> {
         return schedulesDataSourceFactory
-                .create()
+                .create(true)
                 .getLineSchedules(codeLine, day)
                 .map{ it.toLineScheduleBO()}
     }

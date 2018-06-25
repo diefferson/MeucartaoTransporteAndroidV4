@@ -70,6 +70,7 @@ dependencies {
     testImplementation dataTestDependencies.mockito
     testImplementation dataTestDependencies.assertj
     testImplementation dataTestDependencies.robolectric
+    implementation dataDependencies.firebaseDatabase
     implementation dataDependencies.kotlin
     implementation dataDependencies.coroutines
     implementation dataDependencies.okHttp

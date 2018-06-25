@@ -5,11 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.os.Environment
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
-import android.util.Log
 import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.BuildConfig
 import br.com.disapps.meucartaotransporte.R
@@ -30,15 +28,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
 import org.koin.android.architecture.ext.viewModel
-import android.databinding.adapters.NumberPickerBindingAdapter.setValue
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
-
-
-
 
 
 class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastListener{
@@ -64,24 +53,6 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         viewModel.getInitialScreen()
-
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("message")
-
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                val value = dataSnapshot.getValue(String::class.java)
-                Log.d("DATABASE", "Value is: " + value!!)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-                Log.w("DATABASE", "Failed to read value.", error.toException())
-            }
-        })
-
     }
 
     private fun observeViewModel(savedInstanceState: Bundle?) {

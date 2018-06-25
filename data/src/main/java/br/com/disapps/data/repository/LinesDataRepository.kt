@@ -32,14 +32,15 @@ class LinesDataRepository(private val linesDataSourceFactory: LinesDataSourceFac
 
     override suspend fun lines(): List<Line> {
         return linesDataSourceFactory
-                .create()
+                .create(true)
                 .lines()
                 .map{ it.toLineBO() }
+                .sortedBy { it.name }
     }
 
     override suspend fun line(line : Line): Line{
         return linesDataSourceFactory
-                .create()
+                .create(true)
                 .line(line.toLineDTO())
                 .toLineBO()
     }

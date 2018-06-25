@@ -128,6 +128,7 @@ ext {
             retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             retrofitConverter:  "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
             retrofitAdapter:    "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+            firebaseDatabase:           "com.google.firebase:firebase-database:${firebaseDatabaseVersion}",
     ]
 
     dataTestDependencies = [
