@@ -259,7 +259,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
             PermissionsUtils.ACCESS_LOCATION_CODE
             -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 googleMap.isMyLocationEnabled = true
-            } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
+            } else if (Build.VERSION.SDK_INT >= 23 && permissions.isNotEmpty() && !shouldShowRequestPermissionRationale(permissions[0])) {
                 Toast.makeText(activity!!, getString(R.string.error_show_location), Toast.LENGTH_LONG).show()
             } else {
                 /*Usuario negou a permissão*/

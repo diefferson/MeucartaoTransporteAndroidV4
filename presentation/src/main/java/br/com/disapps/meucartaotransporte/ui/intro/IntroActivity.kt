@@ -101,7 +101,7 @@ class IntroActivity : BaseActivity(){
 
                 setupUpdate()
 
-            } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
+            } else if (Build.VERSION.SDK_INT >= 23 && permissions.isNotEmpty() && !shouldShowRequestPermissionRationale(permissions[0])) {
                 /*Usuario marcou opção não perguntar novamente*/
                 AlertDialog.Builder(this).apply {
                     setTitle(getString(R.string.necessary_permission))

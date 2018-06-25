@@ -1,69 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel"/>
-    </data>
-
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/card_code_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            style="@style/AppTheme.InputLayout">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/card_code_container"
+            <EditText
+                android:id="@+id/card_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/AppTheme.InputLayout"
-                app:error="@{!viewModel.isValidCode ? @string/invalid_code : null}">
+                android:hint="@string/card_code"
+                android:inputType="number"
+                android:maxLength="10"
+                android:focusable="true"
+                android:nextFocusForward="@id/card_cpf"/>
 
-                <EditText
-                    android:id="@+id/card_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={viewModel.code}"
-                    android:hint="@string/card_code"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:focusable="true"
-                    android:nextFocusForward="@id/card_cpf"/>
+        </android.support.design.widget.TextInputLayout>
 
-            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/card_cpf_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/AppTheme.InputLayout">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/card_cpf_container"
+            <EditText
+                android:id="@+id/card_cpf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/AppTheme.InputLayout"
-                app:error="@{!viewModel.isValidCpf ? @string/invalid_cpf : null}">
+                android:ems="10"
+                android:hint="@string/cpf"
+                android:inputType="number"
+                android:maxLength="11"
+                android:focusable="true"
+                android:imeOptions="actionDone"/>
 
-                <EditText
-                    android:id="@+id/card_cpf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:text="@={viewModel.cpf}"
-                    android:hint="@string/cpf"
-                    android:inputType="number"
-                    android:maxLength="11"
-                    android:focusable="true"
-                    android:imeOptions="actionDone"/>
+        </android.support.design.widget.TextInputLayout>
 
-            </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/btn_quick_find"
+            style="@style/AppTheme.Button"
+            android:text="@string/consult" />
 
-            <Button
-                android:id="@+id/btn_quick_find"
-                style="@style/AppTheme.Button"
-                android:text="@string/consult" />
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-</layout>
+</android.support.v4.widget.NestedScrollView>

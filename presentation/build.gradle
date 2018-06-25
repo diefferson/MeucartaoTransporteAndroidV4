@@ -36,9 +36,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled = true
-    }
+
     dexOptions {
         preDexLibraries = false
         dexInProcess = false

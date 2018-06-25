@@ -1,14 +1,11 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
 import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.ViewGroup
-import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import com.appodeal.ads.Appodeal
@@ -20,11 +17,10 @@ abstract class BaseActivity: AppCompatActivity(){
 
     abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
-    private var binding: ViewDataBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initDataBinding()
+        setContentView(activityLayout)
         setupLoading()
         setupError()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -44,12 +40,6 @@ abstract class BaseActivity: AppCompatActivity(){
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun initDataBinding(){
-        binding = DataBindingUtil.setContentView(this,activityLayout )
-        binding?.setVariable(BR.viewModel, viewModel)
-        binding?.setLifecycleOwner(this)
     }
 
     open fun setupLoading(){

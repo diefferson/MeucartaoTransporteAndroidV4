@@ -1,5 +1,6 @@
 package br.com.disapps.meucartaotransporte.ui.settings
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -28,7 +29,11 @@ class SettingsFragment : BaseFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iAppActivityListener.setTitle(getString(R.string.settings))
+        observeViewModel()
+        setupClickListeners()
+    }
 
+    private fun setupClickListeners() {
         help.setOnClickListener { HelpActivity.launch(context!!) }
         initial_screen.setOnClickListener { initialScreen() }
         share.setOnClickListener { shareIt() }
@@ -39,6 +44,12 @@ class SettingsFragment : BaseFragment(){
     override fun onResume() {
         super.onResume()
         viewModel.getInitialScreen()
+    }
+
+    private fun observeViewModel(){
+        viewModel.initialScreen.observe(this, Observer {
+            initial_screen_value.text = it
+        })
     }
 
     private fun initialScreen() {
