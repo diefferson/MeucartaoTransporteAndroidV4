@@ -15,8 +15,6 @@ import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesPrefe
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.LinesListAdapter
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.StopsListAdapter
-import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget
-import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidgetConfigureActivity
 import kotlinx.android.synthetic.main.bus_schedules_widget_configure.*
 import org.koin.android.architecture.ext.viewModel
 

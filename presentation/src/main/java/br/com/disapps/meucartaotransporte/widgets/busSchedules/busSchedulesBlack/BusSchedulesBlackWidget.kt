@@ -1,5 +1,7 @@
 package br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -10,10 +12,6 @@ import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidge
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidgetConfigureActivity.Companion.PREFS_NAME
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidgetConfigureActivity.Companion.PREF_PREFIX_KEY
-import android.os.SystemClock
-import android.app.AlarmManager
-import android.app.PendingIntent
-
 
 
 /**

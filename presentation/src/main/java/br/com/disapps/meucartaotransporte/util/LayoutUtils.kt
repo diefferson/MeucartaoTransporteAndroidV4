@@ -12,9 +12,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.exception.UiException
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import com.airbnb.lottie.LottieAnimationView
-import com.appodeal.ads.Appodeal
-import com.appodeal.ads.native_ad.views.NativeAdViewContentStream
-import com.appodeal.ads.native_ad.views.NativeAdViewNewsFeed
+
 
 fun Activity.getErrorView(uiException: UiException) :View{
     val rootView = this.findViewById<ViewGroup>(android.R.id.content)
@@ -142,26 +140,4 @@ fun Activity.getOfflineView():View{
     })
 
     return view
-}
-
-fun Activity.getAdViewContentStream(): View {
-    Appodeal.cache(this, Appodeal.NATIVE)
-    val nativeAdView = NativeAdViewContentStream(this)
-    val nativeAd = Appodeal.getNativeAds(1)
-    if(nativeAd.size >0){
-         nativeAdView.setNativeAd(nativeAd[0])
-    }
-    Appodeal.cache(this, Appodeal.NATIVE)
-    return nativeAdView
-}
-
-fun Activity.getAdViewNewsFeed(): View {
-    Appodeal.cache(this, Appodeal.NATIVE)
-    val adView = NativeAdViewNewsFeed(this)
-    val nativeAd = Appodeal.getNativeAds(1)
-    if(nativeAd.size >0){
-        adView.setNativeAd(nativeAd[0])
-    }
-    Appodeal.cache(this, Appodeal.NATIVE)
-    return adView
 }

@@ -15,7 +15,10 @@ import android.widget.Toast
 import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.app.App
-import br.com.disapps.meucartaotransporte.services.*
+import br.com.disapps.meucartaotransporte.services.DownloadItinerariesService
+import br.com.disapps.meucartaotransporte.services.DownloadLinesService
+import br.com.disapps.meucartaotransporte.services.DownloadSchedulesService
+import br.com.disapps.meucartaotransporte.services.DownloadShapesService
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.PermissionsUtils
 import kotlinx.android.synthetic.main.activity_data_usage.*

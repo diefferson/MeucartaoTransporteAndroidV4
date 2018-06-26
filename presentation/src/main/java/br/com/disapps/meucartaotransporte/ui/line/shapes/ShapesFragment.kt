@@ -14,10 +14,10 @@ import br.com.disapps.domain.model.Bus
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.getAllCoordinates
 import br.com.disapps.meucartaotransporte.model.getLatLng
+import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.util.*
-import com.appodeal.ads.Appodeal
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -103,7 +103,9 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         googleMap = p0
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_json))
         observeViewModel()
-        Appodeal.show(activity!!, Appodeal.INTERSTITIAL)
+        if ((activity as BaseActivity).mInterstitialAd.isLoaded) {
+            (activity as BaseActivity).mInterstitialAd.show()
+        }
     }
 
     private fun observeViewModel(){

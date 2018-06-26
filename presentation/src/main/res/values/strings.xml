@@ -190,6 +190,8 @@
     <string name="select_a_stop">Selecione um ponto</string>
     <string name="widgets">Widgets</string>
     <string name="premium_only">Exclusivo usuário premium.</string>
+    <string name="thanks_pro">Obrigado por ser Premium!</string>
+    <string name="see_widgets">Já viu nossos widgets?</string>
 
 
 </resources>

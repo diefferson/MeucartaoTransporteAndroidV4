@@ -9,6 +9,10 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.app.App
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.InterstitialAd
 import java.text.Normalizer
 
 
@@ -115,4 +119,16 @@ fun Context.getCustomChromeTabs(): CustomTabsIntent {
         setExitAnimations(this@getCustomChromeTabs, R.anim.slide_in_left, R.anim.slide_out_right)
         setShowTitle(true)
     }.build()
+}
+
+fun AdView.loadAdIfIsPro(){
+    if(App.instance!= null && !App.instance!!.preferences.getIsProSync()){
+        this.loadAd(AdRequest.Builder().build())
+    }
+}
+
+fun InterstitialAd.loadAdIfIsPro(){
+    if(App.instance!= null && !App.instance!!.preferences.getIsProSync()){
+        this.loadAd(AdRequest.Builder().build())
+    }
 }

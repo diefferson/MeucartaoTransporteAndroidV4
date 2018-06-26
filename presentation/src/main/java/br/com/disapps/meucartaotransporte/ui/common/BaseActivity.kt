@@ -8,7 +8,9 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import com.appodeal.ads.Appodeal
+import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.InterstitialAd
 
 /**
  * Created by diefferson on 09/03/2018.
@@ -17,6 +19,7 @@ abstract class BaseActivity: AppCompatActivity(){
 
     abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
+    lateinit var mInterstitialAd: InterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +27,18 @@ abstract class BaseActivity: AppCompatActivity(){
         setupLoading()
         setupError()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initInterstitialAd()
     }
 
-    override fun onResume() {
-        super.onResume()
-        Appodeal.cache(this, Appodeal.NATIVE)
+    private fun initInterstitialAd() {
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = getString(R.string.ad_interstitial_id)
+        mInterstitialAd.loadAdIfIsPro()
+        mInterstitialAd.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                mInterstitialAd.loadAdIfIsPro()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

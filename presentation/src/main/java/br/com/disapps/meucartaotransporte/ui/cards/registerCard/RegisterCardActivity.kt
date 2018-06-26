@@ -13,7 +13,6 @@ import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.*
-import com.appodeal.ads.Appodeal
 import kotlinx.android.synthetic.main.activity_register_card.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -144,7 +143,9 @@ class RegisterCardActivity : BaseActivity(){
                 val loadingView = getLoadingView()
                 result_container.removeAllViews()
                 if(it){
-                    Appodeal.show(this, Appodeal.INTERSTITIAL)
+                    if (mInterstitialAd.isLoaded) {
+                        mInterstitialAd.show()
+                    }
                     content.visibility = View.INVISIBLE
                     result_container.addView(loadingView)
                     result_container.visibility = View.VISIBLE

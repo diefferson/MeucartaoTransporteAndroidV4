@@ -27,15 +27,6 @@ fun Activity.hideKeyboard() {
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-@Suppress("DEPRECATION")
-fun fromHtml(html: String): Spanned {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
-    } else {
-        Html.fromHtml(html)
-    }
-}
-
 fun Activity.inflateView(resource: Int, viewGroup: View, attachToRoot : Boolean = false): View =
         layoutInflater.inflate(resource, viewGroup.parent as ViewGroup, attachToRoot)
 

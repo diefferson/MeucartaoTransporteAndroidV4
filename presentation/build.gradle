@@ -89,6 +89,7 @@ dependencies {
     implementation presentationDependencies.playServicesAds
     implementation presentationDependencies.jobDispatcher
 
+    implementation 'com.google.firebase:firebase-ads:15.0.0'
     kapt presentationDependencies.archCompiler
     implementation presentationDependencies.customtabs
     implementation(presentationDependencies.fabric) {
@@ -120,9 +121,6 @@ dependencies {
         exclude module: 'recyclerview-v7'
         exclude module: 'design'
     }
-    //ads
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation fileTree(include: ['*.aar'], dir: 'libs/aar')
 }
 
 apply plugin: 'com.google.gms.google-services'

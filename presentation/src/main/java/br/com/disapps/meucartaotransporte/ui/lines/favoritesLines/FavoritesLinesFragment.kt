@@ -31,7 +31,9 @@ class FavoritesLinesFragment : BaseFragment() {
                 }
             }
             setOnItemClickListener { _, view, position ->
-                LineActivity.launch(context!!, parentFragment,getLine(position).line, view.findViewById(R.id.roundedImage))
+                if(getLine(position).type == LinesListAdapter.ListItem.LINE_ITEM){
+                    LineActivity.launch(context!!, parentFragment, getLine(position).line, view.findViewById(R.id.roundedImage))
+                }
             }
         }
     }

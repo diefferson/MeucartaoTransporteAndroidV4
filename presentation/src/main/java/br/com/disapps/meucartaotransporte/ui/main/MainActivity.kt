@@ -5,13 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.os.Environment
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
 import android.util.Log
 import android.widget.FrameLayout
-import br.com.disapps.meucartaotransporte.BuildConfig
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.InAppBillingStatus
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
@@ -24,8 +22,8 @@ import br.com.disapps.meucartaotransporte.util.iab.IabBroadcastReceiver
 import br.com.disapps.meucartaotransporte.util.iab.IabHelper
 import br.com.disapps.meucartaotransporte.util.iab.IabResult
 import br.com.disapps.meucartaotransporte.util.toast
-import com.appodeal.ads.Appodeal
-import com.appodeal.ads.InterstitialCallbacks
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_tabs.*
@@ -42,19 +40,20 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
     private var fragmentSelected = 0
     private var gettingOut = false
 
+
     internal var mBroadcastReceiver: IabBroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initAppodeal()
         initInAppBilling()
+        MobileAds.initialize(applicationContext, getString(R.string.ad_app_id))
+
         observeViewModel(savedInstanceState)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         viewModel.getInitialScreen()
-
     }
 
     private fun observeViewModel(savedInstanceState: Bundle?) {
@@ -65,9 +64,9 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
 
         viewModel.isPro.observe(this, Observer {
             if (it != null && it) {
-                Appodeal.setCustomRule(MainViewModel.SKU_PRO, true)
+
             } else {
-                Appodeal.setCustomRule(MainViewModel.SKU_PRO, false)
+
             }
         })
 
@@ -83,12 +82,6 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
         })
     }
 
-    private fun initAppodeal() {
-        Appodeal.setAutoCacheNativeIcons(true)
-        Appodeal.setAutoCacheNativeMedia(false)
-        Appodeal.initialize(this, BuildConfig.APPODEAL_APPKEY, Appodeal.INTERSTITIAL or Appodeal.BANNER or Appodeal.NATIVE or Appodeal.MREC)
-    }
-
     override fun onBackPressed() {
         if(toolbar.isSearchExpanded){
             toolbar.onBackPressed()
@@ -97,17 +90,17 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
                 super.onBackPressed()
             }else{
                 gettingOut = true
+                if (mInterstitialAd.isLoaded) {
+                    mInterstitialAd.show()
+                } else {
+                    Log.d("ADS", "The interstitial wasn't loaded yet.")
+                }
                 toast(getString(R.string.press_to_exit))
-                Appodeal.show(this, Appodeal.INTERSTITIAL)
-                Appodeal.setInterstitialCallbacks(object : InterstitialCallbacks {
-                    override fun onInterstitialLoaded(b: Boolean) {}
-                    override fun onInterstitialFailedToLoad() {}
-                    override fun onInterstitialShown() {}
-                    override fun onInterstitialClicked() {}
-                    override fun onInterstitialClosed() {
+                mInterstitialAd.adListener = object: AdListener() {
+                    override fun onAdClosed() {
                         finish()
                     }
-                })
+                }
             }
         }
     }

@@ -2,9 +2,9 @@ package br.com.disapps.meucartaotransporte.ui.custom.animateCircleLoadingView.co
 
 import android.content.Context
 import android.graphics.Color
+import android.support.v7.widget.AppCompatTextView
 import android.view.Gravity
 import android.view.animation.AlphaAnimation
-import android.support.v7.widget.AppCompatTextView
 
 /**
  * @author jlmd

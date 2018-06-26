@@ -6,12 +6,10 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
 import android.widget.RemoteViews
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetUtils
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
-import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidgetConfigureActivity.Companion.PREFS_NAME
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidgetConfigureActivity.Companion.PREF_PREFIX_KEY
 

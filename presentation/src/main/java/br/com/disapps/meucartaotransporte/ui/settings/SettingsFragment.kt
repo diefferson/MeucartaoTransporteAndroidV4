@@ -2,11 +2,14 @@ package br.com.disapps.meucartaotransporte.ui.settings
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.View
 import br.com.disapps.domain.model.InitialScreen
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
@@ -31,6 +34,13 @@ class SettingsFragment : BaseFragment(){
         iAppActivityListener.setTitle(getString(R.string.settings))
         observeViewModel()
         setupClickListeners()
+
+        if(App.instance!= null && App.instance!!.preferences.getIsProSync()){
+            remove_ads.setText(R.string.thanks_pro)
+            see_widgets.visibility = View.VISIBLE
+            remove_ads.setTextColor(ContextCompat.getColor(context!!, R.color.colorAccent))
+            remove_ads.setOnClickListener {}
+        }
     }
 
     private fun setupClickListeners() {

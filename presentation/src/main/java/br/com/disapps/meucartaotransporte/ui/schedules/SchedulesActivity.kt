@@ -8,11 +8,11 @@ import android.support.v7.widget.GridLayoutManager
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.getAdViewContentStream
 import br.com.disapps.meucartaotransporte.util.getCustomTheme
 import br.com.disapps.meucartaotransporte.util.getDayName
 import br.com.disapps.meucartaotransporte.util.getEmptyView
-import com.appodeal.ads.Appodeal
+import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
+import com.google.android.gms.ads.AdRequest
 import kotlinx.android.synthetic.main.activity_schedules.*
 import kotlinx.android.synthetic.main.include_toolbar_schedules.*
 import org.koin.android.architecture.ext.viewModel
@@ -40,7 +40,12 @@ class SchedulesActivity : BaseActivity (){
 
         initRecyclerView()
         observeViewModel()
-        Appodeal.show(this, Appodeal.INTERSTITIAL)
+        if (mInterstitialAd.isLoaded) {
+            mInterstitialAd.show()
+        }
+
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAdIfIsPro()
     }
 
     override fun onResume() {
@@ -62,7 +67,6 @@ class SchedulesActivity : BaseActivity (){
             adapter.apply {
                 setNewData(it)
                 emptyView = getEmptyView(getString(R.string.no_results))
-                setFooterView(getAdViewContentStream())
             }
         })
     }

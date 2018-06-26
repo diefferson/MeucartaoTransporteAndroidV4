@@ -9,7 +9,6 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.*
-import com.appodeal.ads.Appodeal
 import kotlinx.android.synthetic.main.activity_balance.*
 import org.koin.android.architecture.ext.viewModel
 
@@ -23,7 +22,9 @@ class BalanceActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         initRecyclerView()
         observeViewModel()
-        Appodeal.show(this, Appodeal.INTERSTITIAL)
+        if (mInterstitialAd.isLoaded) {
+            mInterstitialAd.show()
+        }
     }
 
     override fun recreate() {

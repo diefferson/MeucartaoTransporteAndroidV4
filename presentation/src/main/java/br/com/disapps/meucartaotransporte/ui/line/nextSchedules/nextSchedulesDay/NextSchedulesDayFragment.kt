@@ -12,7 +12,6 @@ import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
-import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.architecture.ext.sharedViewModel
 import org.koin.android.architecture.ext.viewModel
 
@@ -26,6 +25,7 @@ class NextSchedulesDayFragment : BaseFragment(){
     private val adapter:NextScheduleDayListAdapter by lazy {
         NextScheduleDayListAdapter(ArrayList(), activity!!).apply {
             setOnItemClickListener { _, _, position ->
+                if(adapter.getItem(position)!!.type == NextScheduleDayListAdapter.ListItem.LINE_SCHEDULE_ITEM){
                     SchedulesActivity.launch(context!!, SchedulesDetail(
                             lineCode = getLineSchedule(position).lineCode,
                             day =  getLineSchedule(position).day,
@@ -33,6 +33,7 @@ class NextSchedulesDayFragment : BaseFragment(){
                             busStopCode = getLineSchedule(position).busStopCode,
                             lineColor = lineViewModel.line.color
                     ))
+                }
             }
         }
     }

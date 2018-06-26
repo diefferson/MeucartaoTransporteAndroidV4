@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.R
-import com.appodeal.ads.Appodeal
 
 /**
  * Created by diefferson on 29/11/2017.
@@ -30,11 +29,6 @@ abstract class BaseFragment : Fragment() {
         setupLoading()
         setupError()
         return view
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Appodeal.cache(activity!!, Appodeal.NATIVE)
     }
 
     open fun setupLoading(){

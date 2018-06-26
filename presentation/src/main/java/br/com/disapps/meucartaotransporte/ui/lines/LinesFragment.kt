@@ -14,7 +14,6 @@ import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_lines.*
 import org.koin.android.architecture.ext.sharedViewModel
-import org.koin.android.architecture.ext.viewModel
 
 class LinesFragment : BaseFragment() {
 

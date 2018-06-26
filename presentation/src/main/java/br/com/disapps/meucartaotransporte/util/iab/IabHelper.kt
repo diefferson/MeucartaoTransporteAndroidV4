@@ -20,7 +20,6 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender.SendIntentException
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.Handler
@@ -28,7 +27,6 @@ import android.os.IBinder
 import android.os.RemoteException
 import android.text.TextUtils
 import android.util.Log
-import android.widget.Toast
 import br.com.disapps.meucartaotransporte.BuildConfig
 import com.android.vending.billing.IInAppBillingService
 import org.json.JSONException
