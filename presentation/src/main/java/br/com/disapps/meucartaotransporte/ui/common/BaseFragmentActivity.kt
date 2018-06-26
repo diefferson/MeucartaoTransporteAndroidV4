@@ -60,6 +60,8 @@ abstract class BaseFragmentActivity: BaseActivity(),
         tabs.setupWithViewPager(viewPager, false)
         if(scrollable){
             tabs.tabMode = TabLayout.MODE_SCROLLABLE
+        }else{
+            tabs.tabMode = TabLayout.MODE_FIXED
         }
     }
 
