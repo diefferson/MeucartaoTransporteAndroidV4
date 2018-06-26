@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
 
 def versionMajor = 4
 def versionMinor = 0
@@ -18,10 +17,8 @@ android {
         versionCode versionMajor * 1000000 + versionMinor * 1000 + versionPatch * 100
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        multiDexEnabled true
         buildConfigField 'String', 'GOOGLE_PLAY_PUB_KEY', "\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqW3dO9Bvfme9nBzVl9tUAKTBFbr6cC20GGmxWFrpcUp5dtdbzdKv7GinkKbMLwe7Ymxz0LupkqMTQmXL3Pc0R0jtYrYpOnrSSYP6i2u3Ln/uMxaOe4D68+nsJHRBylNesGsX61FQrY0PNXyGBoZ5yU6/8F9mPmDpQ00CM+ERVtSc2ZpXyMeBEVobsqpRkbpk3hO/7cxmeHDzhS17C7KNxAcaZrgjfazl0AjXAOjPtXdCYwm+lQnd/5DmqhJwYeoO59gd9gYbjt4orVrDFRMQReJNiKUlHQOr18fIzL+Y/GLE2os0vZhHZ+30kVpkTca5uv6nesTGw8+CpvwuBtCDSwIDAQAB\""
         buildConfigField 'String', 'BILLING_PACKAGE', "\"br.com.disapps.meucartaotransporte\""
-        buildConfigField 'String', 'APPODEAL_APPKEY', "\"83afaed2b8417ec012d70d06673c5cfc69d403fdab1e34a4\""
     }
     buildTypes {
         release {
@@ -37,11 +34,6 @@ android {
         }
     }
 
-    dexOptions {
-        preDexLibraries = false
-        dexInProcess = false
-        javaMaxHeapSize "4g"
-    }
     packagingOptions {
         exclude 'publicsuffixes.gz'
         exclude 'META-INF/rxjava.properties'
@@ -54,19 +46,11 @@ kotlin {
     }
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-
-
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
     implementation project(':domain')
     implementation project(':data')
-    implementation 'com.android.support:multidex:1.0.3'
     implementation presentationDependencies.appCompatV7
     implementation presentationDependencies.supportV4
     implementation presentationDependencies.supportDesign
@@ -80,21 +64,19 @@ dependencies {
     implementation presentationDependencies.archExtensions
     implementation presentationDependencies.baseRecyclerView
     implementation presentationDependencies.recyclerviewFastscroll
-    implementation presentationDependencies.pageIndicatorVersion
     implementation presentationDependencies.lottie
     implementation presentationDependencies.firebaseCore
     implementation presentationDependencies.firebaseMessaging
+    implementation presentationDependencies.firebaseAds
     implementation presentationDependencies.playServicesLocation
     implementation presentationDependencies.playServicesMap
-    implementation presentationDependencies.playServicesAds
     implementation presentationDependencies.jobDispatcher
-
-    implementation 'com.google.firebase:firebase-ads:15.0.0'
-    kapt presentationDependencies.archCompiler
     implementation presentationDependencies.customtabs
-    implementation(presentationDependencies.fabric) {
-        transitive = true
-    }
+
+
+    kapt presentationDependencies.archCompiler
+
+
     // Instrumentation test dependencies
     testImplementation presentationTestDependencies.kotlinJUnit
     androidTestImplementation presentationTestDependencies.junit

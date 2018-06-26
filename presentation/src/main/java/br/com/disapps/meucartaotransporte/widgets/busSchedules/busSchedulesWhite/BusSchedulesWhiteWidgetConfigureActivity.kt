@@ -33,7 +33,7 @@ class BusSchedulesWhiteWidgetConfigureActivity : AppCompatActivity() {
 
     private val linesAdapter: LinesListAdapter by lazy{
         LinesListAdapter(ArrayList()).apply {
-            setOnItemClickListener { _, view, position ->
+            setOnItemClickListener { _, _, position ->
 
                 BusSchedulesPreferences.setLineCode(this@BusSchedulesWhiteWidgetConfigureActivity,
                         PREFS_NAME,

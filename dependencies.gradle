@@ -4,7 +4,6 @@ allprojects {
         jcenter()
         maven { url "https://mvnrepository.com"}
         maven { url "https://jitpack.io" }
-        maven { url 'https://maven.fabric.io/public' }
     }
 }
 
@@ -25,24 +24,16 @@ ext {
     archLifecycleVersion = "1.0.0"
     kotlinVersion = '1.2.30'
     recyclerViewVersion = '21.0.3'
-    rxJavaVersion = '2.0.2'
-    rxKotlinVersion = '2.1.0'
-    rxAndroidVersion = '2.0.1'
-    gsonVersion = '2.8.1'
     okHttpVersion = '3.8.1'
-    androidAnnotationsVersion = '21.0.3'
     retrofitVersion = '2.3.0'
-    roomVersion = '1.0.0-alpha6'
     constraintVersion= '1.0.2'
-    pageIndicatorVersion = '0.2.0'
     baseRecyclerViewVersion = '2.9.35'
-    materialScrollBarVersion = '13.2.3'
     recyclerviewFastscroll = '1.0.17'
     lottieVersion = '2.5.4'
     firebaseVersion = '15.0.2'
+    firebaseAdsVersion = '15.0.1'
     playServicesVersion = '15.0.0'
     coroutinesVersion = '0.22.5'
-    fabricVersion = '2.9.2@aar'
     jobDispatcherVersion = '0.8.5'
 
     //Testing
@@ -61,31 +52,29 @@ ext {
     runnerVersion = '0.5'
 
     presentationDependencies = [
-            appCompatV7:        "com.android.support:appcompat-v7:${supportLibraryVersion}",
-            supportV4:        "com.android.support:support-v4:${supportLibraryVersion}",
-            supportDesign:      "com.android.support:design:${supportLibraryVersion}",
-            constraintLayout:   "com.android.support.constraint:constraint-layout:${constraintVersion}",
-            cardView:           "com.android.support:cardview-v7:${supportLibraryVersion}",
-            vectorDrawable:     "com.android.support:support-vector-drawable:${supportLibraryVersion}",
-            archExtensions:     "android.arch.lifecycle:extensions:${archLifecycleVersion}",
-            archCompiler:       "android.arch.lifecycle:compiler:${archLifecycleVersion}",
-            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-            koin:               "org.koin:koin-android:${koinVersion}",
-            rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
-            koinArch:           "org.koin:koin-android-architecture:${koinVersion}",
-            baseRecyclerView:   "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
-            pageIndicatorVersion:  "com.romandanylyk:pageindicatorview:${pageIndicatorVersion}",
-            recyclerviewFastscroll:  "com.simplecityapps:recyclerview-fastscroll:${recyclerviewFastscroll}",
-            lottie:              "com.airbnb.android:lottie:${lottieVersion}",
-            customtabs:              "com.android.support:customtabs:${supportLibraryVersion}",
+            appCompatV7:            "com.android.support:appcompat-v7:${supportLibraryVersion}",
+            supportV4:              "com.android.support:support-v4:${supportLibraryVersion}",
+            supportDesign:          "com.android.support:design:${supportLibraryVersion}",
+            constraintLayout:       "com.android.support.constraint:constraint-layout:${constraintVersion}",
+            cardView:               "com.android.support:cardview-v7:${supportLibraryVersion}",
+            vectorDrawable:         "com.android.support:support-vector-drawable:${supportLibraryVersion}",
+            customtabs:             "com.android.support:customtabs:${supportLibraryVersion}",
+            archExtensions:         "android.arch.lifecycle:extensions:${archLifecycleVersion}",
+            archCompiler:           "android.arch.lifecycle:compiler:${archLifecycleVersion}",
+            kotlin:                 "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+            coroutinesAndroid:      "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
+            koin:                   "org.koin:koin-android:${koinVersion}",
+            koinArch:               "org.koin:koin-android-architecture:${koinVersion}",
+            baseRecyclerView:       "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
+            recyclerviewFastscroll: "com.simplecityapps:recyclerview-fastscroll:${recyclerviewFastscroll}",
+            lottie:                 "com.airbnb.android:lottie:${lottieVersion}",
             firebaseCore:           "com.google.firebase:firebase-core:${firebaseVersion}",
             firebaseMessaging:      "com.google.firebase:firebase-messaging:${firebaseVersion}",
+            firebaseAds:            "com.google.firebase:firebase-ads:${firebaseAdsVersion}",
             playServicesLocation:   "com.google.android.gms:play-services-location:${playServicesVersion}",
             playServicesMap:        "com.google.android.gms:play-services-maps:${playServicesVersion}",
             playServicesAds:        "com.google.android.gms:play-services-ads:${playServicesVersion}",
-            coroutinesAndroid:          "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
-            fabric:          "com.crashlytics.sdk.android:crashlytics:${fabricVersion}",
-            jobDispatcher:  "com.firebase:firebase-jobdispatcher:${jobDispatcherVersion}",
+            jobDispatcher:          "com.firebase:firebase-jobdispatcher:${jobDispatcherVersion}",
     ]
 
     presentationTestDependencies = [
@@ -105,7 +94,6 @@ ext {
 
     domainDependencies = [
             kotlin:             "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-            rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
             coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
     ]
 
@@ -118,14 +106,11 @@ ext {
 
     dataDependencies = [
             kotlin:             "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-            rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
             coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
             okHttp:             "com.squareup.okhttp3:okhttp:${okHttpVersion}",
             okHttpLogger:       "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
-            gson:               "com.google.code.gson:gson:${gsonVersion}",
             retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             retrofitConverter:  "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
-            retrofitAdapter:    "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
     ]
 
     dataTestDependencies = [

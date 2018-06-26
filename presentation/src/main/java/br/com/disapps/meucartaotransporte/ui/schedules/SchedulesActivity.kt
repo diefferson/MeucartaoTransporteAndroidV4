@@ -44,7 +44,6 @@ class SchedulesActivity : BaseActivity (){
             mInterstitialAd.show()
         }
 
-        val adRequest = AdRequest.Builder().build()
         adView.loadAdIfIsPro()
     }
 
