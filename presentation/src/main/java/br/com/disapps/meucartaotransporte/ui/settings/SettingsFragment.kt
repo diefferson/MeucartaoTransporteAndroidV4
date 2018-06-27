@@ -38,7 +38,7 @@ class SettingsFragment : BaseFragment(){
         observeViewModel()
         setupClickListeners()
 
-        if(App.instance!= null && !App.instance!!.preferences.getIsProSync()){
+        if(App.instance!= null && App.instance!!.preferences.getIsProSync()){
             remove_ads.setText(R.string.thanks_pro)
             see_widgets.setText(R.string.see_widgets)
             remove_ads.setTextColor(ContextCompat.getColor(context!!, R.color.colorAccent))
