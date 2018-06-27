@@ -7,9 +7,11 @@ import android.os.Build
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
+import android.util.Log
 import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.app.App
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.InterstitialAd
@@ -132,3 +134,20 @@ fun InterstitialAd.loadAdIfIsPro(){
         this.loadAd(AdRequest.Builder().build())
     }
 }
+
+fun showInterstitial( interstitialAd: InterstitialAd){
+    if(interstitialAd.isLoaded){
+        interstitialAd.show()
+    }else{
+        interstitialAd.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                interstitialAd.show()
+            }
+        }
+    }
+}
+
+fun Unit.testeFun(){
+    Log.i("", "")
+}
+

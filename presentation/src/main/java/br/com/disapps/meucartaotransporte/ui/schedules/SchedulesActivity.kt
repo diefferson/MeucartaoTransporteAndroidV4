@@ -5,14 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.model.SchedulesDetail
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.getCustomTheme
-import br.com.disapps.meucartaotransporte.util.getDayName
-import br.com.disapps.meucartaotransporte.util.getEmptyView
-import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
+import br.com.disapps.meucartaotransporte.util.*
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_schedules.*
 import kotlinx.android.synthetic.main.include_toolbar_schedules.*
 import org.koin.android.architecture.ext.viewModel
@@ -40,11 +41,18 @@ class SchedulesActivity : BaseActivity (){
 
         initRecyclerView()
         observeViewModel()
-        if (mInterstitialAd.isLoaded) {
-            mInterstitialAd.show()
-        }
+
+        showAds()
+    }
+
+    private fun showAds() {
+
+        showInterstitial(mInterstitialAd)
 
         adView.loadAdIfIsPro()
+        if (App.instance == null || App.instance!!.preferences.getIsProSync()) {
+            adView.visibility = View.GONE
+        }
     }
 
     override fun onResume() {

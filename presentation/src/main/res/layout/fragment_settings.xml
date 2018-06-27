@@ -75,8 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:text="@string/see_widgets"
+                android:text="@string/remove_ads_text"
                 style="@style/AppTheme.SettingsValue"/>
 
         </LinearLayout>

@@ -1,6 +1,6 @@
 package br.com.disapps.meucartaotransporte.app
 
-import android.app.Application
+import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatDelegate
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
@@ -12,7 +12,7 @@ import org.koin.log.EmptyLogger
  * Created by dnso on 08/03/2018.
  */
 
-class App : Application() {
+class App : MultiDexApplication() {
 
     private val database : Database by inject()
     val preferences :Preferences  by inject()

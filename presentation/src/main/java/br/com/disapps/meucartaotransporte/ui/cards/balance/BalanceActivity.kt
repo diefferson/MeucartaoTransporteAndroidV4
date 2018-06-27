@@ -22,9 +22,7 @@ class BalanceActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         initRecyclerView()
         observeViewModel()
-        if (mInterstitialAd.isLoaded) {
-            mInterstitialAd.show()
-        }
+        showInterstitial(mInterstitialAd)
     }
 
     override fun recreate() {

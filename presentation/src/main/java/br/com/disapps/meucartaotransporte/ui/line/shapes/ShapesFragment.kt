@@ -103,9 +103,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         googleMap = p0
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_json))
         observeViewModel()
-        if ((activity as BaseActivity).mInterstitialAd.isLoaded) {
-            (activity as BaseActivity).mInterstitialAd.show()
-        }
+        showInterstitial((activity as BaseActivity).mInterstitialAd)
     }
 
     private fun observeViewModel(){

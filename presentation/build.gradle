@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 def versionMajor = 4
 def versionMinor = 0
-def versionPatch = 11
+def versionPatch = 12
 
 android {
     compileSdkVersion 27
@@ -17,6 +17,7 @@ android {
         versionCode versionMajor * 1000000 + versionMinor * 1000 + versionPatch * 100
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled = true
         buildConfigField 'String', 'GOOGLE_PLAY_PUB_KEY', "\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqW3dO9Bvfme9nBzVl9tUAKTBFbr6cC20GGmxWFrpcUp5dtdbzdKv7GinkKbMLwe7Ymxz0LupkqMTQmXL3Pc0R0jtYrYpOnrSSYP6i2u3Ln/uMxaOe4D68+nsJHRBylNesGsX61FQrY0PNXyGBoZ5yU6/8F9mPmDpQ00CM+ERVtSc2ZpXyMeBEVobsqpRkbpk3hO/7cxmeHDzhS17C7KNxAcaZrgjfazl0AjXAOjPtXdCYwm+lQnd/5DmqhJwYeoO59gd9gYbjt4orVrDFRMQReJNiKUlHQOr18fIzL+Y/GLE2os0vZhHZ+30kVpkTca5uv6nesTGw8+CpvwuBtCDSwIDAQAB\""
         buildConfigField 'String', 'BILLING_PACKAGE', "\"br.com.disapps.meucartaotransporte\""
     }
@@ -32,6 +33,12 @@ android {
             testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        dexInProcess = false
+        javaMaxHeapSize "4g"
     }
 
     packagingOptions {
@@ -51,6 +58,7 @@ dependencies {
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
     implementation project(':domain')
     implementation project(':data')
+    implementation 'com.android.support:multidex:1.0.3'
     implementation presentationDependencies.appCompatV7
     implementation presentationDependencies.supportV4
     implementation presentationDependencies.supportDesign

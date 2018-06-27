@@ -17,6 +17,9 @@ import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.architecture.ext.sharedViewModel
 import org.koin.android.architecture.ext.viewModel
+import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
+import br.com.disapps.meucartaotransporte.util.showInterstitial
+import br.com.disapps.meucartaotransporte.util.testeFun
 
 
 /**
@@ -35,9 +38,9 @@ class SettingsFragment : BaseFragment(){
         observeViewModel()
         setupClickListeners()
 
-        if(App.instance!= null && App.instance!!.preferences.getIsProSync()){
+        if(App.instance!= null && !App.instance!!.preferences.getIsProSync()){
             remove_ads.setText(R.string.thanks_pro)
-            see_widgets.visibility = View.VISIBLE
+            see_widgets.setText(R.string.see_widgets)
             remove_ads.setTextColor(ContextCompat.getColor(context!!, R.color.colorAccent))
             remove_ads.setOnClickListener {}
         }
