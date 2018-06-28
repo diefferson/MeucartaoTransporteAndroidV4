@@ -21,14 +21,18 @@ abstract class UseCase<T, in Params> internal constructor(
     private val executionJob = Job()
 
     /**
-     * Builds a [T] which will be used when the current [UseCaseCallback] is executed.
+     * Builds a [T] which will be used when the current callback is executed.
      */
     internal abstract suspend fun buildUseCaseObservable(params: Params): T
 
     /**
      * Executes the current use case.
      */
-    open fun execute(params: Params, repeat: Boolean = false, repeatTime: Long = 30000, onError: (e: Throwable) -> Unit = {}, onSuccess: (T) -> Unit = {}) {
+    fun execute(params: Params,
+                repeat: Boolean = false,
+                repeatTime: Long = 30000,
+                onError: (e: Throwable) -> Unit = {},
+                onSuccess: (T) -> Unit = {}) {
 
         launch(contextExecutor.scheduler, parent = executionJob) {
             do{
