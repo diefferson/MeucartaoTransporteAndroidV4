@@ -12,7 +12,7 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import kotlinx.android.synthetic.main.fragment_lines.*
+import kotlinx.android.synthetic.main.fragment_tabs.*
 import org.koin.android.architecture.ext.sharedViewModel
 
 class LinesFragment : BaseFragment() {
@@ -22,7 +22,7 @@ class LinesFragment : BaseFragment() {
     }
 
     override val viewModel by sharedViewModel<LinesViewModel>()
-    override val fragmentLayout = R.layout.fragment_lines
+    override val fragmentLayout = R.layout.fragment_tabs
     private val mainViewModel by sharedViewModel<MainViewModel>()
     override val fragmentTag = "LinesFragment"
 

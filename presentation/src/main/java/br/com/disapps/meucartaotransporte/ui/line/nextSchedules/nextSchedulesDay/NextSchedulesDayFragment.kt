@@ -11,14 +11,14 @@ import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
+import kotlinx.android.synthetic.main.fragment_recycler.*
 import org.koin.android.architecture.ext.sharedViewModel
 import org.koin.android.architecture.ext.viewModel
 
 class NextSchedulesDayFragment : BaseFragment(){
 
     override val viewModel by viewModel<NextSchedulesDayViewModel>()
-    override val fragmentLayout = R.layout.fragment_next_schedules_day
+    override val fragmentLayout = R.layout.fragment_recycler
     private val lineViewModel  by sharedViewModel<LineViewModel>()
     override val fragmentTag = "NextScheduleDayListAdapter"
 
@@ -53,7 +53,7 @@ class NextSchedulesDayFragment : BaseFragment(){
     }
 
     private fun initRecyclerView() {
-        next_schedules_recycler.apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
             adapter = this@NextSchedulesDayFragment.adapter
         }

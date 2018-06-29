@@ -97,11 +97,6 @@ fun Activity.getErrorView(uiException: UiException) :View{
 
 }
 
-fun Activity.getProgressView() :View{
-    val rootView = this.findViewById<ViewGroup>(android.R.id.content)
-    return inflateView(R.layout.progress_view, rootView)
-}
-
 fun Activity.getLoadingView() :View{
     val rootView = this.findViewById<ViewGroup>(android.R.id.content)
     return inflateView(R.layout.loading_view, rootView)
@@ -127,10 +122,10 @@ fun Activity.getOfflineView():View{
     val button = view.findViewById<Button>(R.id.back)
     val animation = view.findViewById<LottieAnimationView>(R.id.animation_view)
     animation.addAnimatorListener(object : Animator.AnimatorListener{
-        override fun onAnimationRepeat(animation: Animator?) {}
-        override fun onAnimationCancel(animation: Animator?) {}
-        override fun onAnimationStart(animation: Animator?) {}
-        override fun onAnimationEnd(animation: Animator?) {
+        override fun onAnimationRepeat(animator: Animator?) {}
+        override fun onAnimationCancel(animator: Animator?) {}
+        override fun onAnimationStart(animator: Animator?) {}
+        override fun onAnimationEnd(animator: Animator?) {
             view.findViewById<TextView>(R.id.offlineText).visibility = View.VISIBLE
             button.apply {
                 visibility = View.VISIBLE
