@@ -10,6 +10,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
 import android.util.Log
 import android.widget.FrameLayout
+import br.com.disapps.meucartaotransporte.BuildConfig
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.InAppBillingStatus
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
@@ -55,6 +56,10 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         viewModel.getInitialScreen()
+
+        if(BuildConfig.BUILD_TYPE == "release"){
+            navigation.menu.removeItem(R.id.nav_club)
+        }
     }
 
     private fun observeViewModel(savedInstanceState: Bundle?) {
