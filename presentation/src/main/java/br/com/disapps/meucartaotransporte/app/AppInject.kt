@@ -33,6 +33,8 @@ import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.myCards.MyCardsViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel
+import br.com.disapps.meucartaotransporte.ui.club.clubCard.ClubCardViewModel
+import br.com.disapps.meucartaotransporte.ui.club.promotions.PromotionsViewModel
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
@@ -101,6 +103,8 @@ object AppInject {
         viewModel { ItineraryDirectionViewModel(getItineraryUseCase = get()) }
         viewModel { CardBalanceWidgetViewModel(getCardsUseCase = get()) }
         viewModel { BusSchedulesWidgetViewModel(getLinesUseCase = get(), getLineSchedulesUseCase = get())}
+        viewModel { ClubCardViewModel()}
+        viewModel { PromotionsViewModel()}
     }
 
     private val useCaseModule: Module = applicationContext {

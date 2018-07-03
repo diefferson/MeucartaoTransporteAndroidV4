@@ -12,7 +12,7 @@ import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import kotlinx.android.synthetic.main.fragment_my_cards.*
+import kotlinx.android.synthetic.main.fragment_recycler.*
 import org.koin.android.architecture.ext.viewModel
 
 /**
@@ -22,7 +22,7 @@ class MyCardsFragment : BaseFragment(){
 
     override val viewModel by viewModel<MyCardsViewModel>()
     override val fragmentTag = "MyCardsFragment"
-    override val fragmentLayout = R.layout.fragment_my_cards
+    override val fragmentLayout = R.layout.fragment_recycler
 
     private val adapter: CardsListAdapter by lazy {
         CardsListAdapter(ArrayList(), activity!!).apply {
@@ -48,7 +48,7 @@ class MyCardsFragment : BaseFragment(){
     }
 
     private fun initRecyclerView() {
-        cards_recycler.apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@MyCardsFragment.adapter
         }

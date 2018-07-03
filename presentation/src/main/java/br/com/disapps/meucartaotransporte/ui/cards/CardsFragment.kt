@@ -9,7 +9,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
-import kotlinx.android.synthetic.main.fragment_cards.*
+import kotlinx.android.synthetic.main.fragment_tabs.*
 import org.koin.android.architecture.ext.viewModel
 
 /**
@@ -23,7 +23,7 @@ class CardsFragment : BaseFragment(){
 
     override val viewModel by viewModel<BaseViewModel>()
     override val fragmentTag = "CardsFragment"
-    override val fragmentLayout = R.layout.fragment_cards
+    override val fragmentLayout = R.layout.fragment_tabs
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

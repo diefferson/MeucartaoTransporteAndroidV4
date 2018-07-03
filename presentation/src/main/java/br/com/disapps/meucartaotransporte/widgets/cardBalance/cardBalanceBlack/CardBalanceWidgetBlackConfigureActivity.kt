@@ -14,7 +14,7 @@ import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.ConfigureCardsListAdapter
-import kotlinx.android.synthetic.main.fragment_my_cards.*
+import kotlinx.android.synthetic.main.fragment_recycler.*
 import org.koin.android.architecture.ext.viewModel
 
 /**
@@ -55,7 +55,7 @@ class CardBalanceWidgetBlackConfigureActivity : AppCompatActivity() {
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         setResult(Activity.RESULT_CANCELED)
-        setContentView(R.layout.card_balance_widget_configure)
+        setContentView(R.layout.fragment_recycler)
         title = getString(R.string.select_a_card)
 
         val intent = intent
@@ -80,7 +80,7 @@ class CardBalanceWidgetBlackConfigureActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        cards_recycler.apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@CardBalanceWidgetBlackConfigureActivity.adapter
         }

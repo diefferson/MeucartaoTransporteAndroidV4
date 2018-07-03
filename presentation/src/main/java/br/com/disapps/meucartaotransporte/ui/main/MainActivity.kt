@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.InAppBillingStatus
 import br.com.disapps.meucartaotransporte.ui.cards.CardsFragment
+import br.com.disapps.meucartaotransporte.ui.club.ClubFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
@@ -116,7 +117,8 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
         navigation.selectedItemId = when(fragmentSelected){
             0 -> R.id.nav_cards
             1-> R.id.nav_lines
-            2-> R.id.nav_settings
+            2-> R.id.nav_club
+            3-> R.id.nav_settings
             else -> R.id.nav_cards
         }
     }
@@ -152,8 +154,13 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
                 replaceFragment(LinesFragment.newInstance() )
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.nav_settings -> {
+            R.id.nav_club -> {
                 fragmentSelected  = 2
+                replaceFragment(ClubFragment.newInstance())
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_settings -> {
+                fragmentSelected  = 3
                 replaceFragment(SettingsFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }

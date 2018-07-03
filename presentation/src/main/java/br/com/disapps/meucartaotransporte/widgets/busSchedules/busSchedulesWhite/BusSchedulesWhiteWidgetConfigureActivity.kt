@@ -15,7 +15,7 @@ import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesPrefe
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.LinesListAdapter
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.StopsListAdapter
-import kotlinx.android.synthetic.main.bus_schedules_widget_configure.*
+import kotlinx.android.synthetic.main.fragment_recycler.*
 import org.koin.android.architecture.ext.viewModel
 
 /**
@@ -86,7 +86,7 @@ class BusSchedulesWhiteWidgetConfigureActivity : AppCompatActivity() {
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         setResult(Activity.RESULT_CANCELED)
-        setContentView(R.layout.bus_schedules_widget_configure)
+        setContentView(R.layout.fragment_recycler)
         title = getString(R.string.select_a_line)
 
         // Find the widget id from the intent.
