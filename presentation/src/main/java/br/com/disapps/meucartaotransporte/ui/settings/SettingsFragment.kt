@@ -2,7 +2,6 @@ package br.com.disapps.meucartaotransporte.ui.settings
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
@@ -17,9 +16,6 @@ import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.architecture.ext.sharedViewModel
 import org.koin.android.architecture.ext.viewModel
-import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import br.com.disapps.meucartaotransporte.util.showInterstitial
-import br.com.disapps.meucartaotransporte.util.testeFun
 
 
 /**
@@ -39,9 +35,9 @@ class SettingsFragment : BaseFragment(){
         setupClickListeners()
 
         if(App.instance!= null && App.instance!!.preferences.getIsProSync()){
-            remove_ads.setText(R.string.thanks_pro)
+            remove_ads_label.setText(R.string.thanks_pro)
             see_widgets.setText(R.string.see_widgets)
-            remove_ads.setTextColor(ContextCompat.getColor(context!!, R.color.colorAccent))
+            remove_ads_label.setTextColor(ContextCompat.getColor(context!!, R.color.colorAccent))
             remove_ads.setOnClickListener {}
         }
     }
