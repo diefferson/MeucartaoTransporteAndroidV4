@@ -17,10 +17,7 @@ import br.com.disapps.domain.interactor.itineraries.GetAllItineraries
 import br.com.disapps.domain.interactor.itineraries.GetItinerary
 import br.com.disapps.domain.interactor.itineraries.GetItineraryDirections
 import br.com.disapps.domain.interactor.itineraries.SaveAllItinerariesJson
-import br.com.disapps.domain.interactor.lines.GetLines
-import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
-import br.com.disapps.domain.interactor.lines.SaveAllLinesJsonOnly
-import br.com.disapps.domain.interactor.lines.UpdateLine
+import br.com.disapps.domain.interactor.lines.*
 import br.com.disapps.domain.interactor.preferences.*
 import br.com.disapps.domain.interactor.schedules.*
 import br.com.disapps.domain.interactor.shapes.GetShapes
@@ -45,6 +42,7 @@ import br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay
 import br.com.disapps.meucartaotransporte.ui.line.shapes.ShapesViewModel
 import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
+import br.com.disapps.meucartaotransporte.ui.navigation.NavigationViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageViewModel
@@ -105,6 +103,7 @@ object AppInject {
         viewModel { BusSchedulesWidgetViewModel(getLinesUseCase = get(), getLineSchedulesUseCase = get())}
         viewModel { ClubCardViewModel()}
         viewModel { PromotionsViewModel()}
+        viewModel { NavigationViewModel(getLineUseCase = get())}
     }
 
     private val useCaseModule: Module = applicationContext {
@@ -141,6 +140,7 @@ object AppInject {
         factory { SetIsPro( preferencesRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { SaveIsFirstAccess( preferencesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetAllBuses( busesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
+        factory { GetLine( linesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
     }
 
     private val repositoriesModule: Module = applicationContext {

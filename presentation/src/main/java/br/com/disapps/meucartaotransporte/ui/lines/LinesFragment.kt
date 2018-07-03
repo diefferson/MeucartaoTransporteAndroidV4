@@ -62,14 +62,20 @@ class LinesFragment : BaseFragment() {
     }
 
     private fun observeViewModel(){
-        viewModel.hasFavorite.observe(this, Observer {
-            view_pager.adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
+
+        if(mainViewModel.isDeepLink){
+            view_pager.adapter = AllLinesPageAdapter(childFragmentManager, context!!)
             iAppActivityListener.setupTabs(view_pager)
-        })
+        }else{
+            viewModel.hasFavorite.observe(this, Observer {
+                view_pager.adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
+                iAppActivityListener.setupTabs(view_pager)
+            })
+        }
 
         mainViewModel.onSearchAction.observe(this, Observer {
             if(it!= null && it){
-                if(view_pager.adapter != null){
+                if(view_pager.adapter != null && !mainViewModel.isDeepLink){
                     if((view_pager.adapter as LinesPageAdapter).hasFavorite){
                         view_pager.currentItem = 1
                     }else{

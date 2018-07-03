@@ -47,9 +47,17 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_quick_find"
-            style="@style/AppTheme.Button"
-            android:text="@string/consult" />
+            android:id="@+id/btn_quick_find_balance"
+            style="@style/AppTheme.Button2"
+            android:text="@string/balance"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/btn_quick_find_extract"
+            style="@style/AppTheme.Button2"
+            android:text="@string/extract"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 

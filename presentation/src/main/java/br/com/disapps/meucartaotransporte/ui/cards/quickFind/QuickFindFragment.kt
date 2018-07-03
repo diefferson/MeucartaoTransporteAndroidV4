@@ -10,6 +10,7 @@ import android.widget.TextView
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
+import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import kotlinx.android.synthetic.main.fragment_quick_find.*
 import org.koin.android.architecture.ext.viewModel
@@ -32,15 +33,21 @@ class QuickFindFragment: BaseFragment(){
 
     private fun setupClickListeners() {
 
-        btn_quick_find.setOnClickListener {
+        btn_quick_find_balance.setOnClickListener {
             viewModel.code = card_code.text.toString()
             viewModel.cpf = card_cpf.text.toString()
-            viewModel.consult()
+            viewModel.consult(false)
+        }
+
+        btn_quick_find_extract.setOnClickListener {
+            viewModel.code = card_code.text.toString()
+            viewModel.cpf = card_cpf.text.toString()
+            viewModel.consult(true)
         }
 
         card_cpf.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                btn_quick_find.performClick()
+                btn_quick_find_balance.performClick()
                 return@OnEditorActionListener true
             }
             return@OnEditorActionListener false
@@ -90,11 +97,15 @@ class QuickFindFragment: BaseFragment(){
 
         viewModel.isSuccess.observe(this, Observer {
             if(it != null && it){
-                BalanceActivity.launch(context!!, CardVO(cpf = viewModel.cpf, code = viewModel.code))
+                if(viewModel.isExtract){
+                    ExtractActivity.launch(context!!, CardVO(cpf = viewModel.cpf, code = viewModel.code))
+                }else{
+                    BalanceActivity.launch(context!!, CardVO(cpf = viewModel.cpf, code = viewModel.code))
+
+                }
                 viewModel.isSuccess.value = false
             }
         })
-
     }
 
     companion object {

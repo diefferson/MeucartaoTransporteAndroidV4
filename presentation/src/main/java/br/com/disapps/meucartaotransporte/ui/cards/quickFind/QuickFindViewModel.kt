@@ -15,9 +15,10 @@ class QuickFindViewModel : BaseViewModel(){
     val isSuccess = MutableLiveData<Boolean>()
     var cpf:String = ""
     var code:String = ""
+    var isExtract = false
 
-    fun consult(){
-
+    fun consult(extract:Boolean = false){
+        isExtract = extract
         var valid = true
 
         isValidCode.value = true

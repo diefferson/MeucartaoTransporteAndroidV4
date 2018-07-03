@@ -27,6 +27,7 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen,
     val resultInAppBilling = MutableLiveData<InAppBillingStatus>()
     var isTabsVisible = true
     var iabHelper: IabHelper? = null
+    var isDeepLink = false
 
     init {
         getIsProUseCase.execute(Unit){

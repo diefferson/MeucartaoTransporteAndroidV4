@@ -161,11 +161,104 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.navigation.NavigationActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar.SplashTheme"
+            android:launchMode="singleTask">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="meucartaotransporte.com.br"
+                    android:pathPrefix="/linhas" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="meucartaotransporte.com.br"
+                    android:pathPrefix="/linhas" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="meucartaotransporte.com.br"
+                    android:pathPrefix="/linha" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="meucartaotransporte.com.br"
+                    android:pathPrefix="/linha" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="meucartaotransporte.com.br"
+                    android:pathPrefix="/cartao" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="meucartaotransporte.com.br"
+                    android:pathPrefix="/cartao" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".ui.lines.LinesActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".ui.cards.CardsActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".ui.cards.balance.BalanceActivity"
             android:label="@string/card_balance"
@@ -204,7 +297,8 @@
             android:label="@string/data_usage"
             android:theme="@style/AppTheme" />
 
-        <receiver android:name=".widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget"
+        <receiver
+            android:name=".widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -221,7 +315,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidget"
+        <receiver
+            android:name=".widgets.busSchedules.busSchedulesWhite.BusSchedulesWhiteWidget"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
