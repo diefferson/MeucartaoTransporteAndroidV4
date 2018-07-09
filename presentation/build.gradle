@@ -80,6 +80,8 @@ dependencies {
     implementation presentationDependencies.playServicesMap
     implementation presentationDependencies.jobDispatcher
     implementation presentationDependencies.customtabs
+    implementation presentationDependencies.zxing
+    implementation presentationDependencies.zxingAndroid
 
 
     kapt presentationDependencies.archCompiler

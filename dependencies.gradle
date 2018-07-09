@@ -35,6 +35,8 @@ ext {
     playServicesVersion = '15.0.0'
     coroutinesVersion = '0.22.5'
     jobDispatcherVersion = '0.8.5'
+    zxingVersion = '3.2.1'
+    zxingAndroidVersion = '3.2.0@aar'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -75,6 +77,8 @@ ext {
             playServicesMap:        "com.google.android.gms:play-services-maps:${playServicesVersion}",
             playServicesAds:        "com.google.android.gms:play-services-ads:${playServicesVersion}",
             jobDispatcher:          "com.firebase:firebase-jobdispatcher:${jobDispatcherVersion}",
+            zxing                 : "com.google.zxing:core:${zxingVersion}",
+            zxingAndroid          : "com.journeyapps:zxing-android-embedded:${zxingAndroidVersion}",
     ]
 
     presentationTestDependencies = [
