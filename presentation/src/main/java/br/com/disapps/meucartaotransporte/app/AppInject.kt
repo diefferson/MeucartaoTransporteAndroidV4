@@ -31,6 +31,7 @@ import br.com.disapps.meucartaotransporte.ui.cards.myCards.MyCardsViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.quickFind.QuickFindViewModel
 import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel
 import br.com.disapps.meucartaotransporte.ui.club.clubCard.ClubCardViewModel
+import br.com.disapps.meucartaotransporte.ui.club.promotion.PromotionViewModel
 import br.com.disapps.meucartaotransporte.ui.club.promotions.PromotionsViewModel
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import br.com.disapps.meucartaotransporte.ui.intro.IntroViewModel
@@ -104,6 +105,7 @@ object AppInject {
         viewModel { ClubCardViewModel()}
         viewModel { PromotionsViewModel()}
         viewModel { NavigationViewModel(getLineUseCase = get())}
+        viewModel { PromotionViewModel() }
     }
 
     private val useCaseModule: Module = applicationContext {

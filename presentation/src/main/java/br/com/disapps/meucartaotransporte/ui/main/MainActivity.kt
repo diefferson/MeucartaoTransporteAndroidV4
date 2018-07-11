@@ -19,6 +19,7 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragmentActivity
 import br.com.disapps.meucartaotransporte.ui.custom.SearchAnimationToolbar
 import br.com.disapps.meucartaotransporte.ui.lines.LinesFragment
 import br.com.disapps.meucartaotransporte.ui.settings.SettingsFragment
+import br.com.disapps.meucartaotransporte.util.BottomNavigationViewHelper
 import br.com.disapps.meucartaotransporte.util.alertNeutral
 import br.com.disapps.meucartaotransporte.util.iab.IabBroadcastReceiver
 import br.com.disapps.meucartaotransporte.util.iab.IabHelper
@@ -53,6 +54,7 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
 
         observeViewModel(savedInstanceState)
 
+        BottomNavigationViewHelper.disableShiftMode(navigation)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         viewModel.getInitialScreen()

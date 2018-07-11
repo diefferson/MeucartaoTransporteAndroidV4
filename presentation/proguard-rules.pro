@@ -30,6 +30,10 @@
      <init>(...);
 }
 
+-keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
+    boolean mShiftingMode;
+}
+
 # Appodeal
 -keep class com.appodeal.** { *; }
 -keep class org.nexage.** { *; }

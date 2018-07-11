@@ -297,6 +297,11 @@
             android:label="@string/data_usage"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".ui.club.promotion.PromotionActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.TranslucentStatusBar" />
+
         <receiver
             android:name=".widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget"
             android:enabled="true">
