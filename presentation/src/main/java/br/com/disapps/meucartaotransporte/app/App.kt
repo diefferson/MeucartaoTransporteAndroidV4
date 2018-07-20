@@ -4,6 +4,7 @@ import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatDelegate
 import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
+import com.onesignal.OneSignal
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
 import org.koin.log.EmptyLogger
@@ -27,6 +28,11 @@ class App : MultiDexApplication() {
         startKoin(this, AppInject.modules(), logger = EmptyLogger())
 
         database.initDatabase()
+
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .init()
+
     }
 
     companion object {

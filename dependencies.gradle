@@ -37,6 +37,7 @@ ext {
     jobDispatcherVersion = '0.8.5'
     zxingVersion = '3.2.1'
     zxingAndroidVersion = '3.2.0@aar'
+    oneSignalVersion = '[3.9.1, 3.99.99]'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -79,6 +80,7 @@ ext {
             jobDispatcher:          "com.firebase:firebase-jobdispatcher:${jobDispatcherVersion}",
             zxing                 : "com.google.zxing:core:${zxingVersion}",
             zxingAndroid          : "com.journeyapps:zxing-android-embedded:${zxingAndroidVersion}",
+            oneSignal:               "com.onesignal:OneSignal:${oneSignalVersion}",
     ]
 
     presentationTestDependencies = [
