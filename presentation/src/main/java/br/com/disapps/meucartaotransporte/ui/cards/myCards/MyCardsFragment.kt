@@ -13,7 +13,7 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_recycler.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * Created by dnso on 14/03/2018.

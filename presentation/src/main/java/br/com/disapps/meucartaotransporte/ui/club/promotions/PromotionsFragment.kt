@@ -9,7 +9,7 @@ import br.com.disapps.meucartaotransporte.ui.club.promotion.PromotionActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import kotlinx.android.synthetic.main.fragment_recycler.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class PromotionsFragment : BaseFragment(){
 

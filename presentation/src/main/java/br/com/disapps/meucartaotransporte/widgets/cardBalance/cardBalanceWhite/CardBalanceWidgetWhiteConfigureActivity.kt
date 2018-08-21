@@ -15,7 +15,7 @@ import br.com.disapps.meucartaotransporte.util.getLoadingView
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.ConfigureCardsListAdapter
 import kotlinx.android.synthetic.main.fragment_recycler.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * The configuration screen for the [CardBalanceWidgetWhite] AppWidget.

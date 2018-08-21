@@ -49,9 +49,9 @@ import br.com.disapps.meucartaotransporte.ui.settings.SettingsViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageViewModel
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetViewModel
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.Module
-import org.koin.dsl.module.applicationContext
+import org.koin.dsl.module.module
 
 /**
  * Created by dnso on 08/03/2018.
@@ -68,20 +68,20 @@ object AppInject {
             dataSourceFactoryModule
     )
 
-    private val applicationModule: Module = applicationContext {
-        bean(CONTEXT) { App.instance!! as Context }
-        bean { RealmDatabase(get(CONTEXT)) as Database }
-        bean { Preferences(get(CONTEXT)) as PreferencesRepository}
-        bean { Preferences(get(CONTEXT))}
-        bean { RestClient().api }
-        bean { UIContext() as PostExecutionContext }
-        bean { JobContextExecutor() as  ContextExecutor }
-        bean { get<Context>(CONTEXT).assets  }
-        bean { LogException() as br.com.disapps.domain.exception.LogException}
-        bean { CustomDownloadManager(get(CONTEXT)) }
+    private val applicationModule: Module = module {
+        single(CONTEXT){ App.instance!! as Context }
+        single { RealmDatabase(get(CONTEXT)) as Database }
+        single { Preferences(get(CONTEXT)) as PreferencesRepository}
+        single { Preferences(get(CONTEXT))}
+        single { RestClient().api }
+        single { UIContext() as PostExecutionContext }
+        single { JobContextExecutor() as  ContextExecutor }
+        single { get<Context>(CONTEXT).assets  }
+        single { LogException() as br.com.disapps.domain.exception.LogException}
+        single { CustomDownloadManager(get(CONTEXT)) }
     }
 
-    private val viewModelModule = applicationContext {
+    private val viewModelModule = module {
         viewModel { BaseViewModel() }
         viewModel { ItinerariesViewModel( getItineraryDirectionsUseCase = get(), getIsDownloadedCwbItinerariesUseCase = get(), getIsDownloadedMetropolitanItinerariesUseCase = get()) }
         viewModel { LinesViewModel( getLinesUseCase = get(), updateLineUseCase =  get()) }
@@ -108,7 +108,7 @@ object AppInject {
         viewModel { PromotionViewModel() }
     }
 
-    private val useCaseModule: Module = applicationContext {
+    private val useCaseModule: Module = module {
         factory { GetCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetCards( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { SaveCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
@@ -145,21 +145,21 @@ object AppInject {
         factory { GetLine( linesRepository = get(),  contextExecutor = get(), postExecutionContext = get(), logException = get()) }
     }
 
-    private val repositoriesModule: Module = applicationContext {
-        bean { CardsDataRepository( cardsDataSourceFactory = get()) as CardsRepository }
-        bean { LinesDataRepository( linesDataSourceFactory = get()) as LinesRepository }
-        bean { ItinerariesDataRepository( itinerariesDataSourceFactory = get()) as ItinerariesRepository }
-        bean { ShapesDataRepository( shapesDataSourceFactory = get()) as ShapesRepository }
-        bean { SchedulesDataRepository( schedulesDataSourceFactory = get()) as SchedulesRepository }
-        bean { BusesDataRepository( busesDataSourceFactory = get()) as BusesRepository }
+    private val repositoriesModule: Module = module {
+        single { CardsDataRepository( cardsDataSourceFactory = get()) as CardsRepository }
+        single { LinesDataRepository( linesDataSourceFactory = get()) as LinesRepository }
+        single { ItinerariesDataRepository( itinerariesDataSourceFactory = get()) as ItinerariesRepository }
+        single { ShapesDataRepository( shapesDataSourceFactory = get()) as ShapesRepository }
+        single { SchedulesDataRepository( schedulesDataSourceFactory = get()) as SchedulesRepository }
+        single { BusesDataRepository( busesDataSourceFactory = get()) as BusesRepository }
     }
 
-    private val dataSourceFactoryModule : Module = applicationContext {
-        bean { CardsDataSourceFactory(database = get(), restApi = get()) }
-        bean { LinesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
-        bean { ItinerariesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
-        bean { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
-        bean { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
-        bean { BusesDataSourceFactory(database = get(), restApi = get()) }
+    private val dataSourceFactoryModule : Module = module {
+        single { CardsDataSourceFactory(database = get(), restApi = get()) }
+        single { LinesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
+        single { ItinerariesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
+        single { ShapesDataSourceFactory(database = get(), restApi = get(), preferences = get()) }
+        single { SchedulesDataSourceFactory(database = get(), restApi = get(), preferences = get(), assetManager = get()) }
+        single { BusesDataSourceFactory(database = get(), restApi = get()) }
     }
 }

@@ -26,7 +26,7 @@ import br.com.disapps.meucartaotransporte.util.getCustomTheme
 import kotlinx.android.synthetic.main.activity_line.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_animation.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LineActivity : BaseFragmentActivity(){
 

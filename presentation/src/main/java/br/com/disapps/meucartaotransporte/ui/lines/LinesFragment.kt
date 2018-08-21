@@ -13,7 +13,7 @@ import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_tabs.*
-import org.koin.android.architecture.ext.sharedViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class LinesFragment : BaseFragment() {
 

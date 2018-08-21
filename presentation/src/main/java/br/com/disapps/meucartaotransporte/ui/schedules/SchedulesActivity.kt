@@ -16,7 +16,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_schedules.*
 import kotlinx.android.synthetic.main.include_toolbar_schedules.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SchedulesActivity : BaseActivity (){
 

@@ -19,7 +19,7 @@ ext {
     androidCompileSdkVersion = 27
 
     //Libraries
-    koinVersion = "0.9.3"
+    koinVersion = "1.0.0-beta-7"
     supportLibraryVersion = '27.1.1'
     archLifecycleVersion = "1.0.0"
     kotlinVersion = '1.2.30'
@@ -33,11 +33,12 @@ ext {
     firebaseVersion = '15.0.2'
     firebaseAdsVersion = '15.0.1'
     playServicesVersion = '15.0.0'
-    coroutinesVersion = '0.22.5'
+    coroutinesVersion = '0.24.0'
     jobDispatcherVersion = '0.8.5'
     zxingVersion = '3.2.1'
-    zxingAndroidVersion = '3.2.0@aar'
+    zxingAndroidVersion = '3.5.0'
     oneSignalVersion = '[3.9.1, 3.99.99]'
+    multidexVersion = '1.0.3'
 
     //Testing
     robolectricVersion = '3.4.2'
@@ -54,76 +55,146 @@ ext {
     dexmakerMockitoversion = '2.2.0'
     runnerVersion = '0.5'
 
-    presentationDependencies = [
-            appCompatV7:            "com.android.support:appcompat-v7:${supportLibraryVersion}",
-            supportV4:              "com.android.support:support-v4:${supportLibraryVersion}",
-            supportDesign:          "com.android.support:design:${supportLibraryVersion}",
-            constraintLayout:       "com.android.support.constraint:constraint-layout:${constraintVersion}",
-            cardView:               "com.android.support:cardview-v7:${supportLibraryVersion}",
-            vectorDrawable:         "com.android.support:support-vector-drawable:${supportLibraryVersion}",
-            customtabs:             "com.android.support:customtabs:${supportLibraryVersion}",
-            archExtensions:         "android.arch.lifecycle:extensions:${archLifecycleVersion}",
-            archCompiler:           "android.arch.lifecycle:compiler:${archLifecycleVersion}",
-            kotlin:                 "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-            coroutinesAndroid:      "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
-            koin:                   "org.koin:koin-android:${koinVersion}",
-            koinArch:               "org.koin:koin-android-architecture:${koinVersion}",
-            baseRecyclerView:       "com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewVersion}",
-            recyclerviewFastscroll: "com.simplecityapps:recyclerview-fastscroll:${recyclerviewFastscroll}",
-            lottie:                 "com.airbnb.android:lottie:${lottieVersion}",
-            firebaseCore:           "com.google.firebase:firebase-core:${firebaseVersion}",
-            firebaseMessaging:      "com.google.firebase:firebase-messaging:${firebaseVersion}",
-            firebaseAds:            "com.google.firebase:firebase-ads:${firebaseAdsVersion}",
-            playServicesLocation:   "com.google.android.gms:play-services-location:${playServicesVersion}",
-            playServicesMap:        "com.google.android.gms:play-services-maps:${playServicesVersion}",
-            playServicesAds:        "com.google.android.gms:play-services-ads:${playServicesVersion}",
-            jobDispatcher:          "com.firebase:firebase-jobdispatcher:${jobDispatcherVersion}",
-            zxing                 : "com.google.zxing:core:${zxingVersion}",
-            zxingAndroid          : "com.journeyapps:zxing-android-embedded:${zxingAndroidVersion}",
-            oneSignal:               "com.onesignal:OneSignal:${oneSignalVersion}",
+
+    androidLibs =[
+            appCompat           : [group: 'com.android.support', name: 'appcompat-v7', version: supportLibraryVersion],
+            supportV4           : [group: 'com.android.support', name: 'support-v4', version: supportLibraryVersion],
+            supportDesign       : [group: 'com.android.support', name: 'design', version: supportLibraryVersion],
+            cardView            : [group: 'com.android.support', name: 'cardview-v7', version: supportLibraryVersion],
+            vectorDrawable      : [group: 'com.android.support', name: 'support-vector-drawable', version: supportLibraryVersion],
+            customtabs          : [group: 'com.android.support', name: 'customtabs', version: supportLibraryVersion],
+            constraintLayout    : [group: 'com.android.support.constraint', name: 'constraint-layout', version: constraintVersion],
+            archExtensions      : [group: 'android.arch.lifecycle', name: 'extensions', version: archLifecycleVersion],
+            archCompiler        : [group: 'android.arch.lifecycle', name: 'compiler', version: archLifecycleVersion],
+            multidex            : [group: 'com.android.support', name: 'multidex', version: multidexVersion],
     ]
 
-    presentationTestDependencies = [
-            junit:              "junit:junit:${jUnitVersion}",
-            kotlinJUnit:        "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}",
-            assertj:            "org.assertj:assertj-core:${assertJVersion}",
-            mockito:            "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}",
-            supportRunner:      "com.android.support.test:runner:${androidSupportRunnerVersion}",
-            supportRules:       "com.android.support.test:rules:${androidSupportRulesVersion}",
-            mockitoAndroid:     "org.mockito:mockito-android:${mockitoAndroidVersion}",
-            espressoCore:       "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-            espressoIntents:    "com.android.support.test.espresso:espresso-intents:${espressoVersion}",
-            espressoContrib:    "com.android.support.test.espresso:espresso-contrib:${espressoVersion}",
-            androidRunner:      "com.android.support.test:runner:${runnerVersion}",
-            androidRules:       "com.android.support.test:rules:${runnerVersion}",
+    libs = [
+            kotlin                  :[group : 'org.jetbrains.kotlin', name: 'kotlin-stdlib' , version: kotlinVersion],
+            coroutinesAndroid       :[group : 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-android' , version: coroutinesVersion],
+            coroutines              :[group : 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: coroutinesVersion],
+            koin                    :[group : 'org.koin', name: 'koin-android' , version: koinVersion],
+            koinArch                :[group : 'org.koin', name: 'koin-android-viewmodel' , version: koinVersion],
+            baseRecyclerView        :[group : 'com.github.CymChad', name: 'BaseRecyclerViewAdapterHelper' , version: baseRecyclerViewVersion],
+            recyclerviewFastscroll  :[group : 'com.simplecityapps', name: 'recyclerview-fastscroll' , version: recyclerviewFastscroll],
+            lottie                  :[group : 'com.airbnb.android', name: 'lottie' , version: lottieVersion],
+            firebaseCore            :[group : 'com.google.firebase', name: 'firebase-core' , version: firebaseVersion],
+            firebaseMessaging       :[group : 'com.google.firebase', name: 'firebase-messaging' , version: firebaseVersion],
+            firebaseAds             :[group : 'com.google.firebase', name: 'firebase-ads' , version: firebaseAdsVersion],
+            playServicesLocation    :[group : 'com.google.android.gms', name: 'play-services-location' , version: playServicesVersion],
+            playServicesMap         :[group : 'com.google.android.gms', name: 'play-services-maps' , version: playServicesVersion],
+            playServicesAds         :[group : 'com.google.android.gms', name: 'play-services-ads' , version: playServicesVersion],
+            jobDispatcher           :[group : 'com.firebase', name: 'firebase-jobdispatcher' , version: jobDispatcherVersion],
+            zxing                   :[group : 'com.google.zxing', name: 'core' , version: zxingVersion],
+            zxingAndroid            :[group : 'com.journeyapps', name: 'zxing-android-embedded' , version: zxingAndroidVersion],
+            oneSignal               :[group : 'com.onesignal', name: 'OneSignal' , version: oneSignalVersion],
+            okHttp                  :[ group: 'com.squareup.okhttp3', name:'okhttp', version:  okHttpVersion],
+            okHttpLogger            :[ group: 'com.squareup.okhttp3', name:'logging-interceptor', version:  okHttpVersion],
+            retrofit                :[ group: 'com.squareup.retrofit2', name:'retrofit', version:  retrofitVersion],
+            retrofitConverter       :[ group: 'com.squareup.retrofit2', name:'converter-gson', version:  retrofitVersion],
+    ]
+
+    testLibs = [
+            junit               :[group: 'junit', name: 'junit', version: jUnitVersion],
+            kotlinJUnit         :[group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit', version: kotlin_version],
+            assertj             :[group: 'org.assertj', name: 'assertj-core', version: assertJVersion],
+            mockito             :[group: 'com.nhaarman', name: 'mockito-kotlin', version: mockitoKotlinVersion],
+            supportRunner       :[group: 'com.android.support.test', name: 'runner', version: androidSupportRunnerVersion],
+            supportRules        :[group: 'com.android.support.test', name: 'rules', version: androidSupportRulesVersion],
+            mockitoAndroid      :[group: 'org.mockito', name: 'mockito-android', version: mockitoAndroidVersion],
+            espressoCore        :[group: 'com.android.support.test.espresso', name: 'espresso-core', version: espressoVersion],
+            espressoIntents     :[group: 'com.android.support.test.espresso', name: 'espresso-intents', version: espressoVersion],
+            espressoContrib     :[group: 'com.android.support.test.espresso', name: 'espresso-contrib', version: espressoVersion],
+            androidRunner       :[group: 'com.android.support.test', name: 'runner', version: runnerVersion],
+            androidRules        :[group: 'com.android.support.test', name: 'rules', version: runnerVersion],
+            robolectric         :[group: 'org.robolectric',name: 'robolectric', version:robolectricVersion],
+    ]
+
+    presentationDependencies = [
+            [configuration: "implementation", dependency: androidLibs.appCompat],
+            [configuration: "implementation", dependency: androidLibs.supportV4],
+            [configuration: "implementation", dependency: androidLibs.supportDesign],
+            [configuration: "implementation", dependency: androidLibs.cardView],
+            [configuration: "implementation", dependency: androidLibs.vectorDrawable],
+            [configuration: "implementation", dependency: androidLibs.customtabs],
+            [configuration: "implementation", dependency: androidLibs.constraintLayout],
+            [configuration: "implementation", dependency: androidLibs.archExtensions],
+            [configuration: "kapt", dependency: androidLibs.archCompiler],
+            [configuration: "implementation", dependency: libs.kotlin],
+            [configuration: "implementation", dependency: libs.coroutinesAndroid],
+            [configuration: "implementation", dependency: libs.koin],
+            [configuration: "implementation", dependency: libs.koinArch],
+            [configuration: "implementation", dependency: libs.baseRecyclerView],
+            [configuration: "implementation", dependency: libs.recyclerviewFastscroll],
+            [configuration: "implementation", dependency: libs.lottie],
+            [configuration: "implementation", dependency: libs.firebaseCore],
+            [configuration: "implementation", dependency: libs.firebaseMessaging],
+            [configuration: "implementation", dependency: libs.firebaseAds],
+            [configuration: "implementation", dependency: libs.playServicesLocation],
+            [configuration: "implementation", dependency: libs.playServicesMap],
+            [configuration: "implementation", dependency: libs.playServicesAds],
+            [configuration: "implementation", dependency: libs.jobDispatcher],
+            [configuration: "implementation", dependency: libs.zxing],
+            [configuration: "implementation", dependency: libs.zxingAndroid],
+            [configuration: "implementation", dependency: libs.oneSignal],
+
+            //tests
+            [configuration: "testImplementation", dependency: testLibs.kotlinJUnit],
+            [configuration: "androidTestImplementation", dependency: testLibs.junit],
+            [configuration: "androidTestImplementation", dependency: testLibs.mockito],
+            [configuration: "androidTestImplementation", dependency: testLibs.mockitoAndroid],
+            [configuration: "androidTestImplementation", dependency: testLibs.espressoCore,
+                options: { exclude group: 'com.android.support', module: 'support-annotations'}],
+
+            [configuration: "androidTestImplementation", dependency: testLibs.androidRunner,
+                options: { exclude group: 'com.android.support', module: 'support-annotations'}],
+
+            [configuration: "androidTestImplementation", dependency: testLibs.androidRules,
+                options: { exclude group: 'com.android.support', module: 'support-annotations'}],
+
+            [configuration: "androidTestImplementation", dependency: testLibs.espressoIntents,
+                options: { exclude group: 'com.android.support', module: 'support-annotations'}],
+
+            [configuration: "androidTestImplementation", dependency: testLibs.espressoContrib,
+                 options: {
+                     exclude module: 'appcompat'
+                     exclude module: 'appcompat-v7'
+                     exclude module: 'support-v4'
+                     exclude module: 'support-v13'
+                     exclude module: 'support-annotations'
+                     exclude module: 'recyclerview-v7'
+                     exclude module: 'design'
+                 }
+            ],
+
     ]
 
     domainDependencies = [
-            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-            coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
+            [configuration: "implementation", dependency: libs.kotlin],
+            [configuration: "implementation", dependency: libs.coroutines],
+
+            //tests
+            [configuration: "testImplementation", dependency: testLibs.mockito],
+            [configuration: "testImplementation", dependency: testLibs.assertj],
+            [configuration: "testImplementation", dependency: testLibs.kotlinJUnit],
     ]
 
-    domainTestDependencies = [
-            junit:              "junit:junit:${jUnitVersion}",
-            mockito:            "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}",
-            assertj:            "org.assertj:assertj-core:${assertJVersion}",
-            kotlinJUnit:        "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}"
-    ]
 
     dataDependencies = [
-            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
-            coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
-            okHttp:             "com.squareup.okhttp3:okhttp:${okHttpVersion}",
-            okHttpLogger:       "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
-            retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-            retrofitConverter:  "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            [configuration: "implementation", dependency: libs.kotlin],
+            [configuration: "implementation", dependency: libs.coroutines],
+            [configuration: "implementation", dependency: libs.okHttp],
+            [configuration: "implementation", dependency: libs.okHttpLogger],
+            [configuration: "implementation", dependency: libs.retrofit],
+            [configuration: "implementation", dependency: libs.retrofitConverter],
+
+            //tests
+            [configuration: "testImplementation", dependency: testLibs.junit],
+            [configuration: "testImplementation", dependency: testLibs.mockito],
+            [configuration: "testImplementation", dependency: testLibs.assertj],
+            [configuration: "testImplementation", dependency: testLibs.kotlinJUnit],
+            [configuration: "testImplementation", dependency: testLibs.robolectric],
     ]
 
-    dataTestDependencies = [
-            junit:              "junit:junit:${jUnitVersion}",
-            kotlinJUnit:        "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}",
-            assertj:            "org.assertj:assertj-core:${assertJVersion}",
-            mockito:            "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}",
-            robolectric:        "org.robolectric:robolectric:${robolectricVersion}",
-    ]
+
 }

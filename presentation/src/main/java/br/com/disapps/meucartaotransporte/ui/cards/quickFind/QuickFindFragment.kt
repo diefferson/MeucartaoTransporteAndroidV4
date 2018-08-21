@@ -13,7 +13,7 @@ import br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceActivity
 import br.com.disapps.meucartaotransporte.ui.cards.extract.ExtractActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import kotlinx.android.synthetic.main.fragment_quick_find.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * Created by dnso on 12/03/2018.

@@ -23,7 +23,7 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.PermissionsUtils
 import kotlinx.android.synthetic.main.activity_data_usage.*
 import kotlinx.coroutines.experimental.async
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DataUsageActivity : BaseActivity(){
 

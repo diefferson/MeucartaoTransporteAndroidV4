@@ -10,7 +10,7 @@ import br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardActi
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.common.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_tabs.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * Created by dnso on 12/03/2018.

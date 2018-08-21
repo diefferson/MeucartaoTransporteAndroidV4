@@ -7,7 +7,7 @@ import android.util.Log
 import br.com.disapps.meucartaotransporte.ui.cards.CardsActivity
 import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.lines.LinesActivity
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class NavigationActivity : AppCompatActivity() {
 

@@ -12,8 +12,8 @@ import br.com.disapps.meucartaotransporte.util.getDayName
 import br.com.disapps.meucartaotransporte.util.getDayWeek
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import kotlinx.android.synthetic.main.fragment_tabs.*
-import org.koin.android.architecture.ext.sharedViewModel
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class NextSchedulesFragment : BaseFragment(){
 

@@ -57,66 +57,14 @@ kotlin {
 }
 
 dependencies {
-    def presentationDependencies = rootProject.ext.presentationDependencies
-    def presentationTestDependencies = rootProject.ext.presentationTestDependencies
+
     implementation project(':domain')
     implementation project(':data')
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation presentationDependencies.appCompatV7
-    implementation presentationDependencies.supportV4
-    implementation presentationDependencies.supportDesign
-    implementation presentationDependencies.constraintLayout
-    implementation presentationDependencies.vectorDrawable
-    implementation presentationDependencies.cardView
-    implementation presentationDependencies.kotlin
-    implementation presentationDependencies.koin
-    implementation presentationDependencies.coroutinesAndroid
-    implementation presentationDependencies.koinArch
-    implementation presentationDependencies.archExtensions
-    implementation presentationDependencies.baseRecyclerView
-    implementation presentationDependencies.recyclerviewFastscroll
-    implementation presentationDependencies.lottie
-    implementation presentationDependencies.firebaseCore
-    implementation presentationDependencies.firebaseMessaging
-    implementation presentationDependencies.firebaseAds
-    implementation presentationDependencies.playServicesLocation
-    implementation presentationDependencies.playServicesMap
-    implementation presentationDependencies.jobDispatcher
-    implementation presentationDependencies.customtabs
-    implementation presentationDependencies.zxing
-    implementation presentationDependencies.zxingAndroid
-    implementation presentationDependencies.oneSignal
 
+    rootProject.presentationDependencies.each {
+        add(it.configuration, it.dependency, it.options)
+    }
 
-    kapt presentationDependencies.archCompiler
-
-
-    // Instrumentation test dependencies
-    testImplementation presentationTestDependencies.kotlinJUnit
-    androidTestImplementation presentationTestDependencies.junit
-    androidTestImplementation presentationTestDependencies.mockito
-    androidTestImplementation presentationTestDependencies.mockitoAndroid
-    androidTestImplementation(presentationTestDependencies.espressoCore) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation(presentationTestDependencies.androidRunner) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation(presentationTestDependencies.androidRules) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation(presentationTestDependencies.espressoIntents) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation(presentationTestDependencies.espressoContrib) {
-        exclude module: 'appcompat'
-        exclude module: 'appcompat-v7'
-        exclude module: 'support-v4'
-        exclude module: 'support-v13'
-        exclude module: 'support-annotations'
-        exclude module: 'recyclerview-v7'
-        exclude module: 'design'
-    }
 }
 
 apply plugin: 'com.google.gms.google-services'

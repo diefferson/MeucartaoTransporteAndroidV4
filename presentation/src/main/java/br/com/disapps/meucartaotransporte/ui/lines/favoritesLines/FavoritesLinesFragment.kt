@@ -12,7 +12,7 @@ import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
-import org.koin.android.architecture.ext.sharedViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 /**
  * Created by dnso on 14/03/2018.

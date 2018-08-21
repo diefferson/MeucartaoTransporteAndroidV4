@@ -12,8 +12,8 @@ import br.com.disapps.meucartaotransporte.util.getCity
 import br.com.disapps.meucartaotransporte.util.getDownloadDataView
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import kotlinx.android.synthetic.main.fragment_tabs.*
-import org.koin.android.architecture.ext.sharedViewModel
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * Created by dnso on 12/03/2018.

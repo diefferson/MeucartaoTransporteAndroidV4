@@ -18,7 +18,7 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainActivity
 import br.com.disapps.meucartaotransporte.util.PermissionsUtils
 import kotlinx.android.synthetic.main.activity_intro.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class IntroActivity : BaseActivity(){

@@ -16,7 +16,7 @@ import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidge
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.LinesListAdapter
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.StopsListAdapter
 import kotlinx.android.synthetic.main.fragment_recycler.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * The configuration screen for the [BusSchedulesBlackWidget] AppWidget.

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class PromotionActivity : BaseActivity(){
 

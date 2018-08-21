@@ -14,8 +14,8 @@ import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
-import org.koin.android.architecture.ext.sharedViewModel
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 /**
