@@ -50,13 +50,12 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
         }
 
         if(valid){
-            validateHasLocalCard()
+            validateHasCloudCard()
         }
     }
 
-    private fun validateHasLocalCard(){
-        loadingEvent.value = true
-        hasCardUseCase.execute(HasCard.Params(getFormCard()),
+    private fun validateHasLocalCard(card : Card){
+        hasCardUseCase.execute(HasCard.Params(card),
             onError = {
                 loadingEvent.value = false
                 exceptionEvent.value = if(it is KnownException){
@@ -70,13 +69,14 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
                     loadingEvent.value = false
                     exceptionEvent.value = UiException(KnownError.CARD_EXISTS_EXCEPTION, "")
                 }else{
-                    validateHasCloudCard()
+                    saveCard(card)
                 }
             }
         )
     }
 
     private fun validateHasCloudCard(){
+        loadingEvent.value = true
         getCardUseCase.execute(GetCard.Params(getFormCard()),
             onError = {
                 loadingEvent.value = false
@@ -89,7 +89,7 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
             onSuccess= {
                 if(it!= null){
                     it.name = name
-                    saveCard(it)
+                    validateHasLocalCard(it)
                 }else{
                     loadingEvent.value = false
                 }
