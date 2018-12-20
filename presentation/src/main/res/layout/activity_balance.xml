@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-        <import type="android.graphics.Color"/>
-        <import type="android.view.View"/>
-        <variable
-            name="viewModel"
-            type="br.com.disapps.meucartaotransporte.ui.cards.balance.BalanceViewModel"/>
-    </data>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/balance_recycler"
@@ -18,4 +13,4 @@
         android:scrollbars="vertical"
         tools:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
-</layout>
+</android.support.constraint.ConstraintLayout>

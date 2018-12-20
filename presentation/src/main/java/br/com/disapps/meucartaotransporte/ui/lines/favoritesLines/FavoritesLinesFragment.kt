@@ -12,14 +12,14 @@ import br.com.disapps.meucartaotransporte.ui.lines.LinesViewModel
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
 import kotlinx.android.synthetic.main.fragment_list_lines.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 /**
  * Created by dnso on 14/03/2018.
  */
 class FavoritesLinesFragment : BaseFragment() {
 
-    override val viewModel by viewModel<LinesViewModel>()
+    override val viewModel by sharedViewModel<LinesViewModel>()
     override val fragmentLayout = R.layout.fragment_list_lines
     override val fragmentTag = "FavoritesLinesFragment"
 
@@ -31,7 +31,9 @@ class FavoritesLinesFragment : BaseFragment() {
                 }
             }
             setOnItemClickListener { _, view, position ->
-                LineActivity.launch(context!!, parentFragment,getLine(position).line, view.findViewById(R.id.roundedImage))
+                if(getLine(position).type == LinesListAdapter.ListItem.LINE_ITEM){
+                    LineActivity.launch(context!!, parentFragment, getLine(position).line, view.findViewById(R.id.roundedImage))
+                }
             }
         }
     }

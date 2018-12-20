@@ -3,22 +3,19 @@ package br.com.disapps.meucartaotransporte.ui.cards.balance
 import android.app.Activity
 import android.graphics.Color
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.model.CardVO
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdAppWall
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdContentStream
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdFedd
-import com.appodeal.ads.Appodeal
+import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.google.android.gms.ads.AdView
 
 class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMultiItemQuickAdapter<BalanceListAdapter.ListItem, BaseViewHolder>(data){
 
     init {
         addItemType(ListItem.BALANCE_ITEM, R.layout.item_balance)
-        addItemType(ListItem.ADS_FEED_ITEM, R.layout.item_ads_feed)
-        addItemType(ListItem.ADS_CONTENT_STREAM_ITEM, R.layout.item_ads_content_stream)
-        addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
+        addItemType(ListItem.ADS_BANNER, R.layout.ad_banner)
     }
 
     override fun convert(helper: BaseViewHolder, item: ListItem) {
@@ -38,28 +35,8 @@ class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMul
                 }
             }
 
-            ListItem.ADS_FEED_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdFedd(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
-
-            ListItem.ADS_CONTENT_STREAM_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdContentStream(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
-
-            ListItem.ADS_APP_WALL_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdAppWall(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
+            ListItem.ADS_BANNER ->{
+                (helper.itemView as AdView).loadAdIfIsPro()
             }
         }
     }
@@ -73,9 +50,7 @@ class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMul
 
         companion object {
             const val BALANCE_ITEM = 0
-            const val ADS_FEED_ITEM = 1
-            const val ADS_CONTENT_STREAM_ITEM = 2
-            const val ADS_APP_WALL_ITEM = 3
+            const val ADS_BANNER = 1
         }
     }
 
@@ -93,8 +68,11 @@ class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMul
                 list.add(objectToItem(it,ListItem.BALANCE_ITEM))
             }
 
-            if(list.size >0){
-                list.add(objectToItem(getEmptyCard(), ListItem.ADS_CONTENT_STREAM_ITEM))
+            if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
+
+                if (list.size > 0) {
+                    list.add(objectToItem(getEmptyCard(), ListItem.ADS_BANNER))
+                }
             }
 
             return list

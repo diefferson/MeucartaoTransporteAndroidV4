@@ -16,9 +16,9 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
                             private val saveCardUseCase: SaveCard,
                             private val getCardUseCase: GetCard) : BaseViewModel(){
 
-    val code = MutableLiveData<String>()
-    val cpf = MutableLiveData<String>()
-    val name = MutableLiveData<String>()
+    var code = ""
+    var cpf = ""
+    var name = ""
     val isValidCode = MutableLiveData<Boolean>().apply { value = true }
     val isValidCpf = MutableLiveData<Boolean>().apply { value  = true }
     val isValidName = MutableLiveData<Boolean>().apply { value = true }
@@ -32,31 +32,30 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
         isValidCpf.value = true
         isValidName.value = true
 
-        name.value = name.value?.clean()
+        name = name.clean()
 
-        if(name.value.isNullOrEmpty()){
+        if(name.isEmpty()){
             isValidName.value = false
             valid = false
         }
 
-        if(code.value.isNullOrEmpty()){
+        if(code.isEmpty()){
             isValidCode.value = false
             valid = false
         }
 
-        if(cpf.value.isNullOrEmpty() || !cpf.value!!.isCPF()){
+        if(cpf.isEmpty() || !cpf.isCPF()){
             isValidCpf.value = false
             valid = false
         }
 
         if(valid){
-            validateHasLocalCard()
+            validateHasCloudCard()
         }
     }
 
-    private fun validateHasLocalCard(){
-        loadingEvent.value = true
-        hasCardUseCase.execute(HasCard.Params(getFormCard()),
+    private fun validateHasLocalCard(card : Card){
+        hasCardUseCase.execute(HasCard.Params(card),
             onError = {
                 loadingEvent.value = false
                 exceptionEvent.value = if(it is KnownException){
@@ -70,13 +69,14 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
                     loadingEvent.value = false
                     exceptionEvent.value = UiException(KnownError.CARD_EXISTS_EXCEPTION, "")
                 }else{
-                    validateHasCloudCard()
+                    saveCard(card)
                 }
             }
         )
     }
 
     private fun validateHasCloudCard(){
+        loadingEvent.value = true
         getCardUseCase.execute(GetCard.Params(getFormCard()),
             onError = {
                 loadingEvent.value = false
@@ -88,8 +88,8 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
             },
             onSuccess= {
                 if(it!= null){
-                    it.name = name.value.toString()
-                    saveCard(it)
+                    it.name = name
+                    validateHasLocalCard(it)
                 }else{
                     loadingEvent.value = false
                 }
@@ -116,9 +116,9 @@ class RegisterCardViewModel(private val hasCardUseCase: HasCard,
 
     private fun getFormCard() : Card{
         return Card(
-            code = code.value.toString().toLong().toString(),
-            cpf = cpf.value.toString(),
-            name = name.value.toString()
+            code = code.toLong().toString(),
+            cpf = cpf,
+            name = name
         )
     }
 

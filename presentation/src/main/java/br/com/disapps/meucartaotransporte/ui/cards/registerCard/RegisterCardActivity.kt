@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -12,7 +14,7 @@ import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.*
 import kotlinx.android.synthetic.main.activity_register_card.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class RegisterCardActivity : BaseActivity(){
@@ -22,16 +24,18 @@ class RegisterCardActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setupClickListeners()
-
         viewModelObservers()
+        validateFields()
     }
 
     private fun setupClickListeners() {
         btn_register.setOnClickListener {
             hideKeyboard()
             if(validateConnection()){
+                viewModel.name = card_name.text.toString()
+                viewModel.code = card_code.text.toString()
+                viewModel.cpf = card_cpf.text.toString()
                 viewModel.consult()
             }else{
                 result_container.removeAllViews()
@@ -56,10 +60,64 @@ class RegisterCardActivity : BaseActivity(){
     }
 
     private fun viewModelObservers() {
-        viewModel.code.observe(this, Observer { viewModel.isValidCode.value = true })
-        viewModel.cpf.observe(this, Observer { viewModel.isValidCpf.value = true })
-        viewModel.name.observe(this, Observer { viewModel.isValidName.value = true })
         viewModel.isFinished.observe(this, Observer { if(it!= null && it){finish()}})
+    }
+
+    private fun validateFields() {
+
+        card_name.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.isValidName.value = true
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        card_code.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.isValidCode.value = true
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        card_cpf.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.isValidCpf.value = true
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        viewModel.isValidName.observe(this, Observer {
+            card_name_container.error = if(it != null && it){
+                null
+            }else{
+                getString(R.string.invalid_name)
+            }
+        })
+
+        viewModel.isValidCode.observe(this, Observer {
+            card_code_container.error = if(it != null && it){
+                null
+            }else{
+                getString(R.string.invalid_code)
+            }
+        })
+
+        viewModel.isValidCpf.observe(this, Observer {
+            card_cpf_container.error = if(it != null && it){
+                null
+            }else{
+                getString(R.string.invalid_cpf)
+            }
+        })
     }
 
     override fun setupError() {
@@ -85,6 +143,7 @@ class RegisterCardActivity : BaseActivity(){
                 val loadingView = getLoadingView()
                 result_container.removeAllViews()
                 if(it){
+                    showInterstitial(mInterstitialAd)
                     content.visibility = View.INVISIBLE
                     result_container.addView(loadingView)
                     result_container.visibility = View.VISIBLE

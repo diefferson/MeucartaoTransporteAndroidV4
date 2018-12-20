@@ -9,17 +9,15 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import kotlinx.android.synthetic.main.fragment_itinerary_direction.*
-import org.koin.android.architecture.ext.getViewModel
-import org.koin.android.architecture.ext.viewModel
+import kotlinx.android.synthetic.main.fragment_recycler.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ItineraryDirectionFragment : BaseFragment(){
 
-    override val viewModel: ItineraryDirectionViewModel
-        get() = getViewModel()
-
-    override val fragmentLayout = R.layout.fragment_itinerary_direction
-    private val lineViewModel  by viewModel<LineViewModel>()
+    override val viewModel by viewModel<ItineraryDirectionViewModel>()
+    override val fragmentLayout = R.layout.fragment_recycler
+    private val lineViewModel  by sharedViewModel<LineViewModel>()
     override val fragmentTag = "ItineraryDirectionFragment"
 
     private val adapter : ItineraryDirectionListAdapter by lazy {
@@ -40,7 +38,7 @@ class ItineraryDirectionFragment : BaseFragment(){
     }
 
     private fun initRecyclerView() {
-        itinerary_recycler.apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
             adapter = this@ItineraryDirectionFragment.adapter
         }

@@ -1,103 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="viewModel"
-            type="br.com.disapps.meucartaotransporte.ui.cards.registerCard.RegisterCardViewModel"/>
-    </data>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <ScrollView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:paddingBottom="10dp">
 
-        <ScrollView
-            android:id="@+id/content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/card_name_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                style="@style/AppTheme.InputLayout">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/card_name_container"
+                <EditText
+                    android:id="@+id/card_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/AppTheme.InputLayout"
-                    app:error="@{!viewModel.isValidName ? @string/invalid_name : null}">
+                    android:maxLength="50"
+                    android:hint="@string/card_name"
+                    android:inputType="text"
+                    android:focusable="true"
+                    android:nextFocusForward="@id/card_code"/>
 
-                    <EditText
-                        android:id="@+id/card_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLength="50"
-                        android:text="@={viewModel.name}"
-                        android:hint="@string/card_name"
-                        android:inputType="text"
-                        android:focusable="true"
-                        android:nextFocusForward="@id/card_code"/>
-
-                </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>
 
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/card_code_container"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/card_code_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/AppTheme.InputLayout">
+
+                <EditText
+                    android:id="@+id/card_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/AppTheme.InputLayout"
-                    app:error="@{!viewModel.isValidCode ? @string/invalid_code : null}">
+                    android:hint="@string/card_code"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:focusable="true"
+                    android:nextFocusForward="@id/card_cpf"/>
 
-                    <EditText
-                        android:id="@+id/card_code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@={viewModel.code}"
-                        android:hint="@string/card_code"
-                        android:inputType="number"
-                        android:maxLength="10"
-                        android:focusable="true"
-                        android:nextFocusForward="@id/card_cpf"/>
+            </android.support.design.widget.TextInputLayout>
 
-                </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/card_cpf_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/AppTheme.InputLayout">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/card_cpf_container"
+                <EditText
+                    android:id="@+id/card_cpf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/AppTheme.InputLayout"
-                    app:error="@{!viewModel.isValidCpf ? @string/invalid_cpf : null}">
+                    android:ems="10"
+                    android:hint="@string/cpf"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:imeOptions="actionDone"/>
 
-                    <EditText
-                        android:id="@+id/card_cpf"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:text="@={viewModel.cpf}"
-                        android:hint="@string/cpf"
-                        android:inputType="number"
-                        android:maxLength="11"
-                        android:imeOptions="actionDone"/>
+            </android.support.design.widget.TextInputLayout>
 
-                </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/btn_register"
+                style="@style/AppTheme.Button"
+                android:text="@string/btn_register" />
 
-                <Button
-                    android:id="@+id/btn_register"
-                    style="@style/AppTheme.Button"
-                    android:text="@string/btn_register" />
+        </LinearLayout>
+    </ScrollView>
 
-            </LinearLayout>
-        </ScrollView>
+    <RelativeLayout
+        android:id="@+id/result_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
 
-        <RelativeLayout
-            android:id="@+id/result_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"/>
-
-    </RelativeLayout>
-
-</layout>
+</RelativeLayout>

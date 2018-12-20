@@ -9,6 +9,8 @@ import br.com.disapps.domain.repository.PreferencesRepository
 import br.com.disapps.meucartaotransporte.R
 import org.koin.android.ext.android.inject
 import br.com.disapps.data.BuildConfig
+import br.com.disapps.data.utils.deleteFromCache
+import br.com.disapps.meucartaotransporte.util.showCustomNotification
 
 
 class DownloadItinerariesService : BaseService(){
@@ -38,11 +40,21 @@ class DownloadItinerariesService : BaseService(){
 
     private fun downloadItineraries(city: City){
         val idDownload = customDownloadManager.download(FILE_NAME, BuildConfig.DOWNLOAD_ITINERARIES,BuildConfig.DOWNLOAD_ITINERARIES_KEY, getString(R.string.downloading_itineraries), city.toString())
-        if(city == City.CWB){
-            preferences.setIdDownloadItinerariesCwb(idDownload)
-        }else {
-            preferences.setIdDownloadItinerariesMetropolitan(idDownload)
+        if(idDownload > -1){
+            if(city == City.CWB){
+                preferences.setIdDownloadItinerariesCwb(idDownload)
+            }else {
+                preferences.setIdDownloadItinerariesMetropolitan(idDownload)
+            }
+        }else{
+            deleteFromCache(SaveItinerariesService.FILE_PATH)
+            showCustomNotification(this,
+                    SaveItinerariesService.NOTIFICATION_CHANNEL,
+                    SaveItinerariesService.NOTIFICATION_ID,
+                    this.getString(R.string.download_itineraries_error))
+            this.stopSelf()
         }
+
     }
 
     override fun onDestroy() {

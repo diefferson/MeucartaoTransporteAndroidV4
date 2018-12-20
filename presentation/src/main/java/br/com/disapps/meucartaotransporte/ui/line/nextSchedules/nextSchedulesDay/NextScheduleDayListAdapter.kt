@@ -3,49 +3,26 @@ package br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDa
 import android.app.Activity
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdAppWall
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdContentStream
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdFedd
+import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.ui.custom.setSchedule
-import com.appodeal.ads.Appodeal
+import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.google.android.gms.ads.AdView
 
 class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) : BaseMultiItemQuickAdapter<NextScheduleDayListAdapter.ListItem, BaseViewHolder>(data){
 
     init {
         addItemType(ListItem.LINE_SCHEDULE_ITEM, R.layout.item_next_schedules)
-        addItemType(ListItem.ADS_FEED_ITEM, R.layout.item_ads_feed)
-        addItemType(ListItem.ADS_CONTENT_STREAM_ITEM, R.layout.item_ads_content_stream)
-        addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
+        addItemType(ListItem.ADS_BANNER, R.layout.ad_banner)
     }
 
     override fun convert(helper: BaseViewHolder, item: ListItem) {
         when(item.type){
 
-            ListItem.ADS_FEED_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdFedd(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
-
-            ListItem.ADS_CONTENT_STREAM_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdContentStream(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
-
-            ListItem.ADS_APP_WALL_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdAppWall(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
+            ListItem.ADS_BANNER ->{
+                (helper.itemView as AdView).loadAdIfIsPro()
             }
 
             ListItem.LINE_SCHEDULE_ITEM ->{
@@ -93,9 +70,7 @@ class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) :
 
         companion object {
             const val LINE_SCHEDULE_ITEM = 0
-            const val ADS_FEED_ITEM = 1
-            const val ADS_CONTENT_STREAM_ITEM = 2
-            const val ADS_APP_WALL_ITEM = 3
+            const val ADS_BANNER = 1
         }
     }
 
@@ -112,14 +87,12 @@ class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) :
 
             items?.forEach {
                 list.add(objectToItem(it, ListItem.LINE_SCHEDULE_ITEM))
-                if (i % 2 == 0) {
-                    list.add(objectToItem(getEmptyLineSchedule(), ListItem.ADS_APP_WALL_ITEM))
+                if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
+                    if (i % 2 == 0) {
+                        list.add(objectToItem(getEmptyLineSchedule(), ListItem.ADS_BANNER))
+                    }
                 }
                 i++
-            }
-
-            if(list.size >0){
-                list.add(objectToItem(getEmptyLineSchedule(), ListItem.ADS_CONTENT_STREAM_ITEM))
             }
 
             return list

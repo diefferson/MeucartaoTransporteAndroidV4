@@ -13,22 +13,23 @@ class QuickFindViewModel : BaseViewModel(){
     val isValidCpf = MutableLiveData<Boolean>().apply { value = true }
     val isValidCode = MutableLiveData<Boolean>().apply { value = true }
     val isSuccess = MutableLiveData<Boolean>()
-    val cpf = MutableLiveData<String>()
-    val code = MutableLiveData<String>()
+    var cpf:String = ""
+    var code:String = ""
+    var isExtract = false
 
-    fun consult(){
-
+    fun consult(extract:Boolean = false){
+        isExtract = extract
         var valid = true
 
         isValidCode.value = true
         isValidCpf.value = true
 
-        if(code.value.isNullOrEmpty()){
+        if(code.isEmpty()){
             isValidCode.value = false
             valid = false
         }
 
-        if(cpf.value.isNullOrEmpty() || !cpf.value!!.isCPF()){
+        if(cpf.isEmpty() || !cpf.isCPF()){
             isValidCpf.value = false
             valid = false
         }

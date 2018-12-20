@@ -1,16 +1,17 @@
 buildscript {
-    ext.kotlin_version = '1.2.31'
+   // ext.kotlin_version = '1.2.31'
+    ext.kotlin_version = '1.2.61' //to coverage tests
     repositories {
         google()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://plugins.gradle.org/m2/'}
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.realm:realm-gradle-plugin:5.0.0"
         classpath 'com.google.gms:google-services:3.2.1'
-        classpath 'io.fabric.tools:gradle:1.25.3'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.11.0, 0.99.99]'
     }
 }
 

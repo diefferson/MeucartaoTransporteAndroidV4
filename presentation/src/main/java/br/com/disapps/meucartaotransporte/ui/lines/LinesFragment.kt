@@ -12,8 +12,8 @@ import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineActivity
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import kotlinx.android.synthetic.main.fragment_lines.*
-import org.koin.android.architecture.ext.viewModel
+import kotlinx.android.synthetic.main.fragment_tabs.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class LinesFragment : BaseFragment() {
 
@@ -21,9 +21,9 @@ class LinesFragment : BaseFragment() {
         hasTabs = true
     }
 
-    override val viewModel by viewModel<LinesViewModel>()
-    override val fragmentLayout = R.layout.fragment_lines
-    private val mainViewModel by viewModel<MainViewModel>()
+    override val viewModel by sharedViewModel<LinesViewModel>()
+    override val fragmentLayout = R.layout.fragment_tabs
+    private val mainViewModel by sharedViewModel<MainViewModel>()
     override val fragmentTag = "LinesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,14 +62,20 @@ class LinesFragment : BaseFragment() {
     }
 
     private fun observeViewModel(){
-        viewModel.hasFavorite.observe(this, Observer {
-            view_pager.adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
+
+        if(mainViewModel.isDeepLink){
+            view_pager.adapter = AllLinesPageAdapter(childFragmentManager, context!!)
             iAppActivityListener.setupTabs(view_pager)
-        })
+        }else{
+            viewModel.hasFavorite.observe(this, Observer {
+                view_pager.adapter = LinesPageAdapter(childFragmentManager, context!!, it!= null && it)
+                iAppActivityListener.setupTabs(view_pager)
+            })
+        }
 
         mainViewModel.onSearchAction.observe(this, Observer {
             if(it!= null && it){
-                if(view_pager.adapter != null){
+                if(view_pager.adapter != null && !mainViewModel.isDeepLink){
                     if((view_pager.adapter as LinesPageAdapter).hasFavorite){
                         view_pager.currentItem = 1
                     }else{

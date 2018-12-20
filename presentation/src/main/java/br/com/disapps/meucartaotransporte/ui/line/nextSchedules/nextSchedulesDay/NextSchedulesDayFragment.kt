@@ -11,22 +11,21 @@ import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.ui.schedules.SchedulesActivity
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import kotlinx.android.synthetic.main.fragment_next_schedules_day.*
-import org.koin.android.architecture.ext.getViewModel
-import org.koin.android.architecture.ext.viewModel
+import kotlinx.android.synthetic.main.fragment_recycler.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class NextSchedulesDayFragment : BaseFragment(){
 
-    override val viewModel : NextSchedulesDayViewModel
-            get() = getViewModel()
-
-    override val fragmentLayout = R.layout.fragment_next_schedules_day
-    private val lineViewModel  by viewModel<LineViewModel>()
+    override val viewModel by viewModel<NextSchedulesDayViewModel>()
+    override val fragmentLayout = R.layout.fragment_recycler
+    private val lineViewModel  by sharedViewModel<LineViewModel>()
     override val fragmentTag = "NextScheduleDayListAdapter"
 
     private val adapter:NextScheduleDayListAdapter by lazy {
         NextScheduleDayListAdapter(ArrayList(), activity!!).apply {
             setOnItemClickListener { _, _, position ->
+                if(adapter.getItem(position)!!.type == NextScheduleDayListAdapter.ListItem.LINE_SCHEDULE_ITEM){
                     SchedulesActivity.launch(context!!, SchedulesDetail(
                             lineCode = getLineSchedule(position).lineCode,
                             day =  getLineSchedule(position).day,
@@ -34,6 +33,7 @@ class NextSchedulesDayFragment : BaseFragment(){
                             busStopCode = getLineSchedule(position).busStopCode,
                             lineColor = lineViewModel.line.color
                     ))
+                }
             }
         }
     }
@@ -53,7 +53,7 @@ class NextSchedulesDayFragment : BaseFragment(){
     }
 
     private fun initRecyclerView() {
-        next_schedules_recycler.apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
             adapter = this@NextSchedulesDayFragment.adapter
         }

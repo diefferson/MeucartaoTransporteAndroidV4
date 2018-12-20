@@ -2,15 +2,14 @@ package br.com.disapps.meucartaotransporte.ui.lines
 
 import android.app.Activity
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.model.LineVO
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdAppWall
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdContentStream
-import br.com.disapps.meucartaotransporte.ui.custom.setNativeAdFedd
 import br.com.disapps.meucartaotransporte.util.getBusColor
-import com.appodeal.ads.Appodeal
+import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.google.android.gms.ads.AdView
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 
 class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
@@ -18,37 +17,15 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
 
     init {
         addItemType(ListItem.LINE_ITEM, R.layout.item_line)
-        addItemType(ListItem.ADS_FEED_ITEM, R.layout.item_ads_feed)
-        addItemType(ListItem.ADS_CONTENT_STREAM_ITEM, R.layout.item_ads_content_stream)
-        addItemType(ListItem.ADS_APP_WALL_ITEM, R.layout.item_ads_app_wall)
+        addItemType(ListItem.ADS_BANNER, R.layout.ad_banner)
     }
 
     override fun convert(helper: BaseViewHolder, item: ListItem) {
 
         when(item.type){
 
-            ListItem.ADS_FEED_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdFedd(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
-
-            ListItem.ADS_CONTENT_STREAM_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdContentStream(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
-            }
-
-            ListItem.ADS_APP_WALL_ITEM ->{
-                val ads = Appodeal.getNativeAds(1)
-                if(ads.size>0){
-                    helper.setNativeAdAppWall(R.id.ads_item, ads[0])
-                    Appodeal.cache(activity, Appodeal.NATIVE)
-                }
+            ListItem.ADS_BANNER ->{
+                (helper.itemView as AdView).loadAdIfIsPro()
             }
 
             ListItem.LINE_ITEM ->{
@@ -68,22 +45,26 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
     }
 
     override fun getSectionName(position: Int): String {
-        return if(data[position].type == ListItem.LINE_ITEM){
-            try {
-                data[position].line.name[0].toString()
-            }catch (e:Exception){
-                ""
-            }
-        }else{
-            if(position == 0){
-                "A"
-            }else{
+        return try {
+            if(data[position].type == ListItem.LINE_ITEM){
                 try {
-                    data[position-1].line.name[0].toString()
+                    data[position].line.name[0].toString()
                 }catch (e:Exception){
                     ""
                 }
+            }else{
+                if(position == 0){
+                    "A"
+                }else{
+                    try {
+                        data[position-1].line.name[0].toString()
+                    }catch (e:Exception){
+                        ""
+                    }
+                }
             }
+        }catch (e:Exception){
+            ""
         }
     }
 
@@ -100,9 +81,7 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
 
         companion object {
             const val LINE_ITEM = 0
-            const val ADS_FEED_ITEM = 1
-            const val ADS_CONTENT_STREAM_ITEM = 2
-            const val ADS_APP_WALL_ITEM = 3
+            const val ADS_BANNER = 1
         }
     }
 
@@ -119,8 +98,10 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
 
             lines?.forEach {
                 list.add(objectToItem(it,ListItem.LINE_ITEM))
-                if(i%15 == 0){
-                    list.add(objectToItem(getEmptyLine(),ListItem.ADS_FEED_ITEM))
+                if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
+                    if (i % 15 == 0) {
+                        list.add(objectToItem(getEmptyLine(), ListItem.ADS_BANNER))
+                    }
                 }
                 i++
             }

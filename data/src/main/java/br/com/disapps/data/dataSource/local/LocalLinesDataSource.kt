@@ -73,9 +73,17 @@ class LocalLinesDataSource(private val database: Database, private val preferenc
 
     override suspend fun line(linha: Linha): Linha {
         val realm = database.getDatabase() as Realm
-        val line = realm.where(CLAZZ)
+        val result =realm.where(CLAZZ)
                         .equalTo(CODE, linha.codigo)
-                        .findFirstAsync()
+                        .findFirst()
+
+        val line :Linha
+
+        if(result!= null){
+             line =  realm.copyFromRealm(result)
+        }else{
+            throw KnownException(KnownError.NOT_FOUND_EXCEPTION, "")
+        }
         realm.close()
         return line
     }

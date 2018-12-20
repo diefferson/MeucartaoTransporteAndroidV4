@@ -8,9 +8,11 @@ import android.support.v4.app.NotificationCompat
 import android.widget.Toast
 import br.com.disapps.data.BuildConfig
 import br.com.disapps.data.api.CustomDownloadManager
+import br.com.disapps.data.utils.deleteFromCache
 import br.com.disapps.domain.repository.PreferencesRepository
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.setupChannel
+import br.com.disapps.meucartaotransporte.util.showCustomNotification
 import org.koin.android.ext.android.inject
 
 class DownloadSchedulesService: BaseService(){
@@ -39,7 +41,17 @@ class DownloadSchedulesService: BaseService(){
 
     private fun downloadSchedules(){
         val idDownload = customDownloadManager.download(FILE_NAME, BuildConfig.DOWNLOAD_SCHEDULES, BuildConfig.DOWNLOAD_SCHEDULES_KEY, getString(R.string.downloading_schedules), "")
-        preferences.setIdDownloadSchedules(idDownload)
+        if(idDownload > -1){
+            preferences.setIdDownloadSchedules(idDownload)
+        }else{
+            deleteFromCache(SaveSchedulesService.FILE_PATH)
+            ScheduleJob.schedule(this, ScheduleJob.SCHEDULE_TYPE)
+            showCustomNotification(this,
+                    SaveSchedulesService.NOTIFICATION_CHANNEL,
+                    SaveSchedulesService.NOTIFICATION_ID,
+                    this.getString(R.string.download_schedules_error))
+            this.stopSelf()
+        }
     }
 
     override fun onDestroy() {

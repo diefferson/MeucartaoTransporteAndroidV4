@@ -26,7 +26,7 @@ import br.com.disapps.meucartaotransporte.util.getCustomTheme
 import kotlinx.android.synthetic.main.activity_line.*
 import kotlinx.android.synthetic.main.include_container.*
 import kotlinx.android.synthetic.main.include_toolbar_animation.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LineActivity : BaseFragmentActivity(){
 
@@ -70,6 +70,7 @@ class LineActivity : BaseFragmentActivity(){
         super.onBackPressed()
         customAnimation.hideView()
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -151,7 +152,7 @@ class LineActivity : BaseFragmentActivity(){
     }
 
     private fun changeBarColors(restore : Boolean = false){
-        if (!restore && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (!restore && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isTransition) {
             appBar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
             window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         }
@@ -163,7 +164,7 @@ class LineActivity : BaseFragmentActivity(){
             isReloaded = it.getBoolean(IS_RELOADED, false)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isTransition) {
             changeBarColors(isReloaded)
             customAnimation.setTransitions()
         }
@@ -177,10 +178,12 @@ class LineActivity : BaseFragmentActivity(){
         const val RESULT_LINE_FAVOR = 1
         const val RESULT_LINE_DISFAVOR = 0
         const val LINE_CODE = "lineCode"
+        var isTransition = false
 
-        fun launch(context:Context, startFragment: Fragment?, line : LineVO, viewAnimation : View){
+        fun launch(context:Context, startFragment: Fragment?, line : LineVO, viewAnimation : View?){
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && viewAnimation!= null) {
+                isTransition =  true
                 Intent(context, LineActivity::class.java).apply {
                     putExtras(Bundle().apply{ putSerializable(LINE, line)})
                     val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context as BaseFragmentActivity, viewAnimation, context.getString(R.string.roundedColorView_transitionName))
@@ -190,7 +193,9 @@ class LineActivity : BaseFragmentActivity(){
                         context.startActivity(this, transitionActivityOptions.toBundle())
                     }
                 }
+
             } else{
+                isTransition =  false
                 if(startFragment != null){
                     startFragment.startActivityForResult(Intent(context, LineActivity::class.java).apply {
                         putExtras(Bundle().apply{ putSerializable(LINE, line)})

@@ -15,10 +15,8 @@ import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesPrefe
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.LinesListAdapter
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.StopsListAdapter
-import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidget
-import br.com.disapps.meucartaotransporte.widgets.busSchedules.busSchedulesBlack.BusSchedulesBlackWidgetConfigureActivity
-import kotlinx.android.synthetic.main.bus_schedules_widget_configure.*
-import org.koin.android.architecture.ext.viewModel
+import kotlinx.android.synthetic.main.fragment_recycler.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * The configuration screen for the [BusSchedulesWhiteWidget] AppWidget.
@@ -35,7 +33,7 @@ class BusSchedulesWhiteWidgetConfigureActivity : AppCompatActivity() {
 
     private val linesAdapter: LinesListAdapter by lazy{
         LinesListAdapter(ArrayList()).apply {
-            setOnItemClickListener { _, view, position ->
+            setOnItemClickListener { _, _, position ->
 
                 BusSchedulesPreferences.setLineCode(this@BusSchedulesWhiteWidgetConfigureActivity,
                         PREFS_NAME,
@@ -88,7 +86,7 @@ class BusSchedulesWhiteWidgetConfigureActivity : AppCompatActivity() {
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         setResult(Activity.RESULT_CANCELED)
-        setContentView(R.layout.bus_schedules_widget_configure)
+        setContentView(R.layout.fragment_recycler)
         title = getString(R.string.select_a_line)
 
         // Find the widget id from the intent.

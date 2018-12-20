@@ -1,6 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.settings.dataUsage
 
 import android.Manifest
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,16 +10,20 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
+import android.view.View
 import android.widget.Toast
 import br.com.disapps.domain.model.City
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.app.App
-import br.com.disapps.meucartaotransporte.services.*
+import br.com.disapps.meucartaotransporte.services.DownloadItinerariesService
+import br.com.disapps.meucartaotransporte.services.DownloadLinesService
+import br.com.disapps.meucartaotransporte.services.DownloadSchedulesService
+import br.com.disapps.meucartaotransporte.services.DownloadShapesService
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.PermissionsUtils
 import kotlinx.android.synthetic.main.activity_data_usage.*
 import kotlinx.coroutines.experimental.async
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DataUsageActivity : BaseActivity(){
 
@@ -29,6 +34,63 @@ class DataUsageActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         viewModel.init()
         setupClickListeners()
+        observeViewModel()
+    }
+
+    private fun observeViewModel(){
+        viewModel.dateLines.observe(this, Observer {
+            if(it != null){
+                date_updated_lines.visibility = View.VISIBLE
+                date_updated_lines.text = getString(R.string.last_updated,it)
+            }else{
+                date_updated_lines.visibility = View.INVISIBLE
+            }
+        })
+
+        viewModel.dateSchedules.observe(this, Observer {
+            if(it != null){
+                date_updated_schedules.visibility = View.VISIBLE
+                date_updated_schedules.text = getString(R.string.last_updated,it)
+            }else{
+                date_updated_schedules.visibility = View.INVISIBLE
+            }
+        })
+
+        viewModel.dateCwbItineraries.observe(this, Observer {
+            if(it != null){
+                date_cwb_itineraries.visibility = View.VISIBLE
+                date_cwb_itineraries.text = getString(R.string.last_updated,it)
+            }else{
+                date_cwb_itineraries.visibility = View.INVISIBLE
+            }
+        })
+
+        viewModel.dateCwbShapes.observe(this, Observer {
+            if(it != null){
+                date_cwb_shapes.visibility = View.VISIBLE
+                date_cwb_shapes.text = getString(R.string.last_updated,it)
+            }else{
+                date_cwb_shapes.visibility = View.INVISIBLE
+            }
+        })
+
+        viewModel.dateMetItineraries.observe(this, Observer {
+            if(it != null){
+                date_met_itineraries.visibility = View.VISIBLE
+                date_met_itineraries.text = getString(R.string.last_updated,it)
+            }else{
+                date_met_itineraries.visibility = View.INVISIBLE
+            }
+        })
+
+        viewModel.dateMetShapes.observe(this, Observer {
+            if(it != null){
+                date_met_shapes.visibility = View.VISIBLE
+                date_met_shapes.text = getString(R.string.last_updated,it)
+            }else{
+                date_met_shapes.visibility = View.INVISIBLE
+            }
+        })
     }
 
     private fun setupClickListeners() {
@@ -79,7 +141,7 @@ class DataUsageActivity : BaseActivity(){
                     setNeutralButton(getString(R.string.ok)) {_, _-> }
                 }.create().show()
 
-            } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
+            } else if (Build.VERSION.SDK_INT >= 23 && permissions.isNotEmpty() && !shouldShowRequestPermissionRationale(permissions[0])) {
                 /*Usuario marcou opção não perguntar novamente*/
                 AlertDialog.Builder(this).apply {
                     setTitle(getString(R.string.necessary_permission))

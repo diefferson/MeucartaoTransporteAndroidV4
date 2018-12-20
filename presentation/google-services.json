@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "95448377579-r66hl4drogisirt4jnifmfamqdt53i77.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "br.com.disapps.meucartaotransporte",
-            "certificate_hash": "27897ae94555b2b9638aed8614a4d66643f9b185"
-          }
-        },
-        {
           "client_id": "95448377579-teup10v426rsrp9desumnt3svnq11khr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -31,8 +23,12 @@
           }
         },
         {
-          "client_id": "95448377579-74k7cc23lja12ea6bsa27i9krfhiu0mp.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "95448377579-r66hl4drogisirt4jnifmfamqdt53i77.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.disapps.meucartaotransporte",
+            "certificate_hash": "27897ae94555b2b9638aed8614a4d66643f9b185"
+          }
         },
         {
           "client_id": "95448377579-alerfa1o2pa54g78smgp1jgm8j1cuffv.apps.googleusercontent.com",
@@ -72,10 +68,6 @@
             "package_name": "br.com.disapps.meucartaotransporte.dev",
             "certificate_hash": "27897ae94555b2b9638aed8614a4d66643f9b185"
           }
-        },
-        {
-          "client_id": "95448377579-74k7cc23lja12ea6bsa27i9krfhiu0mp.apps.googleusercontent.com",
-          "client_type": 3
         },
         {
           "client_id": "95448377579-alerfa1o2pa54g78smgp1jgm8j1cuffv.apps.googleusercontent.com",

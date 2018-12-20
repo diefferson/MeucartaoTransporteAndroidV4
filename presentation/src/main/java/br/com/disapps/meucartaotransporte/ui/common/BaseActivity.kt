@@ -1,17 +1,16 @@
 package br.com.disapps.meucartaotransporte.ui.common
 
 import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.ViewGroup
-import br.com.disapps.meucartaotransporte.BR
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.getLoadingView
-import com.appodeal.ads.Appodeal
+import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.InterstitialAd
 
 /**
  * Created by diefferson on 09/03/2018.
@@ -20,19 +19,26 @@ abstract class BaseActivity: AppCompatActivity(){
 
     abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
-    private var binding: ViewDataBinding? = null
+    lateinit var mInterstitialAd: InterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initDataBinding()
+        setContentView(activityLayout)
         setupLoading()
         setupError()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initInterstitialAd()
     }
 
-    override fun onResume() {
-        super.onResume()
-        Appodeal.cache(this, Appodeal.NATIVE)
+    private fun initInterstitialAd() {
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = getString(R.string.ad_interstitial_id)
+        mInterstitialAd.loadAdIfIsPro()
+        mInterstitialAd.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                mInterstitialAd.loadAdIfIsPro()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -44,12 +50,6 @@ abstract class BaseActivity: AppCompatActivity(){
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun initDataBinding(){
-        binding = DataBindingUtil.setContentView(this,activityLayout )
-        binding?.setVariable(BR.viewModel, viewModel)
-        binding?.setLifecycleOwner(this)
     }
 
     open fun setupLoading(){

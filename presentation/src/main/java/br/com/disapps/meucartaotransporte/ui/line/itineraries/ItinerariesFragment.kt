@@ -11,8 +11,9 @@ import br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirection
 import br.com.disapps.meucartaotransporte.util.getCity
 import br.com.disapps.meucartaotransporte.util.getDownloadDataView
 import br.com.disapps.meucartaotransporte.util.getEmptyView
-import kotlinx.android.synthetic.main.fragment_itineraries.*
-import org.koin.android.architecture.ext.viewModel
+import kotlinx.android.synthetic.main.fragment_tabs.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * Created by dnso on 12/03/2018.
@@ -24,8 +25,8 @@ class ItinerariesFragment : BaseFragment() {
     }
 
     override val viewModel by viewModel<ItinerariesViewModel>()
-    override val fragmentLayout = R.layout.fragment_itineraries
-    private val lineViewModel  by viewModel<LineViewModel>()
+    override val fragmentLayout = R.layout.fragment_tabs
+    private val lineViewModel  by sharedViewModel<LineViewModel>()
     override val fragmentTag = "ItinerariesFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,7 +64,7 @@ class ItinerariesFragment : BaseFragment() {
                 }
 
                 view_pager.adapter = adapter
-                iAppActivityListener.setupTabs(view_pager)
+                iAppActivityListener.setupTabs(view_pager,true)
             }else{
                 error_view?.addView(activity?.getEmptyView(getString(R.string.no_itinerary_data)))
                 error_view.visibility = View.VISIBLE

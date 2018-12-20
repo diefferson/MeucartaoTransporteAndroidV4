@@ -10,7 +10,7 @@ import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.*
 import kotlinx.android.synthetic.main.activity_extract.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ExtractActivity : BaseActivity(){
 
@@ -22,6 +22,7 @@ class ExtractActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         initRecyclerView()
         observeViewModel()
+        showInterstitial(mInterstitialAd)
     }
 
     override fun recreate() {

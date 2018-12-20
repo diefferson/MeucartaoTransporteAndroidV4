@@ -7,13 +7,8 @@ kotlin {
 }
 
 dependencies {
-    def domainDependencies = rootProject.ext.domainDependencies
-    def domainTestDependencies = rootProject.ext.domainTestDependencies
 
-    implementation domainDependencies.coroutines
-    implementation domainDependencies.kotlin
-
-    testImplementation domainTestDependencies.kotlinJUnit
-    testImplementation domainTestDependencies.mockito
-    testImplementation domainTestDependencies.assertj
+    rootProject.domainDependencies.each {
+        add(it.configuration, it.dependency, it.options)
+    }
 }

@@ -190,6 +190,13 @@
     <string name="select_a_stop">Selecione um ponto</string>
     <string name="widgets">Widgets</string>
     <string name="premium_only">Exclusivo usuário premium.</string>
+    <string name="thanks_pro">Obrigado por ser Premium!</string>
+    <string name="see_widgets">Já viu nossos widgets?</string>
+    <string name="remove_ads_text">Remove anúncios e libera os Widgets!</string>
+    <string name="club">Clube</string>
+    <string name="bus_club">Clube do Busão</string>
+    <string name="promotions">Promoções</string>
+    <string name="my_card">Meu cartão</string>
 
 
 </resources>

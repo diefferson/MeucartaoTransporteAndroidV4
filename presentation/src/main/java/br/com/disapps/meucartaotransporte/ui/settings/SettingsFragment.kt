@@ -1,20 +1,21 @@
 package br.com.disapps.meucartaotransporte.ui.settings
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.View
 import br.com.disapps.domain.model.InitialScreen
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.main.MainViewModel
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import br.com.disapps.meucartaotransporte.ui.settings.help.HelpActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
-import org.koin.android.architecture.ext.viewModel
-import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 /**
@@ -24,13 +25,24 @@ class SettingsFragment : BaseFragment(){
 
     override val viewModel by viewModel<SettingsViewModel>()
     override val fragmentLayout = R.layout.fragment_settings
-    private val mainViewModel: MainViewModel by viewModel()
+    private val mainViewModel by sharedViewModel<MainViewModel>()
     override val fragmentTag  = "SettingsFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iAppActivityListener.setTitle(getString(R.string.settings))
+        observeViewModel()
+        setupClickListeners()
 
+        if(App.instance!= null && App.instance!!.preferences.getIsProSync()){
+            remove_ads_label.setText(R.string.thanks_pro)
+            see_widgets.setText(R.string.see_widgets)
+            remove_ads_label.setTextColor(ContextCompat.getColor(context!!, R.color.colorAccent))
+            remove_ads.setOnClickListener {}
+        }
+    }
+
+    private fun setupClickListeners() {
         help.setOnClickListener { HelpActivity.launch(context!!) }
         initial_screen.setOnClickListener { initialScreen() }
         share.setOnClickListener { shareIt() }
@@ -41,6 +53,12 @@ class SettingsFragment : BaseFragment(){
     override fun onResume() {
         super.onResume()
         viewModel.getInitialScreen()
+    }
+
+    private fun observeViewModel(){
+        viewModel.initialScreen.observe(this, Observer {
+            initial_screen_value.text = it
+        })
     }
 
     private fun initialScreen() {

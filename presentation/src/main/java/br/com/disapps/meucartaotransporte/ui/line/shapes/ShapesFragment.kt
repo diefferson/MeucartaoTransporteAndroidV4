@@ -14,6 +14,7 @@ import br.com.disapps.domain.model.Bus
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.getAllCoordinates
 import br.com.disapps.meucartaotransporte.model.getLatLng
+import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.util.*
@@ -30,7 +31,8 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.withContext
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 /**
@@ -40,7 +42,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
 
     override val viewModel by viewModel<ShapesViewModel>()
     override val fragmentLayout = R.layout.fragment_shapes
-    private val lineViewModel  by viewModel<LineViewModel>()
+    private val lineViewModel  by sharedViewModel<LineViewModel>()
     override val fragmentTag= "ShapesFragment"
 
     private lateinit var googleMap: GoogleMap
@@ -101,6 +103,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         googleMap = p0
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.style_json))
         observeViewModel()
+        showInterstitial((activity as BaseActivity).mInterstitialAd)
     }
 
     private fun observeViewModel(){
@@ -245,7 +248,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
     private fun askViewLocation(){
         if(!viewModel.isPermission){
             viewModel.isPermission = true
-            requestPermissions(arrayOf(PermissionsUtils.ACCESS_LOCATION_PERMISSION), PermissionsUtils.ACCESS_LOCATION_CODE);
+            requestPermissions(arrayOf(PermissionsUtils.ACCESS_LOCATION_PERMISSION), PermissionsUtils.ACCESS_LOCATION_CODE)
         }
     }
 
@@ -256,7 +259,7 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
             PermissionsUtils.ACCESS_LOCATION_CODE
             -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 googleMap.isMyLocationEnabled = true
-            } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(permissions[0])) {
+            } else if (Build.VERSION.SDK_INT >= 23 && permissions.isNotEmpty() && !shouldShowRequestPermissionRationale(permissions[0])) {
                 Toast.makeText(activity!!, getString(R.string.error_show_location), Toast.LENGTH_LONG).show()
             } else {
                 /*Usuario negou a permissão*/

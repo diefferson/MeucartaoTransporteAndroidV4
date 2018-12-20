@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.Toast
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.getEmptyView
 import br.com.disapps.meucartaotransporte.util.getLoadingView
@@ -16,8 +15,8 @@ import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesPrefe
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.BusSchedulesWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.LinesListAdapter
 import br.com.disapps.meucartaotransporte.widgets.busSchedules.StopsListAdapter
-import kotlinx.android.synthetic.main.bus_schedules_widget_configure.*
-import org.koin.android.architecture.ext.viewModel
+import kotlinx.android.synthetic.main.fragment_recycler.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * The configuration screen for the [BusSchedulesBlackWidget] AppWidget.
@@ -87,7 +86,7 @@ class BusSchedulesBlackWidgetConfigureActivity : AppCompatActivity() {
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         setResult(Activity.RESULT_CANCELED)
-        setContentView(R.layout.bus_schedules_widget_configure)
+        setContentView(R.layout.fragment_recycler)
         title = getString(R.string.select_a_line)
 
         // Find the widget id from the intent.

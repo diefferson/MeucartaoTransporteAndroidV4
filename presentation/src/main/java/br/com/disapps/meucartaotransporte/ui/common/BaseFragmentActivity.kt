@@ -55,9 +55,14 @@ abstract class BaseFragmentActivity: BaseActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun setupTabs(viewPager: ViewPager) {
+    override fun setupTabs(viewPager: ViewPager, scrollable:Boolean) {
         showTabs()
         tabs.setupWithViewPager(viewPager, false)
+        if(scrollable){
+            tabs.tabMode = TabLayout.MODE_SCROLLABLE
+        }else{
+            tabs.tabMode = TabLayout.MODE_FIXED
+        }
     }
 
     override fun replaceFragment(fragment: BaseFragment) {
