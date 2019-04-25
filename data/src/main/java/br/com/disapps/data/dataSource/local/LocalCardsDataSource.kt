@@ -82,4 +82,8 @@ class LocalCardsDataSource(private val database: Database) : CardsDataSource {
     override suspend fun getExtract(requestCartao: RequestCartao): List<Extrato>? {
          throw Throwable("not implemented,  cloud only")
     }
+
+    override suspend fun getPassValue(): Float {
+        throw Throwable("not implemented,  cloud only")
+    }
 }

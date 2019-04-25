@@ -2,6 +2,7 @@ package br.com.disapps.meucartaotransporte.ui.cards.balance
 
 import android.app.Activity
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.model.CardVO
@@ -12,6 +13,8 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.google.android.gms.ads.AdView
 
 class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMultiItemQuickAdapter<BalanceListAdapter.ListItem, BaseViewHolder>(data){
+
+    var passValue:Float = 0f
 
     init {
         addItemType(ListItem.BALANCE_ITEM, R.layout.item_balance)
@@ -29,9 +32,15 @@ class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMul
                 helper.setText(R.id.card_balance_date, mContext.getString(R.string.card_updated, item.balance.balanceDate))
 
                 if(item.balance.balance >15){
-                    helper.setTextColor(R.id.card_balance, Color.GREEN)
+                    helper.setTextColor(R.id.card_balance, ContextCompat.getColor(mContext, R.color.colorAccent))
                 }else{
-                    helper.setTextColor(R.id.card_balance, Color.RED)
+                    helper.setTextColor(R.id.card_balance,ContextCompat.getColor(mContext, R.color.background_color))
+                }
+
+                if(passValue>0 ){
+                    helper.setText(R.id.update_message, mContext.getString(R.string.pass_message, (item.balance.balance/passValue).toInt()))
+                }else{
+                    helper.setGone(R.id.update_message, false)
                 }
             }
 
@@ -61,21 +70,7 @@ class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMul
         }
 
         fun objectToItem(balance :List<CardVO>?) : List<ListItem>{
-
-            val list = ArrayList<ListItem>()
-
-            balance?.forEach {
-                list.add(objectToItem(it,ListItem.BALANCE_ITEM))
-            }
-
-            if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
-
-                if (list.size > 0) {
-                    list.add(objectToItem(getEmptyCard(), ListItem.ADS_BANNER))
-                }
-            }
-
-            return list
+            return  balance?.map { objectToItem(it,ListItem.BALANCE_ITEM) }?:ArrayList()
         }
 
         private fun getEmptyCard() : CardVO {

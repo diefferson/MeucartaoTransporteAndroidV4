@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#B71C1C</color>
     <color name="colorAccent">#448AFF</color>
     <color name="accent_translucent">#80448AFF</color>
+    <color name="background_color">#791C1E</color>
 
     <color name="line_blue">#0D47A1</color>
     <color name="line_blue_light">#03A9F4</color>

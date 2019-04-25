@@ -55,4 +55,8 @@ class CardsDataRepository( private val cardsDataSourceFactory: CardsDataSourceFa
                 .getExtract(card.toRequestExtractDTO())?.toExtractBO()
 
     }
+
+    override suspend fun getPassValue(): Float {
+        return  cardsDataSourceFactory.create(true).getPassValue()
+    }
 }

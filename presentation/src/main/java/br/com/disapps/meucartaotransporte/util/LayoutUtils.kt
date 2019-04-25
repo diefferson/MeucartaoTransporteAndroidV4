@@ -3,15 +3,19 @@ package br.com.disapps.meucartaotransporte.util
 import android.animation.Animator
 import android.app.Activity
 import android.net.Uri
+import android.support.annotation.LayoutRes
+import android.support.constraint.ConstraintLayout
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
+import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.exception.UiException
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.ads.AdView
 
 
 fun Activity.getErrorView(uiException: UiException) :View{
@@ -135,4 +139,20 @@ fun Activity.getOfflineView():View{
     })
 
     return view
+}
+
+fun Activity.getShimmerView(@LayoutRes layout:Int):View{
+    val rootView = findViewById<ViewGroup>(android.R.id.content)
+    val view = inflateView(layout, rootView)
+
+    if(view.findViewById<ConstraintLayout>(R.id.friendly_ads) != null){
+        val friendlyAds= view.findViewById<ConstraintLayout>(R.id.friendly_ads)
+        if(App.instance!= null && !App.instance!!.preferences.getIsProSync()){
+            friendlyAds.findViewById<AdView>(R.id.adView).loadAdIfIsPro()
+        }else{
+            friendlyAds.visibility = View.GONE
+        }
+    }
+
+    return  view
 }

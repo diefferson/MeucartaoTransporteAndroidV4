@@ -3,8 +3,10 @@ package br.com.disapps.meucartaotransporte.ui.cards.extract
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
@@ -20,9 +22,12 @@ class ExtractActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+        supportActionBar?.elevation = 0f
         initRecyclerView()
         observeViewModel()
-        showInterstitial(mInterstitialAd)
     }
 
     override fun recreate() {

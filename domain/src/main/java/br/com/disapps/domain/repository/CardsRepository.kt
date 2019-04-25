@@ -18,4 +18,6 @@ interface CardsRepository{
     suspend fun extract(card: Card) : List<Extract>?
 
     suspend fun updateCard(card: Card)
+
+    suspend fun getPassValue() :Float
 }

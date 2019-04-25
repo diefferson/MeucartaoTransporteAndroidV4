@@ -3,8 +3,10 @@ package br.com.disapps.meucartaotransporte.ui.cards.balance
 import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
@@ -20,9 +22,9 @@ class BalanceActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.elevation = 0f
         initRecyclerView()
         observeViewModel()
-        showInterstitial(mInterstitialAd)
     }
 
     override fun recreate() {
@@ -53,6 +55,8 @@ class BalanceActivity : BaseActivity() {
         viewModel.card.observe(this, Observer {
             adapter.apply {
                 if(it!= null){
+                    update_message.visibility = View.VISIBLE
+                    passValue = viewModel.passValue
                     setNewData(BalanceListAdapter.objectToItem(arrayListOf(it)))
                 }
                 emptyView = getEmptyView(getString(R.string.no_results))
@@ -71,7 +75,7 @@ class BalanceActivity : BaseActivity() {
     override fun setupLoading() {
         viewModel.getIsLoadingObservable().observe(this, Observer {
             if(it!= null && it ){
-                adapter.emptyView = getLoadingView()
+                adapter.emptyView = getShimmerView(R.layout.item_balance_loading)
             }
         })
     }

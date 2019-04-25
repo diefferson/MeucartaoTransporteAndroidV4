@@ -197,6 +197,8 @@
     <string name="bus_club">Clube do Busão</string>
     <string name="promotions">Promoções</string>
     <string name="my_card">Meu cartão</string>
+    <string name="support_ads">Este anúncio nos ajuda a manter o aplicativo melhor para voce :)</string>
+    <string name="pass_message">O equivalente a %1$d Passagens :)</string>
 
 
 </resources>

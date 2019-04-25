@@ -90,7 +90,7 @@ object AppInject {
         viewModel { SettingsViewModel( getInitialScreenUseCase = get(), saveInitialScreenUseCase = get()) }
         viewModel { ShapesViewModel( getShapesUseCase = get(), getAllItinerariesUseCase = get(), getAllBusesUseCase = get(), getIsDownloadedCwbShapesUseCase = get(), getIsDownloadedMetropolitanShapesUseCase = get()) }
         viewModel { MyCardsViewModel( getCardsUseCase = get(), deleteCardUseCase =  get()) }
-        viewModel { BalanceViewModel( getCardUseCase = get(), updateCard = get()) }
+        viewModel { BalanceViewModel( getCardUseCase = get(), updateCard = get(), getPassValue = get()) }
         viewModel { RegisterCardViewModel( hasCardUseCase = get(), saveCardUseCase =  get(), getCardUseCase =  get()) }
         viewModel { ExtractViewModel( getExtractUseCase = get(), updateCard = get() ) }
         viewModel { IntroViewModel( saveAllLinesJsonUseCase = get(),saveAllSchedulesJsonUseCase =   get(),saveIsFirstAccessUseCase =  get()) }
@@ -109,6 +109,7 @@ object AppInject {
     }
 
     private val useCaseModule: Module = module {
+        factory { GetPassValue( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { GetCards( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }
         factory { SaveCard( cardRepository = get(), contextExecutor = get(), postExecutionContext = get(), logException = get()) }

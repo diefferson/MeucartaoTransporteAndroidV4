@@ -22,6 +22,16 @@ class ExtractListAdapter(data: List<ListItem>,var activity: Activity) : BaseMult
         when(item.type){
 
             ListItem.EXTRACT_ITEM ->{
+
+                val local = item.extract.local.toLowerCase()
+                helper.setImageResource(R.id.icon, if(local.contains("veículo")){
+                     R.drawable.ic_extract_bus
+                }else if(local.contains("terminal")){
+                    R.drawable.ic_extract_terminal
+                }else{
+                    R.drawable.ic_extract_bus_stop
+                })
+
                 helper.setText(R.id.extract_balance,  mContext.getString(R.string.card_balance_value,String.format("%.2f",item.extract.balance)))
                 helper.setText(R.id.extract_date, item.extract.date)
                 helper.setText(R.id.extract_place, item.extract.local)
@@ -54,21 +64,7 @@ class ExtractListAdapter(data: List<ListItem>,var activity: Activity) : BaseMult
         }
 
         fun objectToItem(extract :List<Extract>?) : List<ListItem>{
-
-            val list = ArrayList<ListItem>()
-            var i = 0
-
-            extract?.forEach {
-                list.add(objectToItem(it,ListItem.EXTRACT_ITEM))
-                if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
-                    if (i % 2 == 0) {
-                        list.add(objectToItem(getEmptyExtract(), ListItem.ADS_BANNER))
-                    }
-                }
-                i++
-            }
-
-            return list
+            return extract?.map { objectToItem(it,ListItem.EXTRACT_ITEM) } ?:ArrayList()
         }
 
         private fun getEmptyExtract() : Extract{
