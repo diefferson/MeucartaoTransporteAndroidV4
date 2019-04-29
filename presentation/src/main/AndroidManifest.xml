@@ -248,6 +248,12 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
+            android:name=".ui.main.Main2Activity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.RedTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".ui.lines.LinesActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
