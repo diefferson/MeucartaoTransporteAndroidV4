@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity(){
         if(Preferences(this).getIsFirstAccess()){
             IntroActivity.launch(this)
         }else{
-            Main2Activity.launch(this)
+            MainActivity.launch(this)
         }
         finish()
     }
