@@ -2,14 +2,11 @@ package br.com.disapps.meucartaotransporte.ui.lines
 
 import android.app.Activity
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.model.LineVO
 import br.com.disapps.meucartaotransporte.util.getBusColor
-import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.google.android.gms.ads.AdView
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 
 class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
@@ -23,10 +20,6 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
     override fun convert(helper: BaseViewHolder, item: ListItem) {
 
         when(item.type){
-
-            ListItem.ADS_BANNER ->{
-                (helper.itemView as AdView).loadAdIfIsPro()
-            }
 
             ListItem.LINE_ITEM ->{
                 helper.setText(R.id.line_code, item.line.code)
@@ -94,17 +87,11 @@ class LinesListAdapter(data: List<ListItem>?, var activity: Activity) :
         fun objectToItem(lines :List<LineVO>?) : List<ListItem>{
 
             val list = ArrayList<ListItem>()
-            var i = 0
 
             lines?.forEach {
                 list.add(objectToItem(it,ListItem.LINE_ITEM))
-                if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
-                    if (i % 15 == 0) {
-                        list.add(objectToItem(getEmptyLine(), ListItem.ADS_BANNER))
-                    }
-                }
-                i++
             }
+
             return list
         }
 

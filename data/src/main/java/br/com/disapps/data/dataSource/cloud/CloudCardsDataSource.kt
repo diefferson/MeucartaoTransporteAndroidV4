@@ -40,4 +40,8 @@ class CloudCardsDataSource(private val restApi: RestApi) : CardsDataSource {
     override suspend fun updateCard(cartao: Cartao){
         throw Throwable("not implemented, only local")
     }
+
+    override suspend fun getPassValue(): Float {
+        return  4.50f
+    }
 }

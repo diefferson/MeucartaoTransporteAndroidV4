@@ -3,13 +3,10 @@ package br.com.disapps.meucartaotransporte.ui.line.itineraries.itineraryDirectio
 import android.app.Activity
 import br.com.disapps.domain.model.BusStop
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.util.getBusColor
-import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.google.android.gms.ads.AdView
 
 class ItineraryDirectionListAdapter(data : List<ListItem>?,val activity: Activity,private val lineColor:String) : BaseMultiItemQuickAdapter<ItineraryDirectionListAdapter.ListItem, BaseViewHolder>( data){
 
@@ -20,9 +17,6 @@ class ItineraryDirectionListAdapter(data : List<ListItem>?,val activity: Activit
 
     override fun convert(helper: BaseViewHolder, item: ListItem) {
         when(item.type) {
-            ListItem.ADS_BANNER ->{
-                (helper.itemView as AdView).loadAdIfIsPro()
-            }
 
             ListItem.BUS_STOP_ITEM -> {
                 helper.setText(R.id.name, item.busStop.name)
@@ -54,16 +48,9 @@ class ItineraryDirectionListAdapter(data : List<ListItem>?,val activity: Activit
         fun objectToItem(items :List<BusStop>?) : List<ListItem>{
 
             val list = ArrayList<ListItem>()
-            var i = 0
 
             items?.forEach {
                 list.add(objectToItem(it, ListItem.BUS_STOP_ITEM))
-                if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
-                    if (i % 2 == 0) {
-                        list.add(objectToItem(getEmptyBusStop(), ListItem.ADS_BANNER))
-                    }
-                }
-                i++
             }
 
             return list

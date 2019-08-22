@@ -34,8 +34,6 @@
     boolean mShiftingMode;
 }
 
-# Appodeal
--keep class com.appodeal.** { *; }
 -keep class org.nexage.** { *; }
 -keepattributes EnclosingMethod, InnerClasses, Signature, JavascriptInterface
 

@@ -248,6 +248,12 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
+            android:name=".ui.main.Main2Activity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.RedTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".ui.lines.LinesActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
@@ -262,7 +268,7 @@
         <activity
             android:name=".ui.cards.balance.BalanceActivity"
             android:label="@string/card_balance"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.RedTheme" />
         <activity
             android:name=".ui.cards.registerCard.RegisterCardActivity"
             android:label="@string/register_card"
@@ -271,7 +277,7 @@
         <activity
             android:name=".ui.cards.extract.ExtractActivity"
             android:label="@string/card_extract"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.Extract" />
         <activity
             android:name=".ui.line.LineActivity"
             android:label="@string/app_name"

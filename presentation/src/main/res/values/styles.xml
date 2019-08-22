@@ -30,6 +30,26 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Extract" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorBackground</item>
+        <item name="colorPrimaryDark">@color/colorBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    </style>
+
+    <style name="AppTheme.RedTheme">
+        <item name="colorPrimary">@color/background_color</item>
+        <item name="colorPrimaryDark">@color/background_color</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/background_color</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    </style>
+
+    <style name="AppTheme.RedTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.Blue">
         <item name="colorPrimary">@color/line_blue</item>
         <item name="colorPrimaryDark">@color/line_blue</item>
@@ -207,6 +227,12 @@
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">4dp</item>
         <item name="cardBackgroundColor">?colorAccent</item>
+    </style>
+
+
+    <style name="placeholderField">
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:background">#dddddd</item>
     </style>
 
 </resources>
