@@ -6,14 +6,14 @@ apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 def versionMajor = 4
 def versionMinor = 2
-def versionPatch = 0
+def versionPatch = 1
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "br.com.disapps.meucartaotransporte"
-        minSdkVersion 16
-        targetSdkVersion 27
+        minSdkVersion 21
+        targetSdkVersion 28
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         versionCode versionMajor * 1000000 + versionMinor * 1000 + versionPatch * 100
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

@@ -4,10 +4,10 @@ apply plugin: 'realm-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 27
+        minSdkVersion 21
+        targetSdkVersion 28
         multiDexEnabled = true
         buildConfigField 'String', 'PREFERENCES_FILE_KEY', "\"br.com.disapps.meucartaotransporte.configs\""
         buildConfigField 'String', 'DOWNLOAD_LINES', "\"https://meucartaotransporte.com.br/api/listaLinhas\""
