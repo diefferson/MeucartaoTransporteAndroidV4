@@ -3,12 +3,9 @@ package br.com.disapps.meucartaotransporte.ui.cards.extract
 import android.app.Activity
 import br.com.disapps.domain.model.Extract
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.app.App
-import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.google.android.gms.ads.AdView
 
 class ExtractListAdapter(data: List<ListItem>,var activity: Activity) : BaseMultiItemQuickAdapter<ExtractListAdapter.ListItem, BaseViewHolder>(data){
 
@@ -36,10 +33,6 @@ class ExtractListAdapter(data: List<ListItem>,var activity: Activity) : BaseMult
                 helper.setText(R.id.extract_date, item.extract.date)
                 helper.setText(R.id.extract_place, item.extract.local)
                 helper.setText(R.id.extract_value,  mContext.getString(R.string.card_balance_value,String.format("%.2f",item.extract.value)))
-            }
-
-            ListItem.ADS_BANNER ->{
-                (helper.itemView as AdView).loadAdIfIsPro()
             }
         }
     }

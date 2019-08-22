@@ -5,20 +5,19 @@ import android.app.Activity
 import android.net.Uri
 import android.support.annotation.LayoutRes
 import android.support.constraint.ConstraintLayout
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.exception.UiException
 import br.com.disapps.meucartaotransporte.ui.settings.dataUsage.DataUsageActivity
 import com.airbnb.lottie.LottieAnimationView
-import com.google.android.gms.ads.AdView
 
 
-fun Activity.getErrorView(uiException: UiException) :View{
+fun Activity.getErrorView(uiException: UiException, white:Boolean =false) :View{
     val rootView = this.findViewById<ViewGroup>(android.R.id.content)
     return when(uiException.knownError){
 
@@ -27,6 +26,10 @@ fun Activity.getErrorView(uiException: UiException) :View{
                 findViewById<TextView>(R.id.title).text = getString(R.string.alert)
                 findViewById<TextView>(R.id.description).text = getString(R.string.card_link_message)
                 findViewById<Button>(R.id.known_more).setOnClickListener { getCustomChromeTabs().launchUrl(this@getErrorView, Uri.parse(resources.getString(R.string.url_balance_card))) }
+                if(white){
+                    findViewById<TextView>(R.id.title).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                    findViewById<TextView>(R.id.description).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                }
             }
         }
 
@@ -37,6 +40,10 @@ fun Activity.getErrorView(uiException: UiException) :View{
                 findViewById<Button>(R.id.known_more).setOnClickListener { finish() }
                 findViewById<Button>(R.id.known_more).text = getString(R.string.back)
                 findViewById<LottieAnimationView>(R.id.animation).setAnimation(R.raw.vish)
+                if(white){
+                    findViewById<TextView>(R.id.title).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                    findViewById<TextView>(R.id.description).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                }
             }
         }
 
@@ -47,6 +54,10 @@ fun Activity.getErrorView(uiException: UiException) :View{
                 findViewById<Button>(R.id.known_more).setOnClickListener { finish() }
                 findViewById<Button>(R.id.known_more).text = getString(R.string.back)
                 findViewById<LottieAnimationView>(R.id.animation).setAnimation(R.raw.vish)
+                if(white){
+                    findViewById<TextView>(R.id.title).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                    findViewById<TextView>(R.id.description).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                }
             }
         }
 
@@ -57,6 +68,10 @@ fun Activity.getErrorView(uiException: UiException) :View{
                 findViewById<Button>(R.id.known_more).setOnClickListener { finish() }
                 findViewById<Button>(R.id.known_more).text = getString(R.string.back)
                 findViewById<LottieAnimationView>(R.id.animation).setAnimation(R.raw.vish)
+                if(white){
+                    findViewById<TextView>(R.id.title).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                    findViewById<TextView>(R.id.description).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                }
             }
         }
 
@@ -67,6 +82,10 @@ fun Activity.getErrorView(uiException: UiException) :View{
                 findViewById<Button>(R.id.known_more).setOnClickListener { finish() }
                 findViewById<Button>(R.id.known_more).text = getString(R.string.back)
                 findViewById<LottieAnimationView>(R.id.animation).setAnimation(R.raw.vish)
+                if(white){
+                    findViewById<TextView>(R.id.title).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                    findViewById<TextView>(R.id.description).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                }
             }
         }
 
@@ -76,6 +95,10 @@ fun Activity.getErrorView(uiException: UiException) :View{
                 findViewById<TextView>(R.id.description).text = uiException.message
                 findViewById<Button>(R.id.known_more).setOnClickListener { getCustomChromeTabs().launchUrl(this@getErrorView, Uri.parse(resources.getString(R.string.url_balance_card))) }
                 findViewById<LottieAnimationView>(R.id.animation).setAnimation(R.raw.not_fault)
+                if(white){
+                    findViewById<TextView>(R.id.title).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                    findViewById<TextView>(R.id.description).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                }
             }
         }
 
@@ -86,6 +109,10 @@ fun Activity.getErrorView(uiException: UiException) :View{
                 findViewById<LottieAnimationView>(R.id.animation).setAnimation(R.raw.funy)
                 findViewById<Button>(R.id.known_more).text = getString(R.string.back)
                 findViewById<Button>(R.id.known_more).setOnClickListener { finish() }
+                if(white){
+                    findViewById<TextView>(R.id.title).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                    findViewById<TextView>(R.id.description).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                }
             }
         }
 
@@ -95,10 +122,13 @@ fun Activity.getErrorView(uiException: UiException) :View{
                 findViewById<TextView>(R.id.description).text = getString(R.string.network_generic_error)
                 findViewById<Button>(R.id.known_more).text = getString(R.string.tray_again)
                 findViewById<Button>(R.id.known_more).setOnClickListener { recreate() }
+                if(white){
+                    findViewById<TextView>(R.id.title).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                    findViewById<TextView>(R.id.description).setTextColor(ContextCompat.getColor(context,R.color.textColorPrimary))
+                }
             }
         }
     }
-
 }
 
 fun Activity.getLoadingView() :View{
@@ -147,11 +177,7 @@ fun Activity.getShimmerView(@LayoutRes layout:Int):View{
 
     if(view.findViewById<ConstraintLayout>(R.id.friendly_ads) != null){
         val friendlyAds= view.findViewById<ConstraintLayout>(R.id.friendly_ads)
-        if(App.instance!= null && !App.instance!!.preferences.getIsProSync()){
-            friendlyAds.findViewById<AdView>(R.id.adView).loadAdIfIsPro()
-        }else{
-            friendlyAds.visibility = View.GONE
-        }
+        friendlyAds.visibility = View.GONE
     }
 
     return  view

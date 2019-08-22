@@ -2,13 +2,10 @@ package br.com.disapps.meucartaotransporte.ui.cards.myCards
 
 import android.app.Activity
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.model.CardVO
-import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.google.android.gms.ads.AdView
 
 
 class CardsListAdapter(data: List<ListItem>?, var activity: Activity) : BaseMultiItemQuickAdapter<CardsListAdapter.ListItem, BaseViewHolder>(data){
@@ -33,10 +30,6 @@ class CardsListAdapter(data: List<ListItem>?, var activity: Activity) : BaseMult
                 helper.addOnClickListener(R.id.btn_card_balance)
                 helper.addOnClickListener(R.id.btn_card_extract)
                 helper.addOnClickListener(R.id.ic_delete_card)
-            }
-
-            ListItem.ADS_BANNER ->{
-                (helper.itemView as AdView).loadAdIfIsPro()
             }
         }
     }
@@ -70,9 +63,6 @@ class CardsListAdapter(data: List<ListItem>?, var activity: Activity) : BaseMult
 
             extract?.forEach {
                 list.add(objectToItem(it,ListItem.CARD_ITEM))
-                if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
-                    list.add(objectToItem(getEmptyCard(), ListItem.ADS_BANNER))
-                }
             }
 
             return list

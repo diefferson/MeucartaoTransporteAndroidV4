@@ -123,30 +123,6 @@ fun Context.getCustomChromeTabs(): CustomTabsIntent {
     }.build()
 }
 
-fun AdView.loadAdIfIsPro(){
-    if(App.instance!= null && !App.instance!!.preferences.getIsProSync()){
-        this.loadAd(AdRequest.Builder().build())
-    }
-}
-
-fun InterstitialAd.loadAdIfIsPro(){
-    if(App.instance!= null && !App.instance!!.preferences.getIsProSync()){
-        this.loadAd(AdRequest.Builder().build())
-    }
-}
-
-fun showInterstitial( interstitialAd: InterstitialAd){
-    if(interstitialAd.isLoaded){
-        interstitialAd.show()
-    }else{
-        interstitialAd.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                interstitialAd.show()
-            }
-        }
-    }
-}
-
 fun Unit.testeFun(){
     Log.i("", "")
 }

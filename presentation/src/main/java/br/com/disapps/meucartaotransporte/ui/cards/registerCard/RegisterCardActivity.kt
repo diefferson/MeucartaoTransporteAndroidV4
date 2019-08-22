@@ -143,7 +143,6 @@ class RegisterCardActivity : BaseActivity(){
                 val loadingView = getLoadingView()
                 result_container.removeAllViews()
                 if(it){
-                    showInterstitial(mInterstitialAd)
                     content.visibility = View.INVISIBLE
                     result_container.addView(loadingView)
                     result_container.visibility = View.VISIBLE

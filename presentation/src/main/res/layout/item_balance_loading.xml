@@ -118,8 +118,4 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <include
-        android:id="@+id/friendly_ads"
-        layout="@layout/friendly_ads"/>
-
 </LinearLayout>

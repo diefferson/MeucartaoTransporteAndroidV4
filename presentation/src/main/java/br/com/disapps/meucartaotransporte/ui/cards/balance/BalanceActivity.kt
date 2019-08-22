@@ -67,7 +67,7 @@ class BalanceActivity : BaseActivity() {
     override fun setupError() {
         viewModel.getErrorObservable().observe(this, Observer {error ->
             error?.let {
-                adapter.emptyView = getErrorView(it)
+                adapter.emptyView = getErrorView(it, true)
             }
         })
     }

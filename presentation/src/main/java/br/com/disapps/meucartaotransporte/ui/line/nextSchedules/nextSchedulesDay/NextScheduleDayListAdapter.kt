@@ -3,13 +3,10 @@ package br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDa
 import android.app.Activity
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.ui.custom.setSchedule
-import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.google.android.gms.ads.AdView
 
 class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) : BaseMultiItemQuickAdapter<NextScheduleDayListAdapter.ListItem, BaseViewHolder>(data){
 
@@ -20,10 +17,6 @@ class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) :
 
     override fun convert(helper: BaseViewHolder, item: ListItem) {
         when(item.type){
-
-            ListItem.ADS_BANNER ->{
-                (helper.itemView as AdView).loadAdIfIsPro()
-            }
 
             ListItem.LINE_SCHEDULE_ITEM ->{
                 var hasSchedules = false
@@ -83,16 +76,9 @@ class NextScheduleDayListAdapter(data: List<ListItem>, var activity: Activity) :
         fun objectToItem(items :List<LineSchedule>?) : List<ListItem>{
 
             val list = ArrayList<ListItem>()
-            var i = 0
 
             items?.forEach {
                 list.add(objectToItem(it, ListItem.LINE_SCHEDULE_ITEM))
-                if(App.instance!= null && !App.instance!!.preferences.getIsProSync()) {
-                    if (i % 2 == 0) {
-                        list.add(objectToItem(getEmptyLineSchedule(), ListItem.ADS_BANNER))
-                    }
-                }
-                i++
             }
 
             return list

@@ -1,16 +1,12 @@
 package br.com.disapps.meucartaotransporte.ui.cards.balance
 
 import android.app.Activity
-import android.graphics.Color
 import android.support.v4.content.ContextCompat
 import br.com.disapps.meucartaotransporte.R
-import br.com.disapps.meucartaotransporte.app.App
 import br.com.disapps.meucartaotransporte.model.CardVO
-import br.com.disapps.meucartaotransporte.util.loadAdIfIsPro
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.google.android.gms.ads.AdView
 
 class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMultiItemQuickAdapter<BalanceListAdapter.ListItem, BaseViewHolder>(data){
 
@@ -42,10 +38,6 @@ class BalanceListAdapter(data : List<ListItem>,var activity: Activity) : BaseMul
                 }else{
                     helper.setGone(R.id.update_message, false)
                 }
-            }
-
-            ListItem.ADS_BANNER ->{
-                (helper.itemView as AdView).loadAdIfIsPro()
             }
         }
     }

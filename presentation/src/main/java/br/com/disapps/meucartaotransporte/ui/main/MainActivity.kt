@@ -41,8 +41,6 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
     override val tabs: TabLayout by lazy { vTabs }
     override val appBar: AppBarLayout by lazy { vAppBar }
     private var fragmentSelected = 0
-    private var gettingOut = false
-
 
     internal var mBroadcastReceiver: IabBroadcastReceiver? = null
 
@@ -94,22 +92,7 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
         if(toolbar.isSearchExpanded){
             toolbar.onBackPressed()
         }else{
-            if(gettingOut){
-                super.onBackPressed()
-            }else{
-                gettingOut = true
-                if (mInterstitialAd.isLoaded) {
-                    mInterstitialAd.show()
-                } else {
-                    Log.d("ADS", "The interstitial wasn't loaded yet.")
-                }
-                toast(getString(R.string.press_to_exit))
-                mInterstitialAd.adListener = object: AdListener() {
-                    override fun onAdClosed() {
-                        finish()
-                    }
-                }
-            }
+            super.onBackPressed()
         }
     }
 

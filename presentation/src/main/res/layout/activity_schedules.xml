@@ -36,6 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:adSize="BANNER"
+        android:visibility="gone"
         app:adUnitId="@string/ad_banner_id"/>
 
 </android.support.constraint.ConstraintLayout>
