@@ -9,8 +9,8 @@ import br.com.disapps.domain.repository.CardsRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
@@ -31,13 +31,13 @@ class DeleteCardTest{
 
 
     @Test
-    fun testBuildUseCaseObservableSuccessCase() = runBlocking {
-        val result = deleteCardUseCase.buildUseCaseObservable(DeleteCard.Params(cardMock))
+    fun testrunSuccessCase() = runBlocking {
+        val result = deleteCardUseCase.run(DeleteCard.Params(cardMock))
     }
 
     @Test(expected = KnownException::class)
-    fun testBuildUseCaseObservableErrorCase() = runBlocking {
+    fun testrunErrorCase() = runBlocking {
         whenever(cardsRepositoryMock.deleteCard(cardMock)).thenThrow(KnownException::class.java)
-        val result = deleteCardUseCase.buildUseCaseObservable(DeleteCard.Params(cardMock))
+        val result = deleteCardUseCase.run(DeleteCard.Params(cardMock))
     }
 }

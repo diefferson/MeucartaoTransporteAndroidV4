@@ -1,6 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.line.nextSchedules.nextSchedulesDay
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.interactor.base.onFailure
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.schedules.GetLineSchedules
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.domain.model.Schedule
@@ -16,10 +18,10 @@ class NextSchedulesDayViewModel(private val getLineSchedulesUseCase: GetLineSche
             isRequested = true
             loadingEvent.value = true
 
-            getLineSchedulesUseCase.execute(GetLineSchedules.Params(codeLine, day), onError = {
+            getLineSchedulesUseCase(this, GetLineSchedules.Params(codeLine, day)).onFailure {
                 nextSchedules.value = ArrayList()
                 loadingEvent.value = false
-            }){
+            }.onSuccess{
                 nextSchedules.value = setupNextSchedules(it)
                 loadingEvent.value = false
             }
@@ -35,10 +37,5 @@ class NextSchedulesDayViewModel(private val getLineSchedulesUseCase: GetLineSche
 
     private fun filterSchedules(schedules: List<Schedule>, day: Int) : List<Schedule>{
         return schedules.filter { validateSchedule(it, day) }.take(3)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        getLineSchedulesUseCase.dispose()
     }
 }

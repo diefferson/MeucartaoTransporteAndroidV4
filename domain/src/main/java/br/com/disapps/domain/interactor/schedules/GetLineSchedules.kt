@@ -1,17 +1,12 @@
 package br.com.disapps.domain.interactor.schedules
 
-import br.com.disapps.domain.exception.LogException
-import br.com.disapps.domain.executor.ContextExecutor
-import br.com.disapps.domain.executor.PostExecutionContext
 import br.com.disapps.domain.interactor.base.UseCase
 import br.com.disapps.domain.model.LineSchedule
 import br.com.disapps.domain.repository.SchedulesRepository
 
-class GetLineSchedules(val schedulesRepository: SchedulesRepository, val contextExecutor: ContextExecutor,
-                       val postExecutionContext: PostExecutionContext,
-                       val logException: LogException): UseCase<List<LineSchedule>, GetLineSchedules.Params>(contextExecutor, postExecutionContext, logException) {
+class GetLineSchedules(val schedulesRepository: SchedulesRepository): UseCase<List<LineSchedule>, GetLineSchedules.Params>() {
 
-    override suspend fun buildUseCaseObservable(params: Params): List<LineSchedule> {
+    override suspend fun run(params: Params): List<LineSchedule> {
         return schedulesRepository.getLineSchedules(params.codeLine, params.day)
     }
 

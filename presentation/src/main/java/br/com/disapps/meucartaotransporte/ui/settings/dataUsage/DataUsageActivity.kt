@@ -22,7 +22,7 @@ import br.com.disapps.meucartaotransporte.services.DownloadShapesService
 import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.util.PermissionsUtils
 import kotlinx.android.synthetic.main.activity_data_usage.*
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.async
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DataUsageActivity : BaseActivity(){

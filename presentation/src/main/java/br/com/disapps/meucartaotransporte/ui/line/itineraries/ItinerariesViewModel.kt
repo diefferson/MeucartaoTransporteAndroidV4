@@ -1,6 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.line.itineraries
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.interactor.base.onFailure
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.itineraries.GetItineraryDirections
 import br.com.disapps.domain.interactor.preferences.GetIsDownloadedCwbItineraries
 import br.com.disapps.domain.interactor.preferences.GetIsDownloadedMetropolitanItineraries
@@ -28,27 +30,20 @@ class ItinerariesViewModel(private val getItineraryDirectionsUseCase: GetItinera
 
     fun getIsDownloaded(city : City){
         when(city){
-            City.CWB -> getIsDownloadedCwbItinerariesUseCase.execute(Unit){
+            City.CWB -> getIsDownloadedCwbItinerariesUseCase(this).onSuccess{
                 isDownloaded.value = it
             }
-            City.MET ->getIsDownloadedMetropolitanItinerariesUseCase.execute(Unit){
+            City.MET ->getIsDownloadedMetropolitanItinerariesUseCase(this).onSuccess{
                 isDownloaded.value = it
             }
         }
     }
 
     fun getItineraryDirections(codeLine : String){
-        getItineraryDirectionsUseCase.execute(GetItineraryDirections.Params(codeLine),onError = {
+        getItineraryDirectionsUseCase(this, GetItineraryDirections.Params(codeLine)).onFailure {
             itineraryDirections.value = ArrayList()
-        }) {
+        }.onSuccess {
             itineraryDirections.value = it
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        getItineraryDirectionsUseCase.dispose()
-        getIsDownloadedCwbItinerariesUseCase.dispose()
-        getIsDownloadedMetropolitanItinerariesUseCase.dispose()
     }
 }

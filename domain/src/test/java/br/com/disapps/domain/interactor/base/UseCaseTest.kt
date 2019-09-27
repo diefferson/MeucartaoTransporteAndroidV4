@@ -6,9 +6,9 @@ import br.com.disapps.domain.exception.LogException
 import br.com.disapps.domain.executor.ContextExecutor
 import br.com.disapps.domain.executor.PostExecutionContext
 import com.nhaarman.mockito_kotlin.*
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
@@ -31,14 +31,14 @@ class UseCaseTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
-        val result:Boolean = testUseCase.buildUseCaseObservable(TestUseCase.Params(true))
+    fun runSuccessTest() = runBlocking{
+        val result:Boolean = testUseCase.run(TestUseCase.Params(true))
         assertEquals(true, result)
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
-        val result = testUseCase.buildUseCaseObservable(TestUseCase.Params(false, error = knownExceptionMock))
+    fun runErrorTest() = runBlocking{
+        val result = testUseCase.run(TestUseCase.Params(false, error = knownExceptionMock))
     }
 
     @Test
@@ -85,7 +85,7 @@ class UseCaseTest{
 
         private var cont = 0
 
-        override suspend fun buildUseCaseObservable(params: Params): Boolean {
+        override suspend fun run(params: Params): Boolean {
 
             if(cont == 2){
                 throw KnownException(KnownError.UNKNOWN_EXCEPTION, "")

@@ -10,8 +10,8 @@ import br.com.disapps.domain.repository.CardsRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -33,15 +33,15 @@ class GetExtractTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
+    fun runSuccessTest() = runBlocking{
         whenever(cardsRepositoryMock.extract(cardMock)).thenReturn(extractMock)
-        val result = getExtractUseCase.buildUseCaseObservable(GetExtract.Params(cardMock))
+        val result = getExtractUseCase.run(GetExtract.Params(cardMock))
         assertEquals(extractMock, result)
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(cardsRepositoryMock.extract(cardMock)).thenThrow(KnownException::class.java)
-        val result = getExtractUseCase.buildUseCaseObservable(GetExtract.Params(cardMock))
+        val result = getExtractUseCase.run(GetExtract.Params(cardMock))
     }
 }

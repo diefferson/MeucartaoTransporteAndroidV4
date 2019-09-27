@@ -1,6 +1,7 @@
 package br.com.disapps.meucartaotransporte.ui.settings
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.preferences.GetInitialScreen
 import br.com.disapps.domain.interactor.preferences.SaveInitialScreen
 import br.com.disapps.domain.model.InitialScreen
@@ -15,21 +16,15 @@ class SettingsViewModel(private var getInitialScreenUseCase: GetInitialScreen,
     val initialScreen = MutableLiveData<String>()
 
     fun getInitialScreen(){
-        getInitialScreenUseCase.execute(Unit){
+        getInitialScreenUseCase(this).onSuccess{
             initialScreen.value = it
         }
 
     }
 
     fun saveInitialScreen(initialScreen: InitialScreen){
-        saveInitialScreenUseCase.execute(SaveInitialScreen.Params(initialScreen)){
+        saveInitialScreenUseCase(this,SaveInitialScreen.Params(initialScreen)).onSuccess{
             getInitialScreen()
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        getInitialScreenUseCase.dispose()
-        saveInitialScreenUseCase.dispose()
     }
 }

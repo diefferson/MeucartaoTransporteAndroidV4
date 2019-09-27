@@ -6,8 +6,10 @@ import br.com.disapps.data.storage.database.Database
 import br.com.disapps.data.storage.preferences.Preferences
 import com.onesignal.OneSignal
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.startKoin
-import org.koin.log.EmptyLogger
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 /**
  * Created by dnso on 08/03/2018.
@@ -25,7 +27,11 @@ class App : MultiDexApplication() {
 
         instance = this
 
-        startKoin(this, AppInject.modules(), logger = EmptyLogger())
+        startKoin {
+            androidLogger(level = Level.ERROR)
+            androidContext(this@App)
+            modules(AppInject.modules())
+        }
 
         database.initDatabase()
 

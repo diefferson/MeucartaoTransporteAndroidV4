@@ -8,14 +8,24 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.getLoadingView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by diefferson on 09/03/2018.
  */
-abstract class BaseActivity: AppCompatActivity(){
+abstract class BaseActivity: AppCompatActivity(), CoroutineScope {
 
     abstract val viewModel: BaseViewModel
     abstract val activityLayout: Int
+
+    private val executionJob: Job by lazy { Job() }
+
+    override val coroutineContext: CoroutineContext by lazy {
+        Dispatchers.Main + executionJob
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,5 +65,10 @@ abstract class BaseActivity: AppCompatActivity(){
             val rootView = this.findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
             Snackbar.make(rootView, getString(R.string.unknown_error), Snackbar.LENGTH_SHORT).show()
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        executionJob.cancel()
     }
 }

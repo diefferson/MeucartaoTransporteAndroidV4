@@ -1,6 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.intro
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.interactor.base.onFailure
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJson
 import br.com.disapps.domain.interactor.preferences.SaveIsFirstAccess
 import br.com.disapps.domain.interactor.schedules.SaveAllSchedulesJson
@@ -56,10 +58,9 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
     }
 
     private fun initLines(cacheDir :String){
-        saveAllLinesJsonUseCase.execute(SaveAllLinesJson.Params("$cacheDir/lines.json",updateProgressLinesListener )
-        , onError = {
+        saveAllLinesJsonUseCase(this, SaveAllLinesJson.Params("$cacheDir/lines.json",updateProgressLinesListener )).onFailure {
             isError.value = true
-        }){
+        }.onSuccess {
             linesComplete = true
             if (schedulesComplete) {
                 isComplete.value = true
@@ -69,10 +70,9 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
     }
 
     private fun initSchedules(cacheDir :String){
-        saveAllSchedulesJsonUseCase.execute(SaveAllSchedulesJson.Params("$cacheDir/schedules.json", updateProgressSchedulesListener)
-        , onError = {
+        saveAllSchedulesJsonUseCase(this, SaveAllSchedulesJson.Params("$cacheDir/schedules.json", updateProgressSchedulesListener)).onFailure {
             isError.value = true
-        }) {
+        }.onSuccess {
             schedulesComplete = true
             if (linesComplete) {
                 isComplete.value = true
@@ -82,13 +82,7 @@ class IntroViewModel(private val saveAllLinesJsonUseCase: SaveAllLinesJson,
     }
 
     private fun saveIsFirstAccess(){
-        saveIsFirstAccessUseCase.execute(SaveIsFirstAccess.Params(false))
+        saveIsFirstAccessUseCase(this, SaveIsFirstAccess.Params(false))
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        saveAllLinesJsonUseCase.dispose()
-        saveAllSchedulesJsonUseCase.dispose()
-        saveIsFirstAccessUseCase.dispose()
-    }
 }

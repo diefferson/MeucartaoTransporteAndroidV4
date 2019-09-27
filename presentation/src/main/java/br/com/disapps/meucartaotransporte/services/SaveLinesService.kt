@@ -8,14 +8,15 @@ import android.os.Build
 import android.os.Environment
 import android.support.v4.app.NotificationCompat
 import android.widget.Toast
+import br.com.disapps.domain.interactor.base.onFailure
 import br.com.disapps.domain.interactor.lines.SaveAllLinesJsonOnly
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.UpdateData
 import br.com.disapps.meucartaotransporte.util.getUpdateDataNotification
 import br.com.disapps.meucartaotransporte.util.setupChannel
 import br.com.disapps.meucartaotransporte.util.showCustomNotification
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class SaveLinesService : BaseService(){
@@ -69,24 +70,20 @@ class SaveLinesService : BaseService(){
     override fun onDestroy() {
         super.onDestroy()
         isRunning = false
-        saveAllLinesJsonUseCase.dispose()
     }
 
     private fun saveLines(){
-        saveAllLinesJsonUseCase.execute(SaveAllLinesJsonOnly.Params(FILE_PATH),
-            onError= {
-                launch(UI) {
-                    isComplete.value = false
-                }
-            },
-
-            onComplete= {
-                ScheduleJob.schedule(this, ScheduleJob.LINE_TYPE)
-                launch(UI) {
-                    isComplete.value = true
-                }
+        saveAllLinesJsonUseCase(this,SaveAllLinesJsonOnly.Params(FILE_PATH)).onFailure {
+            launch(Dispatchers.Main) {
+                isComplete.value = false
             }
-        )
+        }.onFailure{
+            ScheduleJob.schedule(this, ScheduleJob.LINE_TYPE)
+            launch(Dispatchers.Main) {
+                isComplete.value = true
+            }
+        }
+
     }
 
     companion object {

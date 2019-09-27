@@ -1,6 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.lines
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.interactor.base.onFailure
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.lines.GetLines
 import br.com.disapps.domain.interactor.lines.UpdateLine
 import br.com.disapps.meucartaotransporte.model.mappers.toLineBO
@@ -36,11 +38,11 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
         if(!isRequested){
             isRequested = true
             loadingEvent.value = true
-            getLinesUseCase.execute(Unit, onError = {
+            getLinesUseCase(this).onFailure {
                 loadingEvent.value = false
                 isUpdatedFavorites.value = true
                 isUpdatedLines.value = true
-            }) {
+            }.onSuccess{
                 loadingEvent.value = false
                 updateLines(LinesListAdapter.objectToItem(it.toLineVO()))
                 updateFavorites(LinesListAdapter.objectToItem( it.toLineVO().filter { it.favorite }) )
@@ -63,7 +65,7 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
 
     fun favoriteLine(lineItem: LineItem){
         lineItem.line.favorite = !lineItem.line.favorite
-        updateLineUseCase.execute(UpdateLine.Params(lineItem.line.toLineBO()))
+        updateLineUseCase(this,UpdateLine.Params(lineItem.line.toLineBO()))
         updateFavoriteLine(lineItem.line.code, lineItem.line.favorite)
     }
 
@@ -77,11 +79,5 @@ class LinesViewModel(private val getLinesUseCase: GetLines,
         favoriteLines.clear()
         favoriteLines.addAll(lines)
         isUpdatedFavorites.value = true
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        getLinesUseCase.dispose()
-        updateLineUseCase.dispose()
     }
 }

@@ -13,7 +13,8 @@ import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetU
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceBlack.CardBalanceWidgetBlackConfigureActivity.Companion.PREFS_NAME
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceBlack.CardBalanceWidgetBlackConfigureActivity.Companion.PREF_PREFIX_KEY
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
 /**
@@ -66,6 +67,7 @@ class CardBalanceWidgetBlack : AppWidgetProvider() {
         }
     }
 
+
     companion object {
 
         private const val UPDATE_CARD = "br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceBlack.UPDATE_CARD"
@@ -90,7 +92,7 @@ class CardBalanceWidgetBlack : AppWidgetProvider() {
 
             val views = RemoteViews(context.packageName, R.layout.card_balance_widget_black)
 
-            async {
+            GlobalScope.launch {
                 val card = CardBalanceWidgetViewModel.loadCardData(context, appWidgetId, PREFS_NAME, PREF_PREFIX_KEY)
                 if(card != null){
                     CardBalanceWidgetUtils.setupViews(views,context, card)

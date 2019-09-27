@@ -9,8 +9,8 @@ import br.com.disapps.domain.repository.CardsRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
@@ -30,13 +30,13 @@ class UpdateCardTest{
 
 
     @Test
-    fun testBuildUseCaseObservableSuccessCase() = runBlocking {
-        val result = updateCardUseCase.buildUseCaseObservable(UpdateCard.Params(cardMock))
+    fun testrunSuccessCase() = runBlocking {
+        val result = updateCardUseCase.run(UpdateCard.Params(cardMock))
     }
 
     @Test(expected = KnownException::class)
-    fun testBuildUseCaseObservableErrorCase() = runBlocking {
+    fun testrunErrorCase() = runBlocking {
         whenever(cardsRepositoryMock.updateCard(cardMock)).thenThrow(KnownException::class.java)
-        val result = updateCardUseCase.buildUseCaseObservable(UpdateCard.Params(cardMock))
+        val result = updateCardUseCase.run(UpdateCard.Params(cardMock))
     }
 }

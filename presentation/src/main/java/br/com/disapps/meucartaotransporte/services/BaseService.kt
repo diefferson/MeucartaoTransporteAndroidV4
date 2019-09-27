@@ -7,8 +7,18 @@ import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.MutableLiveData
 import android.content.Intent
 import android.os.IBinder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
-abstract class BaseService : Service(), LifecycleOwner {
+abstract class BaseService : Service(), LifecycleOwner, CoroutineScope {
+
+    private val executionJob: Job by lazy { Job() }
+
+    override val coroutineContext: CoroutineContext by lazy {
+        Dispatchers.Main + executionJob
+    }
 
     protected val isComplete = MutableLiveData<Boolean>()
 
@@ -29,6 +39,7 @@ abstract class BaseService : Service(), LifecycleOwner {
 
     override fun onDestroy() {
         super.onDestroy()
+        executionJob.cancel()
         mLifecycleRegistry.markState(Lifecycle.State.DESTROYED)
     }
 

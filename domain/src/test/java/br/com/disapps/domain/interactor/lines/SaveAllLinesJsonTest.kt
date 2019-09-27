@@ -11,8 +11,8 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
@@ -31,21 +31,21 @@ class SaveAllLinesJsonTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
+    fun runSuccessTest() = runBlocking{
         whenever(linesRepositoryMock.saveAllLinesFromJson(MockData.PATH, downloadListenerMock)).then {
             downloadListenerMock.onAttachmentDownloadUpdate(10)
             downloadListenerMock.onAttachmentDownloadUpdate(50)
             downloadListenerMock.onAttachmentDownloadUpdate(100)
         }
-        saveAllLinesJson.buildUseCaseObservable(SaveAllLinesJson.Params(MockData.PATH,downloadListenerMock ))
+        saveAllLinesJson.run(SaveAllLinesJson.Params(MockData.PATH,downloadListenerMock ))
         verify(downloadListenerMock).onAttachmentDownloadUpdate(10)
         verify(downloadListenerMock).onAttachmentDownloadUpdate(50)
         verify(downloadListenerMock).onAttachmentDownloadUpdate(100)
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(linesRepositoryMock.saveAllLinesFromJson(MockData.PATH, downloadListenerMock)).thenThrow(KnownException::class.java)
-        val result = saveAllLinesJson.buildUseCaseObservable(SaveAllLinesJson.Params(MockData.PATH,downloadListenerMock ))
+        val result = saveAllLinesJson.run(SaveAllLinesJson.Params(MockData.PATH,downloadListenerMock ))
     }
 }

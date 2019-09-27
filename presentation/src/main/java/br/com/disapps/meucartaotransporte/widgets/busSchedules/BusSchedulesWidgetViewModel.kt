@@ -4,6 +4,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import br.com.disapps.data.dataSource.local.LocalSchedulesDataSource
 import br.com.disapps.data.entity.mappers.toScheduleBO
+import br.com.disapps.domain.interactor.base.onFailure
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.lines.GetLines
 import br.com.disapps.domain.interactor.schedules.GetLineSchedules
 import br.com.disapps.domain.model.LineSchedule
@@ -33,9 +35,9 @@ class BusSchedulesWidgetViewModel(private val getLinesUseCase: GetLines,
 
     fun getLines(){
         loadingEvent.value = true
-        getLinesUseCase.execute(Unit, onError = {
+        getLinesUseCase(this).onFailure{
             loadingEvent.value = false
-        }) {
+        }.onSuccess{
             loadingEvent.value = false
             lines.value = it.toLineVO()
         }
@@ -43,18 +45,12 @@ class BusSchedulesWidgetViewModel(private val getLinesUseCase: GetLines,
 
     fun getLinesSchedules(codeLine :String){
         loadingEvent.value =true
-        getLineSchedulesUseCase.execute(GetLineSchedules.Params(codeLine, getDayWeek()+1), onError = {
+        getLineSchedulesUseCase(this, GetLineSchedules.Params(codeLine, getDayWeek()+1)).onFailure {
             loadingEvent.value = false
-        }){
+        }.onSuccess{
             loadingEvent.value = false
             lineSchedules.value = it
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        getLinesUseCase.dispose()
-        getLineSchedulesUseCase.dispose()
     }
 
     companion object {

@@ -9,8 +9,8 @@ import br.com.disapps.domain.mock.MockData.CODE_LINE_ERROR
 import br.com.disapps.domain.model.Bus
 import br.com.disapps.domain.repository.BusesRepository
 import com.nhaarman.mockito_kotlin.*
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -32,16 +32,16 @@ class GetAllBusesTest{
     }
 
     @Test
-    fun testBuildUseCaseObservableSuccessCase() = runBlocking {
+    fun testrunSuccessCase() = runBlocking {
         whenever(busesRepositoryMock.getAllBuses(CODE_LINE)).thenReturn(mockBuses)
-        val result = getAllBusesUseCase.buildUseCaseObservable(GetAllBuses.Params(CODE_LINE))
+        val result = getAllBusesUseCase.run(GetAllBuses.Params(CODE_LINE))
         assertEquals(mockBuses, result)
     }
 
     @Test(expected = KnownException::class)
-    fun testBuildUseCaseObservableErrorCase() = runBlocking {
+    fun testrunErrorCase() = runBlocking {
         whenever(busesRepositoryMock.getAllBuses(CODE_LINE_ERROR)).thenThrow(KnownException::class.java)
-        val result = getAllBusesUseCase.buildUseCaseObservable(GetAllBuses.Params(CODE_LINE_ERROR))
+        val result = getAllBusesUseCase.run(GetAllBuses.Params(CODE_LINE_ERROR))
     }
 
 }

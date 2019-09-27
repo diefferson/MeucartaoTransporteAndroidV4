@@ -10,8 +10,8 @@ import br.com.disapps.domain.repository.ItinerariesRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
@@ -30,14 +30,14 @@ class SaveAllItinerariesTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
-      saveAllItinerariesJsonUseCase.buildUseCaseObservable(SaveAllItinerariesJson.Params(City.CWB, MockData.ITINERARIES_JSON))
+    fun runSuccessTest() = runBlocking{
+      saveAllItinerariesJsonUseCase.run(SaveAllItinerariesJson.Params(City.CWB, MockData.ITINERARIES_JSON))
 
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(itinerariesRepository.saveAllFromJson(City.CWB, MockData.ITINERARIES_JSON)).thenThrow(KnownException::class.java)
-        val result = saveAllItinerariesJsonUseCase.buildUseCaseObservable(SaveAllItinerariesJson.Params(City.CWB, MockData.ITINERARIES_JSON))
+        val result = saveAllItinerariesJsonUseCase.run(SaveAllItinerariesJson.Params(City.CWB, MockData.ITINERARIES_JSON))
     }
 }

@@ -1,6 +1,8 @@
 package br.com.disapps.meucartaotransporte.ui.cards.myCards
 
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.interactor.base.onFailure
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.cards.DeleteCard
 import br.com.disapps.domain.interactor.cards.GetCards
 import br.com.disapps.meucartaotransporte.model.CardVO
@@ -18,24 +20,18 @@ class MyCardsViewModel(private val getCardsUseCase: GetCards,
 
     fun getCards(){
         loadingEvent.value = true
-        getCardsUseCase.execute(Unit, onError = {
+        getCardsUseCase(this).onFailure {
             loadingEvent.value = false
             cards.value = ArrayList()
-        }){
+        }.onSuccess{
             loadingEvent.value = false
             cards.value = it.toCardVO()
         }
     }
 
     fun deleteCard(card: CardVO){
-        deleteCardUseCase.execute(DeleteCard.Params(card.toCardBO())){
+        deleteCardUseCase(this, DeleteCard.Params(card.toCardBO())).onSuccess{
             getCards()
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        getCardsUseCase.dispose()
-        deleteCardUseCase.dispose()
     }
 }

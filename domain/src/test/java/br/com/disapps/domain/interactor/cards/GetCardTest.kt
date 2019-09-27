@@ -9,8 +9,8 @@ import br.com.disapps.domain.repository.CardsRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -31,16 +31,16 @@ class GetCardTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
+    fun runSuccessTest() = runBlocking{
         whenever(cardsRepositoryMock.card(cardMock)).thenReturn(cardMock)
-        val result = getCardUseCase.buildUseCaseObservable(GetCard.Params(cardMock))
+        val result = getCardUseCase.run(GetCard.Params(cardMock))
         assertEquals(cardMock, result)
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(cardsRepositoryMock.card(cardMock)).thenThrow(KnownException::class.java)
-        val result = getCardUseCase.buildUseCaseObservable(GetCard.Params(cardMock))
+        val result = getCardUseCase.run(GetCard.Params(cardMock))
     }
 
 }

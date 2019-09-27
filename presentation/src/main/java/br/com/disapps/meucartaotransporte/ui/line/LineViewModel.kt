@@ -13,11 +13,6 @@ class LineViewModel( private val updateLineUseCase: UpdateLine) : BaseViewModel(
     fun favoriteLine(){
 
         line.favorite = !line.favorite
-        updateLineUseCase.execute(UpdateLine.Params(line.toLineBO()))
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        updateLineUseCase.dispose()
+        updateLineUseCase(this, UpdateLine.Params(line.toLineBO()))
     }
 }

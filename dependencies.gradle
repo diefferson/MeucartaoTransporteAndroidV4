@@ -18,10 +18,10 @@ ext {
     androidCompileSdkVersion = 28
 
     //Libraries
-    koinVersion = "1.0.0-beta-7"
+    koinVersion = "2.0.1"
     supportLibraryVersion = '28.0.0'
     archLifecycleVersion = "1.0.0"
-    kotlinVersion = '1.2.30'
+    kotlinVersion = '1.3.41'
     recyclerViewVersion = '21.0.3'
     okHttpVersion = '3.8.1'
     retrofitVersion = '2.3.0'
@@ -32,7 +32,7 @@ ext {
     firebaseVersion = '15.0.2'
     firebaseAdsVersion = '15.0.1'
     playServicesVersion = '15.0.0'
-    coroutinesVersion = '0.24.0'
+    coroutinesVersion = '1.3.0-RC2'
     jobDispatcherVersion = '0.8.5'
     zxingVersion = '3.2.1'
     zxingAndroidVersion = '3.5.0'
@@ -175,6 +175,7 @@ ext {
     domainDependencies = [
             [configuration: "implementation", dependency: libs.kotlin],
             [configuration: "implementation", dependency: libs.coroutines],
+            [configuration: "implementation", dependency: libs.koin],
 
             //tests
             [configuration: "testImplementation", dependency: testLibs.mockito],

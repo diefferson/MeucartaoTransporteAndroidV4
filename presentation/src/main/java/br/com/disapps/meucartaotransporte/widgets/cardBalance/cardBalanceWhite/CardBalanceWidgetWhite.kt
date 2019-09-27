@@ -13,14 +13,15 @@ import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetU
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.CardBalanceWidgetViewModel
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite.CardBalanceWidgetWhiteConfigureActivity.Companion.PREFS_NAME
 import br.com.disapps.meucartaotransporte.widgets.cardBalance.cardBalanceWhite.CardBalanceWidgetWhiteConfigureActivity.Companion.PREF_PREFIX_KEY
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
 /**
  * Implementation of App Widget functionality.
  * App Widget Configuration implemented in [CardBalanceWidgetWhiteConfigureActivity]
  */
-class CardBalanceWidgetWhite : AppWidgetProvider() {
+class CardBalanceWidgetWhite : AppWidgetProvider(){
 
     override fun onReceive(context: Context, intent: Intent?) {
         val appWidgetManager = AppWidgetManager.getInstance(context)
@@ -88,7 +89,7 @@ class CardBalanceWidgetWhite : AppWidgetProvider() {
 
             val views = RemoteViews(context.packageName, R.layout.card_balance_widget_white)
 
-            async {
+            GlobalScope.launch {
                 val card = CardBalanceWidgetViewModel.loadCardData(context, appWidgetId,PREFS_NAME, PREF_PREFIX_KEY)
                 if(card!= null){
                     CardBalanceWidgetUtils.setupViews(views, context, card)

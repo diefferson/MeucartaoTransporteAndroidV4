@@ -9,8 +9,8 @@ import br.com.disapps.domain.repository.LinesRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
@@ -29,14 +29,14 @@ class SaveAllLinesJsonOnlyTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
-        saveAllLinesJsonOnly.buildUseCaseObservable(SaveAllLinesJsonOnly.Params(MockData.PATH))
+    fun runSuccessTest() = runBlocking{
+        saveAllLinesJsonOnly.run(SaveAllLinesJsonOnly.Params(MockData.PATH))
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(linesRepositoryMock.saveAllLinesFromJson(MockData.PATH)).thenThrow(KnownException::class.java)
-        val result = saveAllLinesJsonOnly.buildUseCaseObservable(SaveAllLinesJsonOnly.Params(MockData.PATH))
+        val result = saveAllLinesJsonOnly.run(SaveAllLinesJsonOnly.Params(MockData.PATH))
     }
 
 }

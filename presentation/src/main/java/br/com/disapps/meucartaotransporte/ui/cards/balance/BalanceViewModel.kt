@@ -3,6 +3,8 @@ package br.com.disapps.meucartaotransporte.ui.cards.balance
 import android.arch.lifecycle.MutableLiveData
 import br.com.disapps.domain.exception.KnownError
 import br.com.disapps.domain.exception.KnownException
+import br.com.disapps.domain.interactor.base.onFailure
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.cards.GetCard
 import br.com.disapps.domain.interactor.cards.GetPassValue
 import br.com.disapps.domain.interactor.cards.UpdateCard
@@ -20,7 +22,7 @@ class BalanceViewModel(private val getCardUseCase: GetCard,
     var passValue :Float = 0f
 
     init {
-        getPassValue.execute(Unit){
+        getPassValue(this).onSuccess{
             passValue = it
         }
     }
@@ -29,30 +31,21 @@ class BalanceViewModel(private val getCardUseCase: GetCard,
         if(!isRequested || force){
             loadingEvent.value = true
             isRequested = true
-            getCardUseCase.execute(GetCard.Params(Card(code,cpf)),
-                onError ={
-                    loadingEvent.value = false
-                    exceptionEvent.value = if(it is KnownException){
-                        UiException(it.knownError, it.message?:"")
-                    }else{
-                        UiException(KnownError.UNKNOWN_EXCEPTION,"")
-                    }
-                },
-                onSuccess = {
-                    loadingEvent.value = false
-                    if(it!= null){
-                        updateCard.execute(UpdateCard.Params(it))
-                    }
-
-                    if(it!= null) card.value = it.toCardVO()
+            getCardUseCase(this, GetCard.Params(Card(code,cpf))).onFailure {
+                loadingEvent.value = false
+                exceptionEvent.value = if(it is KnownException){
+                    UiException(it.knownError, it.message?:"")
+                }else{
+                    UiException(KnownError.UNKNOWN_EXCEPTION,"")
                 }
-            )
-        }
-    }
+            }.onSuccess {
+                loadingEvent.value = false
+                if(it!= null){
+                    updateCard(this,UpdateCard.Params(it))
+                }
 
-    override fun onCleared() {
-        super.onCleared()
-        getCardUseCase.dispose()
-        updateCard.dispose()
+                if(it!= null) card.value = it.toCardVO()
+            }
+        }
     }
 }

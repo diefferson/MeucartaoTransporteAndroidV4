@@ -10,8 +10,8 @@ import br.com.disapps.domain.repository.ItinerariesRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -32,15 +32,15 @@ class GetAllItinerariesTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
+    fun runSuccessTest() = runBlocking{
         whenever(itinerariesRepository.getAllItineraries(CODE_LINE)).thenReturn(itinerariesMock)
-        val result = getAllItineraries.buildUseCaseObservable(GetAllItineraries.Params(CODE_LINE))
+        val result = getAllItineraries.run(GetAllItineraries.Params(CODE_LINE))
         assertEquals(itinerariesMock, result)
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(itinerariesRepository.getAllItineraries(CODE_LINE)).thenThrow(KnownException::class.java)
-        val result = getAllItineraries.buildUseCaseObservable(GetAllItineraries.Params(CODE_LINE))
+        val result = getAllItineraries.run(GetAllItineraries.Params(CODE_LINE))
     }
 }

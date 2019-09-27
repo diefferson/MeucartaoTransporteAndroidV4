@@ -2,6 +2,7 @@ package br.com.disapps.meucartaotransporte.ui.main
 
 import android.app.Activity
 import android.arch.lifecycle.MutableLiveData
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.preferences.GetInitialScreen
 import br.com.disapps.domain.interactor.preferences.GetIsPro
 import br.com.disapps.domain.interactor.preferences.SetIsPro
@@ -30,14 +31,14 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen,
     var isDeepLink = false
 
     init {
-        getIsProUseCase.execute(Unit){
+        getIsProUseCase(this).onSuccess{
             isPro.value = it
         }
     }
 
     fun getInitialScreen(){
         initialScreen.value = 0
-        getInitialScreenUseCase.execute(Unit){
+        getInitialScreenUseCase(this).onSuccess{
             initialScreen.value = if(InitialScreen.CARDS.toString() == it){0}else{1}
         }
     }
@@ -66,7 +67,7 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen,
             }
 
             val premiumPurchase = inventory?.getPurchase(SKU_PRO)
-            setIsProUseCase.execute(SetIsPro.Params( premiumPurchase != null))
+            setIsProUseCase(this@MainViewModel,SetIsPro.Params( premiumPurchase != null))
             isPro.value = premiumPurchase != null
         }
     }
@@ -81,17 +82,10 @@ class MainViewModel(private val getInitialScreenUseCase: GetInitialScreen,
             if (purchase!!.sku == SKU_PRO) {
                 resultInAppBilling.value = InAppBillingStatus.SUCCESS
                 iabHelper?.flagEndAsync()
-                setIsProUseCase.execute(SetIsPro.Params(true))
+                setIsProUseCase(this@MainViewModel,SetIsPro.Params(true))
                 isPro.value = true
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        getInitialScreenUseCase.dispose()
-        getIsProUseCase.dispose()
-        setIsProUseCase.dispose()
     }
 
     companion object {

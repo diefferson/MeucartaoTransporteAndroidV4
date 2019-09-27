@@ -10,8 +10,8 @@ import br.com.disapps.domain.repository.ShapesRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -32,15 +32,15 @@ class GetShapesTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
+    fun runSuccessTest() = runBlocking{
         whenever(shapesRepositoryMock.getShapes(MockData.CODE_LINE)).thenReturn(shapesMock)
-        val result = getShapesUseCase.buildUseCaseObservable(GetShapes.Params(MockData.CODE_LINE))
+        val result = getShapesUseCase.run(GetShapes.Params(MockData.CODE_LINE))
         assertEquals(shapesMock, result)
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(shapesRepositoryMock.getShapes(MockData.CODE_LINE)).thenThrow(KnownException::class.java)
-        val result = getShapesUseCase.buildUseCaseObservable(GetShapes.Params(MockData.CODE_LINE))
+        val result = getShapesUseCase.run(GetShapes.Params(MockData.CODE_LINE))
     }
 }

@@ -8,6 +8,8 @@ import br.com.disapps.data.dataSource.local.LocalCardsDataSource
 import br.com.disapps.data.entity.RequestCartao
 import br.com.disapps.data.entity.mappers.toCardBO
 import br.com.disapps.data.entity.mappers.toCardDTO
+import br.com.disapps.domain.interactor.base.onFailure
+import br.com.disapps.domain.interactor.base.onSuccess
 import br.com.disapps.domain.interactor.cards.GetCards
 import br.com.disapps.meucartaotransporte.model.CardVO
 import br.com.disapps.meucartaotransporte.model.mappers.toCardBO
@@ -21,18 +23,13 @@ class CardBalanceWidgetViewModel(private val getCardsUseCase: GetCards) : BaseVi
 
     fun getCards(){
         loadingEvent.value = true
-        getCardsUseCase.execute(Unit, onError = {
+        getCardsUseCase(this).onFailure{
             loadingEvent.value = false
             cards.value = ArrayList()
-        }){
+        }.onSuccess{
             loadingEvent.value = false
             cards.value = it.toCardVO()
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        getCardsUseCase.dispose()
     }
 
     companion object {

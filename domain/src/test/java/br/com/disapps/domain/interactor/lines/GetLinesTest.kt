@@ -9,8 +9,8 @@ import br.com.disapps.domain.repository.LinesRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -30,16 +30,16 @@ class GetLinesTest {
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
+    fun runSuccessTest() = runBlocking{
         whenever(linesRepositoryMock.lines()).thenReturn(linesMock)
-        val result = getLinesUseCase.buildUseCaseObservable(Unit)
+        val result = getLinesUseCase.run(Unit)
         assertEquals(linesMock, result)
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(linesRepositoryMock.lines()).thenThrow(KnownException::class.java)
-        val result = getLinesUseCase.buildUseCaseObservable(Unit)
+        val result = getLinesUseCase.run(Unit)
     }
 
 

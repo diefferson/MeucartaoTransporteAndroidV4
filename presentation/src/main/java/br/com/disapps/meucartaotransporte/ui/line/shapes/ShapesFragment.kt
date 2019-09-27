@@ -14,7 +14,6 @@ import br.com.disapps.domain.model.Bus
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.model.getAllCoordinates
 import br.com.disapps.meucartaotransporte.model.getLatLng
-import br.com.disapps.meucartaotransporte.ui.common.BaseActivity
 import br.com.disapps.meucartaotransporte.ui.common.BaseFragment
 import br.com.disapps.meucartaotransporte.ui.line.LineViewModel
 import br.com.disapps.meucartaotransporte.util.*
@@ -27,10 +26,8 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.android.synthetic.main.fragment_shapes.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.withContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -56,11 +53,9 @@ class ShapesFragment : BaseFragment(), OnMapReadyCallback{
         show_stops.setOnClickListener{ showStops() }
         show_help.setOnClickListener{
             help_text.visibility = View.VISIBLE
-            async {
+            launch {
                 delay(10000)
-                withContext(UI){
-                    help_text.visibility = View.INVISIBLE
-                }
+                help_text.visibility = View.INVISIBLE
             }
         }
     }

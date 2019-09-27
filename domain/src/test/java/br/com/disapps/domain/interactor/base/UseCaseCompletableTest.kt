@@ -5,9 +5,9 @@ import br.com.disapps.domain.exception.LogException
 import br.com.disapps.domain.executor.ContextExecutor
 import br.com.disapps.domain.executor.PostExecutionContext
 import com.nhaarman.mockito_kotlin.*
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
@@ -29,13 +29,13 @@ class UseCaseCompletableTest {
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
-        val result = testUseCase.buildUseCaseObservable(TestUseCaseCompletable.Params(true))
+    fun runSuccessTest() = runBlocking{
+        val result = testUseCase.run(TestUseCaseCompletable.Params(true))
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
-        val result = testUseCase.buildUseCaseObservable(TestUseCaseCompletable.Params(false, error = knownExceptionMock))
+    fun runErrorTest() = runBlocking{
+        val result = testUseCase.run(TestUseCaseCompletable.Params(false, error = knownExceptionMock))
     }
 
     @Test
@@ -70,7 +70,7 @@ class UseCaseCompletableTest {
                                  postExecutionContext: PostExecutionContext,
                                  logException: LogException) : UseCaseCompletable<TestUseCaseCompletable.Params>(contextExecutor, postExecutionContext, logException){
 
-        override suspend fun buildUseCaseObservable(params: Params) {
+        override suspend fun run(params: Params) {
             if(params.isOutOfMemoryError){
                 throw params.error
             }

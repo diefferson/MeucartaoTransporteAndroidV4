@@ -10,8 +10,8 @@ import br.com.disapps.domain.repository.ItinerariesRepository
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.experimental.Unconfined
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.Unconfined
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -31,15 +31,15 @@ class GetItineraryTest{
     }
 
     @Test
-    fun buildUseCaseObservableSuccessTest() = runBlocking{
+    fun runSuccessTest() = runBlocking{
         whenever(itinerariesRepository.getItinerary(MockData.CODE_LINE, MockData.DIRECTION)).thenReturn(itineraryMock)
-        val result = getItineraryUseCase.buildUseCaseObservable(GetItinerary.Params(MockData.CODE_LINE,MockData.DIRECTION))
+        val result = getItineraryUseCase.run(GetItinerary.Params(MockData.CODE_LINE,MockData.DIRECTION))
         assertEquals(itineraryMock, result)
     }
 
     @Test(expected = KnownException::class)
-    fun buildUseCaseObservableErrorTest() = runBlocking{
+    fun runErrorTest() = runBlocking{
         whenever(itinerariesRepository.getItinerary(MockData.CODE_LINE,MockData.DIRECTION)).thenThrow(KnownException::class.java)
-        val result = getItineraryUseCase.buildUseCaseObservable(GetItinerary.Params(MockData.CODE_LINE,MockData.DIRECTION))
+        val result = getItineraryUseCase.run(GetItinerary.Params(MockData.CODE_LINE,MockData.DIRECTION))
     }
 }

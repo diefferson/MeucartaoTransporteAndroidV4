@@ -9,10 +9,10 @@ import br.com.disapps.domain.model.City
 import br.com.disapps.domain.repository.PreferencesRepository
 import br.com.disapps.meucartaotransporte.R
 import br.com.disapps.meucartaotransporte.util.showCustomNotification
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class DownloadBroadcastReceiver : BroadcastReceiver(), KoinComponent{
+class DownloadBroadcastReceiver : BroadcastReceiver(), KoinComponent {
 
     private val preferences : PreferencesRepository by inject()
 
