@@ -1,5 +1,7 @@
 package br.com.disapps.meucartaotransporte.util
 
+import android.support.design.internal.BottomNavigationItemView
+import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
 
 object BottomNavigationViewHelper {

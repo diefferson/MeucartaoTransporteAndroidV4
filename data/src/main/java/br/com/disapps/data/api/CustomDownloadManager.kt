@@ -17,7 +17,7 @@ class CustomDownloadManager(val context: Context) {
             val request = Request(uri)
             request.addRequestHeader("Authorization", token)
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
-            request.setTitle(context.getString(R.string.app_name))
+            request.setTitle("Meu Cartão Transporte")
             request.setDescription(downloadDescription)
             request.setVisibleInDownloadsUi(false)
             downloadManager.enqueue(request)

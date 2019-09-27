@@ -52,8 +52,6 @@ class MainActivity : BaseFragmentActivity(), IabBroadcastReceiver.IabBroadcastLi
 
         observeViewModel(savedInstanceState)
 
-        nav
-        BottomNavigationViewHelper.disableShiftMode(navigation)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         viewModel.getInitialScreen()
