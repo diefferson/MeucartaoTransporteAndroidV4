@@ -1,15 +1,12 @@
 package br.com.disapps.domain.interactor.buses
 
 import br.com.disapps.domain.exception.KnownException
-import br.com.disapps.domain.exception.LogException
-import br.com.disapps.domain.executor.ContextExecutor
-import br.com.disapps.domain.executor.PostExecutionContext
 import br.com.disapps.domain.mock.MockData.CODE_LINE
 import br.com.disapps.domain.mock.MockData.CODE_LINE_ERROR
 import br.com.disapps.domain.model.Bus
 import br.com.disapps.domain.repository.BusesRepository
-import com.nhaarman.mockito_kotlin.*
-import kotlinx.coroutines.Unconfined
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -18,16 +15,13 @@ import kotlin.test.assertEquals
 class GetAllBusesTest{
 
     private val busesRepositoryMock: BusesRepository = mock()
-    private val logExceptionMock: LogException = mock()
-    private val contextExecutorMock: ContextExecutor = mock{ on { scheduler } doReturn(Unconfined) }
-    private val postExecutionContextMock: PostExecutionContext= mock{ on { scheduler } doReturn(Unconfined) }
     private val mockBuses: List<Bus> = mock()
 
     private lateinit var getAllBusesUseCase :GetAllBuses
 
     @Before
     fun setup(){
-        getAllBusesUseCase = GetAllBuses(busesRepositoryMock, contextExecutorMock, postExecutionContextMock, logExceptionMock)
+        getAllBusesUseCase = GetAllBuses(busesRepositoryMock)
 
     }
 

@@ -1,16 +1,16 @@
 buildscript {
    // ext.kotlin_version = '1.2.31'
-    ext.kotlin_version = '1.3.41' //to coverage tests
+    ext.kotlin_version = '1.3.50' //to coverage tests
     repositories {
         google()
         jcenter()
         maven { url 'https://plugins.gradle.org/m2/'}
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "io.realm:realm-gradle-plugin:5.0.0"
-        classpath 'com.google.gms:google-services:4.3.0'
+        classpath "io.realm:realm-gradle-plugin:5.15.0"
+        classpath 'com.google.gms:google-services:4.3.2'
         classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.11.0, 0.99.99]'
     }
 }
