@@ -4,9 +4,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
-def versionMajor = 4
-def versionMinor = 2
-def versionPatch = 1
+def versionMajor = 5
+def versionMinor = 0
+def versionPatch = 0
 
 android {
     compileSdkVersion 28
